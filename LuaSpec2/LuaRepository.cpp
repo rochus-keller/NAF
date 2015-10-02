@@ -262,7 +262,7 @@ int LuaRepository::getExperiment(lua_State *L)
 	return 1;
 }
 
-#include <Cara2/AidaApplication.h>
+#include "AidaApplication.h"
 // RISK: to refactor.
 
 int LuaRepository::save(lua_State *L)
