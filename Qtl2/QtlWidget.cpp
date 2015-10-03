@@ -491,7 +491,7 @@ int Widget::repaint(lua_State * L) // ( int x, int y, int w, int h )
     else if(QRectF* p = QtValue<QRectF>::cast( L, 2 ))
 		obj->repaint( p->toRect() );
     else if(QRegion* p = QtValue<QRegion>::cast( L, 2 ))
-		obj->repaint( p );
+		obj->repaint( *p );
 	return 0;
 }
 int Widget::restoreGeometry(lua_State * L) // ( const QByteArray & geometry ) : bool

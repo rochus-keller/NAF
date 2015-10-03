@@ -173,8 +173,10 @@ int Menu::insertSeparator(lua_State * L) // ( QAction * before ) QAction *
 	QMenu* obj = QtObject<QMenu>::check( L, 1);
 	if( QAction* before = QtObject<QAction>::cast( L, 2) )
 		QtObject<QAction>::create( L, obj->insertSeparator( before ) );
+#ifdef QT3_SUPPORT
 	else
 		lua_pushnumber( L, obj->insertSeparator() );
+#endif
 	return 1;
 }
 int Menu::isEmpty(lua_State * L) // const : bool 

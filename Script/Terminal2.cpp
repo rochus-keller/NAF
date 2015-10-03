@@ -18,7 +18,7 @@
  * http://www.gnu.org/copyleft/gpl.html.
  */
 
-#include "Terminal.h"
+#include "Terminal2.h"
 #include "ExpressionParser.h"
 #include <QStatusBar>
 #include <QKeyEvent>
@@ -28,8 +28,7 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QMessageBox>
-#include <Root/Application.h>
-#include <Gui/Menu.h>
+#include <Gui2/AutoMenu.h>
 using namespace Lua;
 
 static QTextCharFormat s_pf;
@@ -38,20 +37,11 @@ static QTextCharFormat s_errf;
 static QTextCharFormat s_outf;
 static const char* s_prompt = "Lua> ";
 
-ACTION_SLOTS_BEGIN( Terminal )
-	{ Root::Action::EditCopy, &Terminal::handleCopy }, 
-	{ Root::Action::EditPaste, &Terminal::handlePaste }, 
-	{ Root::Action::EditSelectAll, &Terminal::handleSelectAll }, 
-	{ Root::Action::EditDelete, &Terminal::handleDelete }, 
-	{ Root::Action::FileExportPdf, &Terminal::handleExportPdf }, 
-	{ Root::Action::FileSaveAs, &Terminal::handleSaveAs }, 
-ACTION_SLOTS_END( Terminal );
 
-
-Terminal::Terminal(QWidget* parent, Lua::Engine* l):
+Terminal2::Terminal2(QWidget* parent, Lua::Engine2* l):
 	QTextEdit( parent ), d_lua( l )
 {
-	assert( l );
+    Q_ASSERT( l );
 
 	s_pf.setFontFamily( "Arial" );
 	s_pf.setFontWeight( QFont::Bold );
@@ -72,67 +62,24 @@ Terminal::Terminal(QWidget* parent, Lua::Engine* l):
 	setReadOnly( true );
     setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
 
-	Gui::Menu* pop = new Gui::Menu( this, true );
-	Gui::Menu::item( pop, this, "Copy", Root::Action::EditCopy );
-	Gui::Menu::item( pop, this, "Paste", Root::Action::EditPaste );
+    Gui2::AutoMenu* pop = new Gui2::AutoMenu( this, true );
+    pop->addCommand( "Copy", this, SLOT(handleCopy()) );
+    pop->addCommand( "Paste", this, SLOT(handlePaste()) );
 	pop->addSeparator();
-	Gui::Menu::item( pop, this, "Select All", Root::Action::EditSelectAll );
-	Gui::Menu::item( pop, this, "Clear", Root::Action::EditDelete );
+    pop->addCommand( "Select All", this, SLOT(handleSelectAll()) );
+    pop->addCommand( "Clear", this, SLOT(clear()) );
 	pop->addSeparator();
-	Gui::Menu::item( pop, this, "Export PDF...", Root::Action::FileExportPdf );
-	Gui::Menu::item( pop, this, "Save Log...", Root::Action::FileSaveAs );
+    pop->addCommand( "Export PDF...", this, SLOT(handleExportPdf()) );
+    pop->addCommand( "Save Log...", this, SLOT(handleSaveAs()) );
 
-	d_lua->addObserver( this );
+    connect( d_lua, SIGNAL(onNotify(int,QByteArray,int)), this, SLOT(onNotify(int,QByteArray,int)) );
 }
 
-Terminal::~Terminal()
+Terminal2::~Terminal2()
 {
-	d_lua->removeObserver( this );
 }
 
-void Terminal::handle(Root::Message & msg)
-{
-	BEGIN_HANDLER();
-	MESSAGE( Engine::Update, a, msg )
-	{
-		switch( a->getType() )
-		{
-		case Engine::Print:
-            d_out.insertText( a->d_val1, s_outf );
-			d_out.insertText( QString( QChar::ParagraphSeparator ), s_pf );
-			break;
-		case Engine::Error:
-            d_out.insertText( a->d_val1, s_errf );
-			d_out.insertText( QString( QChar::ParagraphSeparator ), s_pf );
-			break;
-		case Engine::Started:
-		case Engine::Finished:
-		case Engine::Aborted:
-            {
-				moveCursor( QTextCursor::StartOfLine, QTextCursor::KeepAnchor );
-				QTextCursor cur = textCursor();
-				cur.insertText( prompt(), s_pf );
-				cur.movePosition(QTextCursor::StartOfLine);
-				d_out.setPosition( cur.position() );
-				d_line.clear();
-            }
-            break;
-        default:
-            break;
-		}
-		//msg.consume()
-		QTextCursor cur = textCursor();
-		cur.setPosition( d_out.position() );
-		ensureCursorVisible();
-	}
-	MESSAGE( Root::Action, a, msg )
-	{
-		EXECUTE_ACTION( Terminal, *a );
-	}
-	END_HANDLER();
-}
-
-void Terminal::keyPressEvent(QKeyEvent *e)
+void Terminal2::keyPressEvent(QKeyEvent *e)
 {
 	switch( e->key() )
 	{
@@ -155,7 +102,7 @@ void Terminal::keyPressEvent(QKeyEvent *e)
                 if( p.parseAndPrint( d_line.toLatin1(), d_lua, false ) )
                     p.executeAndPrint( d_lua );
             }else
-				d_lua->executeCmd( d_line.toLatin1(), "#Terminal" );
+                d_lua->executeCmd( d_line.toLatin1(), "Terminal" );
 			d_line.clear();
 		}
 		return;
@@ -215,7 +162,7 @@ void Terminal::keyPressEvent(QKeyEvent *e)
         e->ignore();
 }
 
-void Terminal::inputMethodEvent(QInputMethodEvent * e)
+void Terminal2::inputMethodEvent(QInputMethodEvent * e)
 {
     // Auf Linux ist diese Methode nötig für Ü, Ö, etc.
     // Das ist eine sehr vereinfachte Methode. Für eine vollständige Behandlung siehe
@@ -234,7 +181,7 @@ void Terminal::inputMethodEvent(QInputMethodEvent * e)
         e->ignore();
 }
 
-QString Terminal::prompt() const
+QString Terminal2::prompt() const
 {
     if( d_lua->isExecuting() )
         return "Exp>";
@@ -242,14 +189,47 @@ QString Terminal::prompt() const
         return s_prompt;
 }
 
-void Terminal::clear()
+void Terminal2::onNotify(int messageType, QByteArray val1, int val2)
+{
+    switch( messageType )
+    {
+	case Engine2::Print:
+        d_out.insertText( val1, s_outf );
+        d_out.insertText( QString( QChar::ParagraphSeparator ), s_pf );
+        break;
+	case Engine2::Error:
+        d_out.insertText( val1, s_errf );
+        d_out.insertText( QString( QChar::ParagraphSeparator ), s_pf );
+        break;
+	case Engine2::Started:
+	case Engine2::Finished:
+	case Engine2::Aborted:
+		{
+			moveCursor( QTextCursor::StartOfLine, QTextCursor::KeepAnchor );
+			QTextCursor cur = textCursor();
+			cur.insertText( prompt(), s_pf );
+			cur.movePosition(QTextCursor::StartOfLine);
+			d_out.setPosition( cur.position() );
+			d_line.clear();
+        }
+        break;
+    default:
+        break;
+    }
+    //msg.consume();
+    QTextCursor cur = textCursor();
+    cur.setPosition( d_out.position() );
+    ensureCursorVisible();
+}
+
+void Terminal2::clear()
 {
 	setPlainText( "" );
 	QTextCursor cur = textCursor();
     cur.insertText( prompt(), s_pf );
 }
 
-void Terminal::paste()
+void Terminal2::paste()
 {
 	QString s = QApplication::clipboard()->text();
 	moveCursor( QTextCursor::End );
@@ -258,51 +238,51 @@ void Terminal::paste()
 	d_line += s;
 }
 
-void Terminal::handlePaste( Root::Action& t )
+void Terminal2::handlePaste()
 {
 	QClipboard* cb = QApplication::clipboard();
-	ACTION_ENABLED_IF( t, !cb->text().isNull() );
+    ENABLED_IF( !cb->text().isNull() );
 	paste();
 }
-void Terminal::handleCopy( Root::Action& t ) 
+void Terminal2::handleCopy()
 { 
-	ACTION_ENABLED_IF( t, textCursor().hasSelection() ); 
+    ENABLED_IF( textCursor().hasSelection() );
 	copy(); 
 }
-void Terminal::handleSelectAll( Root::Action& t ) 
+void Terminal2::handleSelectAll()
 {
-	ACTION_ENABLED_IF( t, true );
+    ENABLED_IF( true );
 	selectAll();
 }
-void Terminal::handleDelete( Root::Action& t ) 
+void Terminal2::handleDelete()
 {
-	ACTION_ENABLED_IF( t, true );
+    ENABLED_IF( true );
 	clear();
 }
 
-void Terminal::handleExportPdf( Root::Action& t ) 
+void Terminal2::handleExportPdf()
 {
-	ACTION_ENABLED_IF( t, true );
+    ENABLED_IF( true );
 	QPrinter p( QPrinter::HighResolution );
 	p.setOutputFormat( QPrinter::PdfFormat );
 	p.setCreator( tr("CARA") );
 	p.setPrintProgram( tr("CARA") );
-	p.setDocName( tr("CARA Lua Terminal Log") );
+    p.setDocName( tr("CARA Lua Terminal2 Log") );
 	
 	QString path = QFileDialog::getSaveFileName( this, tr("Export to PDF" ), 
-		Root::AppAgent::getCurrentDir(), "*.pdf" );
+                                                 QString(), "*.pdf" );
 	if( path.isEmpty() )
 		return;
 	p.setOutputFileName( path );
 	print( &p );
 }
 
-void Terminal::handleSaveAs( Root::Action& t ) 
+void Terminal2::handleSaveAs()
 {
-	ACTION_ENABLED_IF( t, true );
+    ENABLED_IF( true );
 
 	QString path = QFileDialog::getSaveFileName( this, tr("Export to Text" ), 
-		Root::AppAgent::getCurrentDir(), "*.txt" );
+                                                 QString(), "*.txt" );
 	if( path.isEmpty() )
 		return;
 	QFile out(path);

@@ -83,6 +83,7 @@ int MenuBar::clear(lua_State * L)
 int MenuBar::insertMenu(lua_State * L) // ( QAction * before, QMenu * menu ) QAction * 
 {
 	QMenuBar* obj = QtObject<QMenuBar>::check( L, 1);
+#ifdef QT3_SUPPORT
 	if( QMenu* p = QtObject<QMenu>::cast( L, 2 ) )
 	{
 		const char* str = luaL_checkstring( L, 3 );
@@ -94,6 +95,7 @@ int MenuBar::insertMenu(lua_State * L) // ( QAction * before, QMenu * menu ) QAc
 			index = luaL_checknumber( L, 5 ) - 1;
 		lua_pushnumber( L, obj->insertItem( str, p, id, index ) );
 	}else
+#endif
 	{
 		QAction* before = QtObject<QAction>::check( L, 2);
 		QMenu* menu = QtObject<QMenu>::check( L, 3);

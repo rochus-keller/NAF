@@ -30,8 +30,6 @@
 using namespace Qtl;
 using namespace Lua;
 
-GCC_IGNORE(-Wunused-variable);
-
 int FileDialog::init(lua_State * L)
 {
     return DefaultCreateObject<QFileDialog>::init( L );
@@ -59,7 +57,7 @@ int FileDialog::history(lua_State * L) // const : QStringList
 }
 int FileDialog::iconProvider(lua_State * L) // const : QFileIconProvider *
 {
-	QFileDialog* obj = QtObject<QFileDialog>::check( L, 1);
+	//QFileDialog* obj = QtObject<QFileDialog>::check( L, 1);
     // TODO
 //	QFileIconProvider* res = QtValue<QFileIconProvider>::create( L );
 //	res = obj->iconProvider();

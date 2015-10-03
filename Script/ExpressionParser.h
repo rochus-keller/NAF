@@ -22,14 +22,14 @@
 #define EXPRESSIONPARSER_H
 
 #include <QVariant>
-#include <QTextOStream>
+#include <QTextStream>
 class QIODevice;
 
 typedef struct lua_State lua_State;
 
 namespace Lua
 {
-    class Engine;
+	class Engine2;
 
     class SourceBuffer
     {
@@ -75,7 +75,7 @@ namespace Lua
         };
         bool process( const QByteArray& );
         const QString& getError() const { return d_error; }
-        void dump( QTextOStream& ) const;
+		void dump( QTextStream& ) const;
         Token next();
         Token peek(int i = 0 );
     protected:
@@ -118,17 +118,17 @@ namespace Lua
             QVariant d_val;
             AstNode* d_left;
             AstNode* d_right;
-            void dump( QTextOStream&, int level = 0 ) const;
+			void dump( QTextStream&, int level = 0 ) const;
         };
         ExpressionParser();
         ~ExpressionParser();
         bool parse( const QByteArray & );
-        bool parseAndPrint( const QByteArray &, Engine*, bool doDump = false );
+		bool parseAndPrint( const QByteArray &, Engine2*, bool doDump = false );
         const AstNode* getTop() const { return d_top; }
         const QString& getError() const { return d_error; }
-        int execute(Engine*);
-        bool executeAndPrint(Engine*);
-        void dump(QTextOStream&) const;
+		int execute(Engine2*);
+		bool executeAndPrint(Engine2*);
+		void dump(QTextStream&) const;
     protected:
         struct ParsEx : public std::exception {};
         void prefixexp(AstNode*);
@@ -137,7 +137,7 @@ namespace Lua
         void expr(AstNode*);
         Lexer::Operator subexpr( AstNode*, quint32 limit, int level);
         void error( const char* msg );
-        int depthFirstExec(Engine *e, AstNode*);
+		int depthFirstExec(Engine2 *e, AstNode*);
     private:
         AstNode* d_top;
         Lexer d_lex;

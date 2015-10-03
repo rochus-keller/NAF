@@ -21,14 +21,12 @@
 #ifndef VALUEBINDING_H
 #define VALUEBINDING_H
 
-#include <Script/Lua.h>
+#include <NAF/Script/Lua.h>
 #include <typeinfo>
 #include <exception>
 #include <QByteArray>
 #include <QtDebug>
 #include <new>
-
-// Entspricht 1:1 der Variante aus DoorScope (ausser "class" statt "type" und )
 
 namespace Lua
 {

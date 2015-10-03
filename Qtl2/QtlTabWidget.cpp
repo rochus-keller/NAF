@@ -31,8 +31,6 @@
 using namespace Qtl;
 using namespace Lua;
 
-GCC_IGNORE(-Wunused-variable);
-
 int TabWidget::init( lua_State * L )
 {
     return DefaultCreateObject<QTabWidget>::init( L );

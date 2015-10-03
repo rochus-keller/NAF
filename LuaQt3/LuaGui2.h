@@ -21,7 +21,7 @@
 #ifndef _LuaQt3_LuaGui2
 #define _LuaQt3_LuaGui2
 
-#include <Script/Engine.h>
+#include <Script/Engine2.h>
 
 namespace Lua
 {
@@ -29,7 +29,7 @@ namespace Lua
 	{
 	public:
 		static const char* s_gui;
-		static int install( Lua::Engine* );
+		static int install( Lua::Engine2* );
 		
 	};
 }
