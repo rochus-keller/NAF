@@ -21,13 +21,10 @@
 #if !defined(AFX_UTIL_H__CAEAC1C3_E254_4D2C_8C07_F0B689463FDD__INCLUDED_)
 #define AFX_UTIL_H__CAEAC1C3_E254_4D2C_8C07_F0B689463FDD__INCLUDED_
 
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-
-#include <Root/Units.h>
 #include <Script/Lua.h>
-#include <QString>
+#include <QVariant>
+#include <math.h>
+#include <stdlib.h>
 
 namespace Lua
 {
@@ -48,9 +45,7 @@ namespace Lua
 		void getData(lua_State* L) const;
 
 	private:
-		Root::Int32 d_refCount;
-
-		DONT_CREATE_ON_HEAP; 
+		qint32 d_refCount;
 	};
 
 	class Util  
@@ -155,7 +150,7 @@ namespace Lua
 		{
 			lua_pushnumber( L, v );
 		}
-		static void push( lua_State *L, Root::UInt32 v )
+		static void push( lua_State *L, quint32 v )
 		{
 			lua_pushnumber( L, v );
 		}
@@ -200,9 +195,9 @@ namespace Lua
 		static bool release(lua_State *L, UserObject*); // true if to delete
 		static void addRef(lua_State *L, UserObject*);
 
-		static void createPushMetaTable( lua_State* L, const char* className, Root::UInt32 metaMeta );
-		static void pushCheckMetaTable( lua_State* L, const char* className, Root::UInt32 metaMeta );
-		static bool checkMetaTable( lua_State* L, int n, Root::UInt32 metaMeta );
+		static void createPushMetaTable( lua_State* L, const char* className, quint32 metaMeta );
+		static void pushCheckMetaTable( lua_State* L, const char* className, quint32 metaMeta );
+		static bool checkMetaTable( lua_State* L, int n, quint32 metaMeta );
 
 		// Pushe den Data Table des Objekts an Stackposition n auf den Stack. 
 		// Erzeuge es, falls es noch nicht existiert.
@@ -231,7 +226,7 @@ namespace Lua
             ~StackTester()
             {
                 const int top = Util::top(d_lua);
-                assert( top == d_post );
+				Q_ASSERT( top == d_post );
             }
     #else
         public:

@@ -19,7 +19,7 @@
  */
 
 #include "LuaWidget2.h"
-#include <Script/Engine.h>
+#include <Script/Engine2.h>
 #include <Script/Util.h>
 #include <Script2/QtValue.h>
 using namespace Lua;
@@ -476,7 +476,7 @@ bool LuaWidgetCallbacks::pushCallbackAndMe(QWidget * obj, LuaWidget2::Event call
     if( !peer->d_hash.value( obj ).contains( callbackId ) )
         return false;
     // Stack: -
-    Engine* e = Engine::inst(false);
+	Engine2* e = Engine2::getInst();
     Q_ASSERT( e != 0 );
     pushSlotTable(e->getCtx(), peer );
     const int slotTable = lua_gettop(e->getCtx());
@@ -492,15 +492,15 @@ bool LuaWidgetCallbacks::pushCallbackAndMe(QWidget * obj, LuaWidget2::Event call
 
 bool LuaWidgetCallbacks::call(int nargs, int nresults)
 {
-    Engine* e = Engine::inst(false);
-    Q_ASSERT( e != 0 );
+	Engine2* e = Engine2::getInst();
+	Q_ASSERT( e != 0 );
     if( !e->runFunction( nargs, nresults ) && !e->isSilent() )
     {
         try
         {
             qDebug() << "LuaWidgetCallbacks::call:" << e->getLastError();
             e->error( e->getLastError() );
-        }catch( Root::Exception& e )
+		}catch( const std::exception& e )
         {
             qDebug( "LuaWidgetCallbacks::call: Error calling host: %s", e.what() );
         }
@@ -511,15 +511,15 @@ bool LuaWidgetCallbacks::call(int nargs, int nresults)
 
 lua_State * LuaWidgetCallbacks::getLua()
 {
-    Engine* e = Engine::inst(false);
-    Q_ASSERT( e != 0 );
+	Engine2* e = Engine2::getInst();
+	Q_ASSERT( e != 0 );
     return e->getCtx();
 }
 
 void LuaWidgetCallbacks::onDeleted(QObject * obj)
 {
-    Engine* e = Engine::inst(false);
-    Q_ASSERT( e != 0 );
+	Engine2* e = Engine2::getInst();
+	Q_ASSERT( e != 0 );
     pushSlotTable(e->getCtx(), this);
     const int slotTable = lua_gettop(e->getCtx());
     lua_pushlightuserdata( e->getCtx(), obj );

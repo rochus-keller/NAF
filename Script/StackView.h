@@ -22,22 +22,22 @@
 #define STACKMDL_H
 
 #include <QTreeView>
-#include <Script/Engine.h>
+#include <Script/Engine2.h>
 
 namespace Lua
 {
     class StackView : public QTreeView
     {
     public:
-        StackView( Engine* lua, QWidget* p );
+        StackView( Engine2* lua, QWidget* p );
     };
 
-    class StackMdl : public QAbstractItemModel, public Root::Messenger
+    class StackMdl : public QAbstractItemModel
     {
         Q_OBJECT
     public:
         enum Columns { Level, Function, Kind, Line, Source };
-        explicit StackMdl( Engine* lua, StackView *parent = 0);
+        explicit StackMdl( Engine2* lua, StackView *parent = 0);
         ~StackMdl();
         StackView* getView() const { return static_cast<StackView*>( QAbstractItemModel::parent() ); }
         // overrides
@@ -50,11 +50,11 @@ namespace Lua
         int rowCount ( const QModelIndex & parent = QModelIndex() ) const { return d_levels.size(); }
     public slots:
         void onDoubleClicked( const QModelIndex & index );
+        void onNotify( int messageType, QByteArray val1 = "", int val2 = 0 );
     protected:
-        void handle( Root::Message& );
         void createStackTrace();
     private:
-        Root::Ref<Engine> d_lua;
+        Engine2* d_lua;
         struct StackLevel
         {
             QByteArray d_func;

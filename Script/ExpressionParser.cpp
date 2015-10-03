@@ -27,9 +27,10 @@
 
 #include "ExpressionParser.h"
 #include "Lua.h"
-#include "Engine.h"
+#include "Engine2.h"
 #include <QtDebug>
 #include <ctype.h>
+#include <math.h>
 using namespace Lua;
 
 ExpressionParser::ExpressionParser():d_top(0)
@@ -79,7 +80,7 @@ bool Lua::ExpressionParser::parse(const QByteArray & str)
     return true;
 }
 
-bool ExpressionParser::parseAndPrint(const QByteArray & source, Engine * e, bool doDump )
+bool ExpressionParser::parseAndPrint(const QByteArray & source, Engine2 *e, bool doDump )
 {
     Q_ASSERT( e != 0 );
     if( parse( source ) )
@@ -103,7 +104,7 @@ bool ExpressionParser::parseAndPrint(const QByteArray & source, Engine * e, bool
     }
 }
 
-int ExpressionParser::execute(Engine * e)
+int ExpressionParser::execute(Engine2 * e)
 {
     Q_ASSERT( e != 0 );
     d_error.clear();
@@ -128,7 +129,7 @@ int ExpressionParser::execute(Engine * e)
     }
 }
 
-bool ExpressionParser::executeAndPrint(Engine * e)
+bool ExpressionParser::executeAndPrint(Engine2 * e)
 {
     if( execute( e ) > 0 )
     {
@@ -171,7 +172,7 @@ void ExpressionParser::error(const char *msg)
     throw ParsEx();
 }
 
-static inline void _evalName( Engine* e, ExpressionParser::AstNode* n, int arg )
+static inline void _evalName( Engine2* e, ExpressionParser::AstNode* n, int arg )
 {
     Q_ASSERT( n != 0 );
     if( n->d_type == ExpressionParser::Name )
@@ -185,7 +186,7 @@ static inline void _evalName( Engine* e, ExpressionParser::AstNode* n, int arg )
 
 #define luai_nummod(a,b)	((a) - floor((a)/(b))*(b))
 
-static bool _compareSimpleOrUser(Engine* e, int op )
+static bool _compareSimpleOrUser(Engine2* e, int op )
 {
     switch( lua_type( e->getCtx(), -2 ) )
     {
@@ -225,7 +226,7 @@ static bool _compareSimpleOrUser(Engine* e, int op )
     return false;
 }
 
-int ExpressionParser::depthFirstExec(Engine* e, ExpressionParser::AstNode * n)
+int ExpressionParser::depthFirstExec(Engine2* e, ExpressionParser::AstNode * n)
 {
     if( n == 0 )
         return 0;

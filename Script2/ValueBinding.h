@@ -28,8 +28,6 @@
 #include <QtDebug>
 #include <new>
 
-// Entspricht 1:1 der Variante aus DoorScope (ausser "class" statt "type" und )
-
 namespace Lua
 {
     class ValueBindingBase

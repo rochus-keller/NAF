@@ -27,7 +27,7 @@
 #include <QVBoxLayout>
 using namespace Lua;
 
-LocalsView::LocalsView(Engine *lua, QWidget *parent) :
+LocalsView::LocalsView(Engine2 *lua, QWidget *parent) :
     QWidget(parent), d_lua(lua)
 {
     Q_ASSERT( lua != 0 );
@@ -39,39 +39,32 @@ LocalsView::LocalsView(Engine *lua, QWidget *parent) :
     d_list->setSortingEnabled(true);
     d_list->setHeaderLabels( QStringList() << tr("Nr.") << tr("Name") << tr("Type") << tr("Value") );
     vbox->addWidget( d_list );
-    d_lua->addObserver( this );
+    connect( d_lua, SIGNAL(onNotify(int,QByteArray,int)), this, SLOT(onNotify(int,QByteArray,int)) );
     setMinimumWidth(350);
 }
 
 LocalsView::~LocalsView()
 {
-    d_lua->removeObserver(this);
 }
 
-void LocalsView::handle(Root::Message & msg)
+void LocalsView::onNotify(int messageType, QByteArray val1, int val2)
 {
-    BEGIN_HANDLER();
-    MESSAGE( Engine::Update, a, msg )
+    switch( messageType )
     {
-        switch( a->getType() )
-        {
-        case Engine::Update::LineHit:
-        case Engine::Update::BreakHit:
-        case Engine::Update::ActiveLevel:
-            fillLocals();
-            break;
-        case Engine::Update::Start:
-        case Engine::Update::Continue:
-        case Engine::Update::Finish:
-		case Engine::Update::Abort:
-            d_list->clear();
-            break;
-        default:
-            break;
-        }
-        msg.consume();
+	case Engine2::LineHit:
+	case Engine2::BreakHit:
+	case Engine2::ActiveLevel:
+        fillLocals();
+        break;
+	case Engine2::Started:
+	case Engine2::Continued:
+	case Engine2::Finished:
+	case Engine2::Aborted:
+		d_list->clear();
+        break;
+    default:
+        break;
     }
-    END_HANDLER();
 }
 
 void LocalsView::fillLocals()

@@ -29,7 +29,7 @@ typedef struct lua_State lua_State;
 
 namespace Lua
 {
-    class Engine;
+	class Engine2;
 
     class SourceBuffer
     {
@@ -123,11 +123,11 @@ namespace Lua
         ExpressionParser();
         ~ExpressionParser();
         bool parse( const QByteArray & );
-        bool parseAndPrint( const QByteArray &, Engine*, bool doDump = false );
+		bool parseAndPrint( const QByteArray &, Engine2*, bool doDump = false );
         const AstNode* getTop() const { return d_top; }
         const QString& getError() const { return d_error; }
-        int execute(Engine*);
-        bool executeAndPrint(Engine*);
+		int execute(Engine2*);
+		bool executeAndPrint(Engine2*);
         void dump(QTextOStream&) const;
     protected:
         struct ParsEx : public std::exception {};
@@ -137,7 +137,7 @@ namespace Lua
         void expr(AstNode*);
         Lexer::Operator subexpr( AstNode*, quint32 limit, int level);
         void error( const char* msg );
-        int depthFirstExec(Engine *e, AstNode*);
+		int depthFirstExec(Engine2 *e, AstNode*);
     private:
         AstNode* d_top;
         Lexer d_lex;

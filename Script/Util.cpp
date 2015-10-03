@@ -19,7 +19,7 @@
  */
 
 #include "Util.h"
-#include <Root/Exception.h>
+#include "Engine2.h"
 #include <QVariant>
 using namespace Lua;
 
@@ -67,7 +67,7 @@ void Util::push(lua_State *L, const QVariant & v)
         lua_pushnumber( L, v.toLongLong() );
         break;
     case QVariant::ULongLong:
-        lua_pushnumber( L, (double)(Root::UInt32)v.toULongLong() );
+		lua_pushnumber( L, (double)v.toULongLong() );
         break;
     case QVariant::UInt:
         lua_pushnumber( L, v.toUInt() );
@@ -347,14 +347,14 @@ bool Util::release(lua_State *L, UserObject* me)
 	return i <= 0;
 }
 
-void Util::createPushMetaTable( lua_State* L, const char* className, Root::UInt32 metaMeta )
+void Util::createPushMetaTable( lua_State* L, const char* className, quint32 metaMeta )
 {
 	StackTester _test(L,1);
 	if( luaL_newmetatable( L, className ) == 0 )
 	{
 		// Stack: null
 		lua_pop(L, 1);
-		throw Root::Exception( "Meta class already exists: ", className );
+		throw Engine2::Exception( QByteArray("Meta class already exists: ") + className );
 	}
 	// Stack: table
 	const int meta = lua_gettop(L);
@@ -365,7 +365,7 @@ void Util::createPushMetaTable( lua_State* L, const char* className, Root::UInt3
 	// Stack: table
 }
 
-void Util::pushCheckMetaTable( lua_State* L, const char* className, Root::UInt32 metaMeta )
+void Util::pushCheckMetaTable( lua_State* L, const char* className, quint32 metaMeta )
 {
 	StackTester _test(L,1);
 	luaL_getmetatable( L, className );  
@@ -375,24 +375,24 @@ void Util::pushCheckMetaTable( lua_State* L, const char* className, Root::UInt32
 	{
 		lua_pop(L, 1);
 		// Stack: -
-		throw Root::Exception( "Meta class does not exist: ", className );
+		throw Engine2::Exception( QByteArray("Meta class does not exist: ") + className );
 	}
 	lua_pushstring(L, s_metaMeta );
 	lua_rawget( L, meta ); 
 	// Stack: table, value
-	Root::UInt32 res = lua_tonumber( L, -1 );
+	quint32 res = lua_tonumber( L, -1 );
 	lua_pop(L, 1);
 	// Stack: table
 	if( res != metaMeta )
 	{
 		lua_pop(L, 1);
 		// Stack: -
-		throw Root::Exception( "Meta class not compatible: ", className );
+		throw Engine2::Exception( QByteArray("Meta class not compatible: ") + className );
 	}
 	// Stack: table
 }
 
-bool Util::checkMetaTable( lua_State* L, int n, Root::UInt32 metaMeta )
+bool Util::checkMetaTable( lua_State* L, int n, quint32 metaMeta )
 {
 	StackTester _test(L,0);
 	// Stack: -
@@ -403,7 +403,7 @@ bool Util::checkMetaTable( lua_State* L, int n, Root::UInt32 metaMeta )
 	lua_pushstring(L, s_metaMeta );
 	lua_rawget( L, n ); 
 	// Stack: magic
-	Root::UInt32 res = lua_tonumber( L, -1 );
+	quint32 res = lua_tonumber( L, -1 );
 	lua_pop(L, 1);
 
 	// Stack: -

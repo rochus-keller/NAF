@@ -557,7 +557,7 @@ static void initAlign(lua_State * L)
 	lua_pop(L, 1);
 }
 
-int LuaGui2::install(Engine * e)
+int LuaGui2::install(Engine2 *e)
 {
 	assert( e );
 	lua_State * L = e->getCtx();

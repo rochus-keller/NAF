@@ -19,11 +19,11 @@
  */
 
 #include "QtObject.h"
-#include <Script/Engine.h>
+#include <Script/Engine2.h>
 #include "QtValue.h"
 using namespace Lua;
 
-struct QtObjectPeerPrivate : public QObject, public Root::Messenger
+struct QtObjectPeerPrivate : public QObject
 {
     QtObjectPeerPrivate();
     ~QtObjectPeerPrivate();
@@ -227,8 +227,8 @@ int QtObjectBase::disconnect(lua_State *L)
 
 QtObjectPeerPrivate *QtObjectPeerPrivate::inst(lua_State *L)
 {
-    Engine* e = Engine::inst(false);
-    Q_ASSERT( e != 0 && e->getCtx() == L );
+	Engine2* e = Engine2::getInst();
+	Q_ASSERT( e != 0 && e->getCtx() == L );
     if( s_peer == 0 )
     {
         s_peer = new QtObjectPeerPrivate();
@@ -401,7 +401,7 @@ void QtObjectPeerPrivate::executeCall(int sigIndex, void ** a)
 {
     // Code aus ObjectPeer adaptiert
 
-    Engine* e = Engine::inst(false);
+	Engine2* e = Engine2::getInst();
     Q_ASSERT( e != 0 );
     QObject* obj = sender();
     // ich kann hier nicht einfach QtObject<QObject>::create verwenden, da ansonsten im
@@ -486,16 +486,11 @@ void QtObjectPeerPrivate::executeCall(int sigIndex, void ** a)
 QtObjectPeerPrivate::QtObjectPeerPrivate()
 {
     d_bind = new QtObjectPeer( this );
-    Engine* e = Engine::inst(false);
-    e->addObserver(this);
 }
 
 QtObjectPeerPrivate::~QtObjectPeerPrivate()
 {
     s_peer = 0;
-    Engine* e = Engine::inst(false);
-    if( e )
-        e->removeObserver(this);
 }
 
 QtObjectPeer::QtObjectPeer(QtObjectPeerPrivate *p):QObject(p)
@@ -504,8 +499,8 @@ QtObjectPeer::QtObjectPeer(QtObjectPeerPrivate *p):QObject(p)
 
 void QtObjectPeer::onDeleted(QObject * obj)
 {
-    Engine* e = Engine::inst(false);
-    Q_ASSERT( e != 0 );
+	Engine2* e = Engine2::getInst();
+	Q_ASSERT( e != 0 );
     QtObjectPeerPrivate* peer = static_cast<QtObjectPeerPrivate*>( parent() );
     QtObjectPeerPrivate::pushSlotTable(e->getCtx(), peer);
     const int slotTable = lua_gettop(e->getCtx());

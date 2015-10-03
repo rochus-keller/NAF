@@ -22,23 +22,24 @@
 #define LOCALSVIEW_H
 
 #include <QWidget>
-#include <Script/Engine.h>
+#include <Script/Engine2.h>
 
 class QTreeWidget;
 
 namespace Lua
 {
-    class LocalsView : public QWidget, public Root::Messenger
+    class LocalsView : public QWidget
     {
         Q_OBJECT
     public:
-        explicit LocalsView(Engine* lua, QWidget *parent = 0);
+        explicit LocalsView(Engine2* lua, QWidget *parent = 0);
         ~LocalsView();
+    protected slots:
+        void onNotify( int messageType, QByteArray val1 = "", int val2 = 0 );
     protected:
-        void handle( Root::Message& );
         void fillLocals();
     private:
-        Root::Ref<Engine> d_lua;
+        Engine2* d_lua;
         QTreeWidget* d_list;
     };
 }

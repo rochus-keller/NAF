@@ -30,8 +30,6 @@
 using namespace Qtl;
 using namespace Lua;
 
-GCC_IGNORE(-Wunused-variable);
-
 int FileDialog::init(lua_State * L)
 {
     return DefaultCreateObject<QFileDialog>::init( L );

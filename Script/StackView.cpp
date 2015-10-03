@@ -22,16 +22,15 @@
 #include "Lua.h"
 using namespace Lua;
 
-StackMdl::StackMdl(Engine *lua, StackView *parent) :
+StackMdl::StackMdl(Engine2 *lua, StackView *parent) :
     QAbstractItemModel(parent), d_lua(lua)
 {
     Q_ASSERT( lua != 0 );
-    d_lua->addObserver( this );
+    connect( d_lua, SIGNAL(onNotify(int,QByteArray,int)), this, SLOT(onNotify(int,QByteArray,int)) );
 }
 
 StackMdl::~StackMdl()
 {
-    d_lua->removeObserver(this);
 }
 
 QVariant StackMdl::data(const QModelIndex &index, int role) const
@@ -93,33 +92,6 @@ QModelIndex StackMdl::index(int row, int column, const QModelIndex &parent) cons
     return createIndex( row, column, row );
 }
 
-void StackMdl::handle(Root::Message & msg)
-{
-    BEGIN_HANDLER();
-    MESSAGE( Engine::Update, a, msg )
-    {
-        switch( a->getType() )
-        {
-        case Engine::Update::LineHit:
-        case Engine::Update::BreakHit:
-            // Stack wird gltig
-            createStackTrace();
-            break;
-        case Engine::Update::Start:
-        case Engine::Update::Continue:
-        case Engine::Update::Finish:
-		case Engine::Update::Abort:
-			d_levels.clear();
-            reset();
-            break;
-        default:
-            break;
-        }
-        msg.consume();
-    }
-    END_HANDLER();
-}
-
 void StackMdl::createStackTrace()
 {
     d_levels.clear();
@@ -148,7 +120,7 @@ Qt::ItemFlags StackMdl::flags(const QModelIndex &index) const
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
-StackView::StackView(Engine *lua, QWidget *p):
+StackView::StackView(Engine2 *lua, QWidget *p):
     QTreeView(p)
 {
     setRootIsDecorated(false);
@@ -163,5 +135,26 @@ void StackMdl::onDoubleClicked(const QModelIndex &index)
 {
     d_lua->setActiveLevel( index.row(), d_levels[index.row()].d_source, d_levels[index.row()].d_sourceLine );
     getView()->update();
+}
+
+void StackMdl::onNotify(int messageType, QByteArray val1, int val2)
+{
+    switch( messageType )
+    {
+	case Engine2::LineHit:
+	case Engine2::BreakHit:
+        // Stack wird gültig
+        createStackTrace();
+        break;
+	case Engine2::Started:
+	case Engine2::Continued:
+	case Engine2::Finished:
+	case Engine2::Aborted:
+		d_levels.clear();
+        reset();
+        break;
+    default:
+        break;
+    }
 }
 
