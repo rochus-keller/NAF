@@ -347,7 +347,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
                 return;
             }
         }
-    }else if( e->key() == Qt::Key_BackTab )
+	}else if( e->key() == Qt::Key_Backtab )
     {
         if( e->modifiers() & Qt::ControlModifier )
         {

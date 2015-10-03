@@ -745,7 +745,7 @@ static inline QString _tab( int level )
 QString DisAss::formatFunc(const DisAss::Function & f, int level) const
 {
     QString res;
-    QTextOStream out( &res );
+	QTextStream out( &res );
     if( level == 0 )
         out << tr("-- Disassembled binary Lua file; line numbers not corresponding to debug information") << endl;
     else

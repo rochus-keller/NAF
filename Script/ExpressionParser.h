@@ -22,7 +22,7 @@
 #define EXPRESSIONPARSER_H
 
 #include <QVariant>
-#include <QTextOStream>
+#include <QTextStream>
 class QIODevice;
 
 typedef struct lua_State lua_State;
@@ -75,7 +75,7 @@ namespace Lua
         };
         bool process( const QByteArray& );
         const QString& getError() const { return d_error; }
-        void dump( QTextOStream& ) const;
+		void dump( QTextStream& ) const;
         Token next();
         Token peek(int i = 0 );
     protected:
@@ -118,7 +118,7 @@ namespace Lua
             QVariant d_val;
             AstNode* d_left;
             AstNode* d_right;
-            void dump( QTextOStream&, int level = 0 ) const;
+			void dump( QTextStream&, int level = 0 ) const;
         };
         ExpressionParser();
         ~ExpressionParser();
@@ -128,7 +128,7 @@ namespace Lua
         const QString& getError() const { return d_error; }
 		int execute(Engine2*);
 		bool executeAndPrint(Engine2*);
-        void dump(QTextOStream&) const;
+		void dump(QTextStream&) const;
     protected:
         struct ParsEx : public std::exception {};
         void prefixexp(AstNode*);

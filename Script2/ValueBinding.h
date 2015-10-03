@@ -21,7 +21,7 @@
 #ifndef VALUEBINDING_H
 #define VALUEBINDING_H
 
-#include <Script/Lua.h>
+#include <NAF/Script/Lua.h>
 #include <typeinfo>
 #include <exception>
 #include <QByteArray>

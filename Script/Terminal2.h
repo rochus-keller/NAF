@@ -23,9 +23,7 @@
 
 #include <QTextEdit>
 #include <QTextCursor>
-#include <Script/Engine2.h>
-
-// Von NAF adaptiert
+#include <NAF/Script/Engine2.h>
 
 namespace Lua
 {

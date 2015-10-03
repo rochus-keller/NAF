@@ -57,7 +57,7 @@ int FileDialog::history(lua_State * L) // const : QStringList
 }
 int FileDialog::iconProvider(lua_State * L) // const : QFileIconProvider *
 {
-	QFileDialog* obj = QtObject<QFileDialog>::check( L, 1);
+	//QFileDialog* obj = QtObject<QFileDialog>::check( L, 1);
     // TODO
 //	QFileIconProvider* res = QtValue<QFileIconProvider>::create( L );
 //	res = obj->iconProvider();

@@ -89,7 +89,7 @@ bool ExpressionParser::parseAndPrint(const QByteArray & source, Engine2 *e, bool
         {
             Q_ASSERT( getTop() != 0 );
             QByteArray str;
-            QTextOStream out( &str );
+			QTextStream out( &str );
             dump( out );
             e->print(str);
         }
@@ -157,7 +157,7 @@ bool ExpressionParser::executeAndPrint(Engine2 * e)
     }
 }
 
-void ExpressionParser::dump(QTextOStream & out) const
+void ExpressionParser::dump(QTextStream &out) const
 {
     d_lex.dump( out );
     if( d_top )
@@ -925,7 +925,7 @@ static QString _toValStr( int t, const QVariant& v )
     }
 }
 
-void ExpressionParser::AstNode::dump(QTextOStream & out, int level) const
+void ExpressionParser::AstNode::dump(QTextStream &out, int level) const
 {
     const QString white( level * 4, QChar(' ') );
     out << white << "Token: " << _toTypeStr( d_type ) << " Value: " << _toValStr( d_type, d_val ) << endl;
@@ -1010,7 +1010,7 @@ static QString _toTypeStr2( int t )
     return "Invalid";
 }
 
-void Lexer::dump(QTextOStream & out) const
+void Lexer::dump(QTextStream &out) const
 {
     foreach( const Token& t, d_tokens )
     {
