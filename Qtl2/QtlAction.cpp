@@ -189,6 +189,7 @@ static const luaL_reg _Action[] =
 	{ "actionGroup", Action::actionGroup },
 	{ "associatedWidgets", Action::associatedWidgets }, // QT_DEVIATION
 	{ "data", Action::data },
+	{ "_data", Action::data },
 	{ "isSeparator", Action::isSeparator },
 	{ "menu", Action::menu },
 	{ "parentWidget", Action::parentWidget },

@@ -69,7 +69,7 @@ int Engine2::_print (lua_State *L)
 
 Engine2::Engine2(QObject *p):QObject(p),
     d_ctx( 0 ), d_debugging( false ), d_running(false), d_waitForCommand(false),
-    d_dbgCmd(RunToBreakPoint), d_defaultDbgCmd(RunToBreakPoint), d_activeLevel(0)
+	d_dbgCmd(RunToBreakPoint), d_defaultDbgCmd(RunToBreakPoint), d_activeLevel(0), d_dbgShell(0)
 {
     lua_State* ctx = luaL_newstate();
 	if( ctx == 0 )
@@ -353,12 +353,16 @@ void Engine2::debugHook(lua_State *L, lua_Debug *ar)
         {
             e->d_waitForCommand = true;
 			e->notify( LineHit, e->d_curScript, e->d_curLine );
+			if( e->d_dbgShell )
+				e->d_dbgShell->handleBreak( e, e->d_curScript, e->d_curLine );
         }else if( e->d_breaks.value( source ).contains( e->d_curLine ) )
         {
             e->d_waitForCommand = true;
             e->d_breakHit = true;
 			e->notify( BreakHit, e->d_curScript, e->d_curLine );
-        }
+			if( e->d_dbgShell )
+				e->d_dbgShell->handleBreak( e, e->d_curScript, e->d_curLine );
+		}
 		if( e->d_dbgCmd == Abort || e->d_dbgCmd == AbortSilently )
         {
             luaL_error( L, "Execution terminated by user" );

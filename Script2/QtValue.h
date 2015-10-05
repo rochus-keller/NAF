@@ -33,7 +33,7 @@ namespace Lua
         typedef void (*PushVariant)(lua_State *, const QVariant& v);
         static ToVariant toVariant;
         static PushVariant pushVariant;
-        static QString toString( lua_State *L, int n );
+		static QString toString( lua_State *L, int n, bool assure = true );
         static bool isString( lua_State *L, int n );
     };
 

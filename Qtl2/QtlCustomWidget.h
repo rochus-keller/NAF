@@ -17,36 +17,24 @@
  * http://www.fsf.org/licensing/licenses/info/GPLv2.html and
  * http://www.gnu.org/copyleft/gpl.html.
  */
+#ifndef QTLCUSTOMWIDGET_H
+#define QTLCUSTOMWIDGET_H
 
-#if !defined(_QTL_PROGRESSBAR)
-#define _QTL_PROGRESSBAR
-
+#include <QWidget>
 typedef struct lua_State lua_State;
-
-
-
 
 namespace Qtl
 {
-	class ProgressBar
+	class CustomWidget : public QWidget
 	{
 	public:
-		
-		static int init(lua_State * L);
-		static int setRange(lua_State * L); // ( int minimum, int maximum )
-		static void install(lua_State * L);
-	};
+		explicit CustomWidget(QWidget *parent = 0);
 
-	class ProgressDialog
-	{
-	public:
-		static int init(lua_State * L);
-		static int setBar(lua_State * L);
-		static int setCancelButton(lua_State * L);
-		static int setLabel(lua_State * L);
 		static void install(lua_State * L);
+		static bool pushMethod( lua_State * L, const char* name );
+	protected:
+		void changeEvent ( QEvent * event );
 	};
-
 }
 
-#endif // !defined(_QTL_PROGRESSBAR)
+#endif // QTLCUSTOMWIDGET_H

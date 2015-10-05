@@ -71,6 +71,7 @@
 #include "QtlString.h"
 #include "QtlStringList.h"
 #include "QtlChar.h"
+#include "QtlTextOption.h"
 #include <Script2/QtObject.h>
 #include <Script2/QtValue.h>
 #include <Script/Util.h>
@@ -173,9 +174,10 @@ void Variant::push(lua_State *L, const QVariant &v)
 			break;
 		}
     case QVariant::Size:
+	case QVariant::SizeF:
         {
             QSizeF* f = QtValue<QSizeF>::create( L );
-            *f = qVariantValue<QSize>( v );
+			*f = qVariantValue<QSizeF>( v );
             break;
         }
     case QVariant::Rect:
@@ -264,9 +266,29 @@ void Variant::push(lua_State *L, const QVariant &v)
             *str = v.toStringList();
             break;
         }
-    default:
-        lua_pushnil( L );
-        break;
+	case QVariant::Matrix:
+		{
+			QMatrix* m = QtValue<QMatrix>::create( L );
+			*m = qVariantValue<QMatrix>( v );
+			break;
+		}
+		// Not supported:
+	case QVariant::Map:
+	case QVariant::List:
+	case QVariant::Locale:
+	case QVariant::UserType:
+	case QVariant::LastType:
+		lua_pushnil( L );
+		break;
+		// TODO:
+	case QVariant::RegExp:
+	case QVariant::Cursor:
+	case QVariant::TextLength:
+	case QVariant::TextFormat:
+	case QVariant::Transform:
+		qWarning() << "Variant::push pending conversion for" << v.typeName();
+		lua_pushnil( L );
+		break;
 	}
 }
 
@@ -333,12 +355,12 @@ QVariant Variant::toVariant(lua_State *L, int n)
             return *x;
         else if( QKeySequence* x = QtValue<QKeySequence>::cast( L, n ) )
             return *x;
+		else if( QMatrix* x = QtValue<QMatrix>::cast( L, n ) )
+			return *x;
 //        else if( QFontInfo* x = QtValue<QFontInfo>::cast( L, n ) )
 //            return QVariant::fromValue(*x);
 //        else if( QFontMetrics* x = QtValue<QFontMetrics>::cast( L, n ) )
 //            return QVariant::fromValue(*x);
-//        else if( QMatrix* x = QtValue<QMatrix>::cast( L, n ) )
-//            return *x;
 //        else if( QPainterPath* x = QtValue<QPainterPath>::cast( L, n ) )
 //            return QVariant::fromValue(*x);
         else if( QUrl* x = QtValue<QUrl>::cast( L, n ) )
@@ -389,6 +411,5 @@ void Variant::install(lua_State * L)
     String::install( L );
     StringList::install( L );
     Char::install( L );
-
-    QtValue<QModelIndex>::install(L, "QModelIndex", 0 ); // TODO
+	TextOption::install( L );
 }

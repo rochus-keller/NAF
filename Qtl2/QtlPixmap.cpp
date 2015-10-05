@@ -21,6 +21,7 @@
 #include <QPixmap>
 #include <QBitmap>
 #include "QtlPixmap.h"
+#include "QtlWidget.h"
 #include <Script2/QtValue.h>
 #include <Script2/QtObject.h>
 #include <Script/Util.h>
@@ -283,4 +284,5 @@ static const luaL_reg _Pixmap[] =
 
 void Pixmap::install(lua_State * L){
     QtValue<QPixmap>::install( L, "QPixmap", _Pixmap );
+	QtValue<QPixmap>::addMethods( L, PaintDevice< QtValue<QPixmap> >::_reg ); // Mixin
 }

@@ -45,6 +45,15 @@ namespace Qtl
 		static void install(lua_State * L);
 	};
 
+	class InputDialog
+	{
+	public:
+		static int getDouble(lua_State * L);
+		static int getInteger(lua_State * L);
+		static int getItem(lua_State * L);
+		static int getText(lua_State * L);
+		static void install(lua_State * L);
+	};
 }
 
 #endif // !defined(_QTL_MESSAGEBOX)

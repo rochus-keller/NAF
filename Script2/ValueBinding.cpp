@@ -28,7 +28,7 @@ void ValueBindingBase::ensureSuperClass(lua_State *L, const int metaTable )
     // sicher, dass lua_getmetatable auf die richtige Tabelle zeigt.
     if( lua_getmetatable( L, metaTable ) )
     {
-        // Mission erfÃ¼llt, es ist eine Metatable vorhanden
+		// Mission erfüllt, es ist eine Metatable vorhanden
         lua_pop( L, 1 );
         return;
     }else

@@ -21,6 +21,7 @@
 #include <QImage>
 #include <QMatrix>
 #include "QtlImage.h"
+#include "QtlWidget.h"
 #include <Script2/QtValue.h>
 #include <Script2/QtObject.h>
 #include <Script/Util.h>
@@ -33,11 +34,6 @@ int Image::heightMM(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::
 int Image::logicalDpiX(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::logicalDpiX ); }
 int Image::logicalDpiY(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::logicalDpiY ); }
 int Image::numColors(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::numColors ); }
-int Image::paintEngine(lua_State * L) // () const : QPaintEngine * 
-{
-	Util::push( L );
-	return 1;
-}
 int Image::paintingActive(lua_State * L){ return QtValue<QImage>::getBool( L, &QImage::paintingActive ); }
 int Image::width(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::width ); }
 int Image::widthMM(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::widthMM ); }
@@ -326,8 +322,11 @@ int Image::mirrored(lua_State * L) // ( bool, bool ) const : QImage
 	return 1;
 }
 int Image::hasAlphaChannel(lua_State * L){ return QtValue<QImage>::getBool( L, &QImage::hasAlphaChannel ); }
+
 // int Image::fromData(lua_State * L); // ( const uchar *, int, const char * ) : QImage und ( const QByteArray &, const char * ) : QImage 
+
 int Image::format(lua_State * L){ return QtValue<QImage>::getEnum( L, &QImage::format ); }
+
 int Image::convertToFormat(lua_State * L) 
 // ( Format, Qt::ImageConversionFlags ) const : QImage und 
 // ( Format, const QVector<QRgb> &, Qt::ImageConversionFlags ) const : QImage 
@@ -336,7 +335,7 @@ int Image::convertToFormat(lua_State * L)
     QImage* res = QtValue<QImage>::create( L );
 	Qt::ImageConversionFlags i = Qt::AutoColor;
 	if( Util::top(L) > 2 )
-		i = (Qt::ImageConversionFlags)Util::toInt(L,3);
+		i &= (Qt::ImageConversionFlags)Util::toInt(L,3);
 	*res = obj->convertToFormat( (QImage::Format)Util::toInt(L,2) );
 	return 1;
 }
@@ -361,7 +360,6 @@ static const luaL_reg _Image[] =
 	{ "logicalDpiX", Image::logicalDpiX },
 	{ "logicalDpiY", Image::logicalDpiY },
 	{ "numColors", Image::numColors },
-	{ "paintEngine", Image::paintEngine },
 	{ "paintingActive", Image::paintingActive },
 	{ "width", Image::width },
 	{ "widthMM", Image::widthMM },
@@ -419,4 +417,5 @@ static const luaL_reg _Image[] =
 
 void Image::install(lua_State * L){
     QtValue<QImage>::install( L, "QImage", _Image );
+	QtValue<QImage>::addMethods( L, PaintDevice< QtValue<QImage> >::_reg ); // Mixin
 }

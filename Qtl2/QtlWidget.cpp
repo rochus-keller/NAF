@@ -904,6 +904,25 @@ static const luaL_reg _Widget[] =
 	{ "windowType", Widget::windowType },
 	{ 0, 0 }
 };
+
+/*
+static const luaL_reg _reg[] =
+{
+	{ "depth", PaintDevice< QtObject<QWidget> >::depth },
+	{ "heightMM", PaintDevice< QtObject<QWidget> >::heightMM },
+	{ "logicalDpiX", PaintDevice< QtObject<QWidget> >::logicalDpiX },
+	{ "logicalDpiY", PaintDevice< QtObject<QWidget> >::logicalDpiY },
+	{ "numColors", PaintDevice< QtObject<QWidget> >::numColors },
+	{ "paintingActive", PaintDevice< QtObject<QWidget> >::paintingActive },
+	{ "physicalDpiX", PaintDevice< QtObject<QWidget> >::physicalDpiX },
+	{ "physicalDpiY", PaintDevice< QtObject<QWidget> >::physicalDpiY },
+	{ "widthMM", PaintDevice< QtObject<QWidget> >::widthMM },
+	{ 0, 0 }
+};
+*/
+
 void Widget::install(lua_State * L){
-    QtObject<QWidget,QObject>::install( L, "QWidget", _Widget );
+	QtObject<QWidget,QObject>::install( L, "QWidget", _Widget );
+	QtObject<QWidget>::addMethods( L, PaintDevice< QtObject<QWidget> >::_reg ); // Mixin
 }
+

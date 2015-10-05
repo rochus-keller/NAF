@@ -18,35 +18,34 @@
  * http://www.gnu.org/copyleft/gpl.html.
  */
 
-#if !defined(_QTL_PROGRESSBAR)
-#define _QTL_PROGRESSBAR
+#if !defined(_QTL_TEXTOPTION)
+#define _QTL_TEXTOPTION
+
 
 typedef struct lua_State lua_State;
 
 
-
-
 namespace Qtl
 {
-	class ProgressBar
+class TextOption
 	{
 	public:
-		
+		static int alignment(lua_State * L); // const Qt::Alignment 
+		static int flags (lua_State * L); //const Flags
+		static int setAlignment (lua_State * L); //( Qt::Alignment alignment )void
+		static int setFlags (lua_State * L); // ( Flags flags )void
+		static int setTabStop(lua_State * L); // ( qreal tabStop )void
+		static int setUseDesignMetrics(lua_State * L);//  ( bool enable )void
+		static int tabStop(lua_State * L); //  const qreal
+		static int setTextDirection(lua_State * L); // ( Qt::LayoutDirection direction ) void
+		static int useDesignMetrics(lua_State * L); //const bool
+		static int textDirection(lua_State * L); //const Qt::LayoutDirection  
+		static int setWrapMode(lua_State * L);//( WrapMode mode ) void
+
+		static int wrapMode(lua_State * L); //const
 		static int init(lua_State * L);
-		static int setRange(lua_State * L); // ( int minimum, int maximum )
 		static void install(lua_State * L);
 	};
-
-	class ProgressDialog
-	{
-	public:
-		static int init(lua_State * L);
-		static int setBar(lua_State * L);
-		static int setCancelButton(lua_State * L);
-		static int setLabel(lua_State * L);
-		static void install(lua_State * L);
-	};
-
 }
 
-#endif // !defined(_QTL_PROGRESSBAR)
+#endif // !defined(_QTL_TEXTOPTION)

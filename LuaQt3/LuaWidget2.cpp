@@ -454,13 +454,13 @@ int LuaWidgetCallbacks::setCallback(lua_State *L) // unique
     }
     if( lua_isfunction( L, 3 ) )
     {
-        lua_pushvalue( L, 3 );
+		lua_pushvalue( L, 3 ); // Function
         const int ref = luaL_ref( L, slotTable );
         if( !peer->d_hash.contains(obj) )
         {
             connect( obj, SIGNAL(destroyed(QObject*)), peer, SLOT(onDeleted(QObject*)) );
             lua_pushlightuserdata(L, obj );
-            lua_pushvalue(L, 1 );
+			lua_pushvalue(L, 1 ); // Userobject
             lua_rawset( L, slotTable );
         }
         peer->d_hash[obj][callbackId] = ref;

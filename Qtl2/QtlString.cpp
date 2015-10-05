@@ -720,10 +720,46 @@ static int truncate( lua_State * L)
 	return 0;
 }
 
-// TODO: operators and statics
+static int fromLatin1( lua_State * L)
+{
+	*QtValue<QString>::create(L) = QString::fromLatin1( Util::toStr( L, 1 ) );
+	return 1;
+}
+
+static int fromLocal8Bit( lua_State * L)
+{
+	*QtValue<QString>::create(L) = QString::fromLocal8Bit( Util::toStr( L, 1 ) );
+	return 1;
+}
+
+static int number( lua_State * L)
+{
+	QString* obj = QtValue<QString>::create(L);
+	if( Util::isStr( L, 3 ) )
+	{
+		int precision = 6;
+		if( Util::top(L) > 2 )
+			precision = Util::toInt( L, 3 );
+		obj->setNum( Util::toDbl( L, 1 ), Util::toChar( L, 2 ), precision );
+	}else if( Util::isInt( L, 1 ) )
+	{
+		int base = 10;
+		if( Util::top(L) > 1 )
+			base = Util::toInt( L, 2 );
+		obj->setNum( Util::toInt( L, 1 ), base );
+	}else
+		obj->setNum( Util::toDbl( L, 1 ) );
+	return 1;
+}
+
+// TODO: operators
 
 static const luaL_reg _lib[] = 
 {
+	{ "number", number },
+	{ "fromLocal8Bit", fromLocal8Bit },
+	{ "fromLatin1", fromLatin1 },
+	{ "fromAscii", fromLatin1 },
 	{ "toAscii", toLatin1 },
 	{ "toLatin1", toLatin1 },
 	{ "append", append },

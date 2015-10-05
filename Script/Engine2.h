@@ -55,7 +55,16 @@ namespace Lua
         typedef QMap<QByteArray,Breaks> BreaksPerScript; // @Filename oder :RepositoryName
 
 		// Debugging
-        void setDebug( bool on );
+		class DbgShell // interface
+		{
+		public:
+			DbgShell() {}
+			virtual ~DbgShell() {}
+
+			virtual void handleBreak( Engine2*, const QByteArray& source, int line ) = 0;
+		};
+		void setDbgShell( DbgShell* ds ) { d_dbgShell = ds; }
+		void setDebug( bool on );
         bool isDebug() const { return d_debugging; }
 		enum DebugCommand { RunToNextLine, RunToBreakPoint, Abort, AbortSilently };
         void runToNextLine();
@@ -143,6 +152,7 @@ namespace Lua
 		QByteArray d_lastError;
         DebugCommand d_dbgCmd;
         DebugCommand d_defaultDbgCmd;
+		DbgShell* d_dbgShell;
         bool d_breakHit;
         bool d_debugging;
         bool d_running;

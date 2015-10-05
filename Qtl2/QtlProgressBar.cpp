@@ -19,6 +19,9 @@
  */
 
 #include <QProgressBar>
+#include <QProgressDialog>
+#include <QPushButton>
+#include <QLabel>
 #include "QtlProgressBar.h"
 #include <Script2/QtObject.h>
 #include <Script2/QtValue.h>
@@ -31,19 +34,65 @@ int ProgressBar::init(lua_State * L)
 {
     return DefaultCreateObject<QProgressBar>::init( L );
 }
-int ProgressBar::setRange(lua_State * L) // ( int minimum, int maximum )
-{
-	QProgressBar* obj = QtObject<QProgressBar>::check( L, 1);
-	obj->setRange(Util::toInt( L, 2 ), Util::toInt( L, 3 ));
-	return 0;
-}
+
 static const luaL_reg _ProgressBar[] = 
 {
-	
-	{ "setRange", ProgressBar::setRange },
 	{ Util::s_init, ProgressBar::init },
 	{ 0, 0 }
 };
+
 void ProgressBar::install(lua_State * L){
-    QtObject<QProgressBar,QWidget>::install( L, "QProgressBar", _ProgressBar );
+	QtObject<QProgressBar,QWidget>::install( L, "QProgressBar", _ProgressBar );
+}
+
+static const luaL_reg _ProgressDialog[] =
+{
+	{ Util::s_init, ProgressDialog::init },
+	{ "setBar", ProgressDialog::setBar },
+	{ "setCancelButton", ProgressDialog::setCancelButton },
+	{ "setLabel", ProgressDialog::setLabel },
+	{ 0, 0 }
+};
+
+int ProgressDialog::init(lua_State *L)
+{
+	QProgressDialog* dlg = 0;
+	if( QtValueBase::isString( L, 2 ) )
+	{
+		Qt::WindowFlags f = 0;
+		if( Util::top(L) > 6 )
+			f &= Util::toInt( L, 7 );
+		dlg = new QProgressDialog( QtValueBase::toString( L, 2 ), QtValueBase::toString( L, 3 ),
+								   Util::toInt( L, 4 ), Util::toInt( L, 5 ),
+								   QtObject<QWidget>::cast( L, 6 ), f );
+	}else
+		dlg = new QProgressDialog( QtObject<QWidget>::cast( L, 2 ) );
+	QtObject<QProgressDialog>::setPointer( L, 1, dlg );
+	return 0;
+}
+
+int ProgressDialog::setBar(lua_State *L)
+{
+	QProgressDialog* obj = QtObject<QProgressDialog>::check( L, 1 );
+	obj->setBar( QtObject<QProgressBar>::check( L, 2 ) );
+	return 0;
+}
+
+int ProgressDialog::setCancelButton(lua_State *L)
+{
+	QProgressDialog* obj = QtObject<QProgressDialog>::check( L, 1 );
+	obj->setCancelButton( QtObject<QPushButton>::check( L, 2 ) );
+	return 0;
+}
+
+int ProgressDialog::setLabel(lua_State *L)
+{
+	QProgressDialog* obj = QtObject<QProgressDialog>::check( L, 1 );
+	obj->setLabel( QtObject<QLabel>::check( L, 2 ) );
+	return 0;
+}
+
+void ProgressDialog::install(lua_State *L)
+{
+	QtObject<QProgressDialog,QDialog>::install( L, "QProgressDialog", _ProgressDialog );
 }

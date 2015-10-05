@@ -395,7 +395,8 @@ static const luaL_reg _TreeWidgetItem[] =
 	{ "columnCount", TreeWidgetItem::columnCount },
     { "getData", TreeWidgetItem::data }, // data wird intern verwendet
     { "data", TreeWidgetItem::data },
-    { "flags", TreeWidgetItem::flags },
+	{ "_data", TreeWidgetItem::data },
+	{ "flags", TreeWidgetItem::flags },
 	{ "font", TreeWidgetItem::font },
 	{ "foreground", TreeWidgetItem::foreground },
 	{ "icon", TreeWidgetItem::icon },
@@ -440,7 +441,8 @@ static const luaL_reg _TreeWidgetItem[] =
     { "delete", TreeWidgetItem::erase },
     { 0, 0 }
 };
-void TreeWidgetItem::install(lua_State * L){
+void TreeWidgetItem::install(lua_State * L)
+{
     PtrBinding<TreeWidgetItem>::install( L, "QTreeWidgetItem", _TreeWidgetItem, true );
 }
 

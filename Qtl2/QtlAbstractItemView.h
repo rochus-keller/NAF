@@ -18,35 +18,18 @@
  * http://www.gnu.org/copyleft/gpl.html.
  */
 
-#if !defined(_QTL_PROGRESSBAR)
-#define _QTL_PROGRESSBAR
+#ifndef QTLABSTRACTITEMVIEW_H
+#define QTLABSTRACTITEMVIEW_H
 
 typedef struct lua_State lua_State;
 
-
-
-
 namespace Qtl
 {
-	class ProgressBar
+	class AbstractItemView
 	{
 	public:
-		
-		static int init(lua_State * L);
-		static int setRange(lua_State * L); // ( int minimum, int maximum )
 		static void install(lua_State * L);
 	};
-
-	class ProgressDialog
-	{
-	public:
-		static int init(lua_State * L);
-		static int setBar(lua_State * L);
-		static int setCancelButton(lua_State * L);
-		static int setLabel(lua_State * L);
-		static void install(lua_State * L);
-	};
-
 }
 
-#endif // !defined(_QTL_PROGRESSBAR)
+#endif // QTLABSTRACTITEMVIEW_H

@@ -21,9 +21,7 @@
 #if !defined(_QTL_WIDGET)
 #define _QTL_WIDGET
 
-typedef struct lua_State lua_State;
-
-
+#include <Script/Util.h>
 
 
 namespace Qtl
@@ -121,9 +119,74 @@ namespace Qtl
 		static int windowType(lua_State * L); // const : Qt::WindowType
 		static void install(lua_State * L);
 
-
 	};
 
+	template<class T>
+	class PaintDevice // Mixin
+	{
+	public:
+		// virtual QPaintEngine * paintEngine () const = 0
+		static int depth(lua_State *L)
+		{
+			Lua::Util::push( L, T::check( L, 1)->depth() );
+			return 1;
+		}
+		static int heightMM(lua_State *L)
+		{
+			Lua::Util::push( L, T::check( L, 1)->heightMM() );
+			return 1;
+		}
+		static int logicalDpiX(lua_State *L)
+		{
+			Lua::Util::push( L, T::check( L, 1)->logicalDpiX() );
+			return 1;
+		}
+		static int logicalDpiY(lua_State *L)
+		{
+			Lua::Util::push( L, T::check( L, 1)->logicalDpiY() );
+			return 1;
+		}
+		static int numColors(lua_State *L)
+		{
+			Lua::Util::push( L, T::check( L, 1)->numColors() );
+			return 1;
+		}
+		static int paintingActive(lua_State *L)
+		{
+			Lua::Util::push( L, T::check( L, 1)->paintingActive() );
+			return 1;
+		}
+		static int physicalDpiX(lua_State *L)
+		{
+			Lua::Util::push( L, T::check( L, 1)->physicalDpiX() );
+			return 1;
+		}
+		static int physicalDpiY(lua_State *L)
+		{
+			Lua::Util::push( L, T::check( L, 1)->physicalDpiY() );
+			return 1;
+		}
+		static int widthMM(lua_State *L)
+		{
+			Lua::Util::push( L, T::check( L, 1)->widthMM() );
+			return 1;
+		}
+		static const luaL_reg _reg[];
+	};
+
+	template<class T> const luaL_reg PaintDevice<T>::_reg[] =
+	{
+		{ "depth", PaintDevice<T>::depth },
+		{ "heightMM", PaintDevice<T>::heightMM },
+		{ "logicalDpiX", PaintDevice<T>::logicalDpiX },
+		{ "logicalDpiY", PaintDevice<T>::logicalDpiY },
+		{ "numColors", PaintDevice<T>::numColors },
+		{ "paintingActive", PaintDevice<T>::paintingActive },
+		{ "physicalDpiX", PaintDevice<T>::physicalDpiX },
+		{ "physicalDpiY", PaintDevice<T>::physicalDpiY },
+		{ "widthMM", PaintDevice<T>::widthMM },
+		{ 0, 0 }
+	};
 }
 
 #endif // !defined(_QTL_WIDGET)

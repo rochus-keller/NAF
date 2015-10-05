@@ -48,25 +48,6 @@ namespace Qtl
 
 	};
 
-	/* Keine Vererbung zulassen
-	class PaintDevice
-	{
-	public:
-		static int depth(lua_State * L); // () const : int 
-		static int height(lua_State * L); // () const : int 
-		static int heightMM(lua_State * L); // () const : int 
-		static int logicalDpiX(lua_State * L); // () const : int 
-		static int logicalDpiY(lua_State * L); // () const : int 
-		static int numColors(lua_State * L); // () const : int 
-		static int paintEngine(lua_State * L); // () const : QPaintEngine * 
-		static int paintingActive(lua_State * L); // () const : bool 
-		static int width(lua_State * L); // () const : int 
-		static int widthMM(lua_State * L); // () const : int 
-	};
-	*/
-
-
-
 }
 
 #endif // !defined(AFX_VARIANT_H__9698B45F_12D9_4DC2_8A40_D2CC004D1184__INCLUDED_)

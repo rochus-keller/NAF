@@ -84,12 +84,18 @@ static QVariant _toVariant(lua_State *L, int n)
 QtValueBase::ToVariant QtValueBase::toVariant = _toVariant;
 QtValueBase::PushVariant QtValueBase::pushVariant = _push;
 
-QString QtValueBase::toString(lua_State *L, int n)
+QString QtValueBase::toString(lua_State *L, int n, bool assure)
 {
     if( QString* s = QtValue<QString>::cast( L, n ) )
         return *s;
-    else
-        return QString::fromLatin1( luaL_checkstring( L, n ) );
+	else if( assure )
+		return QString::fromLatin1( luaL_checkstring( L, n ) );
+	else if( lua_isstring( L, n ) | lua_isnumber( L, n ) )
+		return QString::fromLatin1( lua_tostring( L, n ) );
+	else if( lua_isnil( L, n ) || n > lua_gettop(L) )
+		return QString();
+	//else
+	luaL_argerror( L, n, "string or QString expected" );
 }
 
 bool QtValueBase::isString(lua_State *L, int n)

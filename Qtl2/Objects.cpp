@@ -100,7 +100,6 @@
 #include <QListView>
 #include <QListWidget>
 #include <QTableView>
-#include <QTableWidget>
 #include <QTreeView>
 #include <QTreeWidget>
 #include <QHeaderView>
@@ -157,8 +156,14 @@
 #include "QtlTreeWidget.h"
 #include "QtlFrame.h"
 #include "QtlTabWidget.h"
-
+#include "QtlPrinter.h"
+#include "QtlPainter.h"
+#include "QtlTableView.h"
+#include "QtlAbstractItemView.h"
+#include "QtlTableWidget.h"
+#include "QtlTableWidgetItem.h"
 #include "QtlShortcut.h"
+#include "QtlCustomWidget.h"
 using namespace Qtl;
 using namespace Lua;
 
@@ -170,7 +175,7 @@ int Objects::install(lua_State * L)
 	AbstractButton::install( L );
 	AbstractSlider::install( L );
     QtObject<QAbstractScrollArea,QFrame,NotCreatable>::install( L, "QAbstractScrollArea" );
-    QtObject<QAbstractItemView,QAbstractScrollArea,NotCreatable>::install( L, "QAbstractItemView" );
+	AbstractItemView::install( L );
     QtObject<QAbstractSpinBox,QWidget,NotCreatable>::install(L,"QAbstractSpinBox" );
 	ActionGroup::install( L );
     CheckBox::install( L );
@@ -219,11 +224,10 @@ int Objects::install(lua_State * L)
     QtObject<QErrorMessage,QDialog>::install( L, "QErrorMessage" );
     FileDialog::install( L );
     QtObject<QFontDialog,QDialog,HasCustomInit>::install( L, "QFontDialog" );
-    QtObject<QInputDialog,QDialog,HasCustomInit>::install( L, "QInputDialog" );
 	MessageBox::install( L );
+	InputDialog::install( L );
     QtObject<QAbstractPrintDialog,QDialog,NotCreatable>::install( L,"QAbstractPrintDialog" );
     QtObject<QPrintDialog,QAbstractPrintDialog,HasCustomInit>::install( L, "QPrintDialog" );
-    QtObject<QProgressDialog,QDialog>::install( L, "QProgressDialog" );
 	ButtonGroup::install( L );
     GroupBox::install( L );
     QtObject<QSplitter,QFrame>::install( L, "QSplitter" );
@@ -232,6 +236,7 @@ int Objects::install(lua_State * L)
     // TODO Kein QObject QtObject<QWhatsThis,AbstractObjectFactory<> >::install( L );
     // TODO: eigentlich ein Value-Objekt QtObject<QDesktopWidget,QWidget>::install( L, "QDesktopWidget" );
     ProgressBar::install( L );
+	ProgressDialog::install( L );
     TabBar::install( L );
 	ToolBox::install( L );
     QtObject<QValidator,QObject,NotCreatable>::install( L,"QValidator"  );
@@ -262,6 +267,12 @@ int Objects::install(lua_State * L)
     TreeView::install( L );
     TreeWidgetItem::install( L );
     TreeWidget::install( L );
+	TableView::install( L );
+	TableWidget::install( L );
+	TableWidgetItem::install( L );
+	Printer::install( L );
+	Painter::install( L );
+	CustomWidget::install( L );
 
     return 0;
 }

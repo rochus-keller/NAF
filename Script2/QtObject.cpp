@@ -150,7 +150,8 @@ int QtObjectBase::newindex2(lua_State *L)
 			QMetaProperty mp = mo->property( i );
 			if( !mp.isWritable() )
 				luaL_error( L, "property '%s' is not writable!", name.data() );
-			mp.write( obj, v );
+			if( !mp.write( obj, v ) )
+				luaL_error( L, "cannot write value of type '%s' to property '%s'!", v.typeName(), name.data() );
 			return 0;
 		}else
 			obj->setProperty( name, v );
@@ -386,7 +387,7 @@ int QtObjectBase::invokeMethod(lua_State *L, const char *name, QObject *target)
         return 0;
     }else
     {
-		qDebug() << "QtBindingPeerPrivate::invokeMethod: failed" << target << "::" << name << "with arguments:" << numOfArgs;
+		qDebug() << "QtObjectPeerPrivate::invokeMethod: failed" << target << "::" << name << "with arguments:" << numOfArgs;
         for( int i = 0; i < numOfArgs; i++ )
             qDebug() << QtValueBase::toVariant( L, i + off );
 		luaL_error( L, "Given arguments don't meet expected parameter types of %s::%s",
@@ -410,7 +411,7 @@ void QtObjectPeerPrivate::executeCall(int sigIndex, void ** a)
     const int slotTable = lua_gettop(e->getCtx());
     const QList<int>& functionRefs = d_hash[obj][sigIndex];
     if( functionRefs.isEmpty() )
-        qWarning() << "QtBindingPeerPrivate::executeCall: no callback for " << obj << sigIndex;
+		qWarning() << "QtObjectPeerPrivate::executeCall: no callback for " << obj << sigIndex;
     // Stack: slotTable
     foreach( int ref, functionRefs )
     {
@@ -427,47 +428,28 @@ void QtObjectPeerPrivate::executeCall(int sigIndex, void ** a)
         for( int i = 0; i < paramTypes.count(); ++i )
         {
             const int typeCode = QMetaType::type( paramTypes.at(i) );
-            switch( typeCode )
-            {
-            case QMetaType::Void:
+			if( typeCode == QMetaType::Void )
+				params << QVariant(); // Standard QVariant
+			else if( ( typeCode >= QMetaType::Bool && typeCode <= QMetaType::QTransform ) ||
+					 ( typeCode >= QMetaType::Long && typeCode <= QMetaType::Float ) )
+				params << QVariant( typeCode, a[i+1]); // Standard QVariant
+			else if( typeCode == QMetaType::VoidStar ||
+					 typeCode == QMetaType::QObjectStar || typeCode == QMetaType::QWidgetStar )
+				params << QVariant(QVariant::UserType, *(void **)a[i+1]); // Nicht unterstützt von QVariant
+			else if( QMetaType::User )
+			{
+				const int varTypeCode = QVariant::nameToType( paramTypes.at(i) );
+				if( varTypeCode != QVariant::Invalid )
+					params << QVariant((varTypeCode == QVariant::UserType ? typeCode : varTypeCode), a[i+1]);
+				else
+				{
+					qWarning() << "QtObjectPeerPrivate::executeCall: unknown user type" << varTypeCode;
+					params << QVariant();
+				}
+			}else
+			{
+				qWarning() << "QtObjectPeerPrivate::executeCall: unhandled parameter type" << typeCode;
                 params << QVariant();
-                break;
-            case QMetaType::VoidStar:
-                params << QVariant(QVariant::UserType, *(void **)a[i+1]);
-                break;
-            case QMetaType::Int:
-            case QMetaType::UInt:
-            case QMetaType::Bool:
-            case QMetaType::Double:
-            case QMetaType::QByteArray:
-            case QMetaType::QString:
-            case QMetaType::QObjectStar:
-            case QMetaType::QWidgetStar:
-            case QMetaType::Long:
-            case QMetaType::Short:
-            case QMetaType::Char:
-            case QMetaType::ULong:
-            case QMetaType::UShort:
-            case QMetaType::UChar:
-            case QMetaType::Float:
-            case QMetaType::QChar:
-                params << QVariant( typeCode, a[i+1]);
-                break;
-            case QMetaType::User:
-                {
-                    const int varTypeCode = QVariant::nameToType( paramTypes.at(i) );
-                    if( varTypeCode != QVariant::Invalid )
-                        params << QVariant((varTypeCode == QVariant::UserType ? typeCode : varTypeCode), a[i+1]);
-                    else
-                    {
-                        qWarning() << "QtBindingPeerPrivate::executeCall: unknown user type" << varTypeCode;
-                        params << QVariant();
-                    }
-                }
-            default:
-                qWarning() << "QtBindingPeerPrivate::executeCall: unhandled parameter type" << typeCode;
-                params << QVariant();
-                break;
             }
         }
         for( int j = 0; j < params.count(); ++j )

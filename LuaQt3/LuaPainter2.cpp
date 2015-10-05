@@ -242,7 +242,7 @@ int LuaPainter2::drawImage(lua_State *L)
 			luaL_checknumber( L, 4 ), *img );
 	else
 		obj->d_p.drawImage( luaL_checknumber( L, 3 ),
-			luaL_checknumber( L, 4 ), img->smoothScale( w, h ) );
+			luaL_checknumber( L, 4 ), img->scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
 	return 0;
 }
 
