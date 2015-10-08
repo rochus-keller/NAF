@@ -31,10 +31,11 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) :
     // Die Regeln werden in der hier gegebenen Reihenfolge abgearbeitet
     d_commentFormat.setProperty( TokenProp, Comment );
     d_commentFormat.setForeground(Qt::darkGreen);
-    rule.pattern = QRegExp("--+[^\n]*");
-    rule.format = d_commentFormat;
-    rule.name = "Single Line Comment";
-    d_rules.append(rule);
+	// Das wird neu unten gemacht mit den Multiline-Formaten
+//    rule.pattern = QRegExp("--+[^\n]*");
+//    rule.format = d_commentFormat;
+//    rule.name = "Single Line Comment";
+//    d_rules.append(rule);
 
     d_literalFormat.setProperty( TokenProp, LiteralString );
     d_literalFormat.setForeground(Qt::darkRed);
@@ -82,9 +83,10 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) :
     QTextCharFormat idents; // Ist nötig, damit Idents der Form "abc123" nicht als Zahl interpretiert werden
     idents.setProperty( TokenProp, Ident );
     idents.setForeground(Qt::black);
-    rule.pattern = QRegExp("([^0-9]|\\b)[a-zA-Z_][a-zA-Z0-9_]*");
-    // ([^0-9]|\\b) heisst, entweder ist der Ident am Anfang der Zeile oder nicht unmittelbar nach Zahl.
+	rule.pattern = QRegExp("(\\b)[a-zA-Z_][a-zA-Z0-9_]*");
+	// ([^0-9]|\\b) heisst, entweder ist der Ident am Anfang der Zeile oder nicht unmittelbar nach Zahl.
     // Damit verhindern wir, dass 314.16e-2 das "e" als Ident verwendet wird.
+	// Issue: "[^0-9]|\\b" or "[^0-9]" also detect on idents like ".b"
     rule.format = idents;
     rule.name = "Ident";
     d_rules.append(rule);
@@ -99,7 +101,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) :
     QStringList otherTokens; // Zuerst die langen, dann die kurzen
     otherTokens <<  "\\.\\.\\." << "\\.\\." << "==" << "~=" << "<=" << ">=" <<
                     "\\*" << "/" << "%" << "\\^" << "#" << "<" << ">" << "=" <<
-                    "\\(" << "\\)" << "{" << "}" << "\\[" << "\\]" <<  ";" << ":" << "," <<
+					"\\(" << "\\)" << "\\{" << "\\}" << "\\[" << "\\]" <<  ";" << ":" << "," <<
                     "\\+" << "-" << "\\.";
     foreach (const QString &pattern, otherTokens)
     {
@@ -117,112 +119,124 @@ static inline void empty( QString& str, int start, int len )
         str[i] = QChar(' ');
 }
 
-static const int s_cmntSymLen = 3;
-
-// static QRegExp s_pattern = QRegExp("( --\\[ | \\[[=]*\\[ | \\]-- | \\][=]*\\] )"); // funktioniert nicht zuverlässig
-
 struct Mark
 {
-    int d_pos; // Position in text
-    qint16 d_num; // Anzahl Gleichheitszeichen + 1, positiv..start, negagiv..end
-    bool d_cmnt; // true..es ist ein Comment, false..es ist ein String
-    int len() const { return (d_cmnt)?s_cmntSymLen:qAbs(d_num) + 1; }
-    Mark():d_pos(-1){}
+	enum Kind {
+		LineCmt,      // --
+		StartMlCmt,   // --[[ or --[=[ mit d_num Anz. =
+		StartMlStr,   // [[ or [=[ mit d_num Anz. =
+		EndMlStrOrCmt,// ]] or ]=] mit d_num Anz. =
+		Done
+	};
+	int d_pos;     // Position in text
+	quint8 d_num; // Anzahl Gleichheitszeichen
+	quint8 d_kind; // Kind
+	int len() const
+	{
+		switch( d_kind )
+		{
+		case LineCmt:
+			return 2;
+		case StartMlCmt:
+			return 2 + d_num + 2;
+		case StartMlStr:
+		case EndMlStrOrCmt:
+			return d_num + 2;
+		}
+		return 0;
+	}
+	Mark():d_pos(-1),d_num(0),d_kind(Done){}
 };
 typedef QList<Mark> Marks;
 
 static Mark _nextMark2( const QString& text, int from = 0 )
 {
-    // Suche nach "--[", "]--", "]=]", "[=["
+	// Suche nach "--", "--[[", "--[=[", "[[", "[=[", "]]", "]=]"
     Mark res;
     for( int i = from; i < text.size(); i++ )
     {
         const QChar c = text[i];
-        if( c == QChar('-') && i + 2 < text.size() ) // "--["
+		if( c == QChar('-') && i + 1 < text.size() && text[i+1] == QChar('-') )
         {
-            if( text[i+1] == QChar('-') && text[i+2] == QChar('[') )
-            {
-                res.d_cmnt = true;
-                res.d_pos = i;
-                res.d_num = 1;
-                return res;
-            }
-        }else if( c == QChar(']') && i + 1 < text.size() ) // "]--" oder "]=]"
+			// "--" found
+			res.d_kind = Mark::LineCmt;
+			res.d_pos = i;
+			if( i + 3 < text.size() && text[i+2] == QChar('[') )
+			{
+				// "--[" found
+				if( text[i+3] == QChar('=') )
+				{
+					int j = i+4;
+					while( j < text.size() && text[j] == QChar('=') )
+						j++;
+					if( j < text.size() && text[j] == QChar('[') )
+					{
+						// "--[=[" found
+						res.d_kind = Mark::StartMlCmt;
+						res.d_num = j - ( i + 2 ) - 1;
+						return res;
+					}
+				}else if( text[i+3] == QChar('[') )
+				{
+					// "--[[" found
+					res.d_kind = Mark::StartMlCmt;
+					return res;
+				}
+			}
+			return res; // es ist in jedem Fall ein Single Line Comment, wenn man hier ankommt
+		}else if( c == QChar(']') && i + 1 < text.size() )
         {
-            if( text[i+1] == QChar('-') && i + 2 < text.size() && text[i+2] == QChar('-') ) // "]--"
-            {
-                res.d_cmnt = true;
-                res.d_pos = i;
-                res.d_num = -1;
-                return res;
-            }else if( text[i+1] == QChar('=') ) // "]=]"
+			if( text[i+1] == QChar('=') )
             {
                 int j = i+2;
                 while( j < text.size() && text[j] == QChar('=') )
                     j++;
                 if( j < text.size() && text[j] == QChar(']') )
                 {
-                    res.d_cmnt = false;
+					// "]=]" found
+					res.d_kind = Mark::EndMlStrOrCmt;
                     res.d_pos = i;
-                    res.d_num = -(j-i);
+					res.d_num = j - i - 1;
                     return res;
                 }
-            }else if( text[i+1] == QChar(']') ) // "]]"
+			}else if( text[i+1] == QChar(']') )
             {
-                res.d_cmnt = false;
-                res.d_pos = i;
-                res.d_num = -1;
+				// "]]" found
+				res.d_kind = Mark::EndMlStrOrCmt;
+				res.d_pos = i;
                 return res;
             }
-        }else if( c == QChar('[') && i + 1 < text.size() ) // "[=["
+		}else if( c == QChar('[') && i + 1 < text.size() )
         {
-            if( text[i+1] == QChar('=') )
+			if( text[i+1] == QChar('=') ) // "[=" found
             {
                 int j = i+2;
                 while( j < text.size() && text[j] == QChar('=') )
                     j++;
                 if( j < text.size() && text[j] == QChar('[') )
                 {
-                    res.d_cmnt = false;
-                    res.d_pos = i;
-                    res.d_num = j-i;
+					// "[=[" found
+					res.d_kind = Mark::StartMlStr;
+					res.d_pos = i;
+					res.d_num = j - i - 1;
                     return res;
                 }
-            }else if( text[i+1] == QChar('[') ) // "[["
+			}else if( text[i+1] == QChar('[') ) // "[[" found
             {
-                res.d_cmnt = false;
-                res.d_pos = i;
-                res.d_num = 1;
+				res.d_kind = Mark::StartMlStr;
+				res.d_pos = i;
                 return res;
-            }
+			}
         }
     }
     return res;
 }
 
-//static Mark _nextMark( const QString& text, int from = 0 )
-//{
-//    Mark res;
-//    res.d_pos = s_pattern.indexIn( text, from );
-//    if( res.d_pos != -1 )
-//    {
-//        res.d_num = text.mid( res.d_pos, s_pattern.matchedLength() ).count(QChar('=') );
-//        if( res.d_num == 0 )
-//            res.d_cmnt = text[res.d_pos + 1] == QChar('-'); // ]-- und --[ haben beide an zweiter Stelle ein -
-//        // else eindeutig ein String
-//        res.d_num++;
-
-//        if( text[res.d_pos] == QChar(']') ) // ]-- und ]==] starten beide mit ]
-//            res.d_num *= -1;
-//    }
-//    return res;
-//}
-
 static Marks _findMarks( const QString& text )
 {
     Marks marks; // alle Marks der Zeile
     Mark pos = _nextMark2( text );
-    while( pos.d_pos != -1 )
+	while( pos.d_kind != Mark::Done )
     {
         marks.append(pos);
         pos = _nextMark2( text, pos.d_pos + pos.len() );
@@ -236,13 +250,12 @@ union BlockState
     struct Data
     {
         unsigned int startOfComment:1; // Auf der Zeile beginnt ein Kommentar, der dort nicht endet
-        unsigned int endOfComment:1;   // Auf der Zeile endet ein Kommentar, der dort nicht beginnt
+		unsigned int endOfStrOrCmnt:1; // Auf der Zeile endet ein Kommentar oder String, der dort nicht beginnt
         unsigned int allLineComment:1; // Die ganze Zeile gehört zu einem Kommentar, der darüber beginnt und darunter endet
         unsigned int startOfString:1;
-        unsigned int endOfString:1;
         unsigned int allLineString:1;
-        unsigned int stringLevel:8;    // Anz. "=" plus 1
-        unsigned int dummy:17;
+		unsigned int level:8;    // Anz. "="
+		unsigned int dummy:18;
         unsigned int unitialized:1;
     } d_state;
 };
@@ -265,18 +278,20 @@ void SyntaxHighlighter::highlightBlock(const QString & block)
         // prüfe, ob er hier endet; suche das erste End; alle davor liegenden Starts und anderen Marks werden ignoriert
         for( int i = 0; i < marks.size(); i++ )
         {
-            if( marks[i].d_cmnt && marks[i].d_num < 0 )
+			if( marks[i].d_kind == Mark::EndMlStrOrCmt && marks[i].d_num == prev.d_state.level )
             {   // wir sind auf ein End gestossen
                 marksDone = i + 1;
-                newCur.d_state.endOfComment = true;
-                stamp( text, 0, marks[i].d_pos + marks[i].len(), d_commentFormat );
+				newCur.d_state.endOfStrOrCmnt = true;
+				newCur.d_state.level = prev.d_state.level;
+				stamp( text, 0, marks[i].d_pos + marks[i].len(), d_commentFormat );
                 break;
             }
         }
         if( marksDone == 0 )
         {   // keine wirksamen Comment Marks gefunden; die ganze Zeile ist auch ein Kommentar
             newCur.d_state.allLineComment = true;
-            stamp( text, 0, text.size(), d_commentFormat );
+			newCur.d_state.level = prev.d_state.level;
+			stamp( text, 0, text.size(), d_commentFormat );
             marksDone = marks.size();
         }
     }else if( prev.d_state.startOfString || prev.d_state.allLineString )
@@ -285,11 +300,11 @@ void SyntaxHighlighter::highlightBlock(const QString & block)
         // prüfe, ob er hier endet; suche das erste End; alle davor liegenden Starts und anderen Marks werden ignoriert
         for( int i = 0; i < marks.size(); i++ )
         {
-            if( !marks[i].d_cmnt && marks[i].d_num < 0 && qAbs(marks[i].d_num) == prev.d_state.stringLevel )
+			if( marks[i].d_kind == Mark::EndMlStrOrCmt && marks[i].d_num == prev.d_state.level )
             {   // wir sind auf ein End gestossen
                 marksDone = i + 1;
-                newCur.d_state.endOfString = true;
-                newCur.d_state.stringLevel = prev.d_state.stringLevel;
+				newCur.d_state.endOfStrOrCmnt = true;
+				newCur.d_state.level = prev.d_state.level;
                 stamp( text, 0, marks[i].d_pos + marks[i].len(), d_literalFormat );
                 break;
             }
@@ -297,24 +312,29 @@ void SyntaxHighlighter::highlightBlock(const QString & block)
         if( marksDone == 0 )
         {   // keine wirksamen String Marks gefunden; die ganze Zeile ist auch ein String
             newCur.d_state.allLineString = true;
-            newCur.d_state.stringLevel = prev.d_state.stringLevel;
+			newCur.d_state.level = prev.d_state.level;
             stamp( text, 0, text.size(), d_literalFormat );
             marksDone = marks.size();
         }
     }
-    // Suche ganze Paare
+	// Suche ganze LineCmt oder Ml-Paare
     for( int i = marksDone; i < marks.size(); i++ )
     {
-        if( marks[i].d_num > 0 )
+		if( marks[i].d_kind == Mark::LineCmt )
+		{
+			stamp( text, marks[i].d_pos, text.size() - marks[i].d_pos, d_commentFormat );
+			marksDone = marks.size();
+			break;
+		}else if( marks[i].d_kind == Mark::StartMlCmt || marks[i].d_kind == Mark::StartMlStr )
         {
-            for(int j = i + 1; j < marks.size(); j++ )
+			for( int j = i + 1; j < marks.size(); j++ )
             {
-                if( marks[j].d_num == -marks[i].d_num && marks[j].d_cmnt == marks[i].d_cmnt )
+				if( marks[j].d_num == marks[i].d_num )
                 {
                     stamp( text, marks[i].d_pos, marks[j].d_pos - marks[i].d_pos + marks[j].len(),
-                           (marks[i].d_cmnt)?d_commentFormat:d_literalFormat );
-                    marks[i].d_num = 0;
-                    marks[j].d_num = 0; // als gesehen markieren
+						   (marks[i].d_kind == Mark::StartMlCmt)?d_commentFormat:d_literalFormat );
+					marks[i].d_kind = Mark::Done;
+					marks[j].d_kind = Mark::Done; // als gesehen markieren
                 }
             }
         }
@@ -322,20 +342,20 @@ void SyntaxHighlighter::highlightBlock(const QString & block)
     // Suche offene Enden
     for( int i = marksDone; i < marks.size(); i++ )
     {
-        if( marks[i].d_num > 0 )
+		if( marks[i].d_kind == Mark::StartMlCmt || marks[i].d_kind == Mark::StartMlStr )
         {
-            if( marks[i].d_cmnt )
+			if( marks[i].d_kind == Mark::StartMlCmt )
                 newCur.d_state.startOfComment = true;
             else
-            {
                 newCur.d_state.startOfString = true;
-                newCur.d_state.stringLevel = marks[i].d_num;
-            }
-            stamp( text, marks[i].d_pos, text.size() - marks[i].d_pos, (marks[i].d_cmnt)?d_commentFormat:d_literalFormat );
+			newCur.d_state.level = marks[i].d_num;
+			stamp( text, marks[i].d_pos, text.size() - marks[i].d_pos,
+				   (marks[i].d_kind == Mark::StartMlCmt)?d_commentFormat:d_literalFormat );
         }
     }
     setCurrentBlockState( newCur.d_int );
 
+	//qDebug() << "**********";
     foreach( const HighlightingRule &rule, d_rules )
     {
         QRegExp expression(rule.pattern);
@@ -343,7 +363,7 @@ void SyntaxHighlighter::highlightBlock(const QString & block)
         while( index >= 0 )
         {
             const int length = expression.matchedLength();
-            // qDebug() << "hit" << rule.name << ":" << str.mid( index, length );
+			//qDebug() << "hit" << rule.name << ":" << text.mid( index, length );
             stamp( text, index, length, rule.format );
             index = expression.indexIn(text, index + length);
         }
@@ -355,7 +375,7 @@ void SyntaxHighlighter::stamp(QString &text, int start, int len, const QTextChar
     setFormat(start, len, f );
     // Vermeide, dass mehrere Regeln auf denselben Text angewendet werden
     empty( text, start, len );
-    //qDebug() << "empty:" << str;
+	// qDebug() << "empty:" << text;
 }
 
 QString SyntaxHighlighter::format(int tokenType)
