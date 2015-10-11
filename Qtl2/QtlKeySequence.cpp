@@ -89,7 +89,7 @@ static const luaL_reg _KeySequence[] =
 	{ "matches", KeySequence::matches },
 	{ "toString", KeySequence::toString },
 	{ "getElementReference", KeySequence::getElement }, // QT_DEVIATION
-	{ Util::s_init, KeySequence::init },
+	{ "init", KeySequence::init },
 	{ 0, 0 }
 };
 void KeySequence::install(lua_State * L){

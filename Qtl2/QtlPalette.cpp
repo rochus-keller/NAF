@@ -211,7 +211,7 @@ static const luaL_reg _Palette[] =
 	{ "text", Palette::text },
 	{ "window", Palette::window },
 	{ "windowText", Palette::windowText },
-	{ Util::s_init, Palette::init },
+	{ "init", Palette::init },
 	{ 0, 0 }
 };
 void Palette::install(lua_State * L){

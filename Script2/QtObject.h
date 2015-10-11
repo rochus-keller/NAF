@@ -34,10 +34,10 @@ namespace Lua
     public:
         static void install(lua_State * L);
 		static int connectFunc(lua_State *L, int objArg, int sigArg, int funcArg );
+		static int index2(lua_State *L);
 	protected:
         static QObject* rawCheck(lua_State *L, int narg = 1);
         static int newindex2(lua_State *L);
-        static int index2(lua_State *L);
         static int asyncInvoker2(lua_State *L);
         static int connect(lua_State *L);
 		static int disconnect(lua_State *L);
@@ -109,9 +109,8 @@ namespace Lua
             lua_pushvalue(L, metaTable );
             lua_rawset( L, LUA_REGISTRYINDEX );
 
-            lua_pushliteral(L, "__meta" );
             lua_pushliteral(L, "QtObject" );
-            lua_rawset(L, metaTable );
+			lua_rawseti(L, metaTable, ValueBindingBase::BindingName );
 
             lua_pushliteral(L, "__index" );
             lua_pushcfunction(L, index2 );
@@ -129,8 +128,7 @@ namespace Lua
 			lua_pushcfunction(L , finalize2 );
 			lua_rawset(L, metaTable);
 
-			lua_pushliteral(L, "__metatable" );
-            lua_rawget( L, metaTable );
+			lua_rawgeti( L, metaTable, ValueBindingBase::MethodTable );
             const int methodTable = lua_gettop(L);
 
             // Stack: metaTable, methodTable

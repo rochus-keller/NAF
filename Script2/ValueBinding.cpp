@@ -33,13 +33,12 @@ void ValueBindingBase::ensureSuperClass(lua_State *L, const int metaTable )
         return;
     }else
     {
-        lua_pushliteral( L, "__super" );
-        lua_rawget(L, metaTable );
+		lua_rawgeti(L, metaTable, SuperClassName );
         // Stack: string | nil
         if( lua_isstring( L, -1 ) )
         {
-            luaL_getmetatable( L, lua_tostring( L, -1 ) );
-            lua_setmetatable( L, metaTable );
+			luaL_getmetatable( L, lua_tostring( L, -1 ) );
+			lua_setmetatable( L, metaTable ); // Superklasse ist nun via meta von meta erreichbar
             lua_pop( L, 1 );
         }else
         {
@@ -52,17 +51,38 @@ void ValueBindingBase::ensureSuperClass(lua_State *L, const int metaTable )
 QByteArray ValueBindingBase::getTypeName(lua_State *L, int n)
 {
 	QByteArray name;
-	if( !lua_getmetatable( L, n ) )
+	if( lua_getmetatable( L, n ) )
 	{
-		name = "<unknown class>";
-	}else
-	{
-		lua_pushstring(L, "__class" );
-		lua_rawget(L, -2 );
+		lua_rawgeti(L, -1, ClassName );
 		name = lua_tostring(L, -1 );
-		lua_remove(L, -2 ); // entferne Metatable
+		lua_pop(L, 2 ); // meta und string
 	}
 	return name;
+}
+
+QByteArray ValueBindingBase::getBindingName(lua_State *L, int n)
+{
+	QByteArray name;
+	if( lua_getmetatable( L, n ) )
+	{
+		lua_rawgeti(L, -1, BindingName );
+		name = lua_tostring(L, -1 );
+		lua_pop(L, 2 ); // meta und string
+	}
+	return name;
+}
+
+int ValueBindingBase::pushTypeName(lua_State *L, int n)
+{
+	if( !lua_getmetatable( L, n ) )
+	{
+		lua_pushnil( L );
+	}else
+	{
+		lua_rawgeti(L, -1, ClassName );
+		lua_remove(L, -2 ); // entferne Metatable
+	}
+	return 1;
 }
 
 int ValueBindingBase::newindex(lua_State *L)
@@ -142,8 +162,7 @@ bool ValueBindingBase::fetch(lua_State *L, bool doMethodLookup, bool doDataLooku
             lua_pushstring(L, "<unknown class>" );
         }else
         {
-            lua_pushstring(L, "__class" );
-            lua_rawget(L, -2 );
+			lua_rawgeti(L, -1, ClassName );
             lua_remove(L, -2 ); // entferne Metatable
         }
         if( test.isViolation() )
@@ -237,8 +256,7 @@ void ValueBindingBase::lookupMethod(lua_State *L, const char* fieldName, bool re
         // Durchsuche die in der metaTable referenzierte methodTable und gehe die
         // Klassenhierarchie hoch, bis gefunden oder Ende Feuer.
         // Stack: metaTable
-        lua_pushliteral(L, "__metatable" );
-        lua_rawget( L, metaTable );
+		lua_rawgeti( L, metaTable, MethodTable );
         const int methodTable = lua_gettop(L);
         // Stack: metaTable, methodTable
         if( lua_istable( L, methodTable ) )
@@ -255,8 +273,9 @@ void ValueBindingBase::lookupMethod(lua_State *L, const char* fieldName, bool re
                 // Stack: method, methodTable
                 lua_pop( L, 1 );
                 // Stack: method
+				// TODO: ev. cachen in erster Methodtable damit künftig schneller zugreifbar
                 return;
-            }else if( !recursive )
+			}else if( !recursive )
             {
                 // Stack: metaTable, methodTable, nil
                 lua_remove( L, -2 );
@@ -305,7 +324,8 @@ int ValueBindingBase::createInstanceByCall( lua_State *L )
 
 void ValueBindingBase::addMetaMethodImp( lua_State *L,  const char* name, lua_CFunction f, const char* typeName )
 {
-    luaL_getmetatable( L, typeName );
+	StackTester test( L, 0 );
+	luaL_getmetatable( L, typeName );
     const int metaTable = lua_gettop( L );
     if( !lua_istable( L, metaTable ) )
         throw Exception( "not a metatable" );
@@ -317,7 +337,8 @@ void ValueBindingBase::addMetaMethodImp( lua_State *L,  const char* name, lua_CF
 
 void ValueBindingBase::addMetaMethodsImp( lua_State *L,  const luaL_reg* ms, const char* typeName )
 {
-    luaL_getmetatable( L, typeName );
+	StackTester test( L, 0 );
+	luaL_getmetatable( L, typeName );
     const int metaTable = lua_gettop( L );
     if( !lua_istable( L, metaTable ) )
         throw Exception( "not a metatable" );
@@ -333,12 +354,12 @@ void ValueBindingBase::addMetaMethodsImp( lua_State *L,  const luaL_reg* ms, con
 
 void ValueBindingBase::addMethodImp(lua_State *L, const char *name, lua_CFunction f, const char *typeName)
 {
-    luaL_getmetatable( L, typeName );
+	StackTester test( L, 0 );
+	luaL_getmetatable( L, typeName );
     const int metaTable = lua_gettop( L );
     if( !lua_istable( L, metaTable ) )
         throw Exception( "not a metatable" );
-    lua_pushliteral(L, "__metatable" );
-    lua_rawget( L, metaTable );
+	lua_rawgeti( L, metaTable, MethodTable );
     const int methodTable = lua_gettop(L);
     // Stack: metaTable, methodTable
     if( !lua_istable( L, methodTable ) )
@@ -360,13 +381,13 @@ void ValueBindingBase::addMethodImp(lua_State *L, const char *name, lua_CFunctio
 
 void ValueBindingBase::addMethodsImp( lua_State *L,  const luaL_reg* ms, const char* typeName )
 {
-    luaL_getmetatable( L, typeName );
+	StackTester test( L, 0 );
+	luaL_getmetatable( L, typeName );
     const int metaTable = lua_gettop( L );
     if( !lua_istable( L, metaTable ) )
         throw Exception( "not a metatable" );
 
-    lua_pushliteral(L, "__metatable" );
-    lua_rawget( L, metaTable );
+	lua_rawgeti( L, metaTable, MethodTable );
     const int methodTable = lua_gettop(L);
     // Stack: metaTable, methodTable
     if( !lua_istable( L, methodTable ) )
@@ -397,8 +418,7 @@ int ValueBindingBase::tostring( lua_State *L )
         lua_pushstring(L,"<unknown class>");
     else
     {
-        lua_pushstring(L, "__class" );
-        lua_rawget(L, -2 );
+		lua_rawgeti(L, -1, ClassName );
         lua_remove(L, -2 ); // entferne Metatable
     }
     lua_pushfstring( L, " %p", obj );

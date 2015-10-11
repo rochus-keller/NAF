@@ -248,7 +248,7 @@ int Pixmap::init(lua_State * L)
 
 static const luaL_reg _Pixmap[] = 
 {
-	{ Util::s_init, Pixmap::init },
+	{ "init", Pixmap::init },
 	{ "createHeuristicMask", Pixmap::createHeuristicMask },
 	{ "createMaskFromColor", Pixmap::createMaskFromColor },
 	//{ "defaultDepth", Pixmap::defaultDepth },

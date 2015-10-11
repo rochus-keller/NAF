@@ -62,7 +62,7 @@ int Dialog::setSizeGripEnabled(lua_State * L) //  bool
 }
 static const luaL_reg _Dialog[] = 
 {
-    { Util::s_init, Dialog::init },
+    { "init", Dialog::init },
     { "isSizeGripEnabled", Dialog::isSizeGripEnabled },
 	{ "result", Dialog::result },
 	{ "setModal", Dialog::setModal },

@@ -120,7 +120,7 @@ int Font::init(lua_State * L)
 static const luaL_reg _fontlib[] = 
 {
 	// { "setStyleHint", LuaMemberWrapper<QFont, &QFont::setStyleHint>::call },
-	{ Util::s_init, Font::init },
+	{ "init", Font::init },
 	{ "toString", Font::g_string },
 	{ "bold", Font::g_bold },
 	{ "setBold", Font::s_bold },

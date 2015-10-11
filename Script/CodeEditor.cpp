@@ -26,6 +26,14 @@
 #include <QFile>
 #include <QScrollBar>
 #include <QBuffer>
+#include <Gui2/AutoMenu.h>
+#include <QApplication>
+#include <QClipboard>
+#include <QInputDialog>
+#include <QPrinter>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QPrintDialog>
 
 namespace Lua
 {
@@ -59,7 +67,7 @@ protected:
             QTextCursor cur = d_codeEditor->textCursor();
             const int selStart = d_codeEditor->document()->findBlock( cur.selectionStart() ).blockNumber();
             const int selEnd = d_codeEditor->document()->findBlock( cur.selectionEnd() ).blockNumber();
-            Q_ASSERT( selStart <= selEnd ); // bei position und anchor nicht erfüllt
+            Q_ASSERT( selStart <= selEnd ); // bei position und anchor nicht erfllt
             const int clicked = d_codeEditor->lineAt( event->pos() );
             if( clicked <= selEnd )
             {
@@ -109,9 +117,10 @@ private:
 using namespace Lua;
 
 CodeEditor::CodeEditor(QWidget *parent) :
-    QPlainTextEdit(parent), d_showNumbers(true),
+	QPlainTextEdit(parent), d_showNumbers(true),
     d_undoAvail(false),d_redoAvail(false),d_copyAvail(false),d_curPos(-1)
 {
+	setFont( defaultFont() );
     setLineWrapMode( QPlainTextEdit::NoWrap );
     setTabStopWidth( 30 );
     setTabChangesFocus(false);
@@ -129,7 +138,19 @@ CodeEditor::CodeEditor(QWidget *parent) :
     highlightCurrentLine();
 
     new SyntaxHighlighter( document() );
-    updateTabWidth();
+	updateTabWidth();
+}
+
+QFont CodeEditor::defaultFont()
+{
+	QFont f;
+#ifdef Q_WS_X11
+	f.setFamily("Courier");
+#else
+	f.setStyleHint( QFont::TypeWriter );
+#endif
+	f.setPointSize(9);
+	return f;
 }
 
 int CodeEditor::handleAreaWidth()
@@ -196,7 +217,14 @@ QString CodeEditor::textLine(int i) const
     if( i < document()->blockCount() )
         return document()->findBlockByNumber(i).text();
     else
-        return QString();
+		return QString();
+}
+
+void CodeEditor::setName(const QString &str)
+{
+	d_name = str;
+	// nicht praktisch da mit setText gelscht: setDocumentTitle( str )
+	emit modificationChanged( document()->isModified() ); // Damit Titel auch in GUI nachgefhrt werden kann
 }
 
 int CodeEditor::lineCount() const
@@ -257,7 +285,7 @@ void CodeEditor::selectLines(int lineFrom, int lineTo)
             cur.setPosition( to.position() + to.length() - 1, QTextCursor::KeepAnchor );
         }else
         {
-            // Auch wenn sie gleich sind, wird von rechts nach links selektiert, damit kein HoriScroll bei Überlänge
+            // Auch wenn sie gleich sind, wird von rechts nach links selektiert, damit kein HoriScroll bei berlnge
             cur.setPosition( from.position() + from.length() - 1 );
             cur.setPosition( to.position(), QTextCursor::KeepAnchor );
         }
@@ -288,7 +316,175 @@ void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
         d_numberArea->update(0, rect.y(), d_numberArea->width(), rect.height());
 
     if (rect.contains(viewport()->rect()))
-        updateLineNumberAreaWidth();
+		updateLineNumberAreaWidth();
+}
+
+void CodeEditor::handleEditUndo()
+{
+	ENABLED_IF( isUndoAvailable() );
+	undo();
+}
+
+void CodeEditor::handleEditRedo()
+{
+	ENABLED_IF( isRedoAvailable() );
+	redo();
+}
+
+void CodeEditor::handleEditCut()
+{
+	ENABLED_IF( !isReadOnly() && isCopyAvailable() );
+	cut();
+}
+
+void CodeEditor::handleEditCopy()
+{
+	ENABLED_IF( isCopyAvailable() );
+	copy();
+}
+
+void CodeEditor::handleEditPaste()
+{
+	QClipboard* cb = QApplication::clipboard();
+	ENABLED_IF( !isReadOnly() && !cb->text().isNull() );
+	paste();
+}
+
+void CodeEditor::handleEditSelectAll()
+{
+	ENABLED_IF( true );
+	selectAll();
+}
+
+void CodeEditor::handleFind()
+{
+	ENABLED_IF( true );
+	bool ok	= FALSE;
+	QString res = QInputDialog::getText( this, tr("Find Text"),
+		tr("Enter a string to look for:"), QLineEdit::Normal, "", &ok );
+	if( !ok )
+		return;
+	d_find = res.toLatin1();
+	find( true );
+}
+
+void CodeEditor::handleFindAgain()
+{
+	ENABLED_IF( !d_find.isEmpty() );
+	find( false );
+}
+
+void CodeEditor::handleReplace()
+{
+	// TODO
+}
+
+void CodeEditor::handleGoto()
+{
+	ENABLED_IF( true );
+	int line, col;
+	getCursorPosition( &line, &col );
+	bool ok	= FALSE;
+	line = QInputDialog::getInteger( this, tr("Goto Line"),
+		tr("Please	enter a valid line number:"),
+		line + 1, 1, 999999, 1,	&ok );
+	if( !ok )
+		return;
+	setCursorPosition( line - 1, col );
+	//ensureLineVisible( line - 1 );
+}
+
+void CodeEditor::handleIndent()
+{
+	ENABLED_IF( !isReadOnly() );
+
+	indent();
+}
+
+void CodeEditor::handleUnindent()
+{
+	ENABLED_IF( !isReadOnly() );
+
+	unindent();
+}
+
+void CodeEditor::handleSetIndent()
+{
+	ENABLED_IF( !isReadOnly() );
+
+	bool ok;
+	const int level = QInputDialog::getInteger( this, tr("Set Indentation Level"),
+		tr("Enter the indentation level (0..20):"), 0, 0, 20, 1, &ok );
+	if( ok )
+		setIndentation( level );
+}
+
+void CodeEditor::find(bool fromTop)
+{
+	int line, col;
+	getCursorPosition( &line, &col );
+	if( fromTop )
+	{
+		line = 0;
+		col = 0;
+	}else
+		col++;
+	const int count = lineCount();
+	int j = -1;
+	for( int i = qMax(line,0); i < count; i++ )
+	{
+		j = textLine( i ).indexOf( d_find, col );
+		if( j != -1 )
+		{
+			line = i;
+			col = j;
+			break;
+		}else if( i < count )
+			col = 0;
+	}
+	if( j != -1 )
+	{
+		setCursorPosition( line, col + d_find.size() );
+		ensureLineVisible( line );
+		setSelection( line, col, line, col + d_find.size() );
+	}
+
+}
+
+void CodeEditor::handlePrint()
+{
+	ENABLED_IF( true );
+
+	QPrinter p;
+	p.setPageMargins( 15, 10, 10, 10, QPrinter::Millimeter );
+
+	QPrintDialog dialog( &p, this );
+	if( dialog.exec() )
+	{
+		print( &p );
+	}
+}
+
+void CodeEditor::handleExportPdf()
+{
+	ENABLED_IF( true );
+
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Export PDF"), QString(), tr("*.pdf") );
+	if (fileName.isEmpty())
+		return;
+
+	QFileInfo info( fileName );
+
+	if( info.suffix().toUpper() != "PDF" )
+		fileName += ".pdf";
+	info.setFile( fileName );
+
+	QPrinter p;
+	p.setPageMargins( 15, 10, 10, 10, QPrinter::Millimeter );
+	p.setOutputFormat(QPrinter::PdfFormat);
+	p.setOutputFileName(fileName);
+
+	print( &p );
 }
 
 void CodeEditor::resizeEvent(QResizeEvent *e)
@@ -328,13 +524,13 @@ bool CodeEditor::viewportEvent( QEvent * event )
 
 void CodeEditor::keyPressEvent(QKeyEvent *e)
 {
-    // SHIFT+TAB kommt hier nie an aus nicht nachvollziehbaren Gründen. Auch in event und viewPortEvent nicht.
+    // SHIFT+TAB kommt hier nie an aus nicht nachvollziehbaren Grnden. Auch in event und viewPortEvent nicht.
     // NOTE: Qt macht daraus automatisch BackTab und versendet das!
     if( e->key() == Qt::Key_Tab )
     {
         if( e->modifiers() & Qt::ControlModifier )
         {
-            // Wir brauchen CTRL+TAB für Umschalten der Scripts
+            // Wir brauchen CTRL+TAB fr Umschalten der Scripts
             e->ignore();
             return;
         }
@@ -351,7 +547,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
     {
         if( e->modifiers() & Qt::ControlModifier )
         {
-            // Wir brauchen CTRL+TAB für Umschalten der Scripts
+            // Wir brauchen CTRL+TAB fr Umschalten der Scripts
             e->ignore();
             return;
         }
@@ -367,7 +563,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
         if( e->modifiers() != Qt::NoModifier )
             return; // Verschlucke Return mit Ctrl etc.
         textCursor().beginEditBlock();
-        QPlainTextEdit::keyPressEvent( e ); // Lasse Qt den neuen Block einfügen
+        QPlainTextEdit::keyPressEvent( e ); // Lasse Qt den neuen Block einfgen
         QTextBlock prev = textCursor().block().previous();
         if( prev.isValid() )
         {
@@ -522,7 +718,7 @@ static inline int _indentToPos( const QTextBlock& b, int indent )
         else
             return b.position() + i; // ohne das aktuelle Zeichen, das ja kein Space ist
         if( ( spaces / s_charPerTab ) >= indent )
-            return b.position() + i + 1; // inkl. dem aktuellen Zeichen, mit dem die Bedingung erfüllt ist.
+            return b.position() + i + 1; // inkl. dem aktuellen Zeichen, mit dem die Bedingung erfllt ist.
     }
     return b.position();
 }
@@ -586,7 +782,7 @@ bool CodeEditor::loadFromFile(const QString &filename, bool meetLineNumbers)
         return false;
     if( DisAss::isLuaBinary( &file ) )
     {
-        // Binäres Lua-File
+        // Binres Lua-File
         DisAss d;
         if( !d.disassemble( &file ) )
         {
@@ -608,7 +804,7 @@ bool CodeEditor::loadFromString(const QByteArray &source, bool meetLineNumbers)
 	buf.open( QIODevice::ReadOnly );
 	if( DisAss::isLuaBinary( &buf ) )
 	{
-		// Binäres Lua-File
+		// Binres Lua-File
 		DisAss d;
 		if( !d.disassemble( &buf ) )
 		{

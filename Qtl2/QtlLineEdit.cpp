@@ -191,7 +191,7 @@ static const luaL_reg _LineEdit[] =
 	{ "setValidator", LineEdit::setValidator },
 	{ "sizeHint", LineEdit::sizeHint },
 	{ "validator", LineEdit::validator },//check
-	{ Util::s_init, LineEdit::init },
+	{ "init", LineEdit::init },
 	{ 0, 0 }
 };
 void LineEdit::install(lua_State * L){

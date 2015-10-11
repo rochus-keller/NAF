@@ -28,12 +28,47 @@ namespace Qtl
 	class CustomWidget : public QWidget
 	{
 	public:
-		explicit CustomWidget(QWidget *parent = 0);
+		explicit CustomWidget(int ref, QWidget *parent = 0);
+		~CustomWidget();
 
 		static void install(lua_State * L);
-		static bool pushMethod( lua_State * L, const char* name );
+		static int index(lua_State *L);
+		static void pushClassTable(lua_State * L);
+		bool pushMethodAndThis( const char* name ) const;
+		static bool call(int nargs, int nresults);
 	protected:
+		int heightForWidth ( int w ) const;
+		QSize minimumSizeHint () const;
+		QSize sizeHint () const;
 		void changeEvent ( QEvent * event );
+		void closeEvent ( QCloseEvent * event );
+		void contextMenuEvent ( QContextMenuEvent * event );
+		// TODO: drag/drop Events
+		void enterEvent ( QEvent * event );
+		void focusInEvent ( QFocusEvent * event );
+		void focusOutEvent ( QFocusEvent * event );
+		void hideEvent ( QHideEvent * event );
+		// TODO void inputMethodEvent ( QInputMethodEvent * event );
+		void keyPressEvent ( QKeyEvent * event );
+		void keyReleaseEvent ( QKeyEvent * event );
+		void leaveEvent ( QEvent * event );
+		void mouseDoubleClickEvent ( QMouseEvent * event );
+		void mouseMoveEvent ( QMouseEvent * event );
+		void mousePressEvent ( QMouseEvent * event );
+		void mouseReleaseEvent ( QMouseEvent * event );
+		void moveEvent ( QMoveEvent * event );
+		void paintEvent ( QPaintEvent * event );
+		void resizeEvent ( QResizeEvent * event );
+		void showEvent ( QShowEvent * event );
+		// TODO: tablet und wheelEvent
+		// QObject
+		void connectNotify ( const char * signal );
+		void disconnectNotify ( const char * signal );
+		void timerEvent ( QTimerEvent * event );
+		// TODO: eventFilter, customEvent
+	private:
+		// Ev. die "Klasse" d.h. Lua-Methodentabelle, in der die Callbacks gesucht werden sollen
+		int d_classRef;
 	};
 }
 

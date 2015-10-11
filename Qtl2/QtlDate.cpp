@@ -176,7 +176,7 @@ static const luaL_reg _Date[] =
 	{ "toString", Date::toString },
 	{ "weekNumber", Date::weekNumber },
 	{ "year", Date::year },
-	{ Util::s_init, Date::init },
+	{ "init", Date::init },
 	{ 0, 0 }
 };
 void Date::install(lua_State * L){

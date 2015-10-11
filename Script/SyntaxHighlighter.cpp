@@ -40,12 +40,12 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) :
     d_literalFormat.setProperty( TokenProp, LiteralString );
     d_literalFormat.setForeground(Qt::darkRed);
     // Quelle: http://stackoverflow.com/questions/481282/how-can-i-match-double-quoted-strings-with-escaped-double-quote-characters
-    rule.pattern = QRegExp( "\"(?:[^\\\\\"]|\\\\.)*\"" );
+	rule.pattern = QRegExp( "\"(?:[^\\\\\"]|\\\\.)*\"" ); // TODO: verhindern, dass '"'abc'"' als String "'abc'" interpretiert wird!
     rule.pattern.setMinimal(true);
     rule.name = "Double Quote String";
     rule.format = d_literalFormat;
     d_rules.append(rule);
-    rule.pattern = QRegExp(  "'(?:[^\\\\']|\\\\.)*'" );
+	rule.pattern = QRegExp( "'(?:[^\\\\']|\\\\.)*'" );
     rule.pattern.setMinimal(true);
     rule.name = "Single Quote String";
     d_rules.append(rule);

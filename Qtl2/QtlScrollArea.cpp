@@ -122,7 +122,7 @@ static const luaL_reg _ScrollArea[] =
 	{ "setWidget", ScrollArea::setWidget },
 	{ "takeWidget", ScrollArea::takeWidget },
 	{ "widget", ScrollArea::widget },
-	{ Util::s_init, ScrollArea::init },
+	{ "init", ScrollArea::init },
 	{ 0, 0 }
 };
 void ScrollArea::install(lua_State * L){

@@ -20,6 +20,7 @@
 
 #include "StackView.h"
 #include "Lua.h"
+#include <QVBoxLayout>
 using namespace Lua;
 
 StackMdl::StackMdl(Engine2 *lua, StackView *parent) :
@@ -109,10 +110,10 @@ void StackMdl::createStackTrace()
         level++;
     }
     reset();
-    getView()->resizeColumnToContents(0);
-    getView()->resizeColumnToContents(1);
-    getView()->resizeColumnToContents(2);
-    getView()->resizeColumnToContents(3);
+	getView()->getTree()->resizeColumnToContents(0);
+	getView()->getTree()->resizeColumnToContents(1);
+	getView()->getTree()->resizeColumnToContents(2);
+	getView()->getTree()->resizeColumnToContents(3);
 }
 
 Qt::ItemFlags StackMdl::flags(const QModelIndex &index) const
@@ -121,14 +122,18 @@ Qt::ItemFlags StackMdl::flags(const QModelIndex &index) const
 }
 
 StackView::StackView(Engine2 *lua, QWidget *p):
-    QTreeView(p)
+	QWidget(p)
 {
-    setRootIsDecorated(false);
-    setAllColumnsShowFocus(true);
-    setAlternatingRowColors(true);
-    setModel( new StackMdl( lua, this ) );
-    connect( this, SIGNAL(doubleClicked(QModelIndex)), model(), SLOT(onDoubleClicked(QModelIndex)) );
-    setMinimumWidth(350);
+	QVBoxLayout* vbox = new QVBoxLayout( this );
+	vbox->setMargin(0);
+	d_tree = new QTreeView(this);
+	d_tree->setRootIsDecorated(false);
+	d_tree->setAllColumnsShowFocus(true);
+	d_tree->setAlternatingRowColors(true);
+	d_tree->setModel( new StackMdl( lua, this ) );
+	connect( d_tree, SIGNAL(doubleClicked(QModelIndex)), d_tree->model(), SLOT(onDoubleClicked(QModelIndex)) );
+	vbox->addWidget( d_tree );
+	setMinimumWidth(350);
 }
 
 void StackMdl::onDoubleClicked(const QModelIndex &index)

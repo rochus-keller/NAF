@@ -63,7 +63,7 @@ int PainterPath::init(lua_State * L) // ( const QPointF & startPoint )
 }
 static const luaL_reg _PainterPath[] = 
 {
-	{ Util::s_init, PainterPath::init },
+	{ "init", PainterPath::init },
 	{ "addEllipse", PainterPath::addEllipse },	
 	{ "addPath", PainterPath::addPath },
 	{ "addPolygon", PainterPath::addPolygon },

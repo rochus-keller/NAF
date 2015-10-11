@@ -48,16 +48,14 @@ namespace Lua
             Super::pushMetaTable( L );
             const int metaTable = lua_gettop( L );
 
-            lua_pushliteral(L, "__meta" );
             lua_pushliteral(L, "QtValue" );
-            lua_rawset(L, metaTable );
+			lua_rawseti(L, metaTable, ValueBindingBase::BindingName );
 
             lua_pushliteral(L, "__tostring" );
             lua_pushcfunction(L, pushAsString );
             lua_rawset(L, metaTable);
 
-			lua_pushliteral(L, "__metatable" );
-			lua_rawget( L, metaTable );
+			lua_rawgeti( L, metaTable, ValueBindingBase::MethodTable );
 			const int methodTable = lua_gettop(L);
 
 			// Stack: metaTable, methodTable

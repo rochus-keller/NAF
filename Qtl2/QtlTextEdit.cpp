@@ -272,7 +272,7 @@ int TextEdit::init(lua_State * L)
 }
 static const luaL_reg _TextEdit[] = 
 {
-	{ Util::s_init, TextEdit::init },
+	{ "init", TextEdit::init },
 	{ "alignment", TextEdit::alignment },
 	{ "anchorAt", TextEdit::anchorAt },
 	{ "canPaste", TextEdit::canPaste },

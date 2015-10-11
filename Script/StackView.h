@@ -26,10 +26,13 @@
 
 namespace Lua
 {
-    class StackView : public QTreeView
+	class StackView : public QWidget
     {
     public:
         StackView( Engine2* lua, QWidget* p );
+		QTreeView* getTree() const { return d_tree; }
+	private:
+		QTreeView* d_tree;
     };
 
     class StackMdl : public QAbstractItemModel

@@ -28,9 +28,13 @@ QSize LuaMyWidget2::sizeHint()
 {
     if( LuaWidgetCallbacks::pushCallbackAndMe( this, LuaWidget2::SizeHint ) )
 	{
-		LuaWidgetCallbacks::call( 1, 2 );
-        return QSize( lua_tonumber( LuaWidgetCallbacks::getLua(), 1 ),
+		if( LuaWidgetCallbacks::call( 1, 2 ) )
+		{
+			QSize s( lua_tonumber( LuaWidgetCallbacks::getLua(), 1 ),
                       lua_tonumber( LuaWidgetCallbacks::getLua(), 2 ) );
+			lua_pop( LuaWidgetCallbacks::getLua(), 2 );
+			return s;
+		}
 	}else
 		return QWidget::sizeHint();
 }
@@ -125,6 +129,7 @@ void LuaMyWidget2::keyPressEvent ( QKeyEvent * e )
 			e->accept();
 		else
 			e->ignore();
+		lua_pop( LuaWidgetCallbacks::getLua(), 1 ); // bool result
 	}else
 		e->ignore();
 }
@@ -146,6 +151,7 @@ void LuaMyWidget2::keyReleaseEvent ( QKeyEvent * e )
 			e->accept();
 		else
 			e->ignore();
+		lua_pop( LuaWidgetCallbacks::getLua(), 1 ); // bool result
 	}else
 		e->ignore();
 }

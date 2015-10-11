@@ -247,7 +247,7 @@ static int  unicodeVersion(lua_State * L)
 }
 static const luaL_reg _charlib[] = 
 {
-	{ Util::s_init, Char::init },
+	{ "init", Char::init },
 	{ "category", Char::category },
 	{ "cell", Char::cell },
 	{ "combiningClass", Char::combiningClass },

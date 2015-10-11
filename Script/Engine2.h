@@ -105,6 +105,7 @@ namespace Lua
         QByteArray getValueString(int arg) const;
         int pushLocalOrGlobal( const QByteArray& name );
         void pop(int count = 1);
+		void dumpStackFrom( int arg, const char *title = "" );
 
 		const QByteArray& getLastError() const { return d_lastError; }
 		const char* getVersion() const;

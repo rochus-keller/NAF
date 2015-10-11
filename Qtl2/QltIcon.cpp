@@ -125,7 +125,7 @@ static const luaL_reg _Icon[] =
 	{ "paint", Icon::paint },
 	{ "pixmap", Icon::pixmap },
 	{ "serialNumber", Icon::serialNumber },
-	{ Util::s_init, Icon::init },
+	{ "init", Icon::init },
 	{ 0, 0 }
 };
 

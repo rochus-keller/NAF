@@ -37,7 +37,7 @@ int ProgressBar::init(lua_State * L)
 
 static const luaL_reg _ProgressBar[] = 
 {
-	{ Util::s_init, ProgressBar::init },
+	{ "init", ProgressBar::init },
 	{ 0, 0 }
 };
 
@@ -47,7 +47,7 @@ void ProgressBar::install(lua_State * L){
 
 static const luaL_reg _ProgressDialog[] =
 {
-	{ Util::s_init, ProgressDialog::init },
+	{ "init", ProgressDialog::init },
 	{ "setBar", ProgressDialog::setBar },
 	{ "setCancelButton", ProgressDialog::setCancelButton },
 	{ "setLabel", ProgressDialog::setLabel },

@@ -21,7 +21,59 @@
 #include "QtObject.h"
 #include <Script/Engine2.h>
 #include "QtValue.h"
+#include <QSharedData>
 using namespace Lua;
+
+static int pushGlobalValueTable(lua_State *L)
+{
+	static const char* s_ptr = "GlobalValueTable";
+	lua_pushlightuserdata( L, (void*)s_ptr );
+	lua_rawget( L, LUA_REGISTRYINDEX );
+	if( lua_isnil( L, -1 ) )
+	{
+		lua_pop(L, 1); // Drop nil
+		lua_newtable ( L );
+		const int t = lua_gettop(L);
+		lua_pushlightuserdata(L, (void*)s_ptr );
+		lua_pushvalue(L, t );
+		lua_rawset( L, LUA_REGISTRYINDEX );
+	}
+	return 1;
+}
+
+struct LuaPropertyValue
+{
+	struct Data : public QSharedData
+	{
+		int d_ref; // Ergebnis von luaL_ref
+		Data(int ref = LUA_NOREF):d_ref(ref) {}
+		Data( const Data& )
+		{
+			d_ref = LUA_NOREF;
+		}
+		~Data()
+		{
+			if( d_ref == LUA_NOREF )
+				return;
+			// else
+			Engine2* e = Engine2::getInst();
+			if( e == 0 )
+				return;
+			pushGlobalValueTable( e->getCtx() );
+			luaL_unref( e->getCtx(), -1, d_ref );
+			lua_pop( e->getCtx(), 1 ); // global value table
+		}
+	};
+	QSharedDataPointer<Data> d_data;
+	bool isNull() const { return d_data.constData() == 0; }
+	LuaPropertyValue(int ref ):d_data( new Data(ref) ) {}
+	LuaPropertyValue() {}
+	LuaPropertyValue( const LuaPropertyValue& rhs )
+	{
+		d_data = rhs.d_data;
+	}
+};
+Q_DECLARE_METATYPE( LuaPropertyValue )
 
 struct QtObjectPeerPrivate : public QObject
 {
@@ -95,21 +147,21 @@ int QtObjectBase::index2(lua_State *L)
 		QtValueBase::pushVariant( L, mp.read( obj ) );
         return 1;
     }
-    i = mo->indexOfEnumerator( name );
-	if( i != -1 )
-    {
-        QMetaEnum me = mo->enumerator( i );
-        lua_newtable( L );
-        int t = lua_gettop( L );
+//    i = mo->indexOfEnumerator( name ); // RISK: wer braucht das?
+//	if( i != -1 )
+//    {
+//        QMetaEnum me = mo->enumerator( i );
+//        lua_newtable( L );
+//        int t = lua_gettop( L );
 
-        for( i = 0; i < me.keyCount(); i++ )
-        {
-            lua_pushstring( L, me.key( i ) );
-            lua_pushnumber( L, me.value( i ) );
-            lua_rawset( L, t );
-        }
-        return 1;
-    }
+//        for( i = 0; i < me.keyCount(); i++ )
+//        {
+//            lua_pushstring( L, me.key( i ) );
+//            lua_pushnumber( L, me.value( i ) );
+//            lua_rawset( L, t );
+//        }
+//        return 1;
+//    }
     // Versuche nun, name als Signal/Slot zu interpretieren
     for( i = 0; i < mo->methodCount(); i++ )
     {
@@ -127,7 +179,16 @@ int QtObjectBase::index2(lua_State *L)
 	if( !v.isValid() )
 		ValueBindingBase::fetch( L, false, true );
 	else
-		QtValueBase::pushVariant( L, v );
+	{
+		LuaPropertyValue v2 = v.value<LuaPropertyValue>();
+		if( !v2.isNull() )
+		{
+			pushGlobalValueTable( L );
+			lua_rawgeti( L, -1, v2.d_data.constData()->d_ref );
+			lua_remove( L, -2 );
+		}else
+			QtValueBase::pushVariant( L, v );
+	}
 	return 1;
 }
 
@@ -140,24 +201,31 @@ int QtObjectBase::newindex2(lua_State *L)
 	if( obj == 0 )
 		luaL_error( L, "dereferencing null pointer!" );
 	const QMetaObject* mo = obj->metaObject();
-    int i = mo->indexOfProperty( name );
-	const QVariant v = QtValueBase::toVariant( L, 3 );
-	if( !v.isNull() || lua_type( L, 3 ) == LUA_TNIL )
+	const int i = mo->indexOfProperty( name );
+	if( i != -1 )
 	{
-		// wenn der Wert als QVariant darstellbar ist
-		if( i != -1 )
-		{
-			QMetaProperty mp = mo->property( i );
-			if( !mp.isWritable() )
-				luaL_error( L, "property '%s' is not writable!", name.data() );
-			if( !mp.write( obj, v ) )
-				luaL_error( L, "cannot write value of type '%s' to property '%s'!", v.typeName(), name.data() );
-			return 0;
-		}else
-			obj->setProperty( name, v );
+		QMetaProperty mp = mo->property( i );
+		if( !mp.isWritable() )
+			luaL_error( L, "property '%s' is not writable!", name.data() );
+	}
+	QVariant v = QtValueBase::toVariant( L, 3 );
+	if( v.isNull() && lua_type( L, 3 ) != LUA_TNIL )
+	{
+		// Der Wert ist nicht als QVariant darstellbar.
+		pushGlobalValueTable( L );
+		lua_pushvalue( L, 3 );
+		const int ref = luaL_ref( L, -2 ); // pops value
+		v.setValue( LuaPropertyValue(ref) );
+		lua_pop( L, 1 ); // GlobalValueTable
+	}
+	if( i != -1 )
+	{
+		QMetaProperty mp = mo->property( i );
+		if( !mp.write( obj, v ) )
+			luaL_error( L, "cannot write value of type '%s' to property '%s'!", v.typeName(), name.data() );
+		return 0;
 	}else
-		// wenn der Wert nicht als QVariant darstellbar ist
-		return ValueBindingBase::newindex( L );
+		obj->setProperty( name, v );
 	return 0;
 }
 
@@ -404,7 +472,8 @@ void QtObjectPeerPrivate::executeCall(int sigIndex, void ** a)
 
 	Engine2* e = Engine2::getInst();
     Q_ASSERT( e != 0 );
-    QObject* obj = sender();
+	const int prevTop = lua_gettop( e->getCtx() );
+	QObject* obj = sender();
     // ich kann hier nicht einfach QtObject<QObject>::create verwenden, da ansonsten im
     // Methodenaufruf in Lua "this" einen falschen Typ hat
     pushSlotTable(e->getCtx(), this);
@@ -462,7 +531,7 @@ void QtObjectPeerPrivate::executeCall(int sigIndex, void ** a)
             e->error( e->getLastError() );
         // Stack: slotTable
     }
-    lua_pop( e->getCtx(), 1 ); // slotTable
+	lua_settop( e->getCtx(), prevTop ); // hinterlasse den Stack so, wie wir ihn angefunden haben
 }
 
 QtObjectPeerPrivate::QtObjectPeerPrivate()

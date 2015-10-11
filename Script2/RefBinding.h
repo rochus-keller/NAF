@@ -39,9 +39,8 @@ namespace Lua
             Super::pushMetaTable( L );
             const int metaTable = lua_gettop( L );
 
-            lua_pushliteral(L, "__meta" );
             lua_pushliteral(L, "RefBinding" );
-            lua_rawset(L, metaTable );
+			lua_rawseti(L, metaTable, ValueBindingBase::BindingName );
 
             lua_pushliteral(L, "__tostring" );
             lua_pushcfunction(L, toString );

@@ -166,6 +166,7 @@ const luaL_reg LuaCanvas2::methods[] =
 
 void LuaCanvas2::install( lua_State *L )
 {
+	StackTester test( L, 0 );
 	QtObject<LuaCanvas2,QMainWindow,NotCreatable>::install( L, "Canvas", methods );
 }
 

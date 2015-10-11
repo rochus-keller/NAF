@@ -80,7 +80,7 @@ static const luaL_reg _StackedWidget[] =
 	{ "insertWidget", StackedWidget::insertWidget },
 	{ "removeWidget", StackedWidget::removeWidget },
 	{ "widget", StackedWidget::widget },
-	{ Util::s_init, StackedWidget::init },
+	{ "init", StackedWidget::init },
 	{ 0, 0 }
 };
 void StackedWidget::install(lua_State * L){

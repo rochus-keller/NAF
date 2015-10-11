@@ -172,7 +172,7 @@ int FileDialog::setLabelText(lua_State * L) // DialogLabel label, const QString 
 
 static const luaL_reg _FileDialog[] = 
 {
-	{ Util::s_init, FileDialog::init },
+	{ "init", FileDialog::init },
 	{ "directory", FileDialog::directory },
 	{ "filters", FileDialog::filters },
 	{ "history", FileDialog::history },

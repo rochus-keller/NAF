@@ -381,7 +381,7 @@ static const luaL_reg _Rect[] =
 	{ "y", Rect::y },
 	{ Variant::intersectedAssign, Rect::intersectedAssign },
 	{ Variant::unitedAssign, Rect::unitedAssign },
-	{ Util::s_init, Rect::init },
+	{ "init", Rect::init },
 	{ 0, 0 }
 };
 void Rect::install(lua_State * L){

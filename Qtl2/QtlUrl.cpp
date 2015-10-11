@@ -394,7 +394,7 @@ int Url::operatorEq ( lua_State * L )// ( const QUrl & url ) const : QUrl
 }
 static const luaL_reg _Url[] = 
 {
-	{ Util::s_init, Url::init },
+	{ "init", Url::init },
 	{ "addQueryItem", Url::addQueryItem },
 	{ "allQueryItemValues", Url::allQueryItemValues },
 	{ "authority", Url::authority },

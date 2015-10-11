@@ -41,7 +41,8 @@ const luaL_reg LuaContourPlot2::methods[] =
 
 void LuaContourPlot2::install(lua_State *L)
 {
-    ValueBinding<LuaContourPlot2>::install( L, "ContourPlot", methods );
+	StackTester test( L, 0 );
+	ValueBinding<LuaContourPlot2>::install( L, "ContourPlot", methods );
     ValueBinding<LuaSlicePlot2>::install( L, "SlicePlot", LuaSlicePlot2::methods );
 }
 

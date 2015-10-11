@@ -319,7 +319,7 @@ static const luaL_reg _TableWidgetItem[] =
 	{ "whatsThis",TableWidgetItem::whatsThis },
 	//{ "write",TableWidgetItem::write },
 	{ "flags", TableWidgetItem::flags },
-	{ Util::s_init, TableWidgetItem::init },
+	{ "init", TableWidgetItem::init },
 	{ 0, 0 }
 };
 void TableWidgetItem::install(lua_State * L)

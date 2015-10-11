@@ -170,7 +170,9 @@ int Printer::printerName(lua_State * L) // const : QString
 int Printer::printerSelectionOption(lua_State * L) // const : QString 
 {
 	QPrinter* lhs = ValueBinding<MyQPrinter>::check( L, 1 );
+#ifndef _WIN32
 	*QtValue<QString>::create( L ) = lhs->printerSelectionOption();
+#endif
 	return 1; 
 }
 int Printer::printerState(lua_State * L) // const : PrinterState 
@@ -303,7 +305,9 @@ int Printer::setPrinterName(lua_State * L) // ( const QString & name )
 int Printer::setPrinterSelectionOption(lua_State * L) // ( const QString & option )
 {
 	QPrinter* lhs = ValueBinding<MyQPrinter>::check( L, 1 );
+#ifndef _WIN32
 	lhs->setPrinterSelectionOption( QtValueBase::toString( L, 2 ));
+#endif
 	return 0;
 }
 int Printer::setResolution(lua_State * L) // ( int dpi )

@@ -89,7 +89,7 @@ int GroupBox::title(lua_State * L) //  const : QString
 
 static const luaL_reg _GroupBox[] = 
 {
-	{ Util::s_init, GroupBox::init },
+	{ "init", GroupBox::init },
 	{ "alignment", GroupBox::alignment },
 	{ "isCheckable", GroupBox::isCheckable },
 	{ "isChecked", GroupBox::isChecked },

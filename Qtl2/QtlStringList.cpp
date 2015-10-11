@@ -172,7 +172,7 @@ static int _at( lua_State * L )
 
 static const luaL_reg _StringList[] = 
 {
-	{ Util::s_init, StringList::init },//  not completed
+	{ "init", StringList::init },//  not completed
 	{ "contains", StringList::contains },
 	{ "filter", StringList::filter },
 	{ "indexOf", StringList::indexOf },

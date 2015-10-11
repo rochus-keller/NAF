@@ -411,7 +411,7 @@ static const luaL_reg _Image[] =
 	{ "transformed", Image::transformed },
 	{ "trueMatrix", Image::trueMatrix },
 	{ "valid", Image::valid },
-	{ Util::s_init, Image::init },
+	{ "init", Image::init },
 	{ 0, 0 }
 };
 

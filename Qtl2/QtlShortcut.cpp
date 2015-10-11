@@ -66,7 +66,7 @@ static const luaL_reg _Shortcut[] =
 {
 	{ "id", Shortcut::id },
 	{ "parentWidget", Shortcut::parentWidget },
-	{ Util::s_init, Shortcut::init },
+	{ "init", Shortcut::init },
 	{ 0, 0 }
 };
 void Shortcut::install(lua_State * L){

@@ -305,7 +305,8 @@ static const luaL_reg guilib[] =
 
 static void initFrameStyle( lua_State * L)
 {
-    lua_newtable( L );					
+	StackTester test( L, 0 );
+	lua_newtable( L );
 	int t = lua_gettop( L );
     lua_pushstring( L, "Frame" );			
     lua_gettable( L, LUA_GLOBALSINDEX );
@@ -370,7 +371,8 @@ static void initFrameStyle( lua_State * L)
 
 static void initHoriVerti( lua_State * L)
 {
-	lua_pushstring( L, LuaGui2::s_gui );			
+	StackTester test( L, 0 );
+	lua_pushstring( L, LuaGui2::s_gui );
     lua_gettable( L, LUA_GLOBALSINDEX );
 	int t = lua_gettop( L );
 
@@ -387,16 +389,18 @@ static void initHoriVerti( lua_State * L)
 
 static void initTabWidget( lua_State * L)
 {
-    lua_pushstring( L, "TabWidget" );			
+	StackTester test( L, 0 );
+	lua_pushstring( L, "TabWidget" );
     lua_gettable( L, LUA_GLOBALSINDEX );
 	if( Util::isNil( L, -1 ) )
 	{
+		lua_pop(L,1);
 		lua_newtable( L );					
 		lua_pushstring( L, "TabWidget" );	
 		lua_pushvalue( L, -2 );
 		lua_settable( L, LUA_GLOBALSINDEX );
 	}
-	int t = lua_gettop( L );
+	const int t = lua_gettop( L );
 
 	lua_pushstring( L, "Top" );
 	lua_pushnumber( L, QTabWidget::Top );
@@ -411,7 +415,8 @@ static void initTabWidget( lua_State * L)
 
 static void initEventTable(lua_State * L)
 {
-    lua_newtable( L );					// t
+	StackTester test( L, 0 );
+	lua_newtable( L );					// t
 	int t = lua_gettop( L );
 	lua_pushstring( L, LuaGui2::s_gui );			// t, "gui"
     lua_gettable( L, LUA_GLOBALSINDEX );// t, gui
@@ -521,7 +526,8 @@ static void initEventTable(lua_State * L)
 
 static void initAlign(lua_State * L)
 {
-    lua_newtable( L );					
+	StackTester test( L, 0 );
+	lua_newtable( L );
 	int t = lua_gettop( L );
 	lua_pushstring( L, LuaGui2::s_gui );			
     lua_gettable( L, LUA_GLOBALSINDEX );
@@ -561,8 +567,10 @@ int LuaGui2::install(Engine2 *e)
 {
 	assert( e );
 	lua_State * L = e->getCtx();
+	StackTester test( L, 0 );
 
-	luaL_openlib( L, s_gui, guilib, 0 );
+	luaL_register( L, s_gui, guilib );
+	lua_pop( L, 1 ); // lib
 
 	LuaWidget2::install( L );
 	LuaPushButton2::install( L );

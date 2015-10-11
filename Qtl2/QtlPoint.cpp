@@ -114,7 +114,7 @@ static const luaL_reg _Point[] =
 	{ "setY", Point::setY },
 	{ "x", Point::x }, 
 	{ "y", Point::y },
-	{ Util::s_init, Point::init },
+	{ "init", Point::init },
 	{ 0, 0 }
 };
 static const luaL_reg _PointMeta[] =

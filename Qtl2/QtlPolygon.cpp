@@ -110,7 +110,7 @@ static const luaL_reg _Polygon[] =
 	{ "translate", Polygon::translate },
 	{ "boundingRect", Polygon::boundingRect },
 	{ "isClosed", Polygon::isClosed },
-	{ Util::s_init, Polygon::init },
+	{ "init", Polygon::init },
 	{ 0, 0 }
 };
 

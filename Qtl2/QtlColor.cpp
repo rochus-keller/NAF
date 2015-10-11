@@ -100,7 +100,7 @@ static const luaL_reg _colorlib[] =
 	{ "setCmyk", Color::setCmyk },
 	{ "setRgb", Color::setRgb },
 	{ "setHsv", Color::setHsv },
-	{ Util::s_init, Color::init },
+	{ "init", Color::init },
 	{ 0, 0 }
 };
 void Color::install(lua_State * L)

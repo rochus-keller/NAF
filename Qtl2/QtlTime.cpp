@@ -145,7 +145,7 @@ static const luaL_reg _Time[] =
 	{ "setHMS", Time::setHMS },
 	{ "start", Time::start },
 	{ "toString", Time::toString },
-	{ Util::s_init, Time::init },
+	{ "init", Time::init },
 	{ 0, 0 }
 };
 

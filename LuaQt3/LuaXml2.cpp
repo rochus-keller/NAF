@@ -120,7 +120,9 @@ const luaL_reg LuaDomText2::methods[] =
 
 void LuaDomDocument2::install(lua_State *L)
 {
-	luaL_openlib( L, "xml", xmllib, 0 );
+	StackTester test(L,0);
+	luaL_register( L, "xml", xmllib );
+	lua_pop(L,1); // lib
     DomDocumentValue::install( L, "DomDocument", methods );
     DomElementValue::install( L, "DomElement", LuaDomElement2::methods );
     DomTextValue::install( L, "DomText", LuaDomText2::methods );

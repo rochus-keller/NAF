@@ -437,7 +437,7 @@ static const luaL_reg _TreeWidgetItem[] =
     { "type", TreeWidgetItem::type },
     { "whatsThis", TreeWidgetItem::whatsThis },
     //{ "write", TreeWidgetItem::write },
-	{ Util::s_init, TreeWidgetItem::init },
+	{ "init", TreeWidgetItem::init },
     { "delete", TreeWidgetItem::erase },
     { 0, 0 }
 };

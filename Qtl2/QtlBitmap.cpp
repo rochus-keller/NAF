@@ -62,7 +62,7 @@ int Bitmap::init(lua_State * L)
 static const luaL_reg _Bitmap[] = 
 {
 	{ "clear", Bitmap::clear },
-	{ Util::s_init, Bitmap::init },
+	{ "init", Bitmap::init },
 	{ "transformed", Bitmap::transformed },
 	{ 0, 0 }
 };

@@ -214,7 +214,7 @@ static const luaL_reg _DateTime[] =
 	{ "toTimeSpec", DateTime::toTimeSpec },
 	{ "toTime_t", DateTime::toTime_t },
 	{ "toUTC", DateTime::toUTC },
-	{ Util::s_init, DateTime::init },
+	{ "init", DateTime::init },
 	{ 0, 0 }
 };
 

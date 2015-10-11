@@ -375,7 +375,7 @@ int TabWidget::widget( lua_State * L ) //( int index ) const QWidget
 }
 static const luaL_reg _TabWidget[] = 
 {
-	{ Util::s_init, TabWidget::init },
+	{ "init", TabWidget::init },
 	{ "addTab", TabWidget::addTab },
 	{ "cornerWidget", TabWidget::cornerWidget },
 	{ "count", TabWidget::count },

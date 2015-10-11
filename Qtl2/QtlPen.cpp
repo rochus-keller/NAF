@@ -95,7 +95,7 @@ static const luaL_reg _Pen[] =
 	{ "setWidth", Pen::setWidthF },
 	{ "style", Pen::style },
 	{ "width", Pen::widthF },
-	{ Util::s_init, Pen::init },
+	{ "init", Pen::init },
 	{ 0, 0 }
 };
 

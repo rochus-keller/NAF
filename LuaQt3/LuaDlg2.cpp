@@ -655,7 +655,9 @@ static const luaL_reg dlglib[] =
 
 int LuaDlg2::install(lua_State * L)
 {
-	luaL_openlib( L, "dlg", dlglib, 0 );
+	StackTester test( L, 0 );
+	luaL_register( L, "dlg", dlglib );
+	lua_pop( L, 1 ); // lib
 	LuaCanvas2::install( L );
 	LuaContourPlot2::install( L );
 	return 1;
@@ -678,7 +680,8 @@ static const luaL_reg scriptlib[] =
 
 int LuaDlg2::install2(lua_State * L)
 {
-	luaL_openlib( L, "log", loglib, 0 );
-	luaL_openlib( L, "script", scriptlib, 0 );
+	luaL_register( L, "log", loglib );
+	luaL_register( L, "script", scriptlib );
+	lua_pop(L, 2); // libs
 	return 1;
 }

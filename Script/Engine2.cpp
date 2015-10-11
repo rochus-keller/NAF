@@ -19,7 +19,8 @@
  */
 
 #include "Engine2.h"
-#include <Script/Lua.h>
+#include "Lua.h"
+#include <Script2/ValueBinding.h>
 #include <QCoreApplication>
 #include <math.h>
 
@@ -56,14 +57,18 @@ int Engine2::_print (lua_State *L)
 	try
 	{
 		e->notify( Print, val1 );
-        QCoreApplication::processEvents();
+		// QCoreApplication::processEvents();
         // TODO
 //        if( msg.d_cancel )
 //            luaL_error( L, "Execution canceled by user" );
     }catch( std::exception& e )
 	{
 		luaL_error( L, "Error calling host: %s", e.what() );
+	}catch( ... )
+	{
+		luaL_error( L, "Unknown exception while calling host" );
 	}
+
 	return 0;
 }
 
@@ -244,7 +249,7 @@ bool Engine2::executeCmd(const QByteArray &source, const QByteArray &name)
         error( d_lastError );
         return false;
     }
-    const bool res = runFunction( 0, LUA_MULTRET );
+	const bool res = runFunction( 0, LUA_MULTRET );
     if( !res )
         error( d_lastError );
     return res;
@@ -272,7 +277,7 @@ bool Engine2::executeFile(const QByteArray &path)
         error( d_lastError );
         return false;
     }
-    const bool res = runFunction( 0, LUA_MULTRET );
+	const bool res = runFunction( 0, LUA_MULTRET );
     if( !res )
         error( d_lastError );
     return res;
@@ -280,17 +285,21 @@ bool Engine2::executeFile(const QByteArray &path)
 
 bool Engine2::runFunction(int nargs, int nresults)
 {
-    if( d_running )
+	const int preTop = lua_gettop( d_ctx );
+	if( d_waitForCommand )
     {
-        d_lastError = "Cannot call Lua function while script is running!";
-        lua_pop( d_ctx, nargs + 1 ); // funktion + args
+		d_lastError = "Cannot run another Lua function while script is waiting in debugger!";
+		lua_pop( d_ctx, nargs + 1 ); // funktion + args
+		if( nresults != LUA_MULTRET )
+			Q_ASSERT( lua_gettop( d_ctx ) == ( preTop - nargs - 1 ) );
         return false;
     }
-    d_lastError.clear();
+	d_lastError.clear();
     d_running = true;
-    d_dbgCmd = d_defaultDbgCmd;
-    notifyStart();
+	d_dbgCmd = d_defaultDbgCmd;
+	notifyStart();
     // TODO: ev. Stacktrace mittels errfunc
+	// Lua: All arguments and the function value are popped from the stack when the function is called.
     const int err = lua_pcall( d_ctx, nargs, nresults, 0 );
     d_running = false;
     switch( err )
@@ -298,6 +307,7 @@ bool Engine2::runFunction(int nargs, int nresults)
     case LUA_ERRRUN:
         d_lastError = lua_tostring( d_ctx, -1 );
         lua_pop( d_ctx, 1 );  /* remove error message */
+		nresults = 0;
         break;
     case LUA_ERRMEM:
         d_lastError = "Lua memory exception";
@@ -308,6 +318,9 @@ bool Engine2::runFunction(int nargs, int nresults)
         break;
     }
 	notifyEnd();
+	const int postTop = lua_gettop( d_ctx );
+	if( nresults != LUA_MULTRET )
+		Q_ASSERT( postTop == ( preTop - nargs - 1 + nresults ) );
 	return (err == 0);
 }
 
@@ -336,6 +349,7 @@ void Engine2::debugHook(lua_State *L, lua_Debug *ar)
         return;
 
 	Engine2* e = Engine2::getInst();
+	Q_ASSERT( e != 0 );
     lua_getinfo( L, "S", ar );
     const QByteArray source = ar->source;
     const bool lineChanged = ( e->d_curLine != ar->currentline || e->d_curScript != source );
@@ -467,8 +481,6 @@ void Engine2::terminate(bool silent)
 
 Engine2* Engine2::getInst()
 {
-	Q_ASSERT( s_this != 0 );
-		// throw Exception( "Engine not initialized" );
 	return s_this;
 }
 
@@ -568,22 +580,11 @@ QByteArray Engine2::getTypeName(int arg) const
             return "Lua function";
     case LUA_TUSERDATA:
         {
-            if( lua_getmetatable( d_ctx, arg ) )
-            {
-                // Stack: meta
-                lua_pushliteral( d_ctx, "__class" );
-                lua_rawget( d_ctx, -2 );
-                // Stack: meta, string | nil
-                if( !lua_isnil( d_ctx, -1 ) )
-                {
-                    QByteArray value = lua_tostring( d_ctx, -1 );
-                    lua_pop( d_ctx, 2 );
-                    return value;
-                }else
-                    lua_pop( d_ctx, 2 );
-            }
-        }
-        // fall through
+			const QByteArray name = ValueBindingBase::getTypeName( d_ctx, arg );
+			if( !name.isEmpty() )
+				return name;
+			break;
+		}
     default:
         return lua_typename( d_ctx, t );
     }
@@ -615,17 +616,11 @@ QByteArray Engine2::getValueString(int arg) const
         return _toHex( lua_touserdata( d_ctx, arg ) );
     case LUA_TUSERDATA:
         {
-            if( lua_getmetatable( d_ctx, arg ) )
-            {
-                // Stack: meta
-                lua_pushliteral( d_ctx, "__meta" );
-                lua_rawget( d_ctx, -2 );
-                const QByteArray meta = lua_tostring( d_ctx, -1 );
-                lua_pop( d_ctx, 2 ); // meta, string
-                if( !meta.isEmpty() )
-                    return __tostring( arg ); // Alle haben eine gültige tostring-Konvertierung
-            } // else
-            return "<unknown>";
+			const QByteArray name = ValueBindingBase::getBindingName( d_ctx, arg );
+			if( !name.isEmpty() )
+				return __tostring( arg ); // Alle haben eine gültige tostring-Konvertierung
+			else
+				return "<unknown>";
         }
         break;
     }
@@ -672,6 +667,15 @@ QByteArray Engine2::__tostring(int arg) const
 void Engine2::pop(int count)
 {
 	lua_pop( d_ctx, count );
+}
+
+void Engine2::dumpStackFrom(int arg, const char* title )
+{
+	if( arg <= 0 )
+		arg = lua_gettop( d_ctx ) + arg;
+	qDebug() << "******** Engine2::dumpStackFrom: " << arg << title;
+	for( int n = arg; n <= lua_gettop( d_ctx ); n++ )
+		qDebug() << "Level:" << n << getTypeName(n) << getValueString(n);
 }
 
 void Engine2::notify(MessageType messageType, const QByteArray &val1, int val2)

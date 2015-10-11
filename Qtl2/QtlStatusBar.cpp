@@ -130,7 +130,7 @@ static const luaL_reg _StatusBar[] =
 	{ "insertPermanentWidget", StatusBar::insertPermanentWidget },
 	{ "insertWidget", StatusBar::insertWidget },
 	{ "removeWidget", StatusBar::removeWidget },
-	{ Util::s_init, StatusBar::init },
+	{ "init", StatusBar::init },
 	{ 0, 0 }
 };
 void StatusBar::install(lua_State * L){

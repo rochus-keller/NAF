@@ -32,6 +32,7 @@ LocalsView::LocalsView(Engine2 *lua, QWidget *parent) :
 {
     Q_ASSERT( lua != 0 );
     QVBoxLayout* vbox = new QVBoxLayout( this );
+	vbox->setMargin(0);
     d_list = new QTreeWidget( this );
     d_list->setRootIsDecorated(false);
     d_list->setAllColumnsShowFocus(true);
@@ -74,8 +75,10 @@ void LocalsView::fillLocals()
     if( !lua_getstack( d_lua->getCtx(), d_lua->getActiveLevel(), &ar ) )
         return;
     int n = 1;
+	//qDebug() << "************ LocalsView::fillLocals";
     while( const char* name = lua_getlocal( d_lua->getCtx(), &ar, n) )
     {
+		//qDebug() << "LocalsView::fillLocals: n=" << n << "name=" << name;
         QTreeWidgetItem* item = new QTreeWidgetItem( d_list );
         item->setText( 0, QString::number(n) );
         item->setText( 1, name );

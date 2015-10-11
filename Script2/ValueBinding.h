@@ -21,7 +21,7 @@
 #ifndef VALUEBINDING_H
 #define VALUEBINDING_H
 
-#include <NAF/Script/Lua.h>
+#include <Script/Lua.h>
 #include <typeinfo>
 #include <exception>
 #include <QByteArray>
@@ -43,13 +43,21 @@ namespace Lua
             QByteArray d_msg;
         };
 		static QByteArray getTypeName(lua_State *L, int n );
+		static int pushTypeName(lua_State *L, int n );
+		static QByteArray getBindingName(lua_State *L, int n );
 		static int newindex(lua_State *L);
 		static bool fetch(lua_State *L, bool doMethodLookup, bool doDataLookup ); // true..value found; otherwise nil on stack
-    protected:
+		enum MetaAttrs {
+			MethodTable = 1,
+			SuperClassName = 2,
+			ClassName = 3,
+			BindingName = 4
+		};
+	protected:
 		static int index(lua_State *L);
 		static void ensureSuperClass(lua_State *L, const int metaTable );
         static bool isSubOrSameClass(lua_State *L, int narg, const char* typeName, bool recursive );
-        static void lookupMethod(lua_State *L, const char* fieldName, bool recursive = true );
+		static void lookupMethod(lua_State *L, const char* fieldName, bool recursive = true );
         static int createInstanceByCall( lua_State *L );
         static void addMetaMethodImp( lua_State *L,  const char* name, lua_CFunction f, const char* typeName );
         static void addMetaMethodsImp( lua_State *L,  const luaL_reg* ms, const char* typeName );
@@ -114,7 +122,8 @@ namespace Lua
 		}
 		~StackTester()
 		{
-            if( isViolation() )
+			const int top = lua_gettop(d_lua);
+			if( top != d_post )
                 throw ValueBindingBase::Exception( "left improper stack" );
 		}
         bool isViolation() const
@@ -145,7 +154,7 @@ namespace Lua
     class ValueBinding : public ValueBindingBase
     {
         // Zum Template: eigentlich ist SuperClass nur in installMeta relevant. Aber leider
-        // unterstützt C++ keine Default Template Arguments für Member-Funktionen.
+        // untersttzt C++ keine Default Template Arguments fr Member-Funktionen.
         // Man kann also ausser bei installMeta das zweite Template-Argument einfach weglassen.
         // T muss einen Default-Constructor, Copy-Constructor, Assignment-Operator und einen
         // Equality-Operator besitzen (explizit oder Compiler-generiert)
@@ -156,40 +165,38 @@ namespace Lua
             const int stackTest = lua_gettop(L);
 
             // Der metaName dient lediglich intern zur eindeutigen Identifikation des metaTable.
-            // Gegenüber User wird der publicName verwendet.
+            // Gegenber User wird der publicName verwendet.
 			const char* metaName = typeid(T).name();
 
             // Dies ist die metaTable von Userdata, welche diesen identifiziert und dessen
-            // Methodenmechanik gewährleistet.
+            // Methodenmechanik gewhrleistet.
             if( luaL_newmetatable( L, metaName ) == 0 )
                 throw Exception( "metatable with given name already registered");
                 // Mache das gleich hier, damit nicht erst viel gemacht wird, bevor dies festgestellt wird.
 			const int metaTable = lua_gettop(L);
 
-            // Der publicName muss in metaTable hinterlegt werden, da sonst nirgends zugänglich.
-            lua_pushliteral(L, "__class" );
+            // Der publicName muss in metaTable hinterlegt werden, da sonst nirgends zugnglich.
 			lua_pushstring(L, publicName );
-			lua_rawset(L, metaTable );
+			lua_rawseti(L, metaTable, ClassName );
 
-            lua_pushliteral(L, "__meta" );
             lua_pushliteral(L, "ValueBinding" );
-            lua_rawset(L, metaTable );
+			lua_rawseti(L, metaTable, BindingName );
 
-            // Die methodTable enthält alle öffentlichen Methoden der Klasse. Sie ist für den User
-            // als normale Lua-Tabelle zugänglich. Der User kann damit neue Methoden in die
-            // Klasse einfügen oder bestehende verändern.
+            // Die methodTable enthlt alle ffentlichen Methoden der Klasse. Sie ist fr den User
+            // als normale Lua-Tabelle zugnglich. Der User kann damit neue Methoden in die
+            // Klasse einfgen oder bestehende verndern.
 			lua_newtable(L);
 			const int methodTable = lua_gettop(L);
 
-            // Mache die methodTable unter dem publicName global zugänglich.
+            // Mache die methodTable unter dem publicName global zugnglich.
 			lua_pushstring(L, publicName );
 			lua_pushvalue(L, methodTable );
 			lua_settable(L, LUA_GLOBALSINDEX ); // TODO: ev. stattdessen als Modul einer Tabelle zuweisen
 
 			if( creatable )
 			{
-                // Mache, dass mit "Klasse()" Instanzen erzeugt werden können. Dazu wird die
-                // methodTable ihre eigene Metatable und enthält die Funktion __call, welche wiederum
+                // Mache, dass mit "Klasse()" Instanzen erzeugt werden knnen. Dazu wird die
+                // methodTable ihre eigene Metatable und enthlt die Funktion __call, welche wiederum
                 // new aufruft.
                 lua_pushvalue( L, methodTable );
                 lua_setmetatable(L, methodTable );
@@ -203,7 +210,7 @@ namespace Lua
                 lua_rawset(L, methodTable);
 			}
 
-            // Prüfe, ob T eine SuperClass hat, und richte diese ein, falls vorhanden
+            // Prfe, ob T eine SuperClass hat, und richte diese ein, falls vorhanden
 			if( typeid(SuperClass) != typeid(T) )
             {
                 // Wir stellen hier sicher, dass auch C++ T als legale Subklasse von SuperClass anerkennt.
@@ -212,17 +219,20 @@ namespace Lua
                     qDebug() << "CheckTypeCompatibility version" << CheckTypeCompatibility<SuperClass,T>::version;
                     throw Exception( "incompatible superclass" );
                 }
-                lua_pushliteral(L, "__super" );
                 lua_pushstring(L, typeid(SuperClass).name() );
-                lua_rawset(L, metaTable );
+				lua_rawseti(L, metaTable, SuperClassName );
 			}
 
             // setze Attribut __metatable von meta. Dies ist der Wert, der
-			// von getmetatable( obj ) zurückgegeben wird. Trick, um echten Metatable zu verstecken.
+			// von getmetatable( obj ) zurckgegeben wird. Trick, um echten Metatable zu verstecken.
             // Wirkt nicht, wenn debug.getmetatable aufgerufen wird.
 			lua_pushliteral(L, "__metatable");
 			lua_pushvalue(L, methodTable );
 			lua_settable(L, metaTable);
+
+			// Nochmals mit array index fr schnelleren Zugriff bei lookupMethod
+			lua_pushvalue(L, methodTable );
+			lua_rawseti(L, metaTable, MethodTable );
 
 			// The indexing access table[key].
             lua_pushliteral(L, "__index");
@@ -276,9 +286,9 @@ namespace Lua
             if( !isSubOrSameClass( L, narg, typeid(T).name(), recursive ) )
                 return 0;
 			// else
-            // Das ist hier legal, da niemand die metaTable des Userdata ändern kann, und
-            // da wegen CheckTypeCompatibility auch die Kompatibilität mit den Superklassen
-            // gewährt ist. Wir machen hier also im Sinne von C++ nur legales, wenn auch durch die Hintertür.
+            // Das ist hier legal, da niemand die metaTable des Userdata ndern kann, und
+            // da wegen CheckTypeCompatibility auch die Kompatibilitt mit den Superklassen
+            // gewhrt ist. Wir machen hier also im Sinne von C++ nur legales, wenn auch durch die Hintertr.
 			return static_cast<T*>( lua_touserdata( L, narg ) );
 		}
         static T* check(lua_State *L, int narg = 1, bool recursive = true )
@@ -333,14 +343,14 @@ namespace Lua
             if( !lua_getmetatable( L, newInstance ) )
                 lua_pushnil(L);
             // Stack: args, userdata, meta | nil
-            lookupMethod( L, "init", false );
+			lookupMethod( L, "init", false );
             // Stack: args, userdata, function | nil
             if( !lua_isnil( L, -1 ) )
             {
                 if( !lua_isfunction( L, -1 ) )
                     luaL_error( L, "'init' is not a function!" );
                 // Falls init existiert, rufe die Funktion auf mit den an createInstance
-                // übergebenen Parametern
+                // bergebenen Parametern
                 lua_pushvalue(L, newInstance );
                 for( int j = 1; j <= numOfArgs; j++ )
                     lua_pushvalue(L, j );	// value
@@ -367,9 +377,9 @@ namespace Lua
 		{
 			T* lhs = check( L, 1 );
 			T* rhs = check( L, 2 );
-            // In C++ gibt es keinen Default-operator==; wir müssen daher mit diesem Trait prüfen,
+            // In C++ gibt es keinen Default-operator==; wir mssen daher mit diesem Trait prfen,
             // ob T einen solchen Operator hat oder nicht, und den Compiler die entsprechende Methode
-            // auswählen lassen.
+            // auswhlen lassen.
             doEqualityCheck( L, lhs, rhs, Int2Type<CheckIf::EqualityOperatorOf<T>::isAvailable>() );
 			return 1;
 		}
@@ -416,8 +426,7 @@ namespace Lua
             // Stack: meta | nil
             if( lua_istable( L, -1 ) )
             {
-                lua_pushstring(L, "__class" );
-                lua_rawget(L, meta );
+				lua_rawgeti(L, meta, ClassName );
                 // Stack: meta, string
                 lua_remove(L, meta ); // entferne Metatable
                 // Stack: string

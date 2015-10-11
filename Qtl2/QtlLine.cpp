@@ -157,7 +157,7 @@ static const luaL_reg _Line[] =
 	{ "setX2", Line::setX2 },
 	{ "setY1", Line::setY1 },
 	{ "setY2", Line::setY2 },
-	{ Util::s_init, Line::init },
+	{ "init", Line::init },
 	{ 0, 0 }
 };
 

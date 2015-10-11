@@ -23,7 +23,7 @@
 
 #include <QTextEdit>
 #include <QTextCursor>
-#include <NAF/Script/Engine2.h>
+#include <Script/Engine2.h>
 
 namespace Lua
 {
@@ -45,6 +45,7 @@ namespace Lua
 		void keyPressEvent ( QKeyEvent * e );
         void inputMethodEvent(QInputMethodEvent *);
         QString prompt() const;
+		void updateFont( const QFont& );
     protected slots:
         void onNotify( int messageType, QByteArray val1 = "", int val2 = 0 );
         void handlePaste();
@@ -53,6 +54,8 @@ namespace Lua
         void handleDelete();
         void handleExportPdf();
         void handleSaveAs();
+		void handlePrintStack();
+		void handleSetFont();
 	};
 }
 

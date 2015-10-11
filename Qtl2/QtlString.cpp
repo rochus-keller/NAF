@@ -815,7 +815,7 @@ static const luaL_reg _lib[] =
 	{ "toULong", toNumber<ULong>  },
 	{ "toULongLong", toNumber<ULongLong>  },
 	{ "toUShort", toNumber<UShort>  },
-	{ Util::s_init, init },
+	{ "init", init },
 	{ 0, 0 }
 };
 

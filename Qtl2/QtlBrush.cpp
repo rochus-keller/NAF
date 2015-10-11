@@ -86,7 +86,7 @@ static const luaL_reg _Brush[] =
 	{ "setTexture", Brush::setTexture },
 	{ "style", Brush::style },
 	{ "texture", Brush::texture },
-	{ Util::s_init, Brush::init },
+	{ "init", Brush::init },
 	{ 0, 0 }
 };
 

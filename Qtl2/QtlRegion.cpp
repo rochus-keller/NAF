@@ -239,7 +239,7 @@ static const luaL_reg _Region[] =
 	{ Variant::unitedAssign, MyRegion::unitedAssign },
 	{ Variant::subtractedAssign, MyRegion::subtractedAssign },
 	{ Variant::xoredAssign, MyRegion::xoredAssign },
-	{ Util::s_init, MyRegion::init },
+	{ "init", MyRegion::init },
 	{ 0, 0 }
 };
 

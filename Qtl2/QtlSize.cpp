@@ -155,7 +155,7 @@ static const luaL_reg _Size[] =
 	{ "setWidth", Size::setWidth },
 	{ "height", Size::height }, 
 	{ "width", Size::width },
-	{ Util::s_init, Size::init },
+	{ "init", Size::init },
 	{ 0, 0 }
 };
 static const luaL_reg _SizeMeta[] =

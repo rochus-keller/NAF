@@ -33,6 +33,7 @@ namespace Lua
         Q_OBJECT
     public:
         explicit CodeEditor(QWidget *parent = 0);
+		static QFont defaultFont();
 
         void paintHandleArea(QPaintEvent *event);
         int handleAreaWidth();
@@ -44,8 +45,9 @@ namespace Lua
         QString textLine( int i ) const;
         void setText( const QString& str ) { setPlainText( str ); }
         QString text() const { return toPlainText(); }
-        void setName( const QString& str ) { setDocumentTitle( str ); }
-		QString getName() const { return documentTitle(); }
+		QString getText() const { return toPlainText(); }
+		void setName( const QString& str );
+		QString getName() const { return d_name; }
         int lineCount() const;
         void ensureLineVisible( int line );
         void setPositionMarker( int line ); // -1..unsichtbar
@@ -68,6 +70,22 @@ namespace Lua
         void removeBreakPoint( int );
         void clearBreakPoints();
         const QSet<int>& getBreakPoints() const { return d_breakPoints; }
+	public slots:
+		void handleEditUndo();
+		void handleEditRedo();
+		void handleEditCut();
+		void handleEditCopy();
+		void handleEditPaste();
+		void handleEditSelectAll();
+		void handleFind();
+		void handleFindAgain();
+		void handleReplace();
+		void handleGoto();
+		void handleIndent();
+		void handleUnindent();
+		void handleSetIndent();
+		void handlePrint();
+		void handleExportPdf();
     protected:
         friend class _HandleArea;
         void resizeEvent(QResizeEvent *event);
@@ -76,6 +94,7 @@ namespace Lua
         void keyPressEvent ( QKeyEvent * e );
         void paintIndents( QPaintEvent *e );
         void updateTabWidth();
+		void find(bool fromTop);
         // To override
         virtual void numberAreaDoubleClicked( int line ) {}
     private slots:
@@ -85,11 +104,13 @@ namespace Lua
         void onUndoAvail(bool on) { d_undoAvail = on; }
         void onRedoAvail(bool on) { d_redoAvail = on; }
         void onCopyAvail(bool on) { d_copyAvail = on; }
-    private:
+	private:
         QWidget* d_numberArea;
         QSet<int> d_breakPoints;
         int d_curPos; // Zeiger für die aktuelle Ausführungsposition oder -1
-        bool d_undoAvail;
+		QString d_find;
+		QString d_name;
+		bool d_undoAvail;
         bool d_redoAvail;
         bool d_copyAvail;
         bool d_showNumbers;

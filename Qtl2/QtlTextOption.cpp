@@ -183,7 +183,7 @@ static const luaL_reg _TextOption[] =
 	{ "textDirection", TextOption::textDirection},
 	{ "useDesignMetrics", TextOption::useDesignMetrics},
 	{ "wrapMode", TextOption::wrapMode},
-	{ Util::s_init, TextOption::init },
+	{ "init", TextOption::init },
 	{ 0, 0 }
 };
 

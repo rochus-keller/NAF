@@ -27,8 +27,13 @@
 #include <QPrinter>
 #include <QFileDialog>
 #include <QFile>
+#include <QShortcut>
+#include <QtDebug>
 #include <QMessageBox>
+#include <QFontDialog>
+#include <QSettings>
 #include <Gui2/AutoMenu.h>
+#include <Script/Lua.h>
 using namespace Lua;
 
 static QTextCharFormat s_pf;
@@ -37,22 +42,20 @@ static QTextCharFormat s_errf;
 static QTextCharFormat s_outf;
 static const char* s_prompt = "Lua> ";
 
-
 Terminal2::Terminal2(QWidget* parent, Lua::Engine2* l):
 	QTextEdit( parent ), d_lua( l )
 {
     Q_ASSERT( l );
 
-	s_pf.setFontFamily( "Arial" );
-	s_pf.setFontWeight( QFont::Bold );
-	s_luaf.setFontFamily( "Courier" );
-	s_luaf.setFontWeight( QFont::Normal );
-	s_errf.setFontFamily( "Courier" );
-	s_errf.setFontWeight( QFont::Normal );
-	s_errf.setForeground( Qt::red );
-	s_outf.setFontFamily( "Courier" );
-	s_outf.setFontWeight( QFont::Normal );
-	s_outf.setForeground( Qt::blue );
+	QFont font;
+	font.setPointSize(9);
+#ifdef Q_WS_X11
+	font.setFamily("Courier");
+#else
+	font.setStyleHint( QFont::TypeWriter );
+#endif
+	QSettings set;
+	updateFont(set.value( "Terminal/Font", QVariant::fromValue( font ) ).value<QFont>());
 
 	QTextCursor cur = textCursor();
     cur.insertText( prompt(), s_pf );
@@ -67,10 +70,14 @@ Terminal2::Terminal2(QWidget* parent, Lua::Engine2* l):
     pop->addCommand( "Paste", this, SLOT(handlePaste()) );
 	pop->addSeparator();
     pop->addCommand( "Select All", this, SLOT(handleSelectAll()) );
-    pop->addCommand( "Clear", this, SLOT(clear()) );
+	pop->addCommand( "Clear", this, SLOT(handleDelete()) );
 	pop->addSeparator();
     pop->addCommand( "Export PDF...", this, SLOT(handleExportPdf()) );
     pop->addCommand( "Save Log...", this, SLOT(handleSaveAs()) );
+	pop->addSeparator();
+	pop->addCommand( "Set Font...", this, SLOT(handleSetFont()) );
+
+	new QShortcut( tr("F12"), this, SLOT(handlePrintStack()) );
 
     connect( d_lua, SIGNAL(onNotify(int,QByteArray,int)), this, SLOT(onNotify(int,QByteArray,int)) );
 }
@@ -96,7 +103,7 @@ void Terminal2::keyPressEvent(QKeyEvent *e)
 			if( !d_line.isEmpty() )
 				d_histo.append( d_line );
 			d_next.clear();
-			if( d_lua->isExecuting() )
+			if( d_lua->isWaiting() )
             {
                 ExpressionParser p;
                 if( p.parseAndPrint( d_line.toLatin1(), d_lua, false ) )
@@ -183,10 +190,28 @@ void Terminal2::inputMethodEvent(QInputMethodEvent * e)
 
 QString Terminal2::prompt() const
 {
-    if( d_lua->isExecuting() )
+	if( d_lua->isWaiting() )
         return "Exp>";
     else
-        return s_prompt;
+		return s_prompt;
+}
+
+void Terminal2::updateFont(const QFont & f)
+{
+	s_pf.setFontFamily( f.family() );
+	s_pf.setFontPointSize( f.pointSizeF() );
+	s_pf.setFontWeight( QFont::Bold );
+	s_luaf.setFontFamily( f.family() );
+	s_luaf.setFontPointSize( f.pointSizeF() );
+	s_luaf.setFontWeight( QFont::Normal );
+	s_errf.setFontFamily( f.family() );
+	s_errf.setFontPointSize( f.pointSizeF() );
+	s_errf.setFontWeight( QFont::Normal );
+	s_errf.setForeground( Qt::red );
+	s_outf.setFontFamily( f.family() );
+	s_outf.setFontPointSize( f.pointSizeF() );
+	s_outf.setFontWeight( QFont::Normal );
+	s_outf.setForeground( Qt::blue );
 }
 
 void Terminal2::onNotify(int messageType, QByteArray val1, int val2)
@@ -196,15 +221,19 @@ void Terminal2::onNotify(int messageType, QByteArray val1, int val2)
 	case Engine2::Print:
         d_out.insertText( val1, s_outf );
         d_out.insertText( QString( QChar::ParagraphSeparator ), s_pf );
-        break;
+		moveCursor( QTextCursor::End );
+		break;
 	case Engine2::Error:
         d_out.insertText( val1, s_errf );
         d_out.insertText( QString( QChar::ParagraphSeparator ), s_pf );
+		moveCursor( QTextCursor::End );
         break;
-	case Engine2::Started:
-	case Engine2::Finished:
+	case Engine2::LineHit:
+	case Engine2::BreakHit:
+	case Engine2::Continued:
 	case Engine2::Aborted:
 		{
+			moveCursor( QTextCursor::End );
 			moveCursor( QTextCursor::StartOfLine, QTextCursor::KeepAnchor );
 			QTextCursor cur = textCursor();
 			cur.insertText( prompt(), s_pf );
@@ -217,9 +246,7 @@ void Terminal2::onNotify(int messageType, QByteArray val1, int val2)
         break;
     }
     //msg.consume();
-    QTextCursor cur = textCursor();
-    cur.setPosition( d_out.position() );
-    ensureCursorVisible();
+	ensureCursorVisible();
 }
 
 void Terminal2::clear()
@@ -292,4 +319,38 @@ void Terminal2::handleSaveAs()
 		return;
 	}
 	out.write( toPlainText().toLatin1() );
+}
+
+void Terminal2::handlePrintStack()
+{
+	// ENABLED_IF( true );
+	QByteArray str;
+	QTextStream out( &str, QIODevice::WriteOnly );
+	const int top = lua_gettop( d_lua->getCtx() );
+	out << "*** Lua Internal Stack:" << endl;
+	if( top == 0 )
+		out << "empty" << endl;
+	else
+	{
+		for( int n = 1; n <= top; n++ )
+		{
+			out << "* Level " << n << ": (" << d_lua->getTypeName( n ) << ") " << d_lua->getValueString( n ) << endl;
+		}
+	}
+	qDebug() << str;
+	d_lua->print( str );
+}
+
+void Terminal2::handleSetFont()
+{
+	ENABLED_IF( true );
+
+	bool ok;
+	QFont res = QFontDialog::getFont( &ok, s_luaf.font(), this );
+	if( !ok )
+		return;
+	QSettings set;
+	set.setValue( "Terminal/Font", QVariant::fromValue(res) );
+	set.sync();
+	updateFont( res );
 }

@@ -281,6 +281,7 @@ static const luaL_reg speclib[] =
 
 void LuaSpec2::install(lua_State * L)
 {
+	StackTester test(L,0);
 	LuaObject::install( L );
 	LuaRecord::install( L );
 	LuaBuffer::install( L );
@@ -305,7 +306,8 @@ void LuaSpec2::install(lua_State * L)
 	LuaStruct::install( L );
 	LuaProject::install( L );
 	LuaRepository::install( L );
-	luaL_openlib( L, "spec", speclib, 0 );
+	luaL_register( L, "spec", speclib );
+	lua_pop(L,1); // lib
 }
 
 void LuaSpec2::installRepository(lua_State * L, Repository * r)

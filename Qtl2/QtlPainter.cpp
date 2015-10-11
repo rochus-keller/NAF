@@ -1194,7 +1194,7 @@ int Painter::init(lua_State * L) // ( QPaintDevice * device )
 
 static const luaL_reg _Painter[] = 
 {
-	{ Util::s_init, Painter::init }, // QT_DEVIATION
+	{ "init", Painter::init }, // QT_DEVIATION
 	{ "background", Painter::background },
 	{ "backgroundMode", Painter::backgroundMode },
 	{ "begin", Painter::begin }, // QT_DEVIATION

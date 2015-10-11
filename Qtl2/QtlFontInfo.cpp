@@ -125,7 +125,7 @@ static const luaL_reg _fontinfo[] =
 	{ "style", FontInfo::style },
 	{ "styleHint", FontInfo::styleHint },
 	{ "weight", FontInfo::weight },
-	{ Util::s_init, FontInfo::init },
+	{ "init", FontInfo::init },
 	{ 0, 0 }
 };
 void FontInfo::install(lua_State * L){

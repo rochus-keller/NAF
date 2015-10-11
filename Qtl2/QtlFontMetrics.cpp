@@ -229,7 +229,7 @@ static const luaL_reg _FontMetrics[] =
 	{ "underlinePos", FontMetrics::underlinePos },
 	{ "width", FontMetrics::width },
 	{ "xHeight", FontMetrics::xHeight },
-	{ Util::s_init, FontMetrics::init }, // requires ( const QFont & font, QPaintDevice * paintdevice )  
+	{ "init", FontMetrics::init }, // requires ( const QFont & font, QPaintDevice * paintdevice )  
 	{ 0, 0 }
 };
 void FontMetrics::install(lua_State * L){

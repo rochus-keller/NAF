@@ -182,7 +182,7 @@ static const luaL_reg _Matrix[] =
 	{ "translate", Matrix::translate },
 	{ Variant::multiply, Matrix::multiply },
 	{ "init", Matrix::init },
-	{ Util::s_init, Matrix::init },
+	{ "init", Matrix::init },
 	{ 0, 0 }
 };
 static const luaL_reg _MatrixMeta[] =
