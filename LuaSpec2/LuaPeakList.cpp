@@ -209,7 +209,7 @@ int LuaPeak::getVol(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop( L ) > 1 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 2 );
+		spec = RefBinding<Spectrum>::cast( L, 2 );
 	}
 	lua_pushnumber(L, obj->getVol( spec ) ); 
 	return 1;
@@ -221,7 +221,7 @@ int LuaPeak::getAmp(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop( L ) > 1 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 2 );
+		spec = RefBinding<Spectrum>::cast( L, 2 );
 	}
 	lua_pushnumber(L, obj->getAmp( spec ) ); 
 	return 1;
@@ -247,7 +247,7 @@ int LuaPeak::getPos(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop( L ) > 1 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 2 );
+		spec = RefBinding<Spectrum>::cast( L, 2 );
 	}
 	const PeakPos& a = obj->getPos( spec );
 	for( int i = 0; i < obj->getDimCount(); i++ )
@@ -308,7 +308,7 @@ int LuaPeakList::setVol(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop(L) > 3 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 4 );
+		spec = RefBinding<Spectrum>::cast( L, 4 );
 	}
 	obj->setVol( p, a, spec );
 	return 0;
@@ -324,7 +324,7 @@ int LuaPeak::setVol(lua_State *L)
 	Spectrum* spec = 0;
 	if( n > 2 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 3 );
+		spec = RefBinding<Spectrum>::cast( L, 3 );
 	}
 	obj->getOwner()->setVol( obj, a, spec );
 	return 0;
@@ -341,7 +341,7 @@ int LuaPeakList::setAmp(lua_State *L)
 	Spectrum* spec = 0;
 	if( n > 3 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 4 );
+		spec = RefBinding<Spectrum>::cast( L, 4 );
 	}
 	obj->setAmp( p, a, spec );
 	return 0;
@@ -357,7 +357,7 @@ int LuaPeak::setAmp(lua_State *L)
 	Spectrum* spec = 0;
 	if( n > 2 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 3 );
+		spec = RefBinding<Spectrum>::cast( L, 3 );
 	}
 	obj->getOwner()->setAmp( obj, a, spec );
 	return 0;
@@ -392,7 +392,7 @@ int LuaPeakList::setPos(lua_State *L)
 	Spectrum* spec = 0;
 	if( n > dim + 1 )
 	{
-		spec = RefBinding<Spectrum>::check( L, n );
+		spec = RefBinding<Spectrum>::cast( L, n );
 	}
 	obj->setPos( p, a, spec );
 	return 0;
@@ -411,7 +411,7 @@ int LuaPeak::setPos(lua_State *L)
 	Spectrum* spec = 0;
 	if( n > ( dim + 1 ) )
 	{
-		spec = RefBinding<Spectrum>::check( L, n );
+		spec = RefBinding<Spectrum>::cast( L, n );
 	}
 	obj->getOwner()->setPos( obj, a, spec );
 	return 0;
@@ -642,7 +642,7 @@ int LuaPeak::getModel(lua_State *L)
 	Spectrum* spec = 0;
 	if( n > 1 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 2 );
+		spec = RefBinding<Spectrum>::cast( L, 2 );
 	}
 	PeakModel* m = obj->getModel( spec );
 	RefBinding<PeakModel>::create( L, m );
@@ -659,7 +659,7 @@ int LuaPeak::setModel(lua_State *L)
 	Spectrum* spec = 0;
 	if( n > 2 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 3 );
+		spec = RefBinding<Spectrum>::cast( L, 3 );
 	}
 	obj->getOwner()->setModel( obj, id, spec );
 	return 0;

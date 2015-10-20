@@ -404,7 +404,7 @@ int LuaProject::createSpin(lua_State *L)
 	Spectrum* spec = 0;
 	if( n > 3 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 4 );
+		spec = RefBinding<Spectrum>::cast( L, 4 );
 	}
 	Spin* spin = obj->getSpins()->addSpin( s, p, spec );
 	RefBinding<Spin>::create( L, spin );
@@ -419,9 +419,9 @@ int LuaProject::setShift(lua_State *L)
 	Spin* s = RefBinding<Spin>::check( L, 2 );
 	PPM p = luaL_checknumber( L, 3 );
 	Spectrum* spec = 0;
-	if( n > 3  )
+	if( n > 3 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 4 );
+		spec = RefBinding<Spectrum>::cast( L, 4 );
 	}
 	obj->getSpins()->setShift( s, p, spec );
 	return 0;
@@ -708,7 +708,7 @@ int LuaProject::matchSystems(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop(L) > 4 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 5 );
+		spec = RefBinding<Spectrum>::cast( L, 5 );
 	}
 	if( ignoreLabels )
 		obj->getMatcher()->getStripMatchAll( lhs, rhs, fit, spec );
@@ -730,7 +730,7 @@ int LuaProject::matchSpin(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop(L) > 3  )
 	{
-		spec = RefBinding<Spectrum>::check( L, 4 );
+		spec = RefBinding<Spectrum>::cast( L, 4 );
 	}
 	obj->getMatcher()->getStripMatchOne( lhs, rhs, fit, spec );
 	lua_pushnumber( L, fit.d_sum );
@@ -752,7 +752,7 @@ int LuaProject::matchResidue(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop(L) > 4 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 5 );
+		spec = RefBinding<Spectrum>::cast( L, 5 );
 	}
 	obj->getMatcher()->getSeqMatch( lhs, off, rhs, fit, spec );
 	lua_pushnumber( L, fit.d_sum );
@@ -770,9 +770,9 @@ int LuaProject::setLinkParams(lua_State *L)
 	int n = lua_gettop(L);  
 	SpinLink* s = RefBinding<SpinLink>::check( L, 2 );
 	Spectrum* spec = 0;
-    if( n > 2 && !lua_isnil( L, 3 ) )
+	if( n > 2 )
 	{
-        spec = RefBinding<Spectrum>::check( L, 3 );
+		spec = RefBinding<Spectrum>::cast( L, 3 );
 	}
 	Root::Float rate = 0;
 	if( n > 3 )

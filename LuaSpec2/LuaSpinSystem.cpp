@@ -215,7 +215,7 @@ int LuaSpinLink::getRating(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop(L) > 1 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 2 );
+		spec = RefBinding<Spectrum>::cast( L, 2 );
 	}
 	lua_pushnumber(L, obj->getRating( spec ) ); 
 	return 1;
@@ -227,7 +227,7 @@ int LuaSpinLink::getCode(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop( L ) > 1 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 2 );
+		spec = RefBinding<Spectrum>::cast( L, 2 );
 	}
 	lua_pushnumber(L, obj->getCode( spec ) ); 
 	return 1;
@@ -253,7 +253,7 @@ int LuaSpinLink::isVisible(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop( L ) > 1 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 2 );
+		spec = RefBinding<Spectrum>::cast( L, 2 );
 	}
 	lua_pushboolean(L, obj->isVisible( spec ) ); 
 	return 1;
@@ -370,7 +370,7 @@ int LuaSpinLink::getParams(lua_State *L)
 	Spectrum* spec = 0;
 	if( lua_gettop( L ) > 1 )
 	{
-		spec = RefBinding<Spectrum>::check( L, 2 );
+		spec = RefBinding<Spectrum>::cast( L, 2 );
 	}
 	const SpinLink::Alias& ali = obj->getAlias( spec );
 	lua_pushnumber(L, ali.d_rating ); 
