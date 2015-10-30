@@ -35,8 +35,8 @@ QSize LuaMyWidget2::sizeHint()
 			lua_pop( LuaWidgetCallbacks::getLua(), 2 );
 			return s;
 		}
-	}else
-		return QWidget::sizeHint();
+	}// else
+	return QWidget::sizeHint();
 }
 
 void LuaMyWidget2::mousePressEvent ( QMouseEvent * e )

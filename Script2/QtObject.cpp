@@ -47,7 +47,7 @@ struct LuaPropertyValue
 	{
 		int d_ref; // Ergebnis von luaL_ref
 		Data(int ref = LUA_NOREF):d_ref(ref) {}
-		Data( const Data& )
+		Data( const Data& rhs ):QSharedData(rhs)
 		{
 			d_ref = LUA_NOREF;
 		}

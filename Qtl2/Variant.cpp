@@ -278,6 +278,7 @@ void Variant::push(lua_State *L, const QVariant &v)
 	case QVariant::Locale:
 	case QVariant::UserType:
 	case QVariant::LastType:
+	case QVariant::ColorGroup:
 		lua_pushnil( L );
 		break;
 		// TODO:

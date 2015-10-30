@@ -96,6 +96,7 @@ QString QtValueBase::toString(lua_State *L, int n, bool assure)
 		return QString();
 	//else
 	luaL_argerror( L, n, "string or QString expected" );
+	return QString();
 }
 
 bool QtValueBase::isString(lua_State *L, int n)
