@@ -1,17 +1,23 @@
 /*
  * Copyright 2000-2015 Rochus Keller <mailto:rkeller@nmr.ch>
  *
- * This file is part of CARA (Computer Aided Resonance Assignment,
- * see <http://cara.nmr.ch/>).
+ * This file is part of the CARA (Computer Aided Resonance Assignment,
+ * see <http://cara.nmr.ch/>) NMR Application Framework (NAF) library.
  *
- * CARA is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License (GPL) as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The following is the license that applies to this copy of the
+ * library. For a license to use the library under conditions
+ * other than those described here, please email to rkeller@nmr.ch.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * GNU General Public License Usage
+ * This file may be used under the terms of the GNU General Public
+ * License (GPL) versions 2.0 or 3.0 as published by the Free Software
+ * Foundation and appearing in the file LICENSE.GPL included in
+ * the packaging of this file. Please review the following information
+ * to ensure GNU General Public Licensing requirements will be met:
+ * http://www.fsf.org/licensing/licenses/info/GPLv2.html and
+ * http://www.gnu.org/copyleft/gpl.html.
  */
+
 
 #ifndef STARLEXER_H
 #define STARLEXER_H
@@ -25,22 +31,36 @@ namespace Star
 	public:
 		struct Token
 		{
-			enum Type { Tag, Quoted, NonQuoted, Multiline, Loop, Global, Save, Stop, Data, ListStart, ListEnd, ElemSep,
-						TableStart, TableEnd, RefStart, RefEnd, KeyValueSep, Comment,
-						EndOfStream, InvalidChar, SyntaxError } d_type;
+			enum Type { Null,
+						Comment,
+						Global, Data, Save, // Cells
+						Loop,  Stop,  // Loops
+						Tag,
+						Quoted, NonQuoted, Multiline, // Values
+						ListStart, ListEnd,
+						TableStart, TableEnd,
+						RefStart, RefEnd,
+						ElemSep,
+						KeyValueSep,
+						EndOfStream,
+						InvalidChar, SyntaxError // Issue
+					  } d_type;
 			int d_line, d_col;
 			QString d_text;
-			Token(Type t = EndOfStream, int line = 0, int col = 0, const QString& txt = QString() ):
+			Token(Type t = Null, int line = 0, int col = 0, const QString& txt = QString() ):
 				d_type(t),d_line(line),d_col(col),d_text(txt){}
 			const char* typeName() const;
 			bool isDataValue() const;
+			bool isNull() const { return d_type == Null; }
 		};
 
-		StarLexer();
+		StarLexer(bool newSyntax=true);
 		bool setStream( QIODevice* in, const char* codec = "UTF-8" );
 		void reset();
 		Token nextToken();
 		Token nextTokenNoComments();
+		bool isNewSyntax() const { return d_newSyntax; }
+		void setNewSyntax( bool on ) { d_newSyntax = on; }
 		void dump();
 	protected:
 		void nextLine();
@@ -60,6 +80,7 @@ namespace Star
 		int d_lineNr; // current line, starting with 1
 		int d_colNr;  // current column (left of char), starting with 0
 		QString d_line;
+		bool d_newSyntax; // Follow syntax as described in Spadaccini, N. and Hall, S. R., J. Chem. Inf. Model., 52 (8), 1901-1906 (2012)
 	};
 }
 

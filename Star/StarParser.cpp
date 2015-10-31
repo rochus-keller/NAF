@@ -1,23 +1,28 @@
 /*
  * Copyright 2000-2015 Rochus Keller <mailto:rkeller@nmr.ch>
  *
- * This file is part of CARA (Computer Aided Resonance Assignment,
- * see <http://cara.nmr.ch/>).
+ * This file is part of the CARA (Computer Aided Resonance Assignment,
+ * see <http://cara.nmr.ch/>) NMR Application Framework (NAF) library.
  *
- * CARA is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License (GPL) as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The following is the license that applies to this copy of the
+ * library. For a license to use the library under conditions
+ * other than those described here, please email to rkeller@nmr.ch.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * GNU General Public License Usage
+ * This file may be used under the terms of the GNU General Public
+ * License (GPL) versions 2.0 or 3.0 as published by the Free Software
+ * Foundation and appearing in the file LICENSE.GPL included in
+ * the packaging of this file. Please review the following information
+ * to ensure GNU General Public Licensing requirements will be met:
+ * http://www.fsf.org/licensing/licenses/info/GPLv2.html and
+ * http://www.gnu.org/copyleft/gpl.html.
  */
 
 #include "StarParser.h"
 #include <QDebug>
 using namespace Star;
 
-StarParser::StarParser()
+StarParser::StarParser(bool newSyntax):d_lex(newSyntax)
 {
 }
 
@@ -28,29 +33,33 @@ bool StarParser::parse(QIODevice * in)
 		return error( tr("cannot open input device" ) );
 
 	StarLexer::Token t = nextToken();
-	switch( t.d_type )
+	while( t.d_type != StarLexer::Token::EndOfStream )
 	{
-	case StarLexer::Token::Global:
-		if( !t.d_text.isEmpty() )
-			return error( tr("global_ with block name"), t );
-		else if( !parseBlock( d_global, false, false ) )
-			return false;
-		break;
-	case StarLexer::Token::Data:
-		if( t.d_text.isEmpty() )
-			return error( tr("data_ with empty block name"), t );
-		if( d_blocks.contains( t.d_text ) )
-			return error( tr("data_ block name not unique"), t );
-		else if( !parseBlock( d_blocks[t.d_text], true, false ) )
-			return false;
-		break;
-	case StarLexer::Token::EndOfStream:
-		break;
-	default:
-		return unexpectedToken( t );
+		switch( t.d_type )
+		{
+		case StarLexer::Token::Global:
+			if( !t.d_text.isEmpty() )
+				return error( tr("global_ with block name"), t );
+			else if( !parseBlock( d_global, false, false ) )
+				return false;
+			break;
+		case StarLexer::Token::Data:
+			if( t.d_text.isEmpty() )
+				return error( tr("data_ with empty block name"), t );
+			if( d_blocks.contains( t.d_text ) )
+				return error( tr("data_ block name not unique"), t );
+			else if( !parseBlock( d_blocks[t.d_text], true, false ) )
+				return false;
+			break;
+		case StarLexer::Token::EndOfStream:
+			break;
+		default:
+			return unexpectedToken( t );
+		}
+		t = nextToken();
 	}
 
-	if( d_blocks.isEmpty() )
+	if( d_lex.isNewSyntax() && d_blocks.isEmpty() )
 		return error( tr("file contains no data_ block" ) );
 
 	return true;
@@ -60,22 +69,8 @@ void StarParser::clear()
 {
 	d_error.clear();
 	d_blocks.clear();
-	d_peeks.clear();
+	d_lookAhead = StarLexer::Token();
 	d_global = Block();
-}
-
-void StarParser::dump()
-{
-	qDebug() << "******** Dumping Star File *******";
-
-	dumpBlock( d_global, "### Global Block", 0 );
-	QMap<QString,Block>::const_iterator i;
-	for( i = d_blocks.begin(); i != d_blocks.end(); ++i )
-	{
-		dumpBlock( i.value(), tr("### Block '%1'").arg(i.key()), 0 );
-	}
-
-	qDebug() << "*********** End of Dump **********";
 }
 
 bool StarParser::error(const QString & msg)
@@ -100,7 +95,7 @@ bool StarParser::parseBlock(StarParser::Block & db, bool frameIn, bool frameOut)
 	bool firstTime = true;
 	while( true )
 	{
-		StarLexer::Token t = peekToken();
+		StarLexer::Token t = lookAhead();
 		if( t.d_type == StarLexer::Token::Tag )
 		{
 			nextToken(); // Eat token
@@ -112,63 +107,29 @@ bool StarParser::parseBlock(StarParser::Block & db, bool frameIn, bool frameOut)
 		{
 			nextToken(); // Eat token
 			Loop l;
-			while( true )
-			{
-				// Verschachtelte loops sind irrational; die Spezifikation ist grottenschlecht; keine BMRB-Datei braucht das;
-				// also weggelassen; RISK
-				t = peekToken();
-				if( t.d_type == StarLexer::Token::Tag )
-				{
-					nextToken(); // eat token
-					l.d_names.append( t.d_text );
-				}else if( !l.d_names.isEmpty() && t.isDataValue() )
-				{
-					break;
-				}else
-					return unexpectedToken( t );
-			}
-			Q_ASSERT( t.isDataValue() );
-			QVariantList row;
-			while( true )
-			{
-				t = nextToken();
-				if( t.isDataValue() )
-				{
-					if( row.size() == l.d_names.size() )
-					{
-						l.d_values.append( row );
-						row.clear();
-					}
-					row.append( t.d_text );
-				}else if( t.d_type == StarLexer::Token::Stop )
-				{
-					if( !row.isEmpty() )
-					{
-						if( row.size() != l.d_names.size() )
-							return error( tr("invalid number of loop values"), t );
-						else
-							l.d_values.append( row );
-					}
-					break;
-				}else
-					return unexpectedToken( t );
-			}
+			if( !parseLoopHeader( l, 0 ) )
+				return false;
+			if( !parseLoopTable( l.d_headers, l.d_table, 0 ) )
+				return false;
 			db.d_loops.append( l );
-		}else if( frameIn && t.d_type == StarLexer::Token::Save )
+		}else if( t.d_type == StarLexer::Token::Save )
 		{
 			nextToken(); // Eat token
 			if( t.d_text.isEmpty() )
 			{
 				if( frameOut )
 					return true; // save_ closes the frame
+				else if( !frameIn )
+					return unexpectedToken( t );
 				else
 					return error( tr("save_ with empty block name"), t );
-			}
+			}else if( !frameIn )
+				return unexpectedToken( t );
+
 			if( db.d_blocks.contains( t.d_text ) )
 				return error( tr("save_ block name not unique"), t );
-			else if( !parseBlock( db.d_blocks[t.d_text], true, true ) )
+			else if( !parseBlock( db.d_blocks[t.d_text], d_lex.isNewSyntax(), true ) )
 				return false;
-
 		}else if( !frameOut && !firstTime && ( t.d_type == StarLexer::Token::Data || t.d_type == StarLexer::Token::Global ||
 								 t.d_type == StarLexer::Token::EndOfStream ) )
 			// don't eat token
@@ -184,11 +145,11 @@ bool StarParser::parseBlock(StarParser::Block & db, bool frameIn, bool frameOut)
 bool StarParser::parseLoopHeader(StarParser::Loop & l, int level)
 {
 	bool firstTime = true;
-	QStringList header;
-	//l.d_names.resize( level + 1 );
+	Loop::Header header;
+	l.d_headers.resize( level + 1 );
 	while( true )
 	{
-		StarLexer::Token t = peekToken();
+		StarLexer::Token t = lookAhead();
 		if( t.d_type == StarLexer::Token::Tag )
 		{
 			nextToken(); // eat token
@@ -198,15 +159,87 @@ bool StarParser::parseLoopHeader(StarParser::Loop & l, int level)
 			nextToken(); // eat token
 			if( !parseLoopHeader( l, level + 1 ) )
 				return false;
-		}else if( !firstTime && level == 0 && t.isDataValue() )
+		}else if( !firstTime && t.isDataValue() )
 		{
-			//l.d_names[level] = header;
+			l.d_headers[level] = header;
 			return true; // gehe zurück ohne eat token
-		}else if( !firstTime && level > 0 && t.d_type == StarLexer::Token::Stop )
+		}else if( !firstTime && t.d_type == StarLexer::Token::Stop )
+		{
+			// Im BNF 1993 ist stop_ optional; im BNF 2012 ist es obligatorisch, aber im Beispiel im Paper fehlt es auch!
+			nextToken(); // eat token
+			l.d_headers[level] = header;
+			return true;
+		}else
+			return unexpectedToken( t );
+		firstTime = false;
+	}
+	Q_ASSERT( false );
+	return false;
+}
+
+bool StarParser::parseLoopTable(const Loop::Headers & headers, Loop::Table & table, int level)
+{
+	Q_ASSERT( level < headers.size() );
+	bool firstTime = true;
+	while( true )
+	{
+		StarLexer::Token t = lookAhead();
+		if( t.isDataValue() )
+		{
+			if( table.isEmpty() )
+				table.append( Loop::Row() );
+			else if( table.last().size() == headers[level].size() )
+			{
+				// Hierhin kommen wir, wenn eine Zeile von table vollständig gelesen wurde und entschieden werden muss,
+				// ob die nächsten Daten zu table oder einer Untertabelle gehören
+				if( headers.size() > level + 1 )
+				{
+					Loop::Table t2;
+					if( !parseLoopTable( headers, t2, level + 1 ) )
+						return false;
+					table.last().append( QVariant::fromValue( t2 ) );
+				}else
+					table.append( Loop::Row() );
+			}else if( table.last().size() > headers[level].size() )
+				table.append( Loop::Row() ); // Hierher kommen wir nach Rückkehr von der Untertabelle
+			if( table.last().size() < headers[level].size() )
+			{
+				nextToken(); // eat token
+				table.last().append( t.d_text );
+			}
+		}else if( t.d_type == StarLexer::Token::Stop )
 		{
 			nextToken(); // eat token
-			// l.d_names[level] = header;
+			if( table.last().size() < headers[level].size() )
+				return error( tr("invalid number of loop values"), t );
+			// Fall: wenn zwar verschachtelte Loops definiert, aber auch Records nur mit Werten für Toplevel in Tabelle sind.
+			// Siehe Beispiel: http://www.iucr.org/__data/iucr/cif/software/oostar/oostar_ddl1/bin/data/ex.1
+			// Fall: array_usage.str in starlib2 examples; überzählige loop_ am Schluss
+			// Mit folgendem Hack werden diese Fälle abgefangen:
+			t = lookAhead();
+			if( level == 0 )
+			{
+				if( t.isDataValue() )
+				{
+					table.append( Loop::Row() );
+					continue;
+				}else if( t.d_type == StarLexer::Token::Stop && headers.size() > 1 )
+				{
+					// Überzählige stop_ am Schluss werden toleriert, wenn der loop_ verschachtelt war
+					nextToken(); // eat token
+					continue;
+				}
+			}
+			// Ende Hack
 			return true;
+		}else if( !firstTime && ( t.d_type == StarLexer::Token::Tag || t.d_type == StarLexer::Token::Loop ||
+								  t.d_type == StarLexer::Token::Save ||
+								  t.d_type == StarLexer::Token::Data || t.d_type == StarLexer::Token::Global ||
+								  t.d_type == StarLexer::Token::EndOfStream ) )
+		{
+			if( table.last().size() < headers[level].size() )
+				return error( tr("invalid number of loop values"), t );
+			return true; // zurück ohne eat token
 		}else
 			return unexpectedToken( t );
 		firstTime = false;
@@ -284,7 +317,7 @@ bool StarParser::parseList(QVariantList & l, bool first)
 	StarLexer::Token t;
 	if( first )
 	{
-		t = peekToken();
+		t = lookAhead();
 		if( t.d_type == StarLexer::Token::ListEnd )
 		{
 			nextToken(); // eat token
@@ -360,16 +393,16 @@ bool StarParser::parseReference(StarParser::Reference & r)
 	if( !parseRefValue( v ) )
 		return false;
 
-	if( key == "block" )
-		r.d_block.append( v );
-	else if( key == "source" )
-		r.d_source.append( v );
-	else if( key == "frame" )
-		r.d_frame.append( v );
-	else if( key == "item" )
-		r.d_item.append( v );
-	else if( key == "key" )
-		r.d_key.append( v );
+	if( key == "block" && r.d_block.isNull() )
+		r.d_block = v;
+	else if( key == "source" && r.d_source.isNull() )
+		r.d_source = v;
+	else if( key == "frame" && r.d_frame.isNull() )
+		r.d_frame = v;
+	else if( key == "item" && r.d_item.isNull() )
+		r.d_item = v;
+	else if( key == "key" && r.d_key.isNull() )
+		r.d_key = v;
 	else
 		return error( tr("invalid ref-label '%1'").arg( key ), t1 );
 
@@ -390,36 +423,96 @@ bool StarParser::parseReference(StarParser::Reference & r)
 
 StarLexer::Token StarParser::nextToken()
 {
-	if( !d_peeks.isEmpty() )
-		return d_peeks.dequeue();
-	else
+	if( !d_lookAhead.isNull() )
+	{
+		StarLexer::Token t = d_lookAhead;
+		d_lookAhead = StarLexer::Token(); // remove
+		return t;
+	}else
 		return d_lex.nextTokenNoComments();
 }
 
-StarLexer::Token StarParser::peekToken()
+StarLexer::Token StarParser::lookAhead()
 {
-	StarLexer::Token t = d_lex.nextTokenNoComments();
-	d_peeks.enqueue( t );
-	return t;
+	if( d_lookAhead.isNull() )
+		d_lookAhead = d_lex.nextTokenNoComments();
+	return d_lookAhead;
 }
 
-void StarParser::dumpBlock(const StarParser::Block & b, const QString& title, int level)
+static QString _toString( const QVariant& v )
+{
+	return v.toString(); // TODO
+}
+
+void StarParser::dump(QTextStream & out)
+{
+	out << "******** Dumping Star File *******" << endl;
+
+	dumpBlock( out, d_global, "### Global Block", 0 );
+	QMap<QString,Block>::const_iterator i;
+	for( i = d_blocks.begin(); i != d_blocks.end(); ++i )
+	{
+		dumpBlock( out, i.value(), tr("### Block '%1'").arg(i.key()), 0 );
+	}
+
+	out << "*********** End of Dump **********" << endl;
+}
+
+void StarParser::dump()
+{
+	QString str;
+	QTextStream out( &str, QIODevice::WriteOnly );
+	dump(out);
+	qDebug() << str;
+}
+
+void StarParser::dumpBlock(QTextStream& out, const StarParser::Block & b, const QString& title, int level)
 {
 	const QString indent( level * 4, QChar(' ') );
-	qDebug() << indent << title;
+	out << indent << title << endl;
 	QMap<QString,QVariant>::const_iterator j;
 	for( j = b.d_items.begin(); j != b.d_items.end(); ++j )
-		qDebug() << indent << "  " << j.key() << " = " << j.value();
+		out << indent << "    " << j.key() << " = " << _toString(j.value()) << endl;
 	for( int n = 0; n < b.d_loops.size(); n++ )
 	{
-		qDebug() << indent << "  Loop________________";
-		qDebug() << indent << "  " << b.d_loops[n].d_names;
-		for( int m = 0; m < b.d_loops[n].d_values.size(); m++ )
-			qDebug() << indent << "  " << b.d_loops[n].d_values[m];
+		for( int h = 0; h < b.d_loops[n].d_headers.size(); h++ )
+		{
+			const QString dbindent( h * 4, QChar(' ') );
+			out << indent << dbindent << "    ### Loop: ";
+			for( int k = 0; k < b.d_loops[n].d_headers[h].size(); k++ )
+				out << b.d_loops[n].d_headers[h][k] << " ";
+			out << endl;
+		}
+		dumpTable( out, b.d_loops[n].d_table, level + 1 );
 	}
 	QMap<QString,Block>::const_iterator i;
 	for( i = b.d_blocks.begin(); i != b.d_blocks.end(); ++i )
 	{
-		dumpBlock( i.value(), tr("### Block '%1'").arg(i.key()), level + 1 );
+		dumpBlock( out, i.value(), tr("### Block '%1'").arg(i.key()), level + 1 );
+	}
+}
+
+void StarParser::dumpTable(QTextStream & out, const StarParser::Loop::Table & table, int level)
+{
+	const QString indent( level * 4, QChar(' ') );
+	for( int m = 0; m < table.size(); m++ )
+	{
+		out << indent;
+		bool doEndl = true;
+		for( int k = 0; k < table[m].size(); k++ )
+		{
+			QVariant v = table[m][k];
+			if( v.canConvert<Loop::Table>() )
+			{
+				Q_ASSERT( k == table[m].size() - 1 );
+				out << endl;
+				Loop::Table t2 = v.value<Loop::Table>();
+				dumpTable( out, t2, level + 1 );
+				doEndl = false;
+			}else
+				out << _toString( v ) << " ";
+		}
+		if( doEndl )
+			out << endl;
 	}
 }
