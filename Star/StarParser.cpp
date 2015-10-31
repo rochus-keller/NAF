@@ -26,10 +26,10 @@ StarParser::StarParser(bool newSyntax):d_lex(newSyntax)
 {
 }
 
-bool StarParser::parse(QIODevice * in)
+bool StarParser::parse(QIODevice * in, const char *codec)
 {
 	clear();
-	if( !d_lex.setStream( in ) )
+	if( !d_lex.setStream( in, codec ) )
 		return error( tr("cannot open input device" ) );
 
 	StarLexer::Token t = nextToken();

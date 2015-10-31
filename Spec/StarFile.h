@@ -27,8 +27,8 @@
 
 #include <Root/SymbolString.h>
 #include <Spec/Units.h>
-#include <fstream>
 #include <map>
+#include <Star/StarParser.h>
 
 namespace Spec
 {
@@ -85,43 +85,31 @@ namespace Spec
 		QByteArray  d_Citation_full;
 
 		QByteArray  d_err;
-		int d_line;
 		AtomSym* getFirst() const { return d_first; }
-		const Resi& getSeq() const { return (d_autorSeq)?d_seq2:d_seq1; }
+		const Resi& getSeq() const { return d_seq; }
 		Root::Index getCount() const { return d_count; }
-		void parse();
+		bool parse();
 		StarFile(const char*);
 		~StarFile();
 	private:
-		std::ifstream d_in;
+		QByteArray d_fileName;
+		Star::StarParser d_star;
         void* operator new( size_t size ) throw() { return 0; }
         void* operator new( size_t size, void *p ) throw() { return 0; }
 
-	
 		Root::Index d_count;
-		Resi d_seq1;
-		Resi d_seq2;
+		Resi d_seq;
 		AtomSym* d_first;
 		AtomSym* d_last;
-		bool d_autorSeq;
-
-		struct Token 
-		{
-			enum Type { GLOBAL, DATA, SAVE, LOOP, STOP, NAME, VALUE, _EOF };
-			Type d_type;
-			QByteArray  d_val;
-		};
-		void next( Token& );
-		enum State { IDLE, INFO, CITATION, ASSIG, POLY };
-		State d_stat;
+		bool d_newVersion;
 	protected:
-		bool parseSave();
-		bool parseAtoms();
-		bool parseSequence();
-		bool parseLoop();
-		void starFile();
+		bool error( const QByteArray& );
+		bool errorRowCol( int row, const QByteArray& col );
+		Star::StarParser::Blocks::const_iterator findBlock( const Star::StarParser::Block&,const QString& key, const QString& value ) const;
+		int findLoop( const Star::StarParser::Block&, const QString& header ) const; // index or -1
+		bool parseAtoms(const Star::StarParser::Block&);
+		bool parseSequence(const Star::StarParser::Block& );
 		void add( const AtomSym& );
-		bool isWhitespace( int ch );
 	};
 }
 

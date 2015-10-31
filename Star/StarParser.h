@@ -61,6 +61,7 @@ namespace Star
 			QMap<QString,QVariant> d_items;
 			QList<Loop> d_loops;
 		};
+		typedef QMap<QString,Block> Blocks;
 		struct Reference
 		{
 			QVariant d_source;
@@ -71,10 +72,10 @@ namespace Star
 		};
 
 		StarParser(bool newSyntax = true); // true..2012 syntax; false..1991 syntax
-		bool parse( QIODevice* );
+		bool parse( QIODevice*, const char* codec = "UTF-8" );
 		const QString& getError() const { return d_error; }
 		const Block& getGlobal() const { return d_global; }
-		const QMap<QString,Block>& getBlocks() const { return d_blocks; }
+		const Blocks& getBlocks() const { return d_blocks; }
 		void clear();
 		bool isNewSyntax() const { return d_lex.isNewSyntax(); }
 		void setNewSyntax(bool on) { d_lex.setNewSyntax(on); }
@@ -100,7 +101,7 @@ namespace Star
 		StarLexer d_lex;
 		QString d_error;
 		Block d_global;
-		QMap<QString,Block> d_blocks;
+		Blocks d_blocks;
 		StarLexer::Token d_lookAhead;
 	};
 }
