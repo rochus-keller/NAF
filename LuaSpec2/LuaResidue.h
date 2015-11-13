@@ -54,6 +54,12 @@ namespace Lua
 
 	struct LuaResidueType  // : public LuaObject
 	{
+		static int linkAtoms(lua_State *L);
+		static int unlinkAtoms(lua_State *L);
+		static int removeAtomGroup(lua_State *L);
+		static int removeAtom(lua_State *L);
+		static int createAtomGroup(lua_State *L);
+		static int createAtom(lua_State *L);
 		static int setValue(lua_State *L);
 		static int getSystemType(lua_State *L);
 		static int getAtomGroup(lua_State *L);

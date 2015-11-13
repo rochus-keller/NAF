@@ -71,6 +71,12 @@ static const luaL_reg _residueType[] =
 	{"getAtom",  LuaResidueType::getAtom },
 	{"getAtomGroup",  LuaResidueType::getAtomGroup },
 	{"getSystemType",  LuaResidueType::getSystemType },
+	{"createAtom",  LuaResidueType::createAtom },
+	{"createAtomGroup",  LuaResidueType::createAtomGroup },
+	{"removeAtom",  LuaResidueType::removeAtom },
+	{"removeAtomGroup",  LuaResidueType::removeAtomGroup },
+	{"unlinkAtoms",  LuaResidueType::unlinkAtoms },
+	{"linkAtoms",  LuaResidueType::linkAtoms },
 	{0,0}
 };
 
@@ -435,5 +441,70 @@ int LuaAtom::setMagnitude(lua_State *L)
 		luaL_error(L, "Expecting number >= 0");
 
 	obj->getOwner()->setNum( obj, v );
+	return 0;
+}
+
+int LuaResidueType::createAtom(lua_State *L)
+{
+	ResidueType* obj = RefBinding<ResidueType>::check( L, 1);
+	AtomType::Isotope iso = AtomType::parseLabel( luaL_checkstring( L, 3 ) );
+	if( iso == AtomType::None )
+		luaL_argerror( L, 3, "invalid isotope type symbol" );
+	int num = 1;
+	if( lua_gettop(L) > 3 )
+		num = luaL_checkinteger( L, 4 );
+	if( num < 0 || num > 0xfff )
+		luaL_argerror( L, 4, "invalid number of atoms" );
+	Atom* a = obj->addAtom(
+				luaL_checkstring( L, 2 ),
+				iso,
+				num,
+				RefBinding<AtomGroup>::cast( L, 5 )
+				);
+	if( a == 0 )
+		luaL_error( L, "could not create Atom with the given arguments" );
+	return 1;
+}
+
+int LuaResidueType::createAtomGroup(lua_State *L)
+{
+	ResidueType* obj = RefBinding<ResidueType>::check( L, 1);
+	AtomGroup* g = obj->addGroup( luaL_checkstring( L, 2 ) );
+	if( g == 0 )
+		luaL_error( L, "could not create AtomGroup with the given arguments" );
+	return 1;
+}
+
+int LuaResidueType::removeAtom(lua_State *L)
+{
+	ResidueType* obj = RefBinding<ResidueType>::check( L, 1);
+	Atom* a = RefBinding<Atom>::check( L, 2);
+	obj->removeAtom( a->getName() );
+	return 0;
+}
+
+int LuaResidueType::removeAtomGroup(lua_State *L)
+{
+	ResidueType* obj = RefBinding<ResidueType>::check( L, 1);
+	AtomGroup* a = RefBinding<AtomGroup>::check( L, 2);
+	obj->removeGroup( a->getName() );
+	return 0;
+}
+
+int LuaResidueType::linkAtoms(lua_State *L)
+{
+	ResidueType* obj = RefBinding<ResidueType>::check( L, 1);
+	Atom* a1 = RefBinding<Atom>::check( L, 2);
+	Atom* a2 = RefBinding<Atom>::check( L, 3);
+	obj->link( a1, a2 );
+	return 0;
+}
+
+int LuaResidueType::unlinkAtoms(lua_State *L)
+{
+	ResidueType* obj = RefBinding<ResidueType>::check( L, 1);
+	Atom* a1 = RefBinding<Atom>::check( L, 2);
+	Atom* a2 = RefBinding<Atom>::check( L, 3);
+	obj->unlink( a1, a2 );
 	return 0;
 }

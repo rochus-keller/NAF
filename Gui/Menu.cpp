@@ -116,6 +116,7 @@ void MenuItem::init()
     connect( this, SIGNAL( triggered( bool ) ), this, SLOT( handleTrigger( bool ) ) );
     setEnabled( false );
 	setChecked( false );
+	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild Menüs umplatziert und umbenennt
 }
 
 MenuItem::~MenuItem()

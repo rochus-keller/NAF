@@ -20,6 +20,7 @@
 
 #include "StarLexer.h"
 #include <QtDebug>
+#include <QTextStream>
 using namespace Star;
 
 enum { BEL = 7,
@@ -38,23 +39,44 @@ enum { BEL = 7,
 	 };
 
 StarLexer::StarLexer(bool newSyntax) :
-	d_lineNr(0),d_colNr(0),d_newSyntax(newSyntax)
+	d_lineNr(0),d_colNr(0),d_newSyntax(newSyntax),d_in(0)
 {
+}
+
+StarLexer::StarLexer(const StarLexer & rhs):
+	d_lineNr(0),d_colNr(0),d_newSyntax(true),d_in(0)
+{
+	*this = rhs;
+}
+
+StarLexer::~StarLexer()
+{
+	if( d_in )
+		delete d_in;
 }
 
 bool StarLexer::setStream(QIODevice *in, const char *codec)
 {
 	if( in == 0 )
+	{
+		if( d_in )
+			delete d_in;
+		// das muss so sein; wenn erst im Destruktor gelöscht oder Stream sogar ein Value Object, dann stürzt
+		// Prozess beim Löschen von Lexer in QObject bzw. dessen Mutex.
+		d_in = 0;
 		return false;
+	}
 	if( !in->isOpen() )
 	{
 		if( !in->open( QIODevice::ReadOnly ) )
 			return false;
 	}
-	d_in.setAutoDetectUnicode(false);
-	d_in.setDevice( in );
-	d_in.setCodec( codec );
-	d_in.setAutoDetectUnicode(true);
+	if( d_in == 0 )
+		d_in = new QTextStream();
+	d_in->setAutoDetectUnicode(false);
+	d_in->setDevice( in );
+	d_in->setCodec( codec );
+	d_in->setAutoDetectUnicode(true);
 	d_lineNr = 0;
 	d_colNr = 0;
 	d_line.clear();
@@ -63,9 +85,9 @@ bool StarLexer::setStream(QIODevice *in, const char *codec)
 
 void StarLexer::reset()
 {
-	d_in.seek(0);
-	d_in.reset();
-	d_in.resetStatus();
+	d_in->seek(0);
+	d_in->reset();
+	d_in->resetStatus();
 	d_lineNr = 0;
 	d_colNr = 0;
 	d_line.clear();
@@ -76,7 +98,7 @@ StarLexer::Token StarLexer::nextToken()
 	skipWhiteSpace();
 	while( d_colNr >= d_line.size() )
 	{
-		if( d_in.atEnd() )
+		if( d_in->atEnd() )
 			return Token( Token::EndOfStream, d_lineNr, d_colNr );
 		nextLine();
 		if( !checkLineChars() )
@@ -191,11 +213,17 @@ void StarLexer::dump()
 	qDebug() << "****" << t.typeName() << t.d_line << t.d_col << t.d_text;
 }
 
+StarLexer &StarLexer::operator =(const StarLexer &rhs)
+{
+	d_newSyntax = rhs.d_newSyntax;
+	return *this;
+}
+
 void StarLexer::nextLine()
 {
 	d_colNr = 0;
 	d_lineNr++;
-	d_line = d_in.readLine();
+	d_line = d_in->readLine();
 }
 
 void StarLexer::skipWhiteSpace()
@@ -306,7 +334,7 @@ StarLexer::Token StarLexer::readTrippleQuotString(int sym)
 			return Token( Token::SyntaxError, d_lineNr, d_colNr, res );
 		while( true )
 		{
-			if( d_in.atEnd() )
+			if( d_in->atEnd() )
 				return Token( Token::SyntaxError, d_lineNr, d_colNr, res ); // TrippleQuote without end
 			nextLine();
 			if( !checkLineChars() )
@@ -345,7 +373,7 @@ StarLexer::Token StarLexer::readSemicolonString()
 	const int line = d_lineNr;
 	while( true )
 	{
-		if( d_in.atEnd() )
+		if( d_in->atEnd() )
 			return Token( Token::SyntaxError, d_lineNr, d_colNr, res ); // Semicolon String without end
 		nextLine();
 		if( !checkLineChars() )

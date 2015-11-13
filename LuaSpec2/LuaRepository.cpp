@@ -29,7 +29,6 @@
 using namespace Spec;
 using namespace Lua;
 
-
 static const luaL_reg _lib[] = 
 {
 	{"createProject",  LuaRepository::createProject },
@@ -52,6 +51,8 @@ static const luaL_reg _lib[] =
 	{"getAuthor",  LuaRepository::getAuthor },
     {"getScript",  LuaRepository::getScript },
     {"getScriptNames",  LuaRepository::getScriptNames },
+	{"removeResidueType", LuaRepository::removeResidueType },
+	{"createResidueType", LuaRepository::createResidueType },
 	{0,0}
 };
 
@@ -351,4 +352,26 @@ int LuaRepository::createProject(lua_State *L)
 		luaL_error( L, "Unknown exception when creating project" );
 	}
 	return 1;
+}
+
+int LuaRepository::createResidueType(lua_State *L)
+{
+	Repository* obj = RefBinding<Repository>::check( L, 1);
+	Root::Ref<ResidueType> rt = obj->addResidueType(
+				luaL_checkstring( L, 2 ), // Full Name
+				luaL_checkstring( L, 3 ), // Short Name (must be unique)
+				luaL_checkstring( L, 4 ) // Single Letter
+				);
+	if( rt.isNull() )
+		luaL_error( L, "invalid arguments (empty or not unique)" );
+	return 1;
+}
+
+int LuaRepository::removeResidueType(lua_State *L)
+{
+	Repository* obj = RefBinding<Repository>::check( L, 1);
+	ResidueType* rt = RefBinding<ResidueType>::check( L, 2);
+	if( !obj->remove( rt ) )
+		luaL_error( L, "cannot remove the given residue type since it is in use" );
+	return 0;
 }

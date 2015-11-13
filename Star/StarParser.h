@@ -42,7 +42,7 @@ namespace Star
 			J. Chem. Inf. Model., 52 (8), 1901-1906 (2012) DOI: 10.1021/ci300074v
 	*/
 
-	class StarParser : public QObject // für tr()
+	class StarParser
 	{
 	public:
 		struct Loop
@@ -84,6 +84,7 @@ namespace Star
 	protected:
 		bool error( const QString& msg );
 		bool error( const QString &msg, const StarLexer::Token& );
+		bool unarm( bool );
 		bool unexpectedToken( const StarLexer::Token& );
 		bool parseBlock( Block&, bool frameIn, bool frameOut );
 		bool parseLoopHeader( Loop&, int level );

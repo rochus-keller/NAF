@@ -22,6 +22,7 @@
 #include <QDebug>
 using namespace Star;
 
+
 StarParser::StarParser(bool newSyntax):d_lex(newSyntax)
 {
 }
@@ -30,7 +31,7 @@ bool StarParser::parse(QIODevice * in, const char *codec)
 {
 	clear();
 	if( !d_lex.setStream( in, codec ) )
-		return error( tr("cannot open input device" ) );
+		return error( QString("cannot open input device" ) );
 
 	StarLexer::Token t = nextToken();
 	while( t.d_type != StarLexer::Token::EndOfStream )
@@ -39,17 +40,17 @@ bool StarParser::parse(QIODevice * in, const char *codec)
 		{
 		case StarLexer::Token::Global:
 			if( !t.d_text.isEmpty() )
-				return error( tr("global_ with block name"), t );
+				return error( QString("global_ with block name"), t );
 			else if( !parseBlock( d_global, false, false ) )
-				return false;
+				return unarm(false);
 			break;
 		case StarLexer::Token::Data:
 			if( t.d_text.isEmpty() )
-				return error( tr("data_ with empty block name"), t );
+				return error( QString("data_ with empty block name"), t );
 			if( d_blocks.contains( t.d_text ) )
-				return error( tr("data_ block name not unique"), t );
+				return error( QString("data_ block name not unique"), t );
 			else if( !parseBlock( d_blocks[t.d_text], true, false ) )
-				return false;
+				return unarm(false);
 			break;
 		case StarLexer::Token::EndOfStream:
 			break;
@@ -60,9 +61,9 @@ bool StarParser::parse(QIODevice * in, const char *codec)
 	}
 
 	if( d_lex.isNewSyntax() && d_blocks.isEmpty() )
-		return error( tr("file contains no data_ block" ) );
+		return error( QString("file contains no data_ block" ) );
 
-	return true;
+	return unarm(true);
 }
 
 void StarParser::clear()
@@ -76,18 +77,24 @@ void StarParser::clear()
 bool StarParser::error(const QString & msg)
 {
 	d_error = msg;
-	return false;
+	return unarm(false);
 }
 
 bool StarParser::error(const QString & msg, const StarLexer::Token & t)
 {
-	d_error = tr("%1:%2: %3 : %4").arg( t.d_line ).arg( t.d_col ).arg( msg ).arg( t.d_text.simplified() );
-	return false;
+	d_error = QString("%1:%2: %3 : %4").arg( t.d_line ).arg( t.d_col ).arg( msg ).arg( t.d_text.simplified() );
+	return unarm(false);
+}
+
+bool StarParser::unarm(bool res)
+{
+	d_lex.setStream( 0 );
+	return res;
 }
 
 bool StarParser::unexpectedToken(const StarLexer::Token & t)
 {
-	return error( tr("unexpected token '%1'").arg( t.typeName() ), t );
+	return error( QString("unexpected token '%1'").arg( t.typeName() ), t );
 }
 
 bool StarParser::parseBlock(StarParser::Block & db, bool frameIn, bool frameOut)
@@ -100,7 +107,7 @@ bool StarParser::parseBlock(StarParser::Block & db, bool frameIn, bool frameOut)
 		{
 			nextToken(); // Eat token
 			if( db.d_items.contains( t.d_text ) )
-				return error( tr("data name not unique"), t );
+				return error( QString("data name not unique"), t );
 			else if( !parseDataValue( db.d_items[t.d_text] ) )
 				return false;
 		}else if( t.d_type == StarLexer::Token::Loop )
@@ -122,12 +129,12 @@ bool StarParser::parseBlock(StarParser::Block & db, bool frameIn, bool frameOut)
 				else if( !frameIn )
 					return unexpectedToken( t );
 				else
-					return error( tr("save_ with empty block name"), t );
+					return error( QString("save_ with empty block name"), t );
 			}else if( !frameIn )
 				return unexpectedToken( t );
 
 			if( db.d_blocks.contains( t.d_text ) )
-				return error( tr("save_ block name not unique"), t );
+				return error( QString("save_ block name not unique"), t );
 			else if( !parseBlock( db.d_blocks[t.d_text], d_lex.isNewSyntax(), true ) )
 				return false;
 		}else if( !frameOut && !firstTime && ( t.d_type == StarLexer::Token::Data || t.d_type == StarLexer::Token::Global ||
@@ -205,13 +212,16 @@ bool StarParser::parseLoopTable(const Loop::Headers & headers, Loop::Table & tab
 			if( table.last().size() < headers[level].size() )
 			{
 				nextToken(); // eat token
-				table.last().append( t.d_text );
+				if( d_lex.isNewSyntax() )
+					table.last().append( t.d_text );
+				else
+					table.last().append( t.d_text.toAscii() );
 			}
 		}else if( t.d_type == StarLexer::Token::Stop )
 		{
 			nextToken(); // eat token
 			if( table.last().size() < headers[level].size() )
-				return error( tr("invalid number of loop values"), t );
+				return error( QString("invalid number of loop values"), t );
 			// Fall: wenn zwar verschachtelte Loops definiert, aber auch Records nur mit Werten für Toplevel in Tabelle sind.
 			// Siehe Beispiel: http://www.iucr.org/__data/iucr/cif/software/oostar/oostar_ddl1/bin/data/ex.1
 			// Fall: array_usage.str in starlib2 examples; überzählige loop_ am Schluss
@@ -238,7 +248,7 @@ bool StarParser::parseLoopTable(const Loop::Headers & headers, Loop::Table & tab
 								  t.d_type == StarLexer::Token::EndOfStream ) )
 		{
 			if( table.last().size() < headers[level].size() )
-				return error( tr("invalid number of loop values"), t );
+				return error( QString("invalid number of loop values"), t );
 			return true; // zurück ohne eat token
 		}else
 			return unexpectedToken( t );
@@ -256,7 +266,10 @@ bool StarParser::parseDataValue(QVariant & v)
 	case StarLexer::Token::Quoted:
 	case StarLexer::Token::NonQuoted:
 	case StarLexer::Token::Multiline:
-		v = t.d_text;
+		if( d_lex.isNewSyntax() )
+			v = t.d_text;
+		else
+			v = t.d_text.toAscii();
 		return true;
 	case StarLexer::Token::ListStart:
 		{
@@ -404,7 +417,7 @@ bool StarParser::parseReference(StarParser::Reference & r)
 	else if( key == "key" && r.d_key.isNull() )
 		r.d_key = v;
 	else
-		return error( tr("invalid ref-label '%1'").arg( key ), t1 );
+		return error( QString("invalid ref-label '%1'").arg( key ), t1 );
 
 	t1 = nextToken();
 	switch( t1.d_type )
@@ -452,7 +465,7 @@ void StarParser::dump(QTextStream & out)
 	QMap<QString,Block>::const_iterator i;
 	for( i = d_blocks.begin(); i != d_blocks.end(); ++i )
 	{
-		dumpBlock( out, i.value(), tr("### Block '%1'").arg(i.key()), 0 );
+		dumpBlock( out, i.value(), QString("### Block '%1'").arg(i.key()), 0 );
 	}
 
 	out << "*********** End of Dump **********" << endl;
@@ -488,7 +501,7 @@ void StarParser::dumpBlock(QTextStream& out, const StarParser::Block & b, const 
 	QMap<QString,Block>::const_iterator i;
 	for( i = b.d_blocks.begin(); i != b.d_blocks.end(); ++i )
 	{
-		dumpBlock( out, i.value(), tr("### Block '%1'").arg(i.key()), level + 1 );
+		dumpBlock( out, i.value(), QString("### Block '%1'").arg(i.key()), level + 1 );
 	}
 }
 

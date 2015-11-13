@@ -30,6 +30,7 @@ UiFunction::UiFunction(QObject *parent)
 {
     connect( this, SIGNAL( triggered( bool ) ), this, SLOT( execute() ) );
     setEnabled(true);
+	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild Menüs umplatziert und umbenennt
 }
 
 UiFunction::UiFunction(const QString& text, QObject *parent)
@@ -37,6 +38,7 @@ UiFunction::UiFunction(const QString& text, QObject *parent)
 {
     connect( this, SIGNAL( triggered( bool ) ), this, SLOT( execute() ) );
     setEnabled(true);
+	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild Menüs umplatziert und umbenennt
 }
 
 UiFunction::UiFunction(const QString& text, QObject *parent, QObject *receiver, const char* member)
@@ -45,6 +47,7 @@ UiFunction::UiFunction(const QString& text, QObject *parent, QObject *receiver, 
     connect( this, SIGNAL( triggered( bool ) ), this, SLOT( execute() ) );
     connect( this, SIGNAL( handle() ), receiver, member );
     setEnabled(true);
+	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild Menüs umplatziert und umbenennt
 }
 
 UiFunction::~UiFunction()

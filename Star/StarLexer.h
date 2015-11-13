@@ -22,7 +22,10 @@
 #ifndef STARLEXER_H
 #define STARLEXER_H
 
-#include <QTextStream>
+#include <QString>
+
+class QTextStream;
+class QIODevice;
 
 namespace Star
 {
@@ -55,6 +58,8 @@ namespace Star
 		};
 
 		StarLexer(bool newSyntax=true);
+		StarLexer( const StarLexer& );
+		~StarLexer();
 		bool setStream( QIODevice* in, const char* codec = "UTF-8" );
 		void reset();
 		Token nextToken();
@@ -62,6 +67,7 @@ namespace Star
 		bool isNewSyntax() const { return d_newSyntax; }
 		void setNewSyntax( bool on ) { d_newSyntax = on; }
 		void dump();
+		StarLexer& operator=( const StarLexer& rhs );
 	protected:
 		void nextLine();
 		void skipWhiteSpace();
@@ -76,7 +82,7 @@ namespace Star
 		QString escapeString( const QString& str, int sym, bool* ok = 0 ) const;
 		bool matchTuple( int cur, int sym, int count ) const;
 	private:
-		QTextStream d_in;
+		QTextStream* d_in;
 		int d_lineNr; // current line, starting with 1
 		int d_colNr;  // current column (left of char), starting with 0
 		QString d_line;

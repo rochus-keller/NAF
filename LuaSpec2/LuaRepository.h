@@ -31,6 +31,8 @@ namespace Lua
 {
 	struct LuaRepository // : public LuaObject 
 	{
+		static int removeResidueType(lua_State *L);
+		static int createResidueType(lua_State *L);
 		static int createProject(lua_State *L);
 		static int touch(lua_State *L);
 		static int open(lua_State *L);
