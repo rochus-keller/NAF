@@ -223,7 +223,7 @@ QString CodeEditor::textLine(int i) const
 void CodeEditor::setName(const QString &str)
 {
 	d_name = str;
-	// nicht praktisch da mit setText gelscht: setDocumentTitle( str )
+	// nicht praktisch da mit setText gelöscht: setDocumentTitle( str )
 	emit modificationChanged( document()->isModified() ); // Damit Titel auch in GUI nachgefhrt werden kann
 }
 

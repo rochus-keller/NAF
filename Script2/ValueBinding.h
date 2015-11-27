@@ -330,7 +330,25 @@ namespace Lua
 			lua_setmetatable( L, -2 );
 			return p;
         }
-    protected:
+		static T* create( lua_State *L, const T& v, bool findSubclassMeta = false )
+		{
+			T* p = create( L );
+			const int obj = lua_gettop( L );
+			*p = v;
+			if( findSubclassMeta )
+			{
+				// Finde Meta von der tatsächlichen Unterklasse von T
+				lua_pushstring(L, typeid(v).name() );
+				lua_rawget( L, LUA_REGISTRYINDEX );
+				// Stack: obj, meta | nil
+				if( lua_isnil( L, -1 ) )
+					lua_pop( L, 1 ); // nil
+				else
+					lua_setmetatable( L, obj );
+			} // else behalte Meta vom Typ T
+			return p;
+		}
+	protected:
         ValueBinding() {}
         static int createInstance( lua_State *L )
         {

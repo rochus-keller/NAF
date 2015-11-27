@@ -45,7 +45,9 @@ static const char* s_prompt = "Lua> ";
 Terminal2::Terminal2(QWidget* parent, Lua::Engine2* l):
 	QTextEdit( parent ), d_lua( l )
 {
-    Q_ASSERT( l );
+	if( d_lua == 0 )
+		d_lua = Lua::Engine2::getInst();
+	Q_ASSERT( d_lua != 0 );
 
 	QFont font;
 	font.setPointSize(9);
@@ -80,6 +82,14 @@ Terminal2::Terminal2(QWidget* parent, Lua::Engine2* l):
 	new QShortcut( tr("F12"), this, SLOT(handlePrintStack()) );
 
     connect( d_lua, SIGNAL(onNotify(int,QByteArray,int)), this, SLOT(onNotify(int,QByteArray,int)) );
+	printText( QString("%1 %2").arg(LUA_RELEASE).arg(LUA_COPYRIGHT) );
+}
+
+void Terminal2::printText(const QString & str)
+{
+	d_out.insertText( str, s_outf );
+	d_out.insertText( QString( QChar::ParagraphSeparator ), s_pf );
+	moveCursor( QTextCursor::End );
 }
 
 Terminal2::~Terminal2()
@@ -219,9 +229,7 @@ void Terminal2::onNotify(int messageType, QByteArray val1, int val2)
     switch( messageType )
     {
 	case Engine2::Print:
-        d_out.insertText( val1, s_outf );
-        d_out.insertText( QString( QChar::ParagraphSeparator ), s_pf );
-		moveCursor( QTextCursor::End );
+		printText( val1 );
 		break;
 	case Engine2::Error:
         d_out.insertText( val1, s_errf );

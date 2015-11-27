@@ -33,7 +33,8 @@ namespace Lua
 	public:
 		void paste();
 		void clear();
-        Terminal2(QWidget*, Engine2 *);
+		Terminal2(QWidget*, Engine2 * = 0);
+		void printText( const QString& );
         virtual ~Terminal2();
 	private:
         Lua::Engine2* d_lua;
