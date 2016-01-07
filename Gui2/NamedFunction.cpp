@@ -97,7 +97,7 @@ bool NamedFunction::callFunction( QObject* o )
     // Signatur in Qt4.4:
     //    QMetaCallEvent(int id, const QObject *sender, int signalId,
     //    int nargs = 0, int *types = 0, void **args = 0, QSemaphore *semaphore = 0);
-    QMetaCallEvent e( slot, this, sig ); // In private/qobject, aber mit Q_CORE_EXPORT deklariert
+	QMetaCallEvent e( slot, this, sig ); // In qobject private, aber mit Q_CORE_EXPORT deklariert
     QApplication::sendEvent( o, &e );
 #else
     // NOTE: Da in der Praxis niemand eine NamedFunction mit Parametern verwendet,

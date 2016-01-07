@@ -34,6 +34,7 @@ namespace Gui2
 	public:
         // Receiver wird automatisch gesucht
 		AutoShortcut( QWidget * parent, const char * member, const QKeySequence & key = QKeySequence() );
+		AutoShortcut( const QKeySequence & key, QWidget * parent, const char * member );
 
         // Receiver wird explizit angegeben
 		AutoShortcut( const QKeySequence & key, QWidget * parent, 

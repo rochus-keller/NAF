@@ -59,3 +59,9 @@ AutoShortcut::AutoShortcut( QWidget * parent, const char * member, const QKeySeq
 {
 	d_f = new NamedFunction( QString(), member, this );
 }
+
+AutoShortcut::AutoShortcut(const QKeySequence &key, QWidget *parent, const char *member)
+	:QShortcut(key, parent,0,0, Qt::WidgetWithChildrenShortcut )
+{
+	d_f = new NamedFunction( QString(), member, this );
+}

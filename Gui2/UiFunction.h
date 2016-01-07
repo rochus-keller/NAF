@@ -60,13 +60,14 @@ namespace Gui2
         /* else pass through */ \
     }
     // 2014-05-04: folgende Funktion ruft neu gleich selber setCheckable auf, wodurch bei Menü unnötig
+	// NOTE: if(enabled) damit checked nur dann geprueft wird; sonst muss ueberall der Code auch noch auf Nullpointer gesichert werden
 	#define CHECKED_IF( enabled, checked ) \
     { \
         Gui2::UiFunction* f = Gui2::UiFunction::me(); \
         if( f && f->isPreparing() ) \
         { \
-            f->setEnabled( enabled ); \
-            if(enabled) { f->setCheckable(true); f->setChecked( checked ); } \
+			f->setEnabled( enabled ); f->setCheckable(true); \
+			if(enabled) { f->setChecked( checked ); } \
             return; \
         } \
         if( !( enabled ) ) return; \
