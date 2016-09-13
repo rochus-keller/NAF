@@ -230,56 +230,35 @@ void FelixSpectrum::readParams()
 		if( data_size[ i ] <= 0.0 )
 			throw Root::Exception( "Invalid number of samples <= 0.0" );
 
-        // Unsinn:
+		// vor 1.9.1; verworfen zu Gunsten nachfolgender Lösungen von Sparky und Yingang Feng:
 //		if( g_useXeasyN )
 //		{
 //			const double delta = w[ i ] / double( data_size[ i ] );
 //			center[ i ] -= delta / 2.0;
 //			w[ i ] -= delta;
 //		}
-
-        /*
-          TODO
-          yingangfeng@gmail.com 02 Nov 2007
-          Felix .mat header have the reference information:
-        The first 4-bytes is the number of dimension (Dim);
-        From 80+4x6xDim is the observe freguency(MHz, a 4-bytes float number per dimension);
-        From 80+4x7xDim is the spectral width(Hz, a 4-bytes float number per dimension);
-        From 80+4x8xDim is the reference point(Index, a 4-bytes float number per dimension);
-        From 80+4x9xDim is the reference shift(Hz, a 4-bytes float number per dimension).
-        From 880 is the label for each dimension(8 4-bytes characters per dimension).
-        (I got these from source code of sparky, not the official document.)
-
-        Please note the index number is a float number, and unit of reference shift is Hz.
-        Also note the index number may be larger than the number of spectral point(In my HSQC,
-        the first dim have 512 point, but ref point is the 513rd point).
-
-        It seems currently Cara (1.8.4) always use the center point as reference point, which is
-        not suitable for my HSQC.
-          */
+//      const double delta = w[ i ] / double( data_size[ i ] );
+//      w -= delta;
+//		const float idxN = center[ i ] + w[ i ] * 0.5;
+//		const float idx0 = center[ i ] - w[ i ] * 0.5;
 
         // So wird's in Sparky gemacht
 		const double ppm_per_data_point = w[ i ] / data_size[ i ];
 		// 1 = origin in felix
-		const float idxN = center[ i ] + ppm_per_data_point * ( index[ i ] - 1.0 ) * 0.5;
-		const float idx0 = center[ i ] - ppm_per_data_point * ( index[ i ] - 1.0 ) * 0.5;
-        // RISK: mangels Testdaten noch nicht validiert
 
-        // 1.9.1: Mache es so wie in UcsfSpectrum
-//        const double delta = w[ i ] / double( data_size[ i ] );
-//        w -= delta;
-//		const float idxN = center[ i ] + w[ i ] * 0.5;
-//		const float idx0 = center[ i ] - w[ i ] * 0.5;
+		// Ansatz RK (mangels Testdaten noch nicht validiert)
+		// const float idxN = center[ i ] + ppm_per_data_point * ( index[ i ] - 1.0 ) * 0.5;
+		// const float idx0 = center[ i ] - ppm_per_data_point * ( index[ i ] - 1.0 ) * 0.5;
+		// Ansatz Prof. Yingang Feng, Qingdao Institute, Korrespondenz per 2016-05-10
+		const float idxN = center[ i ] + ppm_per_data_point * ( index[ i ] - 1.0 - 0.5 );
+		const float idx0 = center[ i ] + ppm_per_data_point * ( index[ i ] - data_size[ i ] - 0.5 );
 
-//		qDebug( "Felix Dim=%d IdxN=%f Idx0=%f Width=%f Points=%d %s",
-//			i, idxN, idx0, w[ i ], data_size[ i ], buf );
 		d_scales[ i ] = Scale( idxN, idx0, 
 			AtomType::parse( buf, center[i] ), Scale::Unfolded, data_size[ i ] );
 	}
 	totalSize *= Root::Int64(d_word);
 	totalSize += Root::Int64(d_off);
-	if( fileSize < totalSize )	// TEST
-		// qDebug( "WARNING: felix file too short: expectedSize=%d actualSize=%d", totalSize, fileSize );
+	if( fileSize < totalSize )
 		throw Root::Exception( "File is too short" );
 }
 

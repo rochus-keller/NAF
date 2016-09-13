@@ -43,6 +43,7 @@ static int pushGlobalValueTable(lua_State *L)
 
 struct LuaPropertyValue
 {
+	// Mache Data implicitly shared, so dass nicht jedes Assignment einen neuen Lua ref anlegt.
 	struct Data : public QSharedData
 	{
 		int d_ref; // Ergebnis von luaL_ref

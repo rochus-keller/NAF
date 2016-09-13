@@ -47,10 +47,10 @@ bool Lua::ExpressionParser::parse(const QByteArray & str)
 {
     // http://www.lua.org/manual/5.1/manual.html Subset
     // exp ::=  nil | false | true | Number | String | prefixexp | exp binop exp | unop exp
-    // prefixexp ::= var | `(´ exp `)´
-    // var ::=  Name | prefixexp `[´ exp `]´ | prefixexp `.´ Name
-    // binop ::= `+´ | `-´ | `*´ | `/´ | `^´ | `%´ | `..´ | `<´ | `<=´ | `>´ | `>=´ | `==´ | `~=´ | and | or
-    // unop ::= `-´ | not | `#´
+    // prefixexp ::= var | '(' exp ')'
+    // var ::=  Name | prefixexp '[' exp ']' | prefixexp '.' Name
+    // binop ::= '+' | '-' | '*' | '/' | '^' | '%' | '..' | '<' | '<=' | '>' | '>=' | '==' | '~=' | and | or
+    // unop ::= '-' | not | '#'
     // Leider ist die Syntax mehrdeutig; Lösungen siehe http://www.engr.mun.ca/~theo/Misc/exp_parsing.htm
     // Siehe auch http://lua-users.org/lists/lua-l/2011-10/msg00438.html
 
@@ -398,7 +398,7 @@ Lexer::Operator Lexer::fetchOp()
     case '%':
         d_source.eat();
         return Percent;
-    case '<': // `<´ | `<=´
+    case '<': // '<' | '<='
         d_source.peek( ch2, 1 );
         if( ch2[0] == '=' )
         {
@@ -1068,7 +1068,7 @@ void ExpressionParser::prefixexp(AstNode* n)
 
 void ExpressionParser::primaryexp(ExpressionParser::AstNode * n)
 {
-    /* primaryexp -> prefixexp { `.' NAME | `[' exp `]' } */
+    /* primaryexp -> prefixexp { '.' NAME | '[' exp ']' } */
     prefixexp( n );
     // n->d_left ist bereits gesetzt
     for(;;)
@@ -1122,7 +1122,7 @@ static const struct {
   quint8 right; /* right priority */
 } priority[] = {  /* ORDER OPR */
                   { 0, 0 }, // NoOp
-   {6, 6}, {6, 6}, {7, 7}, {7, 7}, {7, 7},  /* `+' `-' `/' `%' */
+   {6, 6}, {6, 6}, {7, 7}, {7, 7}, {7, 7},  /* '+' '-' '/' '%' */
    {10, 9}, {5, 4},                 /* power and concat (right associative) */
    {3, 3}, {3, 3},                  /* equality and inequality */
    {3, 3}, {3, 3}, {3, 3}, {3, 3},  /* order */
@@ -1160,7 +1160,7 @@ Lexer::Operator ExpressionParser::subexpr(ExpressionParser::AstNode * n, quint32
 {
     /*
     ** subexpr -> (simpleexp | unop subexpr) { binop subexpr }
-    ** where `binop' is any binary operator with a priority higher than `limit'
+    ** where 'binop' is any binary operator with a priority higher than 'limit'
     */
     Lexer::Token tok = d_lex.peek();
     if( _isUnop(tok) )
@@ -1172,7 +1172,7 @@ Lexer::Operator ExpressionParser::subexpr(ExpressionParser::AstNode * n, quint32
         simpleexp( n );
     // hier hat also n->d_left einen Wert
     // qDebug() << QString(level*4,QChar(' ') ) << "subexpr: simpe|unop" << _toTypeStr( n->d_left->d_type ) << _toValStr( n->d_left->d_type, n->d_left->d_val );
-    /* expand while operators have priorities higher than `limit' */
+    /* expand while operators have priorities higher than 'limit' */
     tok = d_lex.peek();
     Lexer::Operator op = _getbinopr( tok );
     while( op != Lexer::NoOp && priority[op].left > limit )

@@ -426,7 +426,7 @@ int LuaPeakList::setAssig(lua_State *L)
 	Peak* p = RefBinding<Peak>::check( L, 2 );
 	Peak::Assig a;
 	for( int i = 3; i <= n; i++ )
-		a[ i-2 ] = luaL_checknumber( L, i ); // TEST
+		a[ i-3 ] = luaL_checknumber( L, i );
 	obj->setAssig( p, a );
 	return 0;
 }

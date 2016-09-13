@@ -66,7 +66,7 @@ namespace Lua
         {
             NoOp,
             // Gleiche Reihenfolge wie in lcode.h
-            Plus, Minus, Star, Slash, Percent,   /* `+' `-' '*' `/' `%' */
+            Plus, Minus, Star, Slash, Percent,   /* '+' '-' '*' '/' '%' */
             Hat, Concat,                               /* power and concat (right associative) */
             Neq, Eq,                                   /* equality and inequality */
             Lt, Leq, Gt, Geq,                          /* order */
@@ -103,9 +103,9 @@ namespace Lua
             Constant,   // nil | false | true | Number | String
             BinOp,      // exp binop exp
             UnOp,       // unop exp
-            DotOp,      // prefixexp `.´ Name
-            BraceOp,    // `(´ exp `)´
-            IndexOp,    // prefixexp `[´ exp `]´
+            DotOp,      // prefixexp '.' Name
+            BraceOp,    // '(' exp ')'
+            IndexOp,    // prefixexp '[' exp ']'
             Name        // Name
         };
         struct AstNode
