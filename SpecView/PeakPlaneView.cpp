@@ -31,7 +31,7 @@ static const Twips g_p = 20;
 static const Twips g_d = 40;	// Lnge eines diag Kreuzsegments
 
 
-static char s_buf[32];
+static char s_buf[50];
 
 const char* PeakPlaneView::menuText[] =
 {
@@ -514,7 +514,7 @@ bool PeakPlaneView::formatSelection( QByteArray & s, PeakPlaneView* v, int lim )
 			if( tag.isNull() )
 				::sprintf( s_buf, "%d", (*p) );
 			else
-				::sprintf( s_buf, "%s", tag.data() );
+				::sprintf( s_buf, "%d %s", (*p), tag.data() );
 			str += s_buf;
             if( i < int(sel.size()) - 1 )
 				str += ", ";

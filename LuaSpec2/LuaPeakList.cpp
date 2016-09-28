@@ -439,7 +439,7 @@ int LuaPeak::setAssig(lua_State *L)
 		luaL_error( L, "Expecting %d arguments", int( obj->getDimCount() + 1 ) );
 	Peak::Assig a;
 	for( int i = 2; i <= n; i++ )
-		a[ i-1 ] = luaL_checknumber( L, i ); // TEST
+		a[ i-2 ] = luaL_checknumber( L, i );
 	obj->getOwner()->setAssig( obj, a );
 	return 0;
 }
