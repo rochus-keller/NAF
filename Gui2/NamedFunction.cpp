@@ -52,13 +52,20 @@ void NamedFunction::prepare()
 	// UiFunction
 	d_preparing = true;
     d_target = 0;
+	setEnabled(false);
 	QObject* prev = 0;
 	QWidget* cur = QApplication::focusWidget();
+//#define Gui2_NamedFunction_SearchAllWayUp
+#ifdef Gui2_NamedFunction_SearchAllWayUp
 	if( cur == 0 )
 		cur = QApplication::activeWindow();
 	while( cur )
+#else
+	if( cur != 0 )
+#endif
 	{
 		// Gehe zuerst durch alle Children, die wir noch nicht besucht haben
+		// Widgets können Controller als Children haben.
 		for( int i = 0; i < cur->children().size(); i++ )
 		{
 			if( cur->children()[i] != prev && prepareImp( cur->children()[i] ) )
