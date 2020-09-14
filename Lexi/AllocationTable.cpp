@@ -37,7 +37,7 @@ struct _AllocationTableImp
 
 	GlyphIndex d_count;
 	//. Number of Components of this PolyGlyph
-	long d_max;
+	int d_max;
 	//. Number of Allocations to remember
 
 	static bool equal( const Allocation& a1, const Allocation& a2 ) 
@@ -54,7 +54,7 @@ struct _AllocationTableImp
 
 //////////////////////////////////////////////////////////////////////
 
-AllocationTable::AllocationTable( GlyphIndex count, long max )
+AllocationTable::AllocationTable( GlyphIndex count, int max )
 {
 	d_this = new _AllocationTableImp;
 	d_this->d_count = count;

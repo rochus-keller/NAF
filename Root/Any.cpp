@@ -304,7 +304,7 @@ Float Any::getFloat() const
 	case Any::Float:
 		{
 			Root::Float f;
-			::memcpy( &f, &d_data, 4 );
+			::memcpy( &f, &d_data, sizeof(Root::Float) );
 			return f;
 		}
 		//return (Root::Float) getWord();
@@ -361,7 +361,7 @@ const char* Any::getCStr() const
 		return ""; // null
 	case Any::Object:
 	case Any::Pointer:
-        ::sprintf( g_buffer, "#%x", (unsigned int)getObject() );
+		::sprintf( g_buffer, "#%p", getObject() );
 		return g_buffer;
 	case Any::Short:
 	case Any::Long:
@@ -441,15 +441,15 @@ void Any::setCStr(const char* d)
 
 void Any::setDouble(Root::Double d)
 {
-	resize( 8 );
-	::memcpy( d_data, (void*) &d, 8 );
+	resize( sizeof(Root::Double) );
+	::memcpy( d_data, (void*) &d, sizeof(Root::Double) );
 	d_type = Any::Double;
 }
 
 void Any::setFloat(Root::Float d)
 {
 	resize( 0 );
-	::memcpy( &d_data, &d, 4 );
+	::memcpy( &d_data, &d, sizeof(Root::Float) );
 	d_type = Any::Float;
 }
 
@@ -633,11 +633,11 @@ Any::Any(const Root::Boolean v)
 
 void Any::setDateTime(const Root::DateTime & v)
 {
-	resize( 8 );
+	resize( 2 * sizeof(Root::ULong) );
 	Root::ULong d = v.getDate().getValue();
 	Root::ULong t = v.getTime().getValue();
-	::memcpy( d_data, (void*) &d, 4 );
-	::memcpy( d_data + 4, (void*) &t, 4 );
+	::memcpy( d_data, (void*) &d, sizeof(Root::ULong) );
+	::memcpy( d_data + sizeof(Root::ULong), (void*) &t, sizeof(Root::ULong) );
 	d_type = Any::DateTime;
 }
 
@@ -659,9 +659,9 @@ const Root::Byte* Any::getBytes() const
 
 void Any::setBytes(const Root::Byte * d, Root::ULong size)
 {
-	resize( size + 4 );
-	::memcpy( d_data, (void*) &size, 4 );
-	::memcpy( d_data + 4, (void*) &d, size );
+	resize( size + sizeof(Root::ULong) );
+	::memcpy( d_data, (void*) &size, sizeof(Root::ULong) );
+	::memcpy( d_data + sizeof(Root::ULong), (void*) &d, size );
 	d_type = Any::Bytes;
 }
 
@@ -686,11 +686,11 @@ Root::Complex Any::getComplex() const
 
 void Any::setComplex(const Root::Complex & c)
 {
-	resize( 16 );
+	resize( 2 * sizeof(double) );
 	double real = c.real();
 	double imag = c.imag();
-	::memcpy( d_data, (void*) &real, 8 );
-	::memcpy( d_data + 8, (void*) &imag, 8 );
+	::memcpy( d_data, (void*) &real, sizeof(double) );
+	::memcpy( d_data + sizeof(double), (void*) &imag, sizeof(double) );
 	d_type = Any::Complex;
 }
 

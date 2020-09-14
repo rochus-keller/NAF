@@ -900,7 +900,7 @@ PeakModel* PeakList::addModel( const char* name )
 
 #define ROUNDOFF_FACTOR 1000.0
 
-class _PeakPosInt : public Root::FixPoint<long,CARA_MAX_DIM>	
+class _PeakPosInt : public Root::FixPoint<int,CARA_MAX_DIM>
 {
 public:
 	inline _PeakPosInt( const PeakPos& rhs )

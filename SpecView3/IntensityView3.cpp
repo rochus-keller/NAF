@@ -26,7 +26,7 @@ using namespace Spec;
 using namespace Root;
 
 //////////////////////////////////////////////////////////////////////
-static const long ColorMax = Root::ByteMax;
+static const int ColorMax = Root::ByteMax;
 
 static double logIt( double v )
 {

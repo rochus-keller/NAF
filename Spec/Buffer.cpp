@@ -339,11 +339,11 @@ void Buffer::smoothScale(const Buffer &src, Buffer &dst)
 		if( newcols == cols ) 
 		{
 			/* shortcut X scaling if possible */
-			::memcpy( &dst.d_cellString[ newcols * rowswritten++ ], tempxelrow, newcols*4 );
+			::memcpy( &dst.d_cellString[ newcols * rowswritten++ ], tempxelrow, newcols*sizeof(Amplitude) );
 		}else 
 		{
 			register Amplitude r;
-			register long fraccoltofill, fraccolleft = 0;
+			register int fraccoltofill, fraccolleft = 0;
 			register int needcol;
 
 			nxP = &dst.d_cellString[ newcols * rowswritten++ ];

@@ -44,7 +44,7 @@ Superpose::~Superpose()
 
 void Superpose::request( const RequisitionVector& request, Requisition& result ) 
 {
-    for( long i = 0; i < d_layouts.size(); ++i ) 
+	for( int i = 0; i < d_layouts.size(); ++i )
 	{
 	    d_layouts[ i ]->request( request, result );
     }
@@ -53,7 +53,7 @@ void Superpose::request( const RequisitionVector& request, Requisition& result )
 void Superpose::allocate( const Allocation& given, const RequisitionVector& requisition,
 		AllocationVector& result ) 
 {
-    for( long i = 0; i < d_layouts.size(); ++i ) 
+	for( int i = 0; i < d_layouts.size(); ++i )
 	{
 	    d_layouts[ i ]->allocate( given, requisition, result );
     }

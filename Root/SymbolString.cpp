@@ -24,7 +24,7 @@ using namespace Root;
 
 uint qHash( const Root::SymbolString& s ) 
 { 
-	return (uint) s.data(); 
+	return qHash(s.data());
 }
 
 // TODO Threadsafe
@@ -146,28 +146,6 @@ const char * SymbolString::getAtom(const char *str)
 	return SymString_findN( str, s - str );
 }
 
-#ifdef __unused
-static const char *SymString_findD(long n) 
-{
-	char str[25];
-	char* s = str + sizeof (str);
-	unsigned long m;
-
-	if (n == LONG_MIN)
-		m = (unsigned long)LONG_MAX + 1;
-	else if (n < 0)
-		m = -n;
-	else
-		m = n;
-	do
-		*--s = (char)m%10 + '0';
-	while ((m /= 10) != 0);
-	if (n < 0)
-		*--s = '-';
-	return SymString_findN( s, str + sizeof (str) - s );
-}
-#endif
-
 SymbolString::SymbolString( const char* str )
 {
 	if( str == 0 )
@@ -182,11 +160,6 @@ SymbolString::SymbolString( const char* str, int len )
 		d_str = getAtom( "" );
 	else
 		d_str = SymString_findN( str, len );
-}
-
-SymbolString::SymbolString( Symbol sym )
-{
-	d_str = (const char*) sym;
 }
 
 SymbolString::~SymbolString()

@@ -97,7 +97,7 @@ void Tile::allocate( const Allocation& given, const RequisitionVector& requisiti
         factor = 0;
     }
     Twips origin = g.getOrigin();
-    for( long i = 0; i < requisition.size(); ++i ) 
+	for( int i = 0; i < requisition.size(); ++i )
 	{
         const Requirement& rr = requisition[ i ].getRequirement( d_dim );
         Allotment& a = result[ i ].getAllotment( d_dim );

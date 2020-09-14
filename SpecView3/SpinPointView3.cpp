@@ -128,7 +128,7 @@ static inline void dump( const SpinPoint& p )
 	qDebug( "**** Dump Point" );
 	while( i < p.maxSize() && p[i] )
 	{
-        qDebug( "adr=%x id=%d", (unsigned int)p[i], p[i]->getId() );
+        qDebug( "adr=%p id=%d", p[i], p[i]->getId() );
 		i++;
 	}
 }

@@ -39,7 +39,7 @@ namespace Root
 		class Ptr
 		{
 		public:
-			typedef unsigned long UI;
+			typedef unsigned int UI;
 			enum { MASK = (UI)0x1 };
 			// typedef std::bitset<sizeof(void*)*CHAR_BIT> P;
 

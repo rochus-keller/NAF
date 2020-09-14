@@ -41,15 +41,12 @@ namespace Root
 	class SymbolString  
 	{
 	public:
-		typedef Root::UInt32 Symbol;
-
 		SymbolString();
 		SymbolString( const QString& );
 		SymbolString( const QByteArray& );
 		SymbolString( const SymbolString& );
 		SymbolString( const char* );
 		SymbolString( const char*, int len );
-		SymbolString( Symbol );
 		virtual ~SymbolString();
 
 		SymbolString& operator=(const SymbolString & rhs);
@@ -69,7 +66,6 @@ namespace Root
 		const char* data() const { return d_str; }
 		bool empty() const { return d_str == 0 || *d_str == 0; }
 		bool isNull() const { return d_str == 0 || *d_str == 0; }
-		Symbol getSymbol() const { return (Symbol) d_str; } // RISK
 	private:
 		const char* d_str;
 	};

@@ -54,20 +54,20 @@ using namespace Spec;
 /* Used at start of each data file (FIDs, spectra, 2D) */
 struct datafilehead
 {
-	long nblocks; /* number of blocks in file */
-	long ntraces; /* number of traces per block */
-	long np; /* number of elements per trace (16-bit integers, 32-bit integers, 
+	int nblocks; /* number of blocks in file */
+	int ntraces; /* number of traces per block */
+	int np; /* number of elements per trace (16-bit integers, 32-bit integers,
 				or 32-bit floating point numbers) in one trace. It is equal to 
 				twice the number of complex data points. */
-	long ebytes; /* number of bytes per element, 
+	int ebytes; /* number of bytes per element,
 					either 2 (for 16-bit integers in single
 					precision FIDs) or 4 (for all others). */
-	long tbytes; /* number of bytes per trace, np*ebytes */
-	long bbytes; /* number of bytes per block, (ntraces*tbytes + nbheaders*sizeof(struct
+	int tbytes; /* number of bytes per trace, np*ebytes */
+	int bbytes; /* number of bytes per block, (ntraces*tbytes + nbheaders*sizeof(struct
 					datablockhead)). The size of the datablockhead structure is 28 bytes. */
 	short vers_id; /* software version, file_id status bits */
 	short status; /* status of whole file. Bits below. */
-	long nbheaders; /* number of block headers per block */
+	int nbheaders; /* number of block headers per block */
 };
 
 /*
@@ -122,7 +122,7 @@ struct hypercmplxbhead
 	short status; /* status word for block header */
 	short s_spare2; /* short word: spare */
 	short s_spare3; /* short word: spare */
-	long l_spare1; /* long word: spare */
+	int l_spare1; /* long word: spare */
 	float lpval1; /* 2D-f2 left phase */
 	float rpval1; /* 2D-f2 right phase */
 	float f_spare1; /* float word: spare */

@@ -226,7 +226,7 @@ int LuaWidgetStack2::addWidget(lua_State *L)
 {
 	Q3WidgetStack* obj = QtObject<Q3WidgetStack>::check( L, 1 );
 	QWidget* w = QtObject<QWidget>::check( L, 2 );
-	obj->addWidget( w, int( w ) );
+	obj->addWidget( w, ptrdiff_t( w ) );
 	return 0;
 }
 
@@ -294,7 +294,7 @@ int LuaMultiLineEdit2::setAlignment(lua_State *L)
 {
 	Q3MultiLineEdit* obj = QtObject<Q3MultiLineEdit>::check( L, 1 );
 	Qt::Alignment f;
-	f &= luaL_checkinteger( L, 2 );
+	f &= (Qt::Alignment)luaL_checkinteger( L, 2 );
 	obj->setAlignment( f );
 	return 0;
 }

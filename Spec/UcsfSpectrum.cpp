@@ -75,17 +75,17 @@ UcsfSpectrum::~UcsfSpectrum()
 
 static inline int getF( const Root::Byte* buf, Root::Float& val )
 {
-	::memcpy( &val, buf, 4 );
+	::memcpy( &val, buf, sizeof(Root::Float) );
 	if( !s_big )
-		Root::Host::turnSex( (Root::Byte*)&val, 4 );
+		Root::Host::turnSex( (Root::Byte*)&val, sizeof(Root::Float) );
 	return 4;
 }
 
 static inline int getI( const Root::Byte* buf, int& val )
 {
-	::memcpy( &val, buf, 4 );
+	::memcpy( &val, buf, sizeof(Root::Float) );
 	if( !s_big )
-		Root::Host::turnSex( (Root::Byte*)&val, 4 );
+		Root::Host::turnSex( (Root::Byte*)&val, sizeof(Root::Float) );
 	return 4;
 }
 

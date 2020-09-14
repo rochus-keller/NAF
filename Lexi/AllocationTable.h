@@ -47,7 +47,7 @@ namespace Lexi
 			AllocationVector d_components;
 		};
 
-		AllocationTable( GlyphIndex count = 1, long max = 5 );
+		AllocationTable( GlyphIndex count = 1, int max = 5 );
 		virtual ~AllocationTable();
 
 		Entry* allocate(const Allocation&);

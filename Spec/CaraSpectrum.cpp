@@ -99,61 +99,61 @@ CaraSpectrum::~CaraSpectrum()
 
 static inline void putF( QFile& out, Root::Byte* buf, Root::Float val )
 {
-	::memcpy( buf, &val, 4 );
+	::memcpy( buf, &val, sizeof(Root::Float) );
 	if( !s_big )
-		Root::Host::turnSex( buf, 4 );
-	out.writeBlock( (const char*)buf, 4 );
+		Root::Host::turnSex( buf, sizeof(Root::Float) );
+	out.writeBlock( (const char*)buf, sizeof(Root::Float) );
 }
 
 static inline int getF( const Root::Byte* buf, Root::Float& val )
 {
-	::memcpy( &val, buf, 4 );
+	::memcpy( &val, buf, sizeof(Root::Float) );
 	if( !s_big )
-		Root::Host::turnSex( (Root::Byte*)&val, 4 );
-	return 4;
+		Root::Host::turnSex( (Root::Byte*)&val, sizeof(Root::Float) );
+	return sizeof(Root::Float);
 }
 
 static inline int getF( Stream* s, Root::Float& val )
 {
-	s->read( s_buf, 4 );
+	s->read( s_buf, sizeof(Root::Float) );
 	return getF( s_buf, val );
 }
 
 static inline void putU32( QFile& out, Root::Byte* buf, Root::UInt32 val )
 {
-	::memcpy( buf, &val, 4 );
+	::memcpy( buf, &val, sizeof(Root::UInt32) );
 	if( !s_big )
-		Root::Host::turnSex( buf, 4 );
-	out.writeBlock( (const char*)buf, 4 );
+		Root::Host::turnSex( buf, sizeof(Root::UInt32) );
+	out.writeBlock( (const char*)buf, sizeof(Root::UInt32) );
 }
 
 static inline int getU32( const Root::Byte* buf, Root::UInt32& val )
 {
-	::memcpy( &val, buf, 4 );
+	::memcpy( &val, buf, sizeof(Root::UInt32) );
 	if( !s_big )
-		Root::Host::turnSex( (Root::Byte*)&val, 4 );
+		Root::Host::turnSex( (Root::Byte*)&val, sizeof(Root::UInt32) );
 	return 4;
 }
 
 static inline int getU32( Stream* s, Root::UInt32& val )
 {
-	s->read( s_buf, 4 );
+	s->read( s_buf, sizeof(Root::UInt32) );
 	return getU32( s_buf, val );
 }
 
 static inline void putU16( QFile& out, Root::Byte* buf, Root::UInt16 val )
 {
-	::memcpy( buf, &val, 2 );
+	::memcpy( buf, &val, sizeof(Root::UInt16) );
 	if( !s_big )
-		Root::Host::turnSex( buf, 2 );
-	out.writeBlock( (const char*)buf, 2 );
+		Root::Host::turnSex( buf, sizeof(Root::UInt16) );
+	out.writeBlock( (const char*)buf, sizeof(Root::UInt16) );
 }
 
 static inline int getU16( const Root::Byte* buf, Root::UInt16& val )
 {
-	::memcpy( &val, buf, 2 );
+	::memcpy( &val, buf, sizeof(Root::UInt16) );
 	if( !s_big )
-		Root::Host::turnSex( (Root::Byte*)&val, 2 );
+		Root::Host::turnSex( (Root::Byte*)&val, sizeof(Root::UInt16) );
 	return 2;
 }
 
