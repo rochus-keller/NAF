@@ -82,8 +82,8 @@ static const int g_sizes[] =
 	4,	// OID
 	4,	// Literal
 	LeadingCounter,	// Bytes
-	4,	// Object
-	4,	// Pointer
+	sizeof(void*),	// Object
+	sizeof(void*),	// Pointer
 	NullTerminated, // XML
 	NullTerminated, // HTML
 };
@@ -469,7 +469,7 @@ void Any::setObject(Root::Resource * o, bool refcount )
 {
 	if( refcount )
 		Resource::addRef( o );	// Zuerst, falls man selbes Objekt zuordnet, es nicht zuerst gelöscht wird.
-	setWord( (long)o );
+    setWord( (quintptr)o );
 	if( refcount )
 		d_type = Any::Object;
 	else
@@ -1186,6 +1186,6 @@ void Any::setOid(Root::ULong d)
 
 void Any::setLiteral(const char * str)
 {
-	setWord( (long)str );
+    setWord( (quintptr)str );
 	d_type = Any::Literal;
 }

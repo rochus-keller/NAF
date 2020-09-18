@@ -140,8 +140,8 @@ namespace Root
 		void resize( Root::ULong size );
 		Root::Byte* d_data;
 		Type d_type;
-		void setWord( long v ) { resize( 0 ); d_data = (Root::Byte*) v; }
-		long getWord() const { 	return (long) d_data; }
+        void setWord( quintptr v ) { resize( 0 ); d_data = (Root::Byte*) v; }
+        quintptr getWord() const { 	return (quintptr) d_data; }
 	};
 
 	Any operator*( const Any& lhs, const Any& rhs );

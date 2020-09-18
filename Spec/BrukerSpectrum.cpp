@@ -247,7 +247,7 @@ static Amplitude toAmp( const Root::Byte* data, bool turn, float factor )
 {
 	// 4-Byte-Integer: -2'147'483'647 .. 2'147'483'647
 	// Float: max 3.40282347 e38
-	int val = *(int*)data;
+	qint32 val = *(qint32*)data;
 	if( turn )
 		Host::turnSex( (Root::Byte*) &val, sizeof(int) );
     return val / s_scf * factor;
