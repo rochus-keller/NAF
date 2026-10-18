@@ -472,7 +472,7 @@ void PeakListPeer::handle(Root::Message & m)
 	MESSAGE( PeakModel::Update, a, m )
 	{
 		// Das ist falsch, Model bezeichnet die Modellzuordnung zu einem Peak, nicht 
-		// die Modelländerung: Model
+		// die ModellÃ¤nderung: Model
 		PeakSpace::Update msg2( this, PeakSpace::Update::ModelData, 
 			a->getId() );
 		notifyObservers( msg2 );
@@ -483,7 +483,7 @@ void PeakListPeer::handle(Root::Message & m)
 
 void PeakListPeer::setSpec(Spectrum * s)
 {
-	// RISK: unnötig
+	// RISK: unnÃ¶tig
 	// if( s && d_pl->getDimCount() != s->getDimCount() )
 	//	throw Root::Exception( "Invalid number of dimensions" );
 	d_spec = s;
@@ -517,7 +517,7 @@ void PeakListPeer::updateAllAmps( bool folding )
 	assert( false ); // Obsolet, neu in PeakList
 	assert( d_spec );
 
-	// TODO: Diese Routine gehört in PeakList mit Spec als Param
+	// TODO: Diese Routine gehÃ¶rt in PeakList mit Spec als Param
 	const Dimension dim = d_pl->getDimCount();
 	Selection s;
 	PpmCube c;

@@ -145,10 +145,10 @@ void PeakProjector::find(const PpmCube & range, Selection & s, Spectrum* spec, b
 		// view hat weniger oder gleichviel dim wie pl
         for( int dim = 0; dim < targetDim; dim++ )
 		{
-			// Fülle die nicht-angesprochenen dim von pl mit Default-Werten
+			// FÃ¼lle die nicht-angesprochenen dim von pl mit Default-Werten
             targetRange[ dim ].first = d_orig->getPos(dim);
             targetRange[ dim ].second = d_orig->getPos(dim);
-            targetRange[ dim ].expand( d_thick[ dim ] ); // Setzt auch Width auf Null, falls nötig
+            targetRange[ dim ].expand( d_thick[ dim ] ); // Setzt auch Width auf Null, falls nÃ¶tig
 		}
 	}
 	// viewToPeak als Spezialfall
@@ -175,10 +175,10 @@ void PeakProjector::findAll( Selection & s, Spectrum* spec ) const
 	// view hat weniger dim wie pl
     for( int d = 0; d < targetDims; d++ )
 	{
-		// Fülle die nicht-angesprochenen dim von pl mit Default-Werten
+		// FÃ¼lle die nicht-angesprochenen dim von pl mit Default-Werten
         targetRange[ d ].first = d_orig->getPos(d);
         targetRange[ d ].second = d_orig->getPos(d);
-        targetRange[ d ].expand( d_thick[ d ] ); // Setzt auch Width auf Null, falls nötig
+        targetRange[ d ].expand( d_thick[ d ] ); // Setzt auch Width auf Null, falls nÃ¶tig
 	}
 
     d_pl->find( targetRange, s, spec );
@@ -199,7 +199,7 @@ void PeakProjector::getPos(Index id, PeakPos & pos, Spectrum* spec) const
 	PeakPos p;
 	d_pl->getPos( id, p, spec );
     peakToView2( p, pos, d_rot, d_pl->getDimCount(), d_orig->getPos() );
-	// Der Fall view > pl ist hier möglich, kommt aber praktisch nicht vor.
+	// Der Fall view > pl ist hier mÃ¶glich, kommt aber praktisch nicht vor.
 	// z.B. wird eine PL immer als 1D oder 2D dargestellt, auch wenn das Spec 3D hat.
 }
 
@@ -223,7 +223,7 @@ void PeakProjector::getParams(Index mdl, ModelParam & mp) const
 Index PeakProjector::addPeak(const PeakData & pd, Spectrum* spec, COP & cop)
 {
 	PeakData p = pd;
-    p.d_pos = d_orig->getPos(); // Initialisiere Ziel mit Origin für Fall view < pl
+    p.d_pos = d_orig->getPos(); // Initialisiere Ziel mit Origin fÃ¼r Fall view < pl
 	viewToPeak( pd.d_pos, p.d_pos, d_rot );
 	viewToPeak( pd.d_assig, p.d_assig, d_rot );
 	return d_pl->addPeak( p, spec, cop );
@@ -231,7 +231,7 @@ Index PeakProjector::addPeak(const PeakData & pd, Spectrum* spec, COP & cop)
 
 void PeakProjector::setPos(Index id, const PeakPos & pos, Amplitude a, Spectrum* spec, COP & cop)
 {
-    PeakPos pp = d_orig->getPos(); // Initialisiere Ziel mit Origin für Fall view < pl
+    PeakPos pp = d_orig->getPos(); // Initialisiere Ziel mit Origin fÃ¼r Fall view < pl
 	// Die von rot nicht verwendeten Dimensionen werden damit dennoch initialisiert.
 	viewToPeak( pos, pp, d_rot );
 	d_pl->setPos( id, pp, a, spec, cop );
@@ -248,7 +248,7 @@ void PeakProjector::setParams(Index mdl, const ModelParam & mp)
 {
 	ModelParam p;
 	d_pl->getParams( mdl, p );	// Initialisiere p mit pl-Dims.
-	// Damit sind die hier unbehandelten Dimensionen mit korrekten Werten vorbelegt für
+	// Damit sind die hier unbehandelten Dimensionen mit korrekten Werten vorbelegt fÃ¼r
 	// den Fall view < pl.
 	viewToPeak( mp.d_tol, p.d_tol, d_rot );
 	viewToPeak( mp.d_width, p.d_width, d_rot );
@@ -421,13 +421,13 @@ void PeakSubSpace::find(const PpmCube & viewRange, Selection & s, Spectrum* spec
 		// view hat weniger oder gleichviel dim wie pl
         for( int tDim = 0; tDim < targetDims; tDim++ )
 		{
-			// Fülle die nicht-angesprochenen dim von pl mit Default-Werten
+			// FÃ¼lle die nicht-angesprochenen dim von pl mit Default-Werten
             targetRange[ tDim ].first = d_orig->getPos(tDim);
             targetRange[ tDim ].second = d_orig->getPos(tDim);
             if( withGhosts && tDim == d_dim && d_width != 0.0 && d_thick[ tDim ] != 0.0 )
-                targetRange[ tDim ].expand( d_width ); // Setzt auch Width auf Null, falls nötig
+                targetRange[ tDim ].expand( d_width ); // Setzt auch Width auf Null, falls nÃ¶tig
 			else
-                targetRange[ tDim ].expand( d_thick[ tDim ] ); // Setzt auch Width auf Null, falls nötig
+                targetRange[ tDim ].expand( d_thick[ tDim ] ); // Setzt auch Width auf Null, falls nÃ¶tig
 		}
 	}
 	// viewToPeak als Spezialfall
@@ -453,13 +453,13 @@ void PeakSubSpace::findAll( Selection & s, Spectrum* spec ) const
 	// view hat weniger dim wie pl
 	for( int d = 0; d < tdim; d++ )
 	{
-		// Fülle die nicht-angesprochenen dim von pl mit Default-Werten
+		// FÃ¼lle die nicht-angesprochenen dim von pl mit Default-Werten
         cc[ d ].first = d_orig->getPos(d);
         cc[ d ].second = d_orig->getPos(d);
         if( d == d_dim && d_width != 0.0 && d_thick[ d ] != 0.0 )
-            cc[ d ].expand( d_width ); // Setzt auch Width auf Null, falls nötig
+            cc[ d ].expand( d_width ); // Setzt auch Width auf Null, falls nÃ¶tig
 		else
-            cc[ d ].expand( d_thick[ d ] ); // Setzt auch Width auf Null, falls nötig
+            cc[ d ].expand( d_thick[ d ] ); // Setzt auch Width auf Null, falls nÃ¶tig
 	}
 
 	d_pl->find( cc, s, spec ); 
@@ -467,7 +467,7 @@ void PeakSubSpace::findAll( Selection & s, Spectrum* spec ) const
 
 void PeakSubSpace::getPeak(Index id, PeakData & pd, Spectrum* spec) const
 {
-    // Wie PeakProjector::getPeak, ausser dass hier zusätzlich noch Attribute von pd gesetzt werden
+    // Wie PeakProjector::getPeak, ausser dass hier zusÃ¤tzlich noch Attribute von pd gesetzt werden
 	PeakData p;
 	d_pl->getPeak( id, p, spec );
 	pd = p;
@@ -496,12 +496,12 @@ void PeakSubSpace::getPeak(Index id, PeakData & pd, Spectrum* spec) const
 
 void PeakSubSpaceND::getPeak(Index id, PeakData & pd, Spectrum* spec) const
 {
-    // Wie PeakProjector::getPeak, ausser dass hier zusätzlich noch Attribute von pd gesetzt werden
+    // Wie PeakProjector::getPeak, ausser dass hier zusÃ¤tzlich noch Attribute von pd gesetzt werden
     PeakData p;
 	d_pl->getPeak( id, p, spec );
 	pd = p;
     pd.setNoGhost();
-    for( int d = 0; d < d_dim.size(); d++ ) // RISK: hier wird über alle d_dim OR-verknüpft
+    for( int d = 0; d < d_dim.size(); d++ ) // RISK: hier wird Ã¼ber alle d_dim OR-verknÃ¼pft
     {
         PpmRange inner( d_orig->getPos( d_dim[d] ) + d_thick[d_dim[d]] * 0.5,
                         d_orig->getPos( d_dim[d] ) - d_thick[d_dim[d]] * 0.5 );
@@ -526,19 +526,19 @@ void PeakSubSpaceND::getPeak(Index id, PeakData & pd, Spectrum* spec) const
 
 void PeakSubSpaceND::find(const PpmCube & viewRange, Selection & s, Spectrum* spec, bool withGhosts) const
 {
-    // TODO: Debuggen; insb. wird hier d_width als Ersatz für d_thick verwendet; sollte so sein wie bei Spins
+    // TODO: Debuggen; insb. wird hier d_width als Ersatz fÃ¼r d_thick verwendet; sollte so sein wie bei Spins
 
-    // Wie in PeakProjector, stattdessen mit d_range statt d_tol für gewisse Dimensionen (d_dim)
+    // Wie in PeakProjector, stattdessen mit d_range statt d_tol fÃ¼r gewisse Dimensionen (d_dim)
     Q_ASSERT( viewRange.size() == d_rot.size() ); // d_rot.size() ist getDimCount()
 
     PpmCube targetRange;
     const Dimension targetDim = d_pl->getDimCount();
     targetRange.assign( targetDim, PpmRange() );
-    // targetRange ist grundsätzlich d_orig erweitert um d_tol; für den Fall, dass Ghosts eingeschlossen
+    // targetRange ist grundsÃ¤tzlich d_orig erweitert um d_tol; fÃ¼r den Fall, dass Ghosts eingeschlossen
     // werden sollen, werden die d_dim auf d_range (statt d_tol) gesetzt.
     for( int tDim = 0; tDim < targetDim; tDim++ )
     {
-        // Fülle alle tDim mit Default-Werten
+        // FÃ¼lle alle tDim mit Default-Werten
         targetRange[ tDim ].first = d_orig->getPos(tDim);
         targetRange[ tDim ].second = d_orig->getPos(tDim);
         if( d_thick[ tDim ] != 0.0 )
@@ -552,7 +552,7 @@ void PeakSubSpaceND::find(const PpmCube & viewRange, Selection & s, Spectrum* sp
                 targetRange[ d_dim[d] ].expand( d_width[d] );
         }
     }
-    // Soweit viewDim vorhanden setze für diese targetRange auf viewRange.
+    // Soweit viewDim vorhanden setze fÃ¼r diese targetRange auf viewRange.
     for( int viewDim = 0; viewDim < d_rot.size(); viewDim++ )
         if( d_rot[ viewDim ] < targetDim )
             targetRange[ d_rot[ viewDim ] ] = viewRange[ viewDim ];
@@ -562,7 +562,7 @@ void PeakSubSpaceND::find(const PpmCube & viewRange, Selection & s, Spectrum* sp
 
 void PeakSubSpaceND::findAll(Selection & s, Spectrum* spec) const
 {
-    // TODO: funktion bereinigen; sieht nicht so aus, als ob hier etwas vernünfgites gemacht wird.
+    // TODO: funktion bereinigen; sieht nicht so aus, als ob hier etwas vernÃ¼nfgites gemacht wird.
 
     // Wie in PeakProjector, stattdessen mit d_range statt d_tol
     const Dimension targetDims = d_pl->getDimCount();
@@ -576,7 +576,7 @@ void PeakSubSpaceND::findAll(Selection & s, Spectrum* spec) const
 	// view hat weniger dim wie pl
     for( int plDim = 0; plDim < targetDims; plDim++ )
 	{
-		// Fülle die nicht-angesprochenen dim von pl mit Default-Werten
+		// FÃ¼lle die nicht-angesprochenen dim von pl mit Default-Werten
         targetRange[ plDim ].first = d_orig->getPos(plDim);
         targetRange[ plDim ].second = d_orig->getPos(plDim);
         if( d_thick[ plDim ] != 0.0 )

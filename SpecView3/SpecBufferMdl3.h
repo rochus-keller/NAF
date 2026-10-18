@@ -29,11 +29,11 @@
 namespace Spec
 {
 	//* SpecBufferMdl3
-    //. Diese Klasse schneidet den von ViewAreaMdl3 gewünschten Ausschnitt aus
-	//. dem übergebenen Spektrum. Letzteres muss bereits so reduziert und 
+    //. Diese Klasse schneidet den von ViewAreaMdl3 gewÃ¼nschten Ausschnitt aus
+	//. dem Ã¼bergebenen Spektrum. Letzteres muss bereits so reduziert und 
 	//. rotiert sein, dass es auf X/Y passt (bzw. die von ViewArea verlangten
 	//. Dimensionen). Die Y-Achse wird beim Laden invertiert und es werden
-	//. Auflösungsreduktion und Faltung berücksichtigt.
+	//. AuflÃ¶sungsreduktion und Faltung berÃ¼cksichtigt.
 
 	class SpecBufferMdl3 : public Root::Subject
 	{

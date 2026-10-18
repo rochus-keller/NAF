@@ -32,11 +32,11 @@ namespace Spec
 {
     //* AnchorSpace (vormals SpecAnchorSpace)
     //. Ein Anchor ist im Wesentlichen ein Punkt im HSQC, also die (fast) eindeutige
-    //. "Identifikation" einer Aminosäure bzw. des generischen Backbones. Verwendet dazu
+    //. "Identifikation" einer AminosÃ¤ure bzw. des generischen Backbones. Verwendet dazu
     //. entweder die Dimension Labels des SpecType oder die Pfadsimulation.
-    //. Berechnet inkrementell sämtliche Anchors aller Systeme zu einem gegebenen
-    //. SpectrumType. Man kann einen Pool von Instanzen dieser Klasse führen,
-	//. wobei für jeden Spektrentyp und Projekt eine Instanz exisitiert.
+    //. Berechnet inkrementell sÃ¤mtliche Anchors aller Systeme zu einem gegebenen
+    //. SpectrumType. Man kann einen Pool von Instanzen dieser Klasse fÃ¼hren,
+	//. wobei fÃ¼r jeden Spektrentyp und Projekt eine Instanz exisitiert.
     class AnchorSpace : public SpinSpace
 	{
 	public:

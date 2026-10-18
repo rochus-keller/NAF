@@ -52,9 +52,9 @@ namespace Spec
 	typedef Root::Float		MHz;
 	typedef Root::Float		Hz;
 	typedef Root::Index		Sample; // Sample-Index: Indizierung (0..Anz-1) und Anzahl von Sample-Werten.
-	typedef Root::Float		Amplitude;	// Intensitätswert eines Frequenzpunktes bzw. Samples
+	typedef Root::Float		Amplitude;	// IntensitÃ¤tswert eines Frequenzpunktes bzw. Samples
 
-	extern const PPM Nirwana; // Für "kein gültiger PPM-Wert" (bzw. unsichtbar)
+	extern const PPM Nirwana; // FÃ¼r "kein gÃ¼ltiger PPM-Wert" (bzw. unsichtbar)
 
 	enum { CARA_MAX_DIM = 6 };
 
@@ -89,7 +89,7 @@ namespace Spec
 		inline void allocate( PPM point, PPM width );
 		//. Setze den Range so, dass um point +/- width/2.
 		inline void expand( PPM width );
-		//. Mache Range um +/- width/2 grösser, so dass isParallel eingehalten.
+		//. Mache Range um +/- width/2 grÃ¶sser, so dass isParallel eingehalten.
 		inline void invert();
 		//. Tausche first und second aus.
 		inline PPM getCenter() const { return first + getSign() * getWidth() * 0.5; }
@@ -312,7 +312,7 @@ namespace Spec
 //////////////////////////////////////////////////////////////////////
 /// Implementation
 
-	/* Unnötig und gibt Linker-Probleme (Mehrfachdefinition)
+	/* UnnÃ¶tig und gibt Linker-Probleme (Mehrfachdefinition)
 	template<class _Ty > inline
 		bool operator==(const FixVector<_Ty>& _X,
 			const FixVector<_Ty>& _Y)

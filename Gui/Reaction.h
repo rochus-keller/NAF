@@ -30,10 +30,10 @@
 namespace Gui
 {
 	//* Reaction
-	//. Diese Klasse implementiert eine Action f¸r einen Konkreten Anwendungfall.
+	//. Diese Klasse implementiert eine Action f√ºr einen Konkreten Anwendungfall.
 	//. Man kann eine Instanz dieser Klasse als Filter irgendwo in die Widget-Hierarchie
-	//. setzen, worauf diese selbst‰ndig Command-Events abf‰ngt und Update/Execute macht.
-	//. Standardm‰ssig wird der Filter im Owner installiert.
+	//. setzen, worauf diese selbst√§ndig Command-Events abf√§ngt und Update/Execute macht.
+	//. Standardm√§ssig wird der Filter im Owner installiert.
 
 	class Reaction : public QObject 
 	{

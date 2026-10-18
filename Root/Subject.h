@@ -31,7 +31,7 @@ namespace Root
 {
 	//* Subject
 	//. Dies ist die Elternklasse aller Modelle bzw. Zustandsobjekte,
-	//. die eine Zustandsänderung an irgendwelche Observer senden müssen.
+	//. die eine ZustandsÃ¤nderung an irgendwelche Observer senden mÃ¼ssen.
 	//. Observer erhalten eine UpdateMessage oder eine davon abgeleitete.
 
 	class Subject : public Object
@@ -47,7 +47,7 @@ namespace Root
 		//* Override
 		virtual void setFieldValue( Field, const Any& );
 	private:
-        QList<Messenger*> d_observers; // QList hat im Grundzustand nur die Grösse eines Pointers!
+        QList<Messenger*> d_observers; // QList hat im Grundzustand nur die GrÃ¶sse eines Pointers!
 	};
 }
 

@@ -79,7 +79,7 @@ void AppAgent::handle(Message& msg )
 		qApp->quit();
 	}MESSAGE( ReportToUser, e, msg )
 	{
-		// Letzte Möglichkeit, die Nachricht anzuzeigen.
+		// Letzte MÃ¶glichkeit, die Nachricht anzuzeigen.
 		QString title = QString::fromLatin1( e->getTitle() );
 		if( title.isEmpty() )
 			title = QString::fromLatin1( qApp->argv()[ 0 ] );

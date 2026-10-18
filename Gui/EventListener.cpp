@@ -140,7 +140,7 @@ bool EventListener::eventFilter( QObject * watched, QEvent * event )
         done = closeEvent(widget,(QCloseEvent *)event);
         break;
 
-		/* RK Das überlassen wir weiterhin dem QWidget, da wir ja Gui::Menu haben
+		/* RK Das Ã¼berlassen wir weiterhin dem QWidget, da wir ja Gui::Menu haben
     case QEvent::ContextMenu:
         switch (data->context_menu_policy) {
         case Qt::DefaultContextMenu:

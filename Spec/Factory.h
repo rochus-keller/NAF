@@ -36,8 +36,8 @@ namespace Spec
 	{
 	public:
 		static Spectrum* createSpectrum( const char* path );
-		//. Findet anhand path selbständig das Format heraus und öffnet
-		//. entsprechendes Spektrum oder gibt 0 zurück.
+		//. Findet anhand path selbstÃ¤ndig das Format heraus und Ã¶ffnet
+		//. entsprechendes Spektrum oder gibt 0 zurÃ¼ck.
 		static Spectrum* createBrukerSpectrum( const char* path );
 		//. Pfad zur Spektendatei, Endung digit ( "r" | "i" ) ( "r" | "i" )*
 		static PointSet* createEasyPeakList( Spectrum* );

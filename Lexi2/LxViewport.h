@@ -34,8 +34,8 @@ class QWidget;
 
 namespace Lexi2
 {
-	// Der Viewport repräsentiert den Top-Level Glyph der Visual-Hierarchy und ist
-	// damit der jenige, dessen Owner null ist und direkt das QWidget ausfüllt.
+	// Der Viewport reprÃ¤sentiert den Top-Level Glyph der Visual-Hierarchy und ist
+	// damit der jenige, dessen Owner null ist und direkt das QWidget ausfÃ¼llt.
 	class Viewport : public MonoGlyph
 	{
 	public:
@@ -105,7 +105,7 @@ namespace Lexi2
 
 		Root::Sequence<Damage> d_damages;
 		Allocation d_area;	
-		Requisition d_requ;	// Letztbekannte Grössenanforderung ????
+		Requisition d_requ;	// Letztbekannte GrÃ¶ssenanforderung ????
 		Ref<Glyph> d_grabber;
 		Ref<Glyph> d_focus;
 		QWidget* d_parent;

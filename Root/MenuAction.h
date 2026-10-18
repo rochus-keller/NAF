@@ -32,7 +32,7 @@
 namespace Root
 {
 	//* MenuAction
-	//. Dies ist eine konkrete Implementation von Action, welche für Menüs und
+	//. Dies ist eine konkrete Implementation von Action, welche fÃ¼r MenÃ¼s und
 	//. Toolbars geeignet ist (mittels MenuAdapter).
 
 	class MenuAction : public StateAction
@@ -52,7 +52,7 @@ namespace Root
         Messenger* getHandler() const { return d_handler; }
 	private:
         Messenger* d_handler;
-		//. RISK: Hier auf addRef/release verzichten, da Zirkulärreferenzen häufig.
+		//. RISK: Hier auf addRef/release verzichten, da ZirkulÃ¤rreferenzen hÃ¤ufig.
 		bool d_updating;
 	};
 

@@ -110,8 +110,8 @@ namespace Spec
 	};
 
 	//* Spectrum
-	//. Dies ist die abstrakte Basisklasse für alle Spektren. Die Unterklassen
-	//. müssen nicht unbedingt die Spektraldaten enthalten, jedoch zumindest
+	//. Dies ist die abstrakte Basisklasse fÃ¼r alle Spektren. Die Unterklassen
+	//. mÃ¼ssen nicht unbedingt die Spektraldaten enthalten, jedoch zumindest
 	//. den aktiven Link zur Datei (meist memory mapped) oder Datenbank.
 
 	//. NOTE 8.10.01:
@@ -176,53 +176,53 @@ namespace Spec
 			bool fill = false, bool fold = false, Sample nsx = 0, Sample nsy = 0 );
 		//. Vereinfachter Zugriff auf Plane und Slice, optional mit Zero-Filling und Folding.
 		virtual Amplitude getAt( const PpmCube&, bool fold = false ) const;
-		//. Gebe das Maximum innerhalb des Kreuzes durch Cube zurück.
+		//. Gebe das Maximum innerhalb des Kreuzes durch Cube zurÃ¼ck.
 		virtual Amplitude getAt( const PpmPoint&, bool fill = false, bool fold = false ) const;
-		//. Gebe die Amplitude am Punkt zurück.
+		//. Gebe die Amplitude am Punkt zurÃ¼ck.
 		virtual Dimension mapToType( Dimension ) const; // Adapter zu SpectrumType
 		virtual const SpinLabelSet& getSpinLabels( Dimension d ) const; // Adapter zu SpectrumType
 		virtual Levels getLevels(bool force = false) const;
 		virtual bool fillHisto( Histo& ) const;
-		//. Fülle das übergebene Histo. Es werden die Anzahl Elemente gem. 
-		//. dem übergebenen Histo. Zuerst wird es genullt.
+		//. FÃ¼lle das Ã¼bergebene Histo. Es werden die Anzahl Elemente gem. 
+		//. dem Ã¼bergebenen Histo. Zuerst wird es genullt.
 		virtual PPM getPeakWidth( Dimension ) const;
 		//-
 
 		//* Interface (Downcall)
 		virtual void fillBuffer( Buffer &, const Rotation&, 
 			const Root::Cube& cube, const Root::Point& ns = Root::Point() ) const;
-		//. Fülle den Buffer gem. dem gewünschten Mapping. Dieses entscheidet zugleich
-		//. über die Anzahl Dimensionen, die der Buffer erhalten wird. ns.size == rot.size.
+		//. FÃ¼lle den Buffer gem. dem gewÃ¼nschten Mapping. Dieses entscheidet zugleich
+		//. Ã¼ber die Anzahl Dimensionen, die der Buffer erhalten wird. ns.size == rot.size.
 		virtual Dimension getDimCount() const = 0;
 		//. Anzahl der im Spektrum vorhandener Dimensionen.
 		virtual const Scale& getScale( Dimension dim ) const = 0;
 		//. Die mit jeder Dimension des Spektrums assoziierte PPM-Skala.
 		virtual Amplitude getAt( const Point& ) const;
-		//. Gebe die Amplitude am Punkt zurück.
+		//. Gebe die Amplitude am Punkt zurÃ¼ck.
 		virtual const char* getFilePath() const { return ""; }
 		//. Gebe den Dateipfad, aus dem das Spektrum gelesen wurde (Param-Datei bei Easy).
 		virtual const char* getName() const;
-		//. Gebe eine Bezeichnung des Spektrums zurück, welche als Titel im Fenster angezeigt wird.
+		//. Gebe eine Bezeichnung des Spektrums zurÃ¼ck, welche als Titel im Fenster angezeigt wird.
 		virtual void setName( const char* ) {}
 		//. Gebe dem Spektrum eine Lesbarere Bezeichnung als den FilePath.
 		virtual void adjustScale( Dimension d, PPM offset ); 
 		//. Schiebe und skaliere die PPM-Skala der Dimension und passe so ein Spektrum
 		//. einem oder zwei Referenzpunkten an.
 		virtual void setFolding( Dimension, Scale::Folding f );
-		//. Übersteuere Folding des Spektrums
+		//. Ãœbersteuere Folding des Spektrums
 		virtual const char* getLabel( Dimension ) const;
 		//. Mit jeder Dimension kann ein Tag assoziiert sein. Dieser sagt etwas
-		//. aus über die zu erwartenden Peaks (z.B. Hn/N). Bei Xeasy-Spektren
+		//. aus Ã¼ber die zu erwartenden Peaks (z.B. Hn/N). Bei Xeasy-Spektren
 		//. werden die Labels des Paramfiles a) auf Color und b) auf Label abgebildet.
 		virtual SpectrumType* getType() const { return 0; }
 		virtual Root::Index getId() const { return 0; }
 		virtual int open() const;
-		//. Erst mit Aufruf von Open wird das File geöffnet bzw. als Memory-Map geladen.
-		//. Darf mehrfach aufgerufen werden. Throws Exception (z.B. bei ungültigem Pfad).
-		//. Gibt den neuen Use-Count zurück.
+		//. Erst mit Aufruf von Open wird das File geÃ¶ffnet bzw. als Memory-Map geladen.
+		//. Darf mehrfach aufgerufen werden. Throws Exception (z.B. bei ungÃ¼ltigem Pfad).
+		//. Gibt den neuen Use-Count zurÃ¼ck.
 		virtual int close() const;
-		//. Gegenteil von Open. Darf so häufig aufgerufen werden wie ersteres.
-		//. Gibt den neuen Use-Count zurück.
+		//. Gegenteil von Open. Darf so hÃ¤ufig aufgerufen werden wie ersteres.
+		//. Gibt den neuen Use-Count zurÃ¼ck.
 		virtual bool canSave() const;
 		//. true, wenn sich dieses Spektrum speichern kann.
 		virtual void saveParamFile();
@@ -267,43 +267,43 @@ namespace Spec
 		virtual ~Spectrum();
 
 	private:
-		/// Fülle den Buffer mit den im Cube enthaltenen Punkten. Die Anzahl
+		/// FÃ¼lle den Buffer mit den im Cube enthaltenen Punkten. Die Anzahl
 		/// Samples pro Dimension ergibt sich aus den PPM-Ranges. first wird immer auf
 		/// Sample-Index Null abgebildet. Damit bestimmt die Relation first>second
 		/// die Achsenrichtung. x und y legen fest, welche Dimensionen des Spektrums auf die
 		/// X- und Y-Dimension des Buffers abgebildet werden. Bei allen Dimensionen des Spektrums, 
 		/// die von x und y nicht genannt werden, muss der Range first=second sein. 
 		/// cube bezieht sich auf das Spektrum, d.h. in Bezug auf Rotation, Scale-Color und 
-		/// DimensionCount gleich, auch wenn die Ranges disjunkt sein können.
+		/// DimensionCount gleich, auch wenn die Ranges disjunkt sein kÃ¶nnen.
 		void fillPlane0( Buffer & plane, Dimension x, Dimension y, const Cube& roi, 
 			Sample nsx, Sample nsy ) const;
-		/// Wie fillPlane, ausser dass der Zielbuffer ein 1D-Slice aus dem Spektrum erhält.
+		/// Wie fillPlane, ausser dass der Zielbuffer ein 1D-Slice aus dem Spektrum erhÃ¤lt.
 		/// Entsprechend muss bei allen Dimensionen, die von x nicht genannt werden, der
 		/// PPM-Range first=second sein.
 		void fillSlice0( Buffer & plane, Dimension x, const Cube& roi, Sample ns ) const;
 
-		/// Gleich wie virtuelle Variante, jedoch für PpmCube.
+		/// Gleich wie virtuelle Variante, jedoch fÃ¼r PpmCube.
 		void fillPlane1( Buffer & plane, Dimension x, Dimension y, const PpmCube& roi, 
 			Sample nsx, Sample nsy ) const;
-		/// Gleich wie virtuelle Variante, jedoch für PpmCube.
+		/// Gleich wie virtuelle Variante, jedoch fÃ¼r PpmCube.
 		void fillSlice1( Buffer & plane, Dimension x, const PpmCube& cube, Sample ns ) const;
 
-		/// Wie fillPlane(), jedoch wird immer ganzer roi gefüllt, entweder mit Value oder 0.
+		/// Wie fillPlane(), jedoch wird immer ganzer roi gefÃ¼llt, entweder mit Value oder 0.
 		void fillPlane2( Buffer & plane, Dimension x, Dimension y, const PpmCube& roi, 
 			Sample nsx, Sample nsy ) const;
-		/// Wie fillPlane(), jedoch wird immer ganzer roi gefüllt, entweder mit Value oder 0.
+		/// Wie fillPlane(), jedoch wird immer ganzer roi gefÃ¼llt, entweder mit Value oder 0.
 		void fillPlane2( Buffer & plane, Dimension x, Dimension y, const Cube& roi, 
 			Sample nsx, Sample nsy ) const;
 
-		/// Wie fillSlice(), jedoch wird immer ganzer roi gefüllt, entweder mit 0 oder Value.
+		/// Wie fillSlice(), jedoch wird immer ganzer roi gefÃ¼llt, entweder mit 0 oder Value.
 		void fillSlice2( Buffer & plane, Dimension x, const PpmCube& roi, Sample ns ) const;
-		/// Wie fillSlice(), jedoch wird immer ganzer roi gefüllt, entweder mit 0 oder Value.
+		/// Wie fillSlice(), jedoch wird immer ganzer roi gefÃ¼llt, entweder mit 0 oder Value.
 		void fillSlice2( Buffer & plane, Dimension x, const Cube& roi, Sample ns ) const;
 
-		/// Wie fillPlane(), jedoch wird immer ganzer roi gefüllt, mit Value oder Faltung
+		/// Wie fillPlane(), jedoch wird immer ganzer roi gefÃ¼llt, mit Value oder Faltung
 		void fillPlane3( Buffer & plane, Dimension x, Dimension y, const PpmCube& roi, 
 			Sample nsx, Sample nsy ) const;
-		/// Wie fillSlice(), jedoch wird immer ganzer roi gefüllt, mit Value oder Faltung
+		/// Wie fillSlice(), jedoch wird immer ganzer roi gefÃ¼llt, mit Value oder Faltung
 		void fillSlice3( Buffer & plane, Dimension x, const PpmCube& roi, Sample ns ) const;
 	};
 

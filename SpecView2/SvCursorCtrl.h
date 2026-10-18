@@ -37,7 +37,7 @@ namespace Spec2
 	class CursorCtrl : public Lexi2::Handler
 	{
 	public:
-		// Ein Cursor kann mehrere Dim anzeigen aber Ctrl kann sich auf eine beschr‰nken.
+		// Ein Cursor kann mehrere Dim anzeigen aber Ctrl kann sich auf eine beschr√§nken.
 		CursorCtrl(CursorView*, bool swallow = true, bool doX = true, bool doY = true );
 		CursorView* getView() const { return d_view; }
 		bool inUse( Dimension d ) const { return d_do[ d ]; }

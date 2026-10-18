@@ -34,8 +34,8 @@ namespace Spec
 	namespace Private
 	{
 		//* MappedFile
-		//. Diese Klasse ist ein Layer über das Konzept der Memory-Mapped-Files und
-		//. bietet eine plattformunabhängige Schnittstelle zu diesem Dienst.
+		//. Diese Klasse ist ein Layer Ã¼ber das Konzept der Memory-Mapped-Files und
+		//. bietet eine plattformunabhÃ¤ngige Schnittstelle zu diesem Dienst.
 
 		class MappedFile : public Stream
 		{

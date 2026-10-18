@@ -73,7 +73,7 @@ namespace Spec
 
 	//* Repository
 	//. Dies ist das Hauptmodell, das in der Datei oder DB gespeichert
-	//. wird. Es enthält Projekte und alle projektübergreifenden
+	//. wird. Es enthÃ¤lt Projekte und alle projektÃ¼bergreifenden
 	//. Daten und Konfigurationen.
 
 	class Repository : public Root::Subject
@@ -129,9 +129,9 @@ namespace Spec
 		void saveToFile( const char* path = "", const char* creator = "" );
 		//. Implementiert SaveAs (path!="") oder Save (path=="").
 		const char* getFilePath() const { return d_path.data(); }
-		//. Gibt "" zurück, wenn noch nicht mit einer Datei verknüpft ist.
+		//. Gibt "" zurÃ¼ck, wenn noch nicht mit einer Datei verknÃ¼pft ist.
 		bool isDirty() const { return d_dirty; }
-		//. Gibt true zurück, falls ungesicherte Änderungen vorhanden.
+		//. Gibt true zurÃ¼ck, falls ungesicherte Ã„nderungen vorhanden.
 		void touch();
 		void notifyObservers( Root::UpdateMessage& ); 
 

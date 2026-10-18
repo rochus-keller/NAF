@@ -133,7 +133,7 @@ void ContourView3::paint( QPainter& painter )
 	// rx und ry sind die PPM-Grenzen des geladenen Buffers.
 	const PpmRange& rx = buffer.getScale( DimX ).getRange();
 	const PpmRange& ry = buffer.getScale( DimY ).getRange();
-    // l, t, r und b sind die Coordinaten, die zu rx und ry auf der View gehˆren.
+    // l, t, r und b sind die Coordinaten, die zu rx und ry auf der View geh√∂ren.
     const Points l = area->toPoints( rx.first, DimX );
     const Points t = area->toPoints( ry.first, DimY );
 
@@ -153,9 +153,9 @@ void ContourView3::paint( QPainter& painter )
 
         // Grenze den gesamten Range ein auf den durch die Damage abgedeckten Bereich.
         QRectF damage = damages[ i ];
-        range[DimX].first = ( ( damage.left() - l ) / ppsX ); // runde abw‰rts, so dass immer das ganze angeschnittene Sample
+        range[DimX].first = ( ( damage.left() - l ) / ppsX ); // runde abw√§rts, so dass immer das ganze angeschnittene Sample
         range[DimY].first = ( ( damage.top() - t ) / ppsY );
-        range[DimX].second = ( ( damage.right() - l ) / ppsX ) + 1; // runde aufw‰rts, so dass sicher immer breit genug
+        range[DimX].second = ( ( damage.right() - l ) / ppsX ) + 1; // runde aufw√§rts, so dass sicher immer breit genug
         range[DimY].second = ( ( damage.bottom() - t ) / ppsY ) + 1;
 
         range.clip( buffer.getExtension() );
@@ -163,11 +163,11 @@ void ContourView3::paint( QPainter& painter )
 //                    range[DimY].first << "..." << range[DimY].second;
         if( damage.width() < 15.0 || damage.height() < 15.0 )
         {
-            // Ohne diesen Trick wird der Contour am Rand des damage (Breite 1 Pixel) nicht ¸berall gezeichnet.
+            // Ohne diesen Trick wird der Contour am Rand des damage (Breite 1 Pixel) nicht √ºberall gezeichnet.
             // Vermutlich ein Qt-Fehler bringt den QPainter dazu, mit drawLine nicht immer an den Rand zu fahren,
-            // sondern einen Pixel davor aufzuhˆren. Das liegt nachweislich nicht daran, dass ich mit QPointF zeichne.
+            // sondern einen Pixel davor aufzuh√∂ren. Das liegt nachweislich nicht daran, dass ich mit QPointF zeichne.
             // Man kann das vermeiden, indem setRenderHint( QPainter::Antialiasing ) gesetzt wird,
-            // aber mit l‰ngerer Rechenzeit und unsch‰rferem Bild. Oder aber mit diesem Trick.
+            // aber mit l√§ngerer Rechenzeit und unsch√§rferem Bild. Oder aber mit diesem Trick.
             QPixmap pix( damages[ i ].width(), damages[ i ].height() );
             pix.fill( Qt::transparent );
             QPainter painter2( &pix );
@@ -449,7 +449,7 @@ void ContourView3::drawContour(
         for( int col = range[DimX].first; col < range[DimX].second; col++ )
         {
             const int rowColOffset = col + rowOffset;
-            //. NOTE: es werden f¸r die Fl‰che des Buffers Kontourlinien erzeugt. Diese haben
+            //. NOTE: es werden f√ºr die Fl√§che des Buffers Kontourlinien erzeugt. Diese haben
             //. Float-Koordinaten in der Einheit "Samples".
             const Buffer& buffer = d_model->getBuffer();
             if( ( rowColOffset + 1 + bufferExt[DimX] ) >= buffer.getCellCount() )

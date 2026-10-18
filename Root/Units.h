@@ -26,14 +26,14 @@
 #endif // _MSC_VER >= 1000
 
 #ifdef _MSC_VER
-// Unterdrücke Warnung 4786. Diese besagt, dass gewisse Template-Expansionen
-// längere Symbolbezeichner als 256 Zeichen erzeugen. Diese können vom Debugger
+// UnterdrÃ¼cke Warnung 4786. Diese besagt, dass gewisse Template-Expansionen
+// lÃ¤ngere Symbolbezeichner als 256 Zeichen erzeugen. Diese kÃ¶nnen vom Debugger
 // nicht mehr dargestellt werden. 
 #pragma warning( disable: 4786 )
 // Warning C4275: class 'std::_Complex_base<float>' ist keine DLL-Schnittstelle 
 // und wurde als Basisklasse fuer die DLL-Schnittstelle class 'std::complex<float>' verwendet
 #pragma warning( disable: 4275 )
-// Unterdrücke Warnung C4250:
+// UnterdrÃ¼cke Warnung C4250:
 // Klasse A : erbt 'B::methode()' via Dominanz
 #pragma warning( disable: 4291 )
 #pragma warning( disable: 4250 )
@@ -96,11 +96,11 @@ namespace Root
 	typedef UInt8			Byte;
 	typedef Int32			Index;		// Index in einem GcArray oder einer Matrix
 	typedef Int8			Dimension;	// Anzahl Dimensionen einer Matrix
-	typedef Dimension		Dim;		// Abkürzung
+	typedef Dimension		Dim;		// AbkÃ¼rzung
 
 	typedef Int16			Twip16;		
 	typedef Int32			Twip32;
-		// Absolutes, logisches Mass für Koordinaten. Es gilt: 1 Twip == 20 Points und
+		// Absolutes, logisches Mass fÃ¼r Koordinaten. Es gilt: 1 Twip == 20 Points und
 		// 1 Point == 1/72 Inch. Somit ist 1 Twip == 1/1440 Inch.
 	inline double twipToPoint( Twip32 t ) { return t / 20.0; }
 	inline Twip32 pointToTwip( double p ) { return 0.5 + p * 20.0; }
@@ -166,7 +166,7 @@ namespace Root
 
 	// Folgende beiden Klassen von Qtl u.a. verwendet:
 
-	// Trick zum prüfen der Typenverträgilchkeit gem.
+	// Trick zum prÃ¼fen der TypenvertrÃ¤gilchkeit gem.
 	// Alexanderscu p. 36
 	template<class U, class T> // Entspricht Assignment U = T
 	class Conversion
@@ -192,7 +192,7 @@ namespace Root
 	public:
 		static const char* extractName( const char* name )
 		{
-			// RISK: diese Funktion ist Compiler-abhängig!
+			// RISK: diese Funktion ist Compiler-abhÃ¤ngig!
 	#ifndef __GNUC__
 			return name + 6; // ::strlen( "class " ) = 6
 	#else

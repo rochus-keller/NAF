@@ -317,7 +317,7 @@ bool DisAss::readDebug(Function &f)
     foreach( int l, f.d_codeLines )
     {
         if( l > f.d_lastLine )
-            f.d_lastLine = l; // Dieser Wert ist regelmässig null.
+            f.d_lastLine = l; // Dieser Wert ist regelmÃ¤ssig null.
     }
     if( !readInt( n ) )
         return false;
@@ -467,7 +467,7 @@ static inline void _dump( const QVector<DisAss::Vars>& vars )
 
 QByteArray DisAss::localName( const DisAss::Function & f, int local_number, int pc ) const
 {
-    // Adaptiert aus luaF_getlocalname und dann empirisch solange angepasst, bis vernünftiges Ergebnis.
+    // Adaptiert aus luaF_getlocalname und dann empirisch solange angepasst, bis vernÃ¼nftiges Ergebnis.
     //_dump( f.d_localVars ); // TEST
     pc++;
     local_number++;
@@ -721,7 +721,7 @@ void DisAss::formatFunc(const Function & f, StringVec & out, int level) const
 
     for( int pc = 0; pc < f.d_code.size(); pc++ )
         out.setLine( f.d_codeLines[pc], level, formatOp( f, pc ), funcLines.contains(f.d_codeLines[pc]) );
-    // StringVec sorgt dafür, dass bei Zeilenkollisionen code vor "function" gesetzt wird
+    // StringVec sorgt dafÃ¼r, dass bei Zeilenkollisionen code vor "function" gesetzt wird
 
     if( level == 0 )
     {

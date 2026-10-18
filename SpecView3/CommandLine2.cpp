@@ -307,7 +307,7 @@ void CommandLine2::handleReadParam(char ch)
                 arg( d_cur->d_cmd->text() ).arg( d_cur->d_params.size() ) );
 		}else
 		{
-			// Beginne den nächsten Parameter. Validiere den vorhergehenden.
+			// Beginne den nÃ¤chsten Parameter. Validiere den vorhergehenden.
 			if( interpretParam() )
 				nextParam();
 		}

@@ -23,7 +23,7 @@
 using namespace Spec;
 using namespace Lexi;
 
-static const float g_page = 0.75; // TODO: ev. änderbarer Parameter
+static const float g_page = 0.75; // TODO: ev. Ã¤nderbarer Parameter
 
 ScrollCtrl::ScrollCtrl(SpecViewer* m, bool doX, bool doY, bool immediate ):
 	d_viewer( m ), d_immediate( immediate )

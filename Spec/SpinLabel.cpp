@@ -121,7 +121,7 @@ bool SpinLabel::parse(const char * str, SpinLabel& l )
 	int j = 0;
 	int minus = 0;
 
-	// NOTE: Parser für s_syntax
+	// NOTE: Parser fÃ¼r s_syntax
 	// NOTE: es ist einfacher, Space ganz zu ignorieren und nicht als Ident-Terminator
 	// zu verwenden.
 	while( true )

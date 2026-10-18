@@ -190,18 +190,18 @@ void Spectrum::fillPlane3(Buffer &buf, Dimension x, Dimension y,
 		return;
 	}else if( unfolded )
 	{
-		// Falls etwas ausserhalb, jedoch keine Faltung, fülle Rest mit schwarz
+		// Falls etwas ausserhalb, jedoch keine Faltung, fÃ¼lle Rest mit schwarz
 		fillPlane2( buf, x, y, cube, nsx, nsy );
 		return;
 	}
 
-	// Initialisiere Ziel-Buffer. Mache Skalenreduktion, falls nötig
+	// Initialisiere Ziel-Buffer. Mache Skalenreduktion, falls nÃ¶tig
 	const bool downsize = canDownsize();
-	ScaleFact sfx = 1.0, sfy = 1.0; // Faktoren für Skalenreduktion
+	ScaleFact sfx = 1.0, sfy = 1.0; // Faktoren fÃ¼r Skalenreduktion
 	{
 		// Wir verwenden hier roi zur Ermittlung der PPM (obwohl PPM als Input vorhanden),
-		// damit der resultierende Buffer die mit den Frequenzpunkten übereinstimmenden
-		// PPM erhält.
+		// damit der resultierende Buffer die mit den Frequenzpunkten Ã¼bereinstimmenden
+		// PPM erhÃ¤lt.
 		ScaleVector sv;	 
 		if( downsize && nsx && nsx < roi[ x ].getWidth() )
 		{
@@ -222,7 +222,7 @@ void Spectrum::fillPlane3(Buffer &buf, Dimension x, Dimension y,
 					sy.getColor(), sy.getFolding(), roi[ y ].getWidth() ) );
 
 		// Resize nicht-normalisiert, da buf der Lead ist.
-		buf.resize( sv );	// Alloziiere den Zielbereich und fülle mit 0.
+		buf.resize( sv );	// Alloziiere den Zielbereich und fÃ¼lle mit 0.
 	}
 
 	Buffer::Switches flip( 2 );
@@ -238,7 +238,7 @@ void Spectrum::fillPlane3(Buffer &buf, Dimension x, Dimension y,
 			else if( d == y )
 				flip[ DimY ] = true;
 		}
-		// Ermittle für jede Ecke von roi, in welchem Tile er sich befindet.
+		// Ermittle fÃ¼r jede Ecke von roi, in welchem Tile er sich befindet.
 		// Tile 0/0 ist das Originalspektrum gegeben durch sx mal sy.
 		const Scale& scale = getScale( d );
 		foldTile[ d ].first = roi[ d ].first / scale.getSampleCount();	// RISK -1?
@@ -249,7 +249,7 @@ void Spectrum::fillPlane3(Buffer &buf, Dimension x, Dimension y,
 			foldTile[ d ].second--;
 	}
 
-	Cube cut( roi ); // Der für eine Tile im Spektrum auszuschneidende Cube
+	Cube cut( roi ); // Der fÃ¼r eine Tile im Spektrum auszuschneidende Cube
 	for( d = 0; d < dimCount; d++ )
 	{
 		if( d != x && d != y )
@@ -258,7 +258,7 @@ void Spectrum::fillPlane3(Buffer &buf, Dimension x, Dimension y,
 			// Z-Richtung konstant, mit roi(Z) ev. ausserhalb Spektrum.
 			const Scale& scale = getScale( d );
 
-			// Falte den gewünschten Bereich in den Original-Bereich zurück
+			// Falte den gewÃ¼nschten Bereich in den Original-Bereich zurÃ¼ck
 			cut[ d ].first = /* RK060627 ( (roi[ d ].first < 0)?-1:0 ) + foldTile[ d ].first + */
 				( roi[ d ].first + scale.getSampleCount() * Math::abs( foldTile[ d ].first ) ) % 
 				scale.getSampleCount();
@@ -273,7 +273,7 @@ void Spectrum::fillPlane3(Buffer &buf, Dimension x, Dimension y,
 		}
 	}
 
-	Cube paste( 2 ); // Der Ort im Zielbuffer buf, wo das Tile eingefügt werden soll.
+	Cube paste( 2 ); // Der Ort im Zielbuffer buf, wo das Tile eingefÃ¼gt werden soll.
 	Buffer part;
 	// Gehe nun durch alle betroffenen Tiles
 	for( Index tileY = foldTile[ y ].first; tileY <= foldTile[ y ].second; tileY++ )
@@ -299,7 +299,7 @@ void Spectrum::fillPlane3(Buffer &buf, Dimension x, Dimension y,
 			if( ( sx.getFolding() == Scale::Unfolded && tileX != 0 ) || 
 				( sy.getFolding() == Scale::Unfolded && tileY != 0 ) )
 			{
-				// Keine Faltung: produziere schwarzes Stück
+				// Keine Faltung: produziere schwarzes StÃ¼ck
 				Extension ex( reduce( cut.getCellCount( x ), sfx ), 
 					reduce( cut.getCellCount( y ), sfy ) );
 				part.resize( ex );
@@ -352,22 +352,22 @@ void Spectrum::fillPlane2(Buffer &buf, Dimension x, Dimension y,
 
 	if( sx.contains( roi[ x ] ) && sy.contains( roi[ y ] ) )
 	{
-		// Der gewünschte Bereich liegt ganz in der originalen Sweep-Breite des Spektrums.
+		// Der gewÃ¼nschte Bereich liegt ganz in der originalen Sweep-Breite des Spektrums.
 		fillPlane0( buf, x, y, roi, nsx, nsy ); //. Kongruent oder kleiner
 		return;
 	} // else
-	// Der gewünschte Bereich liegt nicht ganz in der originalen Sweep-Breite.
+	// Der gewÃ¼nschte Bereich liegt nicht ganz in der originalen Sweep-Breite.
 
 	const bool downsize = canDownsize();
-	double sfx = 1.0, sfy = 1.0; // Faktoren für Skalenreduktion
+	double sfx = 1.0, sfy = 1.0; // Faktoren fÃ¼r Skalenreduktion
 	{
 		ScaleVector sv( 2 );
 
-		// Hier muss getDelta verwendet werden, da getWidth zufällig um eins grösser sein kann.
+		// Hier muss getDelta verwendet werden, da getWidth zufÃ¤llig um eins grÃ¶sser sein kann.
 		// TODO: stimmt das oder ist second bereits zu gross?
 		if( downsize && nsx && nsx < roi[ x ].getWidth() )
 		{
-			// Wenn gewünschte Auflösung kleiner ist als die Samplezahl...
+			// Wenn gewÃ¼nschte AuflÃ¶sung kleiner ist als die Samplezahl...
 			sv[ DimX ] = Scale( sx.getFreq( roi[ x ].first ), sx.getFreq( roi[ x ].second ), 
 				sx.getColor(), Scale::Unfolded, nsx );
 			sfx = double( nsx ) / double( roi[ x ].getWidth() );
@@ -385,12 +385,12 @@ void Spectrum::fillPlane2(Buffer &buf, Dimension x, Dimension y,
 				sy.getColor(), sy.getDelta(), Scale::Unfolded );
 
 		// Resize nicht-normalisiert, da buf der Lead ist.
-		buf.resize( sv );	// Alloziiere den Zielbereich und fülle mit 0.
+		buf.resize( sv );	// Alloziiere den Zielbereich und fÃ¼lle mit 0.
 	}
 
-	// roi2 ist die Schnittmenge, welche effektiv Spektrendaten enthält, also nicht
+	// roi2 ist die Schnittmenge, welche effektiv Spektrendaten enthÃ¤lt, also nicht
 	// schwarz bleiben soll.
-	Cube roi2( roi ); // Für Z gilt first==second, darum inv irrelevant.
+	Cube roi2( roi ); // FÃ¼r Z gilt first==second, darum inv irrelevant.
 	roi2[ x ].first = Math::max( Math::min( roi[ x ].first, roi[ x ].second ), 0 );
 	roi2[ x ].second = Math::min( Math::max( roi[ x ].first, roi[ x ].second ), 
 		sx.getSampleCount() - 1 );
@@ -410,7 +410,7 @@ void Spectrum::fillPlane2(Buffer &buf, Dimension x, Dimension y,
 			reduce( roi2[ y ].getWidth(), sfy ) );
 	else
 		fillPlane0( part, x, y, roi2, nsx, nsy ); 
-	// Hole die Schnittmenge aus dem Spektrum (13 Fälle)
+	// Hole die Schnittmenge aus dem Spektrum (13 FÃ¤lle)
 
 	buf.insert( part );
 }
@@ -459,7 +459,7 @@ void Spectrum::fillSlice3(Buffer &buf, Dimension x, const PpmCube &ppmroi, Sampl
 		return;
 	}else if( unfolded )
 	{
-		// Falls etwas ausserhalb, jedoch keine Faltung, fülle Rest mit schwarz
+		// Falls etwas ausserhalb, jedoch keine Faltung, fÃ¼lle Rest mit schwarz
 		fillSlice2( buf, x, ppmroi, nsx );
 		return;
 	}
@@ -467,7 +467,7 @@ void Spectrum::fillSlice3(Buffer &buf, Dimension x, const PpmCube &ppmroi, Sampl
 	// Initialisiere Ziel-Buffer: Hier wird der PPM-Bereich des Ziels festgelegt.
 	// Die Tiles weiter unten werden in diesen Bereich eingesetzt.
 	const bool downsize = canDownsize();
-	ScaleFact sfx = 1.0; // Faktoren für Skalenreduktion
+	ScaleFact sfx = 1.0; // Faktoren fÃ¼r Skalenreduktion
 	{
 		ScaleVector sv;
 		// Falsch: sv.push_back( Scale( ppmroi[ x ].first, ppmroi[ x ].second, roi[ x ].getWidth(), 
@@ -481,7 +481,7 @@ void Spectrum::fillSlice3(Buffer &buf, Dimension x, const PpmCube &ppmroi, Sampl
 			sv.push_back( Scale( sx.getFreq( roi[ x ].first ), sx.getFreq( roi[ x ].second ),
 					sx.getColor(), sx.getFolding(), roi[ x ].getWidth() ) );
 		// Resize nicht-normalisiert, da buf der Lead ist.
-		buf.resize( sv );	// Alloziiere den Zielbereich und fülle mit 0.
+		buf.resize( sv );	// Alloziiere den Zielbereich und fÃ¼lle mit 0.
 	}
 
 	// buf hat hier die Ausdehnung von ppmroi mit idx0 und idxN quantisiert auf roi.
@@ -497,7 +497,7 @@ void Spectrum::fillSlice3(Buffer &buf, Dimension x, const PpmCube &ppmroi, Sampl
 			if( d == x )
 				flip[ DimX ] = true;
 		}
-		// Ermittle für jede Ecke von roi, in welchem Zone er sich befindet.
+		// Ermittle fÃ¼r jede Ecke von roi, in welchem Zone er sich befindet.
 		// Zone 0/0 ist das Originalspektrum gegeben durch sx/sy.
 		const Scale& scale = getScale( d );
 		// Hier wird absichtlich Kommastelle abgeschnitten, damit 0 falls
@@ -510,10 +510,10 @@ void Spectrum::fillSlice3(Buffer &buf, Dimension x, const PpmCube &ppmroi, Sampl
 			zone[ d ].second--;
 	}
 
-	// Da das nächste Tile auf idxN + Delta beginnt, muss bei cut überall die
+	// Da das nÃ¤chste Tile auf idxN + Delta beginnt, muss bei cut Ã¼berall die
 	// Zonennummer hinzuaddiert werden.
 
-	Cube cut( roi ); // Der für eine Zone im Spektrum auszuschneidende Cube
+	Cube cut( roi ); // Der fÃ¼r eine Zone im Spektrum auszuschneidende Cube
 	// Z-Richtung konstant, mit roi(Z) ev. ausserhalb Spektrum.
 	for( d = 0; d < dimCount; d++ )
 	{
@@ -535,7 +535,7 @@ void Spectrum::fillSlice3(Buffer &buf, Dimension x, const PpmCube &ppmroi, Sampl
 		}
 	}
 
-	Cube paste( 1 ); // Der Ort in Buf, wo das Tile eingefügt werden soll.
+	Cube paste( 1 ); // Der Ort in Buf, wo das Tile eingefÃ¼gt werden soll.
 	
 	Buffer part;
 	// Gehe nun durch alle betroffenen Zones
@@ -594,10 +594,10 @@ void Spectrum::fillSlice2(Buffer &buf, Dimension x, const Cube &roi, Sample nsx 
 	} // else
 
 	const bool downsize = canDownsize();
-	double sfx = 1.0; // Faktoren für Skalenreduktion
+	double sfx = 1.0; // Faktoren fÃ¼r Skalenreduktion
 	{
 		ScaleVector sv( 1 );
-		// Hier muss getDelta verwendet werden, da getWidth zufällig um eins grösser sein kann.
+		// Hier muss getDelta verwendet werden, da getWidth zufÃ¤llig um eins grÃ¶sser sein kann.
 		// TODO: stimmt das oder ist second bereits zu gross?
 		if( downsize && nsx && nsx < roi[ x ].getWidth() )
 		{
@@ -608,12 +608,12 @@ void Spectrum::fillSlice2(Buffer &buf, Dimension x, const Cube &roi, Sample nsx 
 			sv[ DimX ] = Scale( sx.getFreq( roi[ x ].first ), sx.getFreq( roi[ x ].second ), 
 				sx.getColor(), sx.getDelta(), Scale::Unfolded );
 		// Resize nicht-normalisiert, da buf der Lead ist.
-		buf.resize( sv );	// Alloziiere den Zielbereich und fülle mit 0.
+		buf.resize( sv );	// Alloziiere den Zielbereich und fÃ¼lle mit 0.
 	}
 
-	// roi2 ist die Schnittmenge, welche effektiv Spektrendaten enthält, also nicht
+	// roi2 ist die Schnittmenge, welche effektiv Spektrendaten enthÃ¤lt, also nicht
 	// schwarz bleiben soll.
-	Cube roi2( roi ); // Für Z gilt first==second, darum inv irrelevant.
+	Cube roi2( roi ); // FÃ¼r Z gilt first==second, darum inv irrelevant.
 	roi2[ x ].first = Math::max( Math::min( roi[ x ].first, roi[ x ].second ), 0 );
 	roi2[ x ].second = Math::min( Math::max( roi[ x ].first, roi[ x ].second ), 
 		sx.getSampleCount() - 1 );
@@ -628,7 +628,7 @@ void Spectrum::fillSlice2(Buffer &buf, Dimension x, const Cube &roi, Sample nsx 
 		fillSlice0( part, x, roi2, reduce( roi2[ x ].getWidth(), sfx ) ); 
 	else
 		fillSlice0( part, x, roi2, 0 ); 
-	// Hole die Schnittmenge aus dem Spektrum (13 Fälle)
+	// Hole die Schnittmenge aus dem Spektrum (13 FÃ¤lle)
 	buf.insert( part );
 }
 
@@ -954,7 +954,7 @@ bool Spectrum::hasNoesy() const
 Amplitude Spectrum::getThreshold() const
 {
     if( getLevels().d_pNoise == 0.0 )
-        return 250.0; // laut Diss Rochus gute Näherung
+        return 250.0; // laut Diss Rochus gute NÃ¤herung
     else
         return getLevels().d_pNoise;
 }

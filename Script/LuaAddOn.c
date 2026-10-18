@@ -34,7 +34,7 @@ LUA_API int lua_getdatatable (lua_State *L, int objindex)
 {
     int equal;
     lua_getfenv(L,objindex);
-    // NOTE: lua_getfenv gibt immer eine Tabelle zurück. Default ist getcurrenv(L)
+    // NOTE: lua_getfenv gibt immer eine Tabelle zurÃ¼ck. Default ist getcurrenv(L)
     lua_pushvalue(L, LUA_GLOBALSINDEX); // TODO: geht das ev. effizienter?
     equal = lua_rawequal( L, -1, -2 );
     lua_pop( L, 1 );
@@ -51,9 +51,9 @@ LUA_API void lua_pushuserdata (lua_State *L, void *p)
     Udata *u = (Udata *)p;
     lua_lock(L);
     // Lua speichert Userdata mit einer fixen Header-Struktur Udata, gefolgt von einer variablen
-    // Anzahl (Udata.len) Bytes, welche die eigentlichen Userdata repräsentieren.
+    // Anzahl (Udata.len) Bytes, welche die eigentlichen Userdata reprÃ¤sentieren.
     // p zeigt zuerst auf das erste dieser Bytes, also mitten in der Struktur Udata+Bytes.
-    // Setze Pointer um die Grösse von Udata zurück. Damit liegt er genau auf dem
+    // Setze Pointer um die GrÃ¶sse von Udata zurÃ¼ck. Damit liegt er genau auf dem
     // Anfang von Udata.
     u = u - 1;
     setuvalue(L, L->top, u);

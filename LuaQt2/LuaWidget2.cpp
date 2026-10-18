@@ -101,7 +101,7 @@ int LuaWidget2::setCallback(lua_State * L)
 	lua_pushvalue( L, 3 );
 	Util::setData( L, 1 );
 
-	ObjectPeer::pinPeer( L ); // RISK: wenn man das wegl‰sst, verschwindet in Autolink ein Teil der Schrift.
+	ObjectPeer::pinPeer( L ); // RISK: wenn man das wegl√§sst, verschwindet in Autolink ein Teil der Schrift.
 	return 0;
 }
 

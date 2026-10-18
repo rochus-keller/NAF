@@ -456,9 +456,9 @@ void PipeSpectrum::readParams()
 		widthHz[rot[d]] -= delta;
 		// damit entspricht Scale genau dem Bruker Spektrum und Slices in PolyScope sind kongruent.
 
-		// Nach Korrespondenz mit Prof. Yingang Feng, Qingdao Institute am 2016-05-10 wäre folgendes richtig;
+		// Nach Korrespondenz mit Prof. Yingang Feng, Qingdao Institute am 2016-05-10 wÃ¤re folgendes richtig;
 		// er hat dieselben Daten mit NMRView und NMRPipe prozessiert und eine Abweichung von einem Punkt erhalten
-		// (demnach würde olivia/xyza2pipe nicht korrekt konvertieren)
+		// (demnach wÃ¼rde olivia/xyza2pipe nicht korrekt konvertieren)
 		 idx0[rot[d]] -= delta / 2.0; // TODO: validieren!
 
 		d_scales[ d ] = Scale( idx0[rot[d]] + widthHz[rot[d]], idx0[rot[d]],  

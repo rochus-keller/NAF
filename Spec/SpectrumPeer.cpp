@@ -147,7 +147,7 @@ bool SpectrumPeer::autoRotate(SpectrumType* type)
 	if( type == 0 )
 		return false;
 	if( type->autoRotate( d_spec, d_rot, type->hasNoesy() ) )
-		// Auflösungsoptimierung nur noch für NOESY-Typen (da TOCSY die beste Auflösung in Y)
+		// AuflÃ¶sungsoptimierung nur noch fÃ¼r NOESY-Typen (da TOCSY die beste AuflÃ¶sung in Y)
 	{
 		Spectrum::Update msg( this, Spectrum::Update::Rotation );
 		notifyObservers( msg );
@@ -271,7 +271,7 @@ void SpectrumPeer::replaceSpectrum(Spectrum * spec)
     d_path = spec->getFilePath();
 	open();
 	d_levels = d_spec->getLevels();
-	for( int i = 0; i < use; i++ )	// Use-Count auf das neue Spec. übertragen
+	for( int i = 0; i < use; i++ )	// Use-Count auf das neue Spec. Ã¼bertragen
 		open();
 	close();
 	for( Dimension d = 0; d < d_spec->getDimCount(); d++ )
@@ -335,7 +335,7 @@ SpectrumPeer::Levels SpectrumPeer::getLevels(bool force ) const
 
 void SpectrumPeer::reloadSpec()
 {
-    // dieser Reload findet statt wenn g_useXeasyN geändert wird (width+delta)
+    // dieser Reload findet statt wenn g_useXeasyN geÃ¤ndert wird (width+delta)
     if( !d_spec->isDummy() )
     {
         // TODO: dieser Code sollte nicht hier sein, da redundant mit Open etc.

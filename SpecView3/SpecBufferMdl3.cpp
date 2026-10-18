@@ -49,7 +49,7 @@ SpecBufferMdl3::~SpecBufferMdl3()
 
 void SpecBufferMdl3::reload()
 {
-	// Wir gehen davon aus, dass d_spec immer über genügend Dimensionen verfügt.
+	// Wir gehen davon aus, dass d_spec immer Ã¼ber genÃ¼gend Dimensionen verfÃ¼gt.
 	PpmCube cube;
 	d_area->getCube( cube );
     Q_ASSERT( cube.size() <= 2 );
@@ -105,7 +105,7 @@ void SpecBufferMdl3::reload()
 				// spec hat nur eine Dim
 			}else
 			{
-				// fülle 1D-ScaleVector mit cube und Phantasieauflösung.
+				// fÃ¼lle 1D-ScaleVector mit cube und PhantasieauflÃ¶sung.
 				ScaleVector sv;
 				sv.push_back( Scale( cube[ DimX ].first, cube[ DimX ].second ) );
 				d_buffer.resize( sv );
@@ -172,7 +172,7 @@ void SpecBufferMdl3::handle( Root::Message & msg )
         Q_UNUSED(a)
         UpdZoom m(this);
         notifyObservers( m );
-        if( d_down ) // Mit dem Zoom ändert auch die Auflösung
+        if( d_down ) // Mit dem Zoom Ã¤ndert auch die AuflÃ¶sung
             reload();
 		msg.consume();
 	}

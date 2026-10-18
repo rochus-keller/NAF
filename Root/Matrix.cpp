@@ -27,11 +27,11 @@ using namespace Root;
 Int64 Point::getIndex(const Extension & ext ) const
 {
 	// Annahme: Indizes x von 1 bis und mit X
-	// ( M * N * ( k - 1 ) ) +	// Anz vollständiger Scheiben
-	// ( M * ( n - 1 ) ) +		// Anz vollständiger Riemen
+	// ( M * N * ( k - 1 ) ) +	// Anz vollstÃ¤ndiger Scheiben
+	// ( M * ( n - 1 ) ) +		// Anz vollstÃ¤ndiger Riemen
 	// m						// Angebrochener Riemen
 
-	// Generisch formuliert für 3D mit Index 0..n-1
+	// Generisch formuliert fÃ¼r 3D mit Index 0..n-1
 	// ( D0 * D1 * d2 ) + ( D0 * d1 ) + d0
 
 	Dimension dim = ext.size();
@@ -77,11 +77,11 @@ Int64 Point::getIndex(const Extension & ext ) const
 Int64 Point::getIndexT(const Extension & ext ) const
 {
 	// Annahme: Indizes x von 1 bis und mit X
-	// ( M * N * ( k - 1 ) ) +	// Anz vollständiger Scheiben
-	// ( M * ( n - 1 ) ) +		// Anz vollständiger Riemen
+	// ( M * N * ( k - 1 ) ) +	// Anz vollstÃ¤ndiger Scheiben
+	// ( M * ( n - 1 ) ) +		// Anz vollstÃ¤ndiger Riemen
 	// m						// Angebrochener Riemen
 
-	// Generisch formuliert für 3D mit Index 0..n-1
+	// Generisch formuliert fÃ¼r 3D mit Index 0..n-1
 	// ( D0 * D1 * d2 ) + ( D0 * d1 ) + d0
 
 	Dimension dim = ext.size();
@@ -143,12 +143,12 @@ Int64 Point::getIndexT(const Extension & ext ) const
 
 Point Extension::getPoint(Int64 index ) const
 {
-	// Formel für Fall 3D mit Index 0..n-1:
+	// Formel fÃ¼r Fall 3D mit Index 0..n-1:
 	// d2 = index / D0 * D1;
 	// d1 = ( index - d2 * D0 * D1 ) / D0
 	// d0 = index - ( d2 * D0 * D1 + d1 * D0 )
 
-	// Formel für Fall 2D
+	// Formel fÃ¼r Fall 2D
 	// d0 = index - ( d1 * D0 )
 	// d1 = ( index ) / D0
 

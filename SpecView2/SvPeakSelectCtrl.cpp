@@ -111,7 +111,7 @@ bool PeakSelectCtrl::handleMousePress( MouseEvent& e )
 		ViewAreaMdl* mdl = d_view->getBuf()->getViewArea();
 		d_view->selectPeak( mdl->toPpm( e.getX(), mdl->getAllocation().getLeft(), DimX ), 
 			mdl->toPpm( e.getY(), mdl->getAllocation().getTop(), DimY ), !e.isShift() );	
-		// Nicht immer true zurück, damit Cursor funktioniert.
+		// Nicht immer true zurÃ¼ck, damit Cursor funktioniert.
 		notifySelection( d_view );
 		return d_swallow;
 	}

@@ -53,21 +53,21 @@ namespace Spec2
 		void createLevelsMinMax( Float factor, Amplitude peakMin, Amplitude peakMax, Option o );
 		void createLevelsMinMax( Amplitude peakMin, Amplitude peakMax );
 		//. Erzeuge eine geometrische Reihe mit der Entfernung factor. Die
-		//. Levels werden im Band zwischen peakMin und peakMax erzeugt, gemäss
-		//. Option: Both für links und rechts von Nullpunkt, Positive nur rechts.
+		//. Levels werden im Band zwischen peakMin und peakMax erzeugt, gemÃ¤ss
+		//. Option: Both fÃ¼r links und rechts von Nullpunkt, Positive nur rechts.
 		//. peakMin wird immer positiv angegeben und muss kleiner sein als peakMax.
 		void clear() { d_levels.clear(); }
 
 		Amplitude getLowerNoiseBound() const { return d_lowerNoiseBound; }
 		Amplitude getUpperNoiseBound() const { return d_upperNoiseBound; }
 		// Upper- und LowerNoiseBound beschreiben einen Bereich um den Nullpunkt,
-		// dessen Punkte für eine Kontour nicht in Betracht gezogen werden. Es
+		// dessen Punkte fÃ¼r eine Kontour nicht in Betracht gezogen werden. Es
 		// gilt immer Lower <= Upper, wobei Lower in der Regel negativ ist.
 		// Wenn Lower auf eine sehr grosse negative oder Upper auf eine sehr
 		// grosse positive Zahl gesetzt wurde, werden entsprechend keine negativen
 		// oder positiven Kontourlinien gezeichnet.
 		Amplitude getMinPeak() const;
-		// Gebe eine Zahl zurück, die peakMin in createLevels entspricht.
+		// Gebe eine Zahl zurÃ¼ck, die peakMin in createLevels entspricht.
 		// Entspricht dem Threshold in der Parameter-Box
 
 		void setWidth( Lexi2::Coord );

@@ -61,7 +61,7 @@ namespace Spec
 		Amplitude d_pmax, d_nmax;
 		Amplitude d_pmean, d_nmean;
 		Amplitude d_porig, d_norig; // Originalamplitude ohne Clipping
-		Lookup d_lkp;	// Dekodiertabelle für 8bit compressed
+		Lookup d_lkp;	// Dekodiertabelle fÃ¼r 8bit compressed
 	protected:
 		void readParams();
 		// Override

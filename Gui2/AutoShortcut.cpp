@@ -44,7 +44,7 @@ void AutoShortcut::onActivated()
 
 bool AutoShortcut::event(QEvent *e)
 {
-    // QShortcut wird vom System über diesen Event benachtrichtigt und ruft dann
+    // QShortcut wird vom System Ã¼ber diesen Event benachtrichtigt und ruft dann
     // triggered auf.
     if( e->type() == QEvent::Shortcut )
     {

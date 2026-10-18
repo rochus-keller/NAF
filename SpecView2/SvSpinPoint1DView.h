@@ -50,7 +50,7 @@ namespace Spec2
 
 		Dimension d_dir; // Direction
 		// Ausrichtung: x..horizonale Bewegung mit vertikalem Cursor
-		// RISK: Diese Klasse zeichnet Peak-Linien standardm‰ssig in Y-Richtung
+		// RISK: Diese Klasse zeichnet Peak-Linien standardm√§ssig in Y-Richtung
 	};
 }
 

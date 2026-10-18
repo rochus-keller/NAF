@@ -27,7 +27,7 @@ using namespace Spec2;
 
 //////////////////////////////////////////////////////////////////////
 
-// Sofort wieder gelöscht, da kein Undo.
+// Sofort wieder gelÃ¶scht, da kein Undo.
 
 class _OverviewCmd : public SelectorCmd
 {

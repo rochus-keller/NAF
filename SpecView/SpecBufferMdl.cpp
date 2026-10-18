@@ -55,7 +55,7 @@ SpecBufferMdl::~SpecBufferMdl()
 
 void SpecBufferMdl::reload()
 {
-	// Wir gehen davon aus, dass d_spec immer über genügend Dimensionen verfügt.
+	// Wir gehen davon aus, dass d_spec immer Ã¼ber genÃ¼gend Dimensionen verfÃ¼gt.
 	PpmCube cube;
 	d_area->getCube( cube );
 	assert( cube.size() <= 2 );
@@ -111,7 +111,7 @@ void SpecBufferMdl::reload()
 				// spec hat nur eine Dim
 			}else
 			{
-				// fülle 1D-ScaleVector mit cube und Phantasieauflösung.
+				// fÃ¼lle 1D-ScaleVector mit cube und PhantasieauflÃ¶sung.
 				ScaleVector sv;
 				sv.push_back( Scale( cube[ DimX ].first, cube[ DimX ].second ) );
 				d_buffer.resize( sv );

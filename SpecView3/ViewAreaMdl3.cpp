@@ -115,14 +115,14 @@ void ViewAreaMdl3::allocate( const QRectF& r)
 	{
         if( d_inUse[ DimX ] && changed[ DimX ] && !d_autoZoom[ DimX ] )
 		{
-			// Fenster‰nderung ohne AutoZoom: sichtbarer Spektrenausschnitt ‰ndert
-			// X-Richtung nachf¸hren, so dass sich Position des Spektrums nicht ‰ndert
+			// Fenster√§nderung ohne AutoZoom: sichtbarer Spektrenausschnitt √§ndert
+			// X-Richtung nachf√ºhren, so dass sich Position des Spektrums nicht √§ndert
 			// TODO
 		}
         if( d_inUse[ DimY ] && changed[ DimY ] && !d_autoZoom[ DimY ] )
 		{
-			// Fenster‰nderung ohne AutoZoom: sichtbarer Spektrenausschnitt ‰ndert
-			// Y-Richtung nachf¸hren, so dass sich Position des Spektrums nicht ‰ndert
+			// Fenster√§nderung ohne AutoZoom: sichtbarer Spektrenausschnitt √§ndert
+			// Y-Richtung nachf√ºhren, so dass sich Position des Spektrums nicht √§ndert
 			// TODO
 		}
 
@@ -131,7 +131,7 @@ void ViewAreaMdl3::allocate( const QRectF& r)
 
 		if( !d_autoZoom[ DimX ] || !d_autoZoom[ DimY ] )
 		{
-			// Die Fenstergrˆsse hat ge‰ndert, der Zoom bleibt aber konstant, es
+			// Die Fenstergr√∂sse hat ge√§ndert, der Zoom bleibt aber konstant, es
 			// musste daher der sichtbare PpmRange angepasst werden.
             UpdRange m1( this,
                 d_inUse[ DimX ] && !d_autoZoom[ DimX ],
@@ -140,7 +140,7 @@ void ViewAreaMdl3::allocate( const QRectF& r)
 		}
 		if( d_autoZoom[ DimX ] || d_autoZoom[ DimY ] )
 		{
-			// Die Fenstergrˆsse hat ge‰ndert, der Zoom ‰ndert mit dieser, der
+			// Die Fenstergr√∂sse hat ge√§ndert, der Zoom √§ndert mit dieser, der
 			// sichtbare PpmRange ist derselbe, aber der TwipPerPpm wurde angepasst
             UpdZoom m1( this,
                 d_inUse[ DimX ] && d_autoZoom[ DimX ] && changed[ DimX ],
@@ -168,7 +168,7 @@ void ViewAreaMdl3::setRange(const PpmRange &x, const PpmRange &y, bool notify )
     Q_ASSERT( d_inUse[DimX] && d_inUse[DimY] );
     d_model->setRange( d_target[DimX], x, d_target[DimY], y, notify );
 
-	// NOTE: Damit wird potentiell Zoom und Origin ver‰ndert.
+	// NOTE: Damit wird potentiell Zoom und Origin ver√§ndert.
 }
 
 void ViewAreaMdl3::setRange(Dimension d, const PpmRange & r, bool notify )
@@ -217,7 +217,7 @@ void ViewAreaMdl3::centerPoint(PPM x, PPM y)
         ry = PpmRange( y + wy / 2.0, y - wy / 2.0 );
     d_model->setRange( d_target[DimX], rx, d_target[DimY], ry );
 
-	// NOTE: Damit wird potentiell Zoom und Origin ver‰ndert.
+	// NOTE: Damit wird potentiell Zoom und Origin ver√§ndert.
 }
 
 void ViewAreaMdl3::centerPoint1D(Dimension d, PPM v)
@@ -230,7 +230,7 @@ void ViewAreaMdl3::centerPoint1D(Dimension d, PPM v)
     else
         d_model->setRange( d_target[d], PpmRange( v + w / 2.0, v - w / 2.0 ) );
 
-	// NOTE: Damit wird potentiell Zoom und Origin ver‰ndert.
+	// NOTE: Damit wird potentiell Zoom und Origin ver√§ndert.
 }
 
 void ViewAreaMdl3::setModel(CubeMdl * mdl, Dimension dx, Dimension dy)

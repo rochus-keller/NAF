@@ -37,7 +37,7 @@ namespace Spec
     class Spectrum;
 
 	//* ViewAreaMdl
-	//. Diese Klasse ist verantwortlich für die Abbildung des Fensterausschnitts auf
+	//. Diese Klasse ist verantwortlich fÃ¼r die Abbildung des Fensterausschnitts auf
 	//. den Spektrenausschnitt (mit allen Umrechnungen). Die beiden Dimensionen X und Y
 	//. beziehen sich auf den Bildschirm. Die PPM-Y-Skala ist entsprechend invertiert.
 	//. Die Klasse SpecBufferMdl verwendet diese PPM-Skala, um den Buffer aus dem
@@ -150,14 +150,14 @@ namespace Spec
 		MHz d_rf[ 2 ];				// Spektrometerfrequenz
 		Allocation d_allocation;	// Der aktuell zugeteilte Bildschirmausschnitt
 		bool d_sizeChanged;			// Damit kann View der Umgebung mitteilen, dass
-									// Grösse geändert hat und neues Layout nötig.
+									// GrÃ¶sse geÃ¤ndert hat und neues Layout nÃ¶tig.
 									// Wird nicht gesetzt durch allocate().
-		bool d_inUse[ 2 ];			// Für welche PPM-Dimensionen sind wir zuständig.
+		bool d_inUse[ 2 ];			// FÃ¼r welche PPM-Dimensionen sind wir zustÃ¤ndig.
 		PpmRange d_range[ 2 ];		// Der aktuell im Viewer dargestellte PPM-Bereich
-		bool d_autoZoom[ 2 ];		// True:  Der PPM-Bereich ändert nicht mit Allocation, 
-									//        d.h. er wird mit Fenstergrösse skaliert.
-									// False: Der PPM-Bereich ist unabhängig von Fenstergrösse,
-									//        d.h. er ändert mit Allocation.
+		bool d_autoZoom[ 2 ];		// True:  Der PPM-Bereich Ã¤ndert nicht mit Allocation, 
+									//        d.h. er wird mit FenstergrÃ¶sse skaliert.
+									// False: Der PPM-Bereich ist unabhÃ¤ngig von FenstergrÃ¶sse,
+									//        d.h. er Ã¤ndert mit Allocation.
 	};
 
 }

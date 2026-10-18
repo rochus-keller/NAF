@@ -31,15 +31,15 @@
 namespace Lexi
 {
 	//* PolyGlyph
-	//. Ein PolyGlyph ist ein Container bzw. Aggregat für Glyphs. Der Inhalt des
+	//. Ein PolyGlyph ist ein Container bzw. Aggregat fÃ¼r Glyphs. Der Inhalt des
 	//. PolyGlyph wird durch die enthaltenen Glyphs definiert. Der PolyGlyph ist
-	//. entsprechend für das Layout (Position, Ausdehnung) der unmittelbar enthaltenen
-	//. Glyphs zuständig. Er kann diese Aufgabe an ein Layout-Objekt delegieren.
+	//. entsprechend fÃ¼r das Layout (Position, Ausdehnung) der unmittelbar enthaltenen
+	//. Glyphs zustÃ¤ndig. Er kann diese Aufgabe an ein Layout-Objekt delegieren.
 
-	//. Der Komponentenindex läuft vom Bildhintergrund zum Vordergrund. Der höchste
+	//. Der Komponentenindex lÃ¤uft vom Bildhintergrund zum Vordergrund. Der hÃ¶chste
 	//. Index wird zuletzt gezeichnet und ist daher zuvorderst sichtbar. Wenn ein
 	//. Hit mehrere Komponenten trifft, so hat der Handler der obersten Komponenten den
-	//. höchsten Index.
+	//. hÃ¶chsten Index.
 
 	class PolyGlyph : public Glyph
 	{
@@ -49,9 +49,9 @@ namespace Lexi
 
 		//* PolyGlyph
 		virtual void modified(GlyphIndex);
-		//. Aufrufen, wenn immer sich die Requisition einer Component geändert hat.
+		//. Aufrufen, wenn immer sich die Requisition einer Component geÃ¤ndert hat.
 		//. Wird implizit auch von den Component-Operations append..remove aufgerufen.
-		//. Damit soll der von PolyGlyph abgeleiteten Klasse die Möglichkeit gegeben werden,
+		//. Damit soll der von PolyGlyph abgeleiteten Klasse die MÃ¶glichkeit gegeben werden,
 		//. ihr Layout in Ordnung zu bringen.
 
 		//* Glyph Overrides

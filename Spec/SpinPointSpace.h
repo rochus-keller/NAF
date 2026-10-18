@@ -31,11 +31,11 @@
 namespace Spec
 {
     //* SpinPointSpace (vormals SpecPeakSpace)
-	//. Berechnet inkrementell sämtliche SpinPoints aller Systeme zu einem gegebenen
+	//. Berechnet inkrementell sÃ¤mtliche SpinPoints aller Systeme zu einem gegebenen
     //. SpectrumType. Generiert auch die Points aus den SpinLinks und die projektionen
     //. in die Nachbarsysteme.
-    //. Man kann einen Pool von Instanzen dieser Klasse führen,
-	//. wobei für jeden Spektrentyp und Projekt eine Instanz exisitiert.
+    //. Man kann einen Pool von Instanzen dieser Klasse fÃ¼hren,
+	//. wobei fÃ¼r jeden Spektrentyp und Projekt eine Instanz exisitiert.
     class SpinPointSpace : public SpinSpace
 	{
 	public:
@@ -57,7 +57,7 @@ namespace Spec
             bool offs = true, bool pathim = true );
 		void refill();
 		void setSpecType( SpectrumType* );
-        void setSpec( Spectrum*, bool recalc = true ); // TODO: was nützt hier Spec? Warum nicht nur SpecType?
+        void setSpec( Spectrum*, bool recalc = true ); // TODO: was nÃ¼tzt hier Spec? Warum nicht nur SpecType?
 
 		//* Overrides
         Spectrum* getSpec() const;
@@ -87,7 +87,7 @@ namespace Spec
 		Root::Ref<SpectrumType> d_st;
 		Root::Ref<Spectrum> d_spec;
 		Result d_res;
-		Dimension d_noesy;	// Die Dim des Noesy-Steps (immer der letztmögliche Step)
+		Dimension d_noesy;	// Die Dim des Noesy-Steps (immer der letztmÃ¶gliche Step)
 		bool d_showLinks;
 		bool d_showInferred;
 		bool d_showNulls;

@@ -315,7 +315,7 @@ QVariant Variant::toVariant(lua_State *L, int n)
 	else if( lua_isuserdata( L, n ) )
 	{
         // Hier sind alle Values vertreten, die in Qtl*.cpp definiert sind; bei den auskommentierten
-        // gibt es keine gültige Konversion
+        // gibt es keine gÃ¼ltige Konversion
         if( QFont* f = QtValue<QFont>::cast( L, n ) )
 			return *f;
         else if( QColor* x = QtValue<QColor>::cast( L, n ) )

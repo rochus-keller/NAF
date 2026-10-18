@@ -47,12 +47,12 @@ namespace Star
 	public:
 		struct Loop
 		{
-			typedef QVariantList Row; // Wenn die Row eine Sub-Table hat, wird diese einfach als weiterer Variant angefügt
+			typedef QVariantList Row; // Wenn die Row eine Sub-Table hat, wird diese einfach als weiterer Variant angefÃ¼gt
 			typedef QVector<Row> Table;
 
 			typedef QStringList Header;
 			typedef QVector<Header> Headers;
-			Headers d_headers; // Top-down ein Header für jeden Loop-Level
+			Headers d_headers; // Top-down ein Header fÃ¼r jeden Loop-Level
 			Table d_table;
 		};
 		struct Block

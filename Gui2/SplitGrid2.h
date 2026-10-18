@@ -30,7 +30,7 @@ class QStackedWidget;
 namespace Gui2
 {
     /*
-        Horizontaler Splitter als Spalten enth‰lt n vertikale Splitter als Zeilen.
+        Horizontaler Splitter als Spalten enth√§lt n vertikale Splitter als Zeilen.
     */
     class SplitGrid2 : public QSplitter
 	{

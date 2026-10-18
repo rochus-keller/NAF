@@ -52,7 +52,7 @@ namespace Spec
         void damageFocusRect();
         static QRect allocation( const QSize& );
     private:
-        QVector< Root::Ref<SpecView3> > d_views; // Schichtung: Index n liegt über Index n-1
+        QVector< Root::Ref<SpecView3> > d_views; // Schichtung: Index n liegt Ã¼ber Index n-1
         Root::Ref<ViewAreaMdl3> d_area; // falls gesetzt ist d_area immer so gross wie size()
         bool d_hasFocus;
     };

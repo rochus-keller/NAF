@@ -113,9 +113,9 @@ bool PolyGlyph::changed()
 			modified( pos );
 		}
 	}
-	// Normalerweise wächst ein Polyglyph mit seinen aggregierten Komponenten.
-	// Wenn der Glyph starr bleiben soll (z.B. eine ScrollView), muss der Rückgabewert
-	// von den abgeleiteten Klassen überschrieben werden.
+	// Normalerweise wÃ¤chst ein Polyglyph mit seinen aggregierten Komponenten.
+	// Wenn der Glyph starr bleiben soll (z.B. eine ScrollView), muss der RÃ¼ckgabewert
+	// von den abgeleiteten Klassen Ã¼berschrieben werden.
 	return res;
 }
 

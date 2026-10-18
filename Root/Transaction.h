@@ -36,10 +36,10 @@ namespace Root
 	//* Transaction
 	//. Eine Transaction kapselt eine Menge von Aktionen und somit einen
 	//. inkrementellen Zustandswechsel. Damit ist sie in der Lage, diesen
-	//. mittels Undo wieder rückgängig zu machen.
+	//. mittels Undo wieder rÃ¼ckgÃ¤ngig zu machen.
 	//. Eine Transaktion (bzw. TransactionRef) kann von einem abstrakten
 	//. Modell als Ergebnis einer modifizierenden Methode an den Aufrufer
-	//. zurückgegeben werden. Dieser kann dann die Transaktion direkt
+	//. zurÃ¼ckgegeben werden. Dieser kann dann die Transaktion direkt
 	//. an den Undo-Manager weiterleiten oder mehrere Transaktionen in einer
 	//. MakroTransaktion zusammenfassen.
 
@@ -62,14 +62,14 @@ namespace Root
 
 	// CallSpec:
 	// Kann den Methoden eines Modells als Argument mitgegeben werden, um 
-	// zu steuern, ob die Methode mit Undo rückgängig gemacht werden kann und
+	// zu steuern, ob die Methode mit Undo rÃ¼ckgÃ¤ngig gemacht werden kann und
 	// ob unmittelbar mit dem Call ein Notify stattfinden soll. Das resultierende
 	// Transaction-Objekt muss dann noch explizit an den UndoManager gesendet werden.
 	struct CallOptions // Value
 	{
 	public:
 		bool d_notify;		// Benachrichtige Observer
-		bool d_undoable;	// Kapsle die Änderung in einer Transaktion -> d_done
+		bool d_undoable;	// Kapsle die Ã„nderung in einer Transaktion -> d_done
 		Ref<Transaction> d_done;
 
 		bool isUd() const { return d_undoable; }

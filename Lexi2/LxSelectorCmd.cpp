@@ -38,7 +38,7 @@ SelectorCmd::~SelectorCmd()
 
 GlyphCommand::Result SelectorCmd::handleMousePress(MouseEvent & e)
 {
-	// Dem Command ist es egal, wie es ausgelöst wurde. Letzteres ist Sache des Commanders.
+	// Dem Command ist es egal, wie es ausgelÃ¶st wurde. Letzteres ist Sache des Commanders.
 	startFeedback();
 	d_left = d_right = e.getX();
 	d_top = d_bottom = e.getY();

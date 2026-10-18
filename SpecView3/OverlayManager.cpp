@@ -45,7 +45,7 @@ OverlayManager::OverlayManager(PlaneGrid * pg, Project * pro, QWidget *parent) :
 //    QPalette p = palette();
 //    p.setColor( QPalette::Highlight, Qt::transparent );
 //    setPalette(p);
-    setSelectionMode(QAbstractItemView::NoSelection); // damit Pos und Neg bei Selektion nicht übermalt werden
+    setSelectionMode(QAbstractItemView::NoSelection); // damit Pos und Neg bei Selektion nicht Ã¼bermalt werden
     setRootIsDecorated(false);
     setAllColumnsShowFocus(false);
     setAlternatingRowColors(true);

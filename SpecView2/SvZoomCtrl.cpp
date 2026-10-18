@@ -102,7 +102,7 @@ void ZoomCtrl::zoom2D(Coord x, Coord y, const Allocation& a, float factor )
 		rx.first -= sign * diff;
 		rx.second += sign * diff;
 
-		// Mache die Translation wieder rückgängig, damit Punkt stationär bleibt
+		// Mache die Translation wieder rÃ¼ckgÃ¤ngig, damit Punkt stationÃ¤r bleibt
 		rx.move( -off * factor );
 
 		PpmRange ry = d_area->getRange( DimY );
@@ -116,7 +116,7 @@ void ZoomCtrl::zoom2D(Coord x, Coord y, const Allocation& a, float factor )
 		ry.first -= sign * diff;
 		ry.second += sign * diff;
 
-		// Mache die Translation wieder rückgängig, damit Punkt stationär bleibt
+		// Mache die Translation wieder rÃ¼ckgÃ¤ngig, damit Punkt stationÃ¤r bleibt
 		ry.move( -off * factor );
 
 		d_area->setRange( rx, ry );
@@ -144,7 +144,7 @@ void ZoomCtrl::zoom1D(Dimension d, Coord x, const Allocation& a, float factor )
 		rx.first -= sign * diff;
 		rx.second += sign * diff;
 
-		// Mache die Translation wieder rückgängig, damit Punkt stationär bleibt
+		// Mache die Translation wieder rÃ¼ckgÃ¤ngig, damit Punkt stationÃ¤r bleibt
 		rx.move( -off * factor );
 
 		d_area->setRange( d, rx );

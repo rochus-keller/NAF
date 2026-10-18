@@ -46,7 +46,7 @@ GenericScope::GenericScope(Agent *supervisor)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     // supervisor darf Null sein. Wenn er nicht Null ist, ist supervisor der Owner.
-    // Wenn supervisor gelöscht wird, wird damit auch d_agent gelöscht. Da QPointer
+    // Wenn supervisor gelÃ¶scht wird, wird damit auch d_agent gelÃ¶scht. Da QPointer
     // wird damit d_agent Null. Wenn supervisor Null ist, ist this Owner.
     d_agent = new _MyAgent( supervisor, this );
 }
@@ -74,7 +74,7 @@ void GenericScope::closeEvent(QCloseEvent *e)
     if( askToCloseWindow() )
     {
         e->accept();
-        // Falls nicht Destructive, wird Fenster nur versteckt, nicht gelöscht
+        // Falls nicht Destructive, wird Fenster nur versteckt, nicht gelÃ¶scht
 
     }else
         e->ignore();
@@ -125,7 +125,7 @@ void GenericScope::handle(Root::Message & msg)
     {
         if( *a == Action::WindowClose )
         {
-            // Wir erhalten einen Schliessbefehl ab einem Menü
+            // Wir erhalten einen Schliessbefehl ab einem MenÃ¼
             msg.consume();
             if( a->isUpdate() )
                 a->setEnabled();

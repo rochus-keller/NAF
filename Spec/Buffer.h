@@ -41,19 +41,19 @@ namespace Spec
 		void amplify( Amplitude );
 		void flip( const Switches&, bool scale = true );
 		//. Spiegle den Buffer an der Achse, deren Switch true ist. Falls scale=true
-		//. wird auch die Scale gespiegelt, ansonsten bleibt diese unverändert.
+		//. wird auch die Scale gespiegelt, ansonsten bleibt diese unverÃ¤ndert.
 		void insert( const Buffer& buf, const Root::Cube& wo );
-		//. Füge den Inhalt von buf bei wo in diesen Buffer ein, wobei wo eine Teilmenge
+		//. FÃ¼ge den Inhalt von buf bei wo in diesen Buffer ein, wobei wo eine Teilmenge
 		//. von this sein muss.
 		bool contains( const Buffer& ) const;
 		void insert( const Buffer& buf );
-		//. Füge den Inhalt von buf an die entsprechende Stelle in this.
-		//. this bleibt dadurch in der Grösse unverändert, jedoch werden
+		//. FÃ¼ge den Inhalt von buf an die entsprechende Stelle in this.
+		//. this bleibt dadurch in der GrÃ¶sse unverÃ¤ndert, jedoch werden
 		//. die Werte der Region gesetzt. buf muss eine Teilmenge von this sein.
 		//. Richtung wird automatisch angepasst. this ist dominant.
 		Amplitude calcMean() const;
 		void calcMean( Amplitude& negative, Amplitude& positive ) const;
-		//. Berechnet den arithmetischen Mittelwert des Buffers, getrennt grösser/kleiner Null
+		//. Berechnet den arithmetischen Mittelwert des Buffers, getrennt grÃ¶sser/kleiner Null
 		void calcMeanMinMax( Amplitude& negative, Amplitude& positive, 
 			Amplitude& minimum, Amplitude& maximum ) const;
 		void null();
@@ -64,7 +64,7 @@ namespace Spec
 		const Scale& getScale( Dimension dim ) const { return d_scales[ dim ]; }
 		void resize( const Extension& ext );
 		void resample( const Extension&, bool interpolate = false );
-		// Verringere die Anzahl Samples, ohne den Spektralbereich zu ändern.
+		// Verringere die Anzahl Samples, ohne den Spektralbereich zu Ã¤ndern.
 		// Wenn interpolate true ist, wird der Durchschnitt der Punkte verwendet,
 		// andernfalls jeder n-te Punkt.
 		static void smoothScale( const Buffer& in, Buffer& out );
@@ -73,7 +73,7 @@ namespace Spec
 		void adjustScale(Dimension d, PPM off ) { d_scales[ d ].adjust( off ); }
 		void setFolding( Dimension, Scale::Folding );
 		void accumulate( Root::Index, Amplitude );
-		// Wie setAt, verwendet aber immer den grösseren Wert (Prüfung des bestehenden)
+		// Wie setAt, verwendet aber immer den grÃ¶sseren Wert (PrÃ¼fung des bestehenden)
 
 		Buffer();
 		virtual ~Buffer();

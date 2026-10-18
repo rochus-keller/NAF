@@ -32,18 +32,18 @@ namespace Lexi2
 {
 	//* SelectorCmd
 	//. Dies ist ein interaktives Command, das in seiner Feedback-Phase
-	//. Mouse-Events empfängt und daraus ein Rubber-Band in Allocation
+	//. Mouse-Events empfÃ¤ngt und daraus ein Rubber-Band in Allocation
 	//. zeichnet. MouseRelease bedeutet Commit und ESC bedeutet Rollback.
 
 	class SelectorCmd : public GlyphCommand
 	{
 	public:
 		void getAllocation( Allocation& ) const;
-		//. Gebe das Rubber-Rectangle zurück.
+		//. Gebe das Rubber-Rectangle zurÃ¼ck.
 		void draw(Canvas&, const Allocation&);
 
 		SelectorCmd(Glyph* controller = nil, QColor = Qt::lightGray  );
-		// Wenn übergeordneter GlyphCommander nicht bereits den Fokus hat, muss
+		// Wenn Ã¼bergeordneter GlyphCommander nicht bereits den Fokus hat, muss
 		// er hier in controller angegeben werden.
 	protected:
 		virtual ~SelectorCmd();

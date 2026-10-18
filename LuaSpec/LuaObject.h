@@ -52,7 +52,7 @@ namespace Lua
 		Root::Ref<Root::Resource> d_obj;
 	};
 
-// RISK: folgende Zeilen müssen als Unix-File gespeichert werden, sonst GCC-Fehler
+// RISK: folgende Zeilen mÃ¼ssen als Unix-File gespeichert werden, sonst GCC-Fehler
 #define DECLARE_LUA_OBJECT( _class, _host )  \
 static PeerHelper<_class>::MethodSlot s_methods[]; \
 _host* obj() const { return (_host*)_obj(); } \
@@ -87,7 +87,7 @@ static int install(lua_State * L);
 	};
 
 
-// RISK: folgende Zeilen müssen als Unix-File gespeichert werden, sonst GCC-Fehler
+// RISK: folgende Zeilen mÃ¼ssen als Unix-File gespeichert werden, sonst GCC-Fehler
 // NOTE: installClass( L, m, true ) ist einziger Unterschied zu Widget 
 #define IMPLEMENT_LUA_OBJECT( _class, _parent, _name ) \
 int _class::install(lua_State *L) \

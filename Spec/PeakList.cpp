@@ -109,7 +109,7 @@ void PeakList::append(PointSet * ps )
 	ColorMap cm;
 	ps->getColors( cm );
 	assert( cm.size() == d_colors.size() );
-	// f¸hrt zu crash assert( cm == d_colors );
+	// f√ºhrt zu crash assert( cm == d_colors );
 
 	PointSet::Selection all = ps->findAll();
 	PointSet::Selection::iterator i;
@@ -175,7 +175,7 @@ void PeakList::rotateAll(const Rotation & rot)
 PeakList::Selection PeakList::find(const PpmCube & c, Spectrum* spec) const
 {
 	assert( c.size() <= d_colors.size() );
-	// Die Dimensionen, welche c nicht umfasst, sind immer erf¸llt
+	// Die Dimensionen, welche c nicht umfasst, sind immer erf√ºllt
 
 	Peaks::const_iterator pos;
 	Selection res;
@@ -230,7 +230,7 @@ Peak* PeakList::addPosition(Peak::Position & peakPos, Spectrum* spec, Root::Inde
 	peak->d_pos[ d_homeSpecId ] = peakPos;
     if( specId != d_homeSpecId )
         peak->d_pos[ specId ] = peakPos;
-        // RISK: damit Peak immer eine g¸ltige Position hat in Home, aber dennoch das Alias bestehen
+        // RISK: damit Peak immer eine g√ºltige Position hat in Home, aber dennoch das Alias bestehen
         // bleibt, wenn dann die Home-Position verschoben wird, da ja zuerst in spec gepickt.
 	PeakList::Update m( this, PeakList::Update::Add, peak );
 	notifyObservers( m );
@@ -287,7 +287,7 @@ void PeakList::setPeak(Peak * pos, const Peak::Position & a, Spectrum * spec)
 				b.d_pos.init( Nirwana );
 				pos->d_pos[ home ] = b;	// Behalte Amplitude und Volumen
 			}else
-				pos->d_pos.erase( home );	// Lˆsche alles
+				pos->d_pos.erase( home );	// L√∂sche alles
 		}else
 			pos->d_pos[ home ] = b;
 	}else
@@ -316,7 +316,7 @@ void PeakList::setPos(Peak * pos, const PeakPos & p, Amplitude a, Spectrum* spec
 				pos->d_pos[ home ].d_pos.init( Nirwana );	// Behalte Amplitude
 				pos->d_pos[ home ].d_amp = a;
 			}else
-				pos->d_pos.erase( home );	// Lˆsche alles
+				pos->d_pos.erase( home );	// L√∂sche alles
 		}else
 			pos->d_pos[ home ].d_pos = p;
 	}else
@@ -434,7 +434,7 @@ bool PeakList::setHome(Spectrum * spec)
     Peak::PositionMap::iterator posIter;
     for( peakIter = d_peaks.begin(); peakIter != d_peaks.end(); ++peakIter )
 	{
-        // Mache eine Kopie und lˆsche Original
+        // Mache eine Kopie und l√∂sche Original
 		Peak::PositionMap pos = (*peakIter).second->d_pos;
         (*peakIter).second->d_pos.clear();
 
@@ -492,7 +492,7 @@ PPM Peak::getPos( Dimension d, Spectrum * s ) const
 	PositionMap::const_iterator i = d_pos.find( (s)?s->getId():0 );
 	if( i != d_pos.end() )
 	{
-        // Es kann sein, dass d_pos nicht valid, n‰mlich wenn das Alias nur verwendet wird,
+        // Es kann sein, dass d_pos nicht valid, n√§mlich wenn das Alias nur verwendet wird,
         // um Amp und Vol zu speichern, ohne eigene Position. In diesem Fall steuert home die
         // Position bei.
 		if( (*i).second.d_pos.isValid() )
@@ -530,7 +530,7 @@ const PeakPos& Peak::getPos(Spectrum * s, bool& alias ) const
 	if( i != d_pos.end() )
 	{
         alias = ( s != 0 && s->getId() != getHome() );
-        // Es kann sein, dass d_pos nicht valid, n‰mlich wenn das Alias nur verwendet wird,
+        // Es kann sein, dass d_pos nicht valid, n√§mlich wenn das Alias nur verwendet wird,
         // um Amp und Vol zu speichern, ohne eigene Position. In diesem Fall steuert home die
         // Position bei.
 		if( (*i).second.d_pos.isValid() )
@@ -548,7 +548,7 @@ const PeakPos& Peak::getPos(Spectrum * s ) const
 	PositionMap::const_iterator i = d_pos.find( (s)?s->getId():0 );
 	if( i != d_pos.end() )
 	{
-        // Es kann sein, dass d_pos nicht valid, n‰mlich wenn das Alias nur verwendet wird,
+        // Es kann sein, dass d_pos nicht valid, n√§mlich wenn das Alias nur verwendet wird,
         // um Amp und Vol zu speichern, ohne eigene Position. In diesem Fall steuert home die
         // Position bei.
 		if( (*i).second.d_pos.isValid() )
@@ -616,11 +616,11 @@ void Peak::getPosition(Position & pos, Spectrum * spec, bool* alias ) const
 	PositionMap::const_iterator i = d_pos.find( specId );
 	if( i != d_pos.end() )
 	{
-        // Ein Wert f¸r specId gefunden
+        // Ein Wert f√ºr specId gefunden
 		pos = (*i).second;
         if( alias && specId != getHome() )
 			*alias = true;
-        // Es kann sein, dass d_pos nicht valid, n‰mlich wenn das Alias nur verwendet wird,
+        // Es kann sein, dass d_pos nicht valid, n√§mlich wenn das Alias nur verwendet wird,
         // um Amp und Vol zu speichern, ohne eigene Position. In diesem Fall steuert home die
         // Position bei.
 		if( pos.d_pos.isValid() )
@@ -634,7 +634,7 @@ void Peak::getPosition(Position & pos, Spectrum * spec, bool* alias ) const
 		pos.d_pos = (*i).second.d_pos;
 	}else
 	{
-        // Es gibt keinen Wert f¸r specId
+        // Es gibt keinen Wert f√ºr specId
         i = d_pos.find( getHome() );
         assert( i != d_pos.end() );
 		pos = (*i).second;
@@ -772,7 +772,7 @@ void DeletePeaksCmd::execute()
 			d_sel[ i ]->getOwner()->deletePosition( d_sel[ i ] );
 		}catch( Root::Exception& )
 		{
-			// Mache die Aktionen bis zur Exception r¸ckg‰ngig.
+			// Mache die Aktionen bis zur Exception r√ºckg√§ngig.
 			for( Index j = 0; j < i; j++ )
 			{
 				d_sel[ i ]->getOwner()->addPosition( d_sel[ j ] );
@@ -847,7 +847,7 @@ PeakModel* PeakList::getModel(Root::Index id) const
 void PeakList::setSpecs(const SpecList & l)
 {
 	d_specs = l;
-	// RISK: wer validiert, ob die Spektren zul‰ssig sind?
+	// RISK: wer validiert, ob die Spektren zul√§ssig sind?
 	d_dirty = true;
 	PeakList::Update m( this, PeakList::Update::SpecList );
 	notifyObservers( m );

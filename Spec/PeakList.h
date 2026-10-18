@@ -43,10 +43,10 @@ namespace Spec
 	class Project;
 
 	//* Peak
-	//. Dies ist ein einzelner Peak mit allen Ausprägungen pro Spektrum.
+	//. Dies ist ein einzelner Peak mit allen AusprÃ¤gungen pro Spektrum.
 	//. Es existiert mind. immer die Position zu d_home. Mit mean wird
-	//. im Falle der Nicht-Existenz zum gewünschten Spektrum ein
-	//. Mittelwert über alle PpmPoint gebildet, ansonsten wird d_home verwendet.
+	//. im Falle der Nicht-Existenz zum gewÃ¼nschten Spektrum ein
+	//. Mittelwert Ã¼ber alle PpmPoint gebildet, ansonsten wird d_home verwendet.
 
 	class Peak : public Root::Object
 	{
@@ -161,8 +161,8 @@ namespace Spec
 
 
 	//* PeakList
-	//. Dies ist eine konkrete, formatunabhängige "Peakliste", welche als
-	//. Teil eines Project geführt wird.
+	//. Dies ist eine konkrete, formatunabhÃ¤ngige "Peakliste", welche als
+	//. Teil eines Project gefÃ¼hrt wird.
 
 	class PeakList : public Root::Subject
 	{
@@ -283,7 +283,7 @@ namespace Spec
 		Root::Ref<PeakModel> d_model;	// Default-Model, ID=0
 		Models d_models;
 		SpecList d_specs;	// Batch-Liste von Spektren, auf welche diese Peaks
-							// mit Integrator angewendet werden müssen.
+							// mit Integrator angewendet werden mÃ¼ssen.
 		Project* d_owner;
 		bool d_dirty;
 	};

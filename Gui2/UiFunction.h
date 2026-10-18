@@ -42,7 +42,7 @@ namespace Gui2
 		void handle();
 	public slots:
 		virtual void prepare(); // Aktualisiert enabled und checked
-		virtual void execute(); // Führt die Funktion aus
+		virtual void execute(); // FÃ¼hrt die Funktion aus
 	protected:
 		static UiFunction* s_sender;
 		static bool d_preparing;
@@ -59,7 +59,7 @@ namespace Gui2
         if( !( cond ) ) return; \
         /* else pass through */ \
     }
-    // 2014-05-04: folgende Funktion ruft neu gleich selber setCheckable auf, wodurch bei Menü unnötig
+    // 2014-05-04: folgende Funktion ruft neu gleich selber setCheckable auf, wodurch bei MenÃ¼ unnÃ¶tig
 	// NOTE: if(enabled) damit checked nur dann geprueft wird; sonst muss ueberall der Code auch noch auf Nullpointer gesichert werden
 	#define CHECKED_IF( enabled, checked ) \
     { \

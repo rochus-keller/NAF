@@ -30,8 +30,8 @@
 namespace Lexi
 {
 	//* Background
-	//. Diese Klasse zeichnet einfach den Hintergrund in der gewünschten Farbe,
-	//. wobei einfach immer die gesamte Allocation gefärbt wird.
+	//. Diese Klasse zeichnet einfach den Hintergrund in der gewÃ¼nschten Farbe,
+	//. wobei einfach immer die gesamte Allocation gefÃ¤rbt wird.
 
 	class Background : public MonoGlyph 
 	{

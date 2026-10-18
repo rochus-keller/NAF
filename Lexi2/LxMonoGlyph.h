@@ -30,7 +30,7 @@
 namespace Lexi2
 {
 	//* MonoGlyph
-	//. Ein MonoGlyph kann einem Glyph als Adapter vorgeschaltet werden. Er ver‰ndert
+	//. Ein MonoGlyph kann einem Glyph als Adapter vorgeschaltet werden. Er ver√§ndert
 	//. dadurch die Eigenschaften des enthaltenen Glyphs, ohne selber als Komponente
 	//. in Erscheinung zu treten.
 

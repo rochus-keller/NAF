@@ -92,7 +92,7 @@ Scale::Scale(PPM idx0, PPM idxN, const AtomType & c, PPM delta, Folding f):
 Scale::Scale():
 	d_ppm( 1, -1 ), d_count( 1 ), d_fold( Unfolded )
 	// NOTE: hier muss etwas anderes als Null gegeben werden, damit ein Buffer
-	// immer etwas sinnvolles enthält.
+	// immer etwas sinnvolles enthÃ¤lt.
 {
 
 }
@@ -154,7 +154,7 @@ bool Scale::contains(const Scale & rhs ) const
 {
 	const bool pl = isParallel();
 	const bool pr = rhs.isParallel();
-	// NOTE: berücksichtigt bereits, dass Sample +/- 0.5 delta breit ist.
+	// NOTE: berÃ¼cksichtigt bereits, dass Sample +/- 0.5 delta breit ist.
 	PPM d2 = getDelta() / 2.0;
 	if( pl && pr )
 		return d_ppm.first - d2 < rhs.getIdx0() && d_ppm.second + d2 > rhs.getIdxN();

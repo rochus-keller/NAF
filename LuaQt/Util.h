@@ -41,7 +41,7 @@ namespace Lua
 
 		static void expect( lua_State *L, int n = 1 )
 		{
-			// Der erste Parameter ist sowieso immer this, darum hier nur die übrigen gezählt
+			// Der erste Parameter ist sowieso immer this, darum hier nur die Ã¼brigen gezÃ¤hlt
 			if( lua_gettop(L) < n )
 				luaL_error( L, "expecting at least %d parameters", n - 1 );
 		}

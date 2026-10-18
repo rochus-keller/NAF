@@ -64,7 +64,7 @@ int StarFile::findLoop(const Star::StarParser::Block & block, const QString &hea
 	for( int i = 0; i < block.d_loops.size(); i++ )
 	{
 		if( block.d_loops[i].d_headers.isEmpty() )
-			continue; // Loop ohne Header; eigentlich nicht möglich
+			continue; // Loop ohne Header; eigentlich nicht mÃ¶glich
 		for( int j = 0; j < block.d_loops[i].d_headers.first().size(); j++ )
 		{
 			if( block.d_loops[i].d_headers.first()[j] == header )

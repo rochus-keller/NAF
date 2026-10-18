@@ -78,7 +78,7 @@ void PeakModelView::draw(Canvas & p, const Allocation & a)
 
 		Coord i;
 		Coord pos;
-		if( area->inUse( DimY ) )	// Kurve verl‰uft vertikal
+		if( area->inUse( DimY ) )	// Kurve verl√§uft vertikal
 		{
 			Coord pixmax = a.getWidth() - 20;
 			Amplitude step = pixmax / ( amax - amin );	// Float-Range pro Pixel
@@ -123,7 +123,7 @@ void PeakModelView::draw(Canvas & p, const Allocation & a)
 						a.getTop(), area->getDim() );
 				p.drawLine( a.getLeft() + pos, i, a.getLeft() + pos, j, d_color );
 			}
-		}else if( area->inUse( DimX ) )	// Kurve verl‰uft horizontal
+		}else if( area->inUse( DimX ) )	// Kurve verl√§uft horizontal
 		{
 			Coord pixmax = a.getHeight() - 20;
 			Amplitude step = pixmax / ( amax - amin );	// Float-Range pro Pixel

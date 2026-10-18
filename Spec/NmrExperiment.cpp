@@ -26,7 +26,7 @@ using namespace Spec;
 
 static char s_buf[32];
 static ResidueType* s_lhs = 0;
-static ResidueType* s_rhs = 0;	// RISK: nicht ThreadSafe. Nur während pathsim nötig
+static ResidueType* s_rhs = 0;	// RISK: nicht ThreadSafe. Nur wÃ¤hrend pathsim nÃ¶tig
 static ResidueType* s_resi = 0;
 static SpectrumType* s_spec = 0;
 typedef std::set<MetaAtom*> Result;
@@ -108,7 +108,7 @@ static void deepFind( MetaAtom* start, AtomType to, Root::Index hops, bool repea
 			// Ausgehend von start durch alle Nachbarn gehen...
 			if( to.isNone() || (*p)->getType(scheme) == to )
 			{
-				// Wenn der Nachbar die gewünschte Farbe hat, registrieren...
+				// Wenn der Nachbar die gewÃ¼nschte Farbe hat, registrieren...
 				if( dp.isNull() || ( (*p)->getMean() != DisPar::Undefined &&
 					dp.contains( (*p)->getMean() ) ) )
 				{
@@ -120,8 +120,8 @@ static void deepFind( MetaAtom* start, AtomType to, Root::Index hops, bool repea
 				}
 			}
 			// RISK: ev. hier ein else, um Suche ab erstem Fund abzubrechen im Ast
-			// Führe Suche fort bis hops aufgebraucht
-			// RISK: falls dp.isValid, darf Suche über einen unpassenden hinweggehen?
+			// FÃ¼hre Suche fort bis hops aufgebraucht
+			// RISK: falls dp.isValid, darf Suche Ã¼ber einen unpassenden hinweggehen?
 			deepFind( (*p), to, hops, repeat, depth + 1, res, dp, scheme );
 		}
 	}
@@ -163,7 +163,7 @@ static void unmarkAll()
 static void findAtoms(MetaAtom* start, AtomType to, Root::Index hops, 
 					  bool repeat, DisPar dp, Result& res, Root::Index scheme )
 {
-	// Fügt nur in res ein, ohne dieses vorher zu leeren: Vereinigungsmenge.
+	// FÃ¼gt nur in res ein, ohne dieses vorher zu leeren: Vereinigungsmenge.
 
 	// Wie ResidueType::find, aber basierend auf Atom statt
 	if( hops == -1 )
@@ -176,7 +176,7 @@ static void findAtoms(MetaAtom* start, AtomType to, Root::Index hops,
 
 	if( start->isGroup() )
 	{
-		// start kann eine Gruppe sein. In diesem Fall verwenden wir für
+		// start kann eine Gruppe sein. In diesem Fall verwenden wir fÃ¼r
 		// die Suche rekursiv alle in der Gruppe enthaltenen Atome anstelle
 		// der Gruppe.
 		MetaAtom::Atoms::const_iterator p;
@@ -220,7 +220,7 @@ static void findAtoms(MetaAtom* start, AtomType to, Root::Index hops,
 					for( i = sel2.begin(); i != sel2.end(); ++i )
 						if( res.count( (*i) ) == 0 )
 						{
-							// Die neu gefundenen müssen selber auch noch als start dienen.
+							// Die neu gefundenen mÃ¼ssen selber auch noch als start dienen.
 							res.insert( (*i) );
 							starts.insert( (*i) );
 						}
@@ -266,8 +266,8 @@ static void recalcTree( NmrExperiment::PathNode* node, const Result& startSet, i
 	Q_ASSERT( s_spec != 0 && s_resi != 0 );
 
 	// Wenn wir hier ankommen, ist startSet zwar bekannt, aber noch nicht im
-	// node eingetragen. Wir müssen hier also in jedem Fall alle start durchlaufen
-	// und für jeden einen neuen Node erstellen.
+	// node eingetragen. Wir mÃ¼ssen hier also in jedem Fall alle start durchlaufen
+	// und fÃ¼r jeden einen neuen Node erstellen.
 
 	Result nextStartSet;
 
@@ -284,21 +284,21 @@ static void recalcTree( NmrExperiment::PathNode* node, const Result& startSet, i
 			findInSpec( step.d_dim, nextStartSet );
 		}else if( step.d_hops == -1 )
 		{
-			// NOESY-Step: suche alle passenden Atome; seit CARA 1.9.1; vorher wurde hier 0 eingefügt wenn
+			// NOESY-Step: suche alle passenden Atome; seit CARA 1.9.1; vorher wurde hier 0 eingefÃ¼gt wenn
 			// Noesy am Schluss und sonst alle Atome der Farbe, aber ohne Wildcard-Markierung
 			findAllAtoms( step.d_atom, DisPar(), nextStartSet, labelingScheme );
 		}
 
 		for( Result::const_iterator startIter = startSet.begin(); startIter != startSet.end(); ++startIter, row++ )
 		{
-			// Merke jedes Atom des ersten Step und gehe für jedes den Baum herunter
+			// Merke jedes Atom des ersten Step und gehe fÃ¼r jedes den Baum herunter
 			Q_ASSERT( (*startIter) != 0 );
 			next = new NmrExperiment::PathNode( (*startIter)->getLabel(), wasNoesy );
 			node->d_subs[ row ] = next;
 
-			if( step.d_hops > 0 ) // Suche durch Molekül
+			if( step.d_hops > 0 ) // Suche durch MolekÃ¼l
 			{ 
-				// Für d_hops <= 0 wurde found bereits oben gesetzt
+				// FÃ¼r d_hops <= 0 wurde found bereits oben gesetzt
 				nextStartSet.clear();
 				findAtoms( (*startIter), step.d_atom, step.d_hops, step.d_repeat,
 					step.d_range, nextStartSet, labelingScheme );
@@ -313,7 +313,7 @@ static void recalcTree( NmrExperiment::PathNode* node, const Result& startSet, i
 		}
 	}else
 	{
-		// Wir sind über letzten Step hinaus. Lediglich Node erzeugen, nicht tauchen
+		// Wir sind Ã¼ber letzten Step hinaus. Lediglich Node erzeugen, nicht tauchen
 		for( Result::const_iterator startIter = startSet.begin(); startIter != startSet.end(); ++startIter, row++ )
 		{
 			Q_ASSERT( (*startIter) != 0 );
@@ -446,7 +446,7 @@ void NmrExperiment::crossproduct(PathTable::Path& path, Dimension dim)
 	if( specDim.d_labels.empty() )
 	{
 		// Joker, damit im Falle einer leeren Label-Deklaration wenigstens
-		// die übrigen Dimensionen berückstichtigt werden.
+		// die Ã¼brigen Dimensionen berÃ¼ckstichtigt werden.
 		path[ dim ] = SpinLabel();
 		if( dim < d_table.getDimCount() - 1 )
 			crossproduct( path, dim + 1 );
@@ -481,7 +481,7 @@ void NmrExperiment::pathsim(PathNode* root) const
 	Atom* l = 0;
 	Atom* r = 0;
 
-	// Sorge dafür, dass N und C von d_resi einen Link auf 
+	// Sorge dafÃ¼r, dass N und C von d_resi einen Link auf 
 	// C in lhs und N in rhs erhalten. Damit werden die 
 	// interresiduellen Spins sichtbar.
 
@@ -537,7 +537,7 @@ void NmrExperiment::getColumn(Dimension col, SpinLabelSet & res, bool checkNoesy
 
 void NmrExperiment::getColumn(const PathTable::Path& filter, Dimension col, SpinLabelSet & res, bool checkNoesy ) const
 {
-    // Ermittle die Spalte und berücksichtige nur die Pfade, welche dem filter entsprechen
+    // Ermittle die Spalte und berÃ¼cksichtige nur die Pfade, welche dem filter entsprechen
     if( checkNoesy && d_specType && d_resiType && d_specType->isNoesy( col ) )
 	{
         res = d_resiType->findAll( d_specType->getColor( col ) );

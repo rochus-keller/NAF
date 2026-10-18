@@ -36,7 +36,7 @@ NamedFunction::NamedFunction(const QString& title, const char* slot, QObject *pa
 
 bool NamedFunction::prepareImp( QObject* cur )
 {
-    // Rufe auf um Verfügbarkeit abzufragen
+    // Rufe auf um VerfÃ¼gbarkeit abzufragen
     if( callFunction( cur ) )
 	{
         // Funktion wurde gefunden und erfolgreich aufgerufen
@@ -65,7 +65,7 @@ void NamedFunction::prepare()
 #endif
 	{
 		// Gehe zuerst durch alle Children, die wir noch nicht besucht haben
-		// Widgets können Controller als Children haben.
+		// Widgets kÃ¶nnen Controller als Children haben.
 		for( int i = 0; i < cur->children().size(); i++ )
 		{
 			if( cur->children()[i] != prev && prepareImp( cur->children()[i] ) )
@@ -80,12 +80,12 @@ void NamedFunction::prepare()
 
 void NamedFunction::execute()
 {
-    // ENABLED_IF lässt in jedem Fall nur durch, wenn Condition erfüllt.
+    // ENABLED_IF lÃ¤sst in jedem Fall nur durch, wenn Condition erfÃ¼llt.
     // Hier muss aber zuvor prepare() aufgerufen worden sein, ansonsten target nicht bekannt ist.
     if( d_target )
 	{
 		d_preparing = false;
-        // Rufe auf um auszuführen
+        // Rufe auf um auszufÃ¼hren
 		callFunction( d_target );
     }else
         qWarning() << "NamedFunction::execute(): no target found for slot" << d_slot;
@@ -108,7 +108,7 @@ bool NamedFunction::callFunction( QObject* o )
     QApplication::sendEvent( o, &e );
 #else
     // NOTE: Da in der Praxis niemand eine NamedFunction mit Parametern verwendet,
-    // sollte dieser Code funktionieren; ansonsten müsste man im Private-Bereich von Qt hantieren.
+    // sollte dieser Code funktionieren; ansonsten mÃ¼sste man im Private-Bereich von Qt hantieren.
 
     // Schneide "(xyz)" ab; wenn es Klammern hat, funktioniert invokeMethod nicht.
     const int pos = d_slot.indexOf( QChar('(') );

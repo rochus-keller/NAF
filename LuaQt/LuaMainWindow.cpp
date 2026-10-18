@@ -97,7 +97,7 @@ _LuaDialog::_LuaDialog( QWidget * parent ):
 LuaDialog::LuaDialog(_LuaDialog* w, lua_State* L):
 	LuaWidget( w, L )
 {
-	unthis();	// Damit überhaupt je ein GC aufgerufen wird
+	unthis();	// Damit Ã¼berhaupt je ein GC aufgerufen wird
 }
 
 int LuaDialog::dispose(lua_State *L)
@@ -250,7 +250,7 @@ int LuaComboBox::addItem(lua_State *L)
 	}else
 		obj()->insertItem( luaL_checkstring( L, 1 ) );
 	lua_pushnumber( L, obj()->count() );
-	// Wir beginnen mit 1 zu zählen
+	// Wir beginnen mit 1 zu zÃ¤hlen
 	return 1;
 }
 
@@ -279,7 +279,7 @@ int LuaComboBox::getCurrentItem(lua_State *L)
 {
 	checkAlive( L );
 	lua_pushnumber( L, obj()->currentItem() + 1 );
-	// Zähle von 1..n, mit 0..nicht selektiert
+	// ZÃ¤hle von 1..n, mit 0..nicht selektiert
 	return 1;
 }
 

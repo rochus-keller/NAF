@@ -169,7 +169,7 @@ bool StarParser::parseLoopHeader(StarParser::Loop & l, int level)
 		}else if( !firstTime && t.isDataValue() )
 		{
 			l.d_headers[level] = header;
-			return true; // gehe zurück ohne eat token
+			return true; // gehe zurÃ¼ck ohne eat token
 		}else if( !firstTime && t.d_type == StarLexer::Token::Stop )
 		{
 			// Im BNF 1993 ist stop_ optional; im BNF 2012 ist es obligatorisch, aber im Beispiel im Paper fehlt es auch!
@@ -197,8 +197,8 @@ bool StarParser::parseLoopTable(const Loop::Headers & headers, Loop::Table & tab
 				table.append( Loop::Row() );
 			else if( table.last().size() == headers[level].size() )
 			{
-				// Hierhin kommen wir, wenn eine Zeile von table vollständig gelesen wurde und entschieden werden muss,
-				// ob die nächsten Daten zu table oder einer Untertabelle gehören
+				// Hierhin kommen wir, wenn eine Zeile von table vollstÃ¤ndig gelesen wurde und entschieden werden muss,
+				// ob die nÃ¤chsten Daten zu table oder einer Untertabelle gehÃ¶ren
 				if( headers.size() > level + 1 )
 				{
 					Loop::Table t2;
@@ -208,7 +208,7 @@ bool StarParser::parseLoopTable(const Loop::Headers & headers, Loop::Table & tab
 				}else
 					table.append( Loop::Row() );
 			}else if( table.last().size() > headers[level].size() )
-				table.append( Loop::Row() ); // Hierher kommen wir nach Rückkehr von der Untertabelle
+				table.append( Loop::Row() ); // Hierher kommen wir nach RÃ¼ckkehr von der Untertabelle
 			if( table.last().size() < headers[level].size() )
 			{
 				nextToken(); // eat token
@@ -222,10 +222,10 @@ bool StarParser::parseLoopTable(const Loop::Headers & headers, Loop::Table & tab
 			nextToken(); // eat token
 			if( table.last().size() < headers[level].size() )
 				return error( QString("invalid number of loop values"), t );
-			// Fall: wenn zwar verschachtelte Loops definiert, aber auch Records nur mit Werten für Toplevel in Tabelle sind.
+			// Fall: wenn zwar verschachtelte Loops definiert, aber auch Records nur mit Werten fÃ¼r Toplevel in Tabelle sind.
 			// Siehe Beispiel: http://www.iucr.org/__data/iucr/cif/software/oostar/oostar_ddl1/bin/data/ex.1
-			// Fall: array_usage.str in starlib2 examples; überzählige loop_ am Schluss
-			// Mit folgendem Hack werden diese Fälle abgefangen:
+			// Fall: array_usage.str in starlib2 examples; Ã¼berzÃ¤hlige loop_ am Schluss
+			// Mit folgendem Hack werden diese FÃ¤lle abgefangen:
 			t = lookAhead();
 			if( level == 0 )
 			{
@@ -235,7 +235,7 @@ bool StarParser::parseLoopTable(const Loop::Headers & headers, Loop::Table & tab
 					continue;
 				}else if( t.d_type == StarLexer::Token::Stop && headers.size() > 1 )
 				{
-					// Überzählige stop_ am Schluss werden toleriert, wenn der loop_ verschachtelt war
+					// ÃœberzÃ¤hlige stop_ am Schluss werden toleriert, wenn der loop_ verschachtelt war
 					nextToken(); // eat token
 					continue;
 				}
@@ -249,7 +249,7 @@ bool StarParser::parseLoopTable(const Loop::Headers & headers, Loop::Table & tab
 		{
 			if( table.last().size() < headers[level].size() )
 				return error( QString("invalid number of loop values"), t );
-			return true; // zurück ohne eat token
+			return true; // zurÃ¼ck ohne eat token
 		}else
 			return unexpectedToken( t );
 		firstTime = false;

@@ -106,13 +106,13 @@ void FragmentAssignment::recalc()
 		excluded = false;
 		for( stripIdx = 0; stripIdx < stripCount; stripIdx++ )
 		{
-			// Gehe für die Squenzposition seqIdx durch das 
+			// Gehe fÃ¼r die Squenzposition seqIdx durch das 
 			// Fragment und berechne Match.
 			if( stripIdx > 0 && 
 				seq[ seqIdx + stripIdx ]->getChain() != 
 				seq[ seqIdx + stripIdx - 1 ]->getChain() )
 			{
-				// Wenn der untersuchte Sequenzabschnitt über zwei Chains hinwegläuft,
+				// Wenn der untersuchte Sequenzabschnitt Ã¼ber zwei Chains hinweglÃ¤uft,
 				// ist dies ein ungeeigneter Match.
 				excluded = true;
 				break;
@@ -122,7 +122,7 @@ void FragmentAssignment::recalc()
 			if( fit.d_excluded )
 			{
 				// Wenn der Residuentyp der aktuellen Sequenzposition in 
-				// der Menge der für den Strip verbotenen Typen steht, wird Match 
+				// der Menge der fÃ¼r den Strip verbotenen Typen steht, wird Match 
 				// ganz verworfen.
 				excluded = true;
 				break;
@@ -136,7 +136,7 @@ void FragmentAssignment::recalc()
 				maxPerStrip = fit.d_weight;
 		}
 		if( excluded )
-			continue; // Nicht in Match-Liste aufnehmen, zum nächsten gehen.
+			continue; // Nicht in Match-Liste aufnehmen, zum nÃ¤chsten gehen.
 		if( d_expand && seqIdx > 0 &&
 			seq[ seqIdx - 1 ]->getChain() == seq[ seqIdx ]->getChain() )
 		{
@@ -182,7 +182,7 @@ void FragmentAssignment::recalc()
 		{
 			// Normiere auf den Strip mit den meisten gepassten Peaks, damit 
 			// diejenigen mit wenig Peaks zu denjenigen mit vielen Peaks im
-			// Verhältnis schlechter sind, auch wenn deren Summe absolut höher ist.
+			// VerhÃ¤ltnis schlechter sind, auch wenn deren Summe absolut hÃ¶her ist.
 			match.d_fits[ stripIdx ] /= Fitness( maxPerStrip );
 			// qDebug( "Strip %d: %f", stripIdx, match.d_fits[ stripIdx ] );
 			if( d_geometric )

@@ -80,7 +80,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) :
     rule.name = "Number";
     d_rules.append(rule);
 
-    QTextCharFormat idents; // Ist nötig, damit Idents der Form "abc123" nicht als Zahl interpretiert werden
+    QTextCharFormat idents; // Ist nÃ¶tig, damit Idents der Form "abc123" nicht als Zahl interpretiert werden
     idents.setProperty( TokenProp, Ident );
     idents.setForeground(Qt::black);
 	rule.pattern = QRegExp("(\\b)[a-zA-Z_][a-zA-Z0-9_]*");
@@ -251,7 +251,7 @@ union BlockState
     {
         unsigned int startOfComment:1; // Auf der Zeile beginnt ein Kommentar, der dort nicht endet
 		unsigned int endOfStrOrCmnt:1; // Auf der Zeile endet ein Kommentar oder String, der dort nicht beginnt
-        unsigned int allLineComment:1; // Die ganze Zeile gehört zu einem Kommentar, der darüber beginnt und darunter endet
+        unsigned int allLineComment:1; // Die ganze Zeile gehÃ¶rt zu einem Kommentar, der darÃ¼ber beginnt und darunter endet
         unsigned int startOfString:1;
         unsigned int allLineString:1;
 		unsigned int level:8;    // Anz. "="
@@ -262,7 +262,7 @@ union BlockState
 
 void SyntaxHighlighter::highlightBlock(const QString & block)
 {
-    QString text = block; // wir machen Kopie, damit wir die geparsten Stellen rauslöschen können
+    QString text = block; // wir machen Kopie, damit wir die geparsten Stellen rauslÃ¶schen kÃ¶nnen
 
     BlockState prev;
     prev.d_int = previousBlockState();
@@ -275,7 +275,7 @@ void SyntaxHighlighter::highlightBlock(const QString & block)
     int marksDone = 0;
     if( prev.d_state.startOfComment || prev.d_state.allLineComment )
     {   // wir sind in einem Kommentar drin
-        // prüfe, ob er hier endet; suche das erste End; alle davor liegenden Starts und anderen Marks werden ignoriert
+        // prÃ¼fe, ob er hier endet; suche das erste End; alle davor liegenden Starts und anderen Marks werden ignoriert
         for( int i = 0; i < marks.size(); i++ )
         {
 			if( marks[i].d_kind == Mark::EndMlStrOrCmt && marks[i].d_num == prev.d_state.level )
@@ -297,7 +297,7 @@ void SyntaxHighlighter::highlightBlock(const QString & block)
     }else if( prev.d_state.startOfString || prev.d_state.allLineString )
     {
         // wir sind in einem String drin
-        // prüfe, ob er hier endet; suche das erste End; alle davor liegenden Starts und anderen Marks werden ignoriert
+        // prÃ¼fe, ob er hier endet; suche das erste End; alle davor liegenden Starts und anderen Marks werden ignoriert
         for( int i = 0; i < marks.size(); i++ )
         {
 			if( marks[i].d_kind == Mark::EndMlStrOrCmt && marks[i].d_num == prev.d_state.level )

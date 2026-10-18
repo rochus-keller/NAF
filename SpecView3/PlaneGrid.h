@@ -103,7 +103,7 @@ namespace Spec
         void fitWindow(int overlay = -1);
         void ensureCursorVisible();
     signals:
-        void contourParamsUpdated(int overlay); // -1 für main Plane
+        void contourParamsUpdated(int overlay); // -1 fÃ¼r main Plane
     public slots:
         void handleShowContour();
         void handleShowIntensity();
@@ -121,9 +121,9 @@ namespace Spec
         void handleRemoveAllRulers();
         void handleAutoGain(); // auch handleAutoGain4D
         void handleViewLabels(); // auch handleViewLabels4D
-        void handleSetPlColor(); // auch für 4D
-        void handleViewPlLabels(); // auch für 4D
-        void handleGhostLabels(); // auch für 4D
+        void handleSetPlColor(); // auch fÃ¼r 4D
+        void handleViewPlLabels(); // auch fÃ¼r 4D
+        void handleGhostLabels(); // auch fÃ¼r 4D
         void handleGlobalCursorSync(); // vormals handleCursorSync()
         void handleGlobalRangeSync(); // vormals handleRangeSync()
         void handleAdjustIntensity();

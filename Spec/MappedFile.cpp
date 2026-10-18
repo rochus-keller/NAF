@@ -18,7 +18,7 @@
  * http://www.gnu.org/copyleft/gpl.html.
  */
 
-// Dies ist die Implementation für Win32
+// Dies ist die Implementation fÃ¼r Win32
 
 #include "MappedFile.h"
 using namespace Spec;
@@ -75,7 +75,7 @@ _MappedFileImp::_MappedFileImp(const char * path, bool readwrite)
 		bytesToMap = d_size;
 	else
 		bytesToMap = 0; //si.dwAllocationGranularity; // * 5; // Eine Allocation entspricht 64KByte.
-			//. RISK: unter Win98 läufts nur so. Andernfalls gibts eine Exception ab 64k.
+			//. RISK: unter Win98 lÃ¤ufts nur so. Andernfalls gibts eine Exception ab 64k.
 	d_start = (Root::Byte*) ::MapViewOfFile( d_mapping, access2 | PAGE_WRITECOPY, 0, 0, bytesToMap ); 
 	if( d_start == 0 )
 	{
@@ -162,7 +162,7 @@ Root::Byte MappedFile::getAt(Root::Int64 pos)
 {
 	if( pos >= d_this->d_size )
 	{
-		d_this->d_ok = false; // Error: Index überschreitet Dateigrösse
+		d_this->d_ok = false; // Error: Index Ã¼berschreitet DateigrÃ¶sse
 		return 0;
 	}
 	return *( d_this->d_start + pos );
@@ -171,7 +171,7 @@ Root::Byte MappedFile::getAt(Root::Int64 pos)
 void MappedFile::seek(Root::Int64 pos)	// not used
 {
 	if( pos >= d_this->d_size )
-		d_this->d_ok = false; // Error: Index überschreitet Dateigrösse
+		d_this->d_ok = false; // Error: Index Ã¼berschreitet DateigrÃ¶sse
 	else
 	{
 		d_this->d_ok = true;
@@ -187,7 +187,7 @@ bool MappedFile::isOk() const
 void MappedFile::read(Root::Byte * buffer, Root::UInt32 length) // not used
 {
     if( ( d_this->d_cursor + int(length) ) > d_this->d_size )
-		d_this->d_ok = false; // Error: Index überschreitet Dateigrösse
+		d_this->d_ok = false; // Error: Index Ã¼berschreitet DateigrÃ¶sse
 	else
 	{
 		d_this->d_ok = true;
@@ -199,7 +199,7 @@ void MappedFile::read(Root::Byte * buffer, Root::UInt32 length) // not used
 void MappedFile::read(Root::Byte * buffer, Root::Int64 pos, Root::UInt32 length) // not used
 {
 	if( pos + length > d_this->d_size )
-		d_this->d_ok = false; // Error: Index überschreitet Dateigrösse
+		d_this->d_ok = false; // Error: Index Ã¼berschreitet DateigrÃ¶sse
 	else
 	{
 		d_this->d_ok = true;

@@ -32,7 +32,7 @@ namespace Spec
 {
 	//* ResidueBase
 	//. Eine dateibasierte Datenbank, welche zu Residuen-Typen und deren Atomen
-	//. Shift-Mittelwerte und -Varianzen zur Verfügung stellt.
+	//. Shift-Mittelwerte und -Varianzen zur VerfÃ¼gung stellt.
 
 	class ResidueBase
 	{

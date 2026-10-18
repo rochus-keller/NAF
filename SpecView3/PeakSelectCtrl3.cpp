@@ -65,7 +65,7 @@ bool PeakSelectCtrl3::mousePressEvent ( QMouseEvent * event )
     {
         ViewAreaMdl3* mdl = getArea();
         d_view->selectPeak( mdl->toPpm( event->x(), DimX ), mdl->toPpm( event->y(), DimY ) );
-		// Nicht immer true zurück, damit Cursor funktioniert.
+		// Nicht immer true zurÃ¼ck, damit Cursor funktioniert.
         notifySelection( d_view, !hasPropagate() );
 		return d_swallow;
 	}
@@ -125,7 +125,7 @@ bool PeakSelect1DCtrl3::mousePressEvent ( QMouseEvent * event )
 //	{
 //		ViewAreaMdl* mdl = d_view->getViewArea();
 //		d_view->selectPeak( mdl->toPpm( e.getX(), a.getLeft(), DimX ) );
-//		// Nicht immer true zurück, damit Cursor funktioniert.
+//		// Nicht immer true zurÃ¼ck, damit Cursor funktioniert.
 //		return d_swallow;
 //	}
 	// else

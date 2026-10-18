@@ -304,7 +304,7 @@ int LuaDomElement2::createElement(lua_State *L)
 {
 	DomElement* obj = DomElementValue::check2( L, 1 );
 	// Param: Name
-	// Erzeugt ein neues Element und fügt es ans Ende der Liste
+	// Erzeugt ein neues Element und fÃ¼gt es ans Ende der Liste
 	Root::Ref<DomElement> e = new DomElement();
 	e->setName( luaL_checkstring( L, 2 ) );
 	DomElementValue::create( L, e );

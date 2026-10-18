@@ -834,12 +834,12 @@ void HtmlParser::resolveParent()
     }
 
 	if( node->isListStart && at(node->parent).isListItem )
-		p = at(node->parent).parent;	// Parser hängt nested Lists irrtümlich an LI
+		p = at(node->parent).parent;	// Parser hÃ¤ngt nested Lists irrtÃ¼mlich an LI
 
     node->parent = p;
 
     // makes it easier to traverse the tree, later
-	// Das funktioniert überhaupt nicht
+	// Das funktioniert Ã¼berhaupt nicht
     // nodes[p].children.append(nodes.count() - 1);
 }
 
@@ -1119,7 +1119,7 @@ void HtmlParser::fillChildren()
 			; // NOP, parent bereits auf stack
 		else if( path.contains( par ) )
 		{
-			// Parent bereits im Pfad, aber nicht zuunterst. Wir müssen rauf
+			// Parent bereits im Pfad, aber nicht zuunterst. Wir mÃ¼ssen rauf
 			while( !path.isEmpty() && path.top() != par )
 				path.pop();
 		}else

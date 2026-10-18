@@ -62,8 +62,8 @@ namespace Root
 		QVector<Any::Type> d_types;
 		Params d_params;
 		QVector<QByteArray> d_names; 
-		bool d_immediate;	// Ausführen ohne Enter, sobald ganzes Mnemonic eingetippt.
-		bool d_enabled;		// Für Update-Zyklus, ob Mnemonic zur Verfügung steht.
+		bool d_immediate;	// AusfÃ¼hren ohne Enter, sobald ganzes Mnemonic eingetippt.
+		bool d_enabled;		// FÃ¼r Update-Zyklus, ob Mnemonic zur VerfÃ¼gung steht.
 		bool d_updating;	// Definiert, ob es sich um Update-Zyklus handelt.
 		short d_mandatory;	// Anzahl obligatorischer Parameter.
 	};

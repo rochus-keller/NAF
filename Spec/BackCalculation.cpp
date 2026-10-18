@@ -156,7 +156,7 @@ void BackCalculation::fillPlane(Buffer & buffer, Dimension x, Dimension y,
 	Index nx = buffer.getExtension()[ DimX ];
 	Index ny = buffer.getExtension()[ DimY ];
 	Root::Matrix<Amplitude> peak( nx, ny );
-	// Wir berechnen den Peak nur für einen Quadranten, wobei 0,0 dem Maximum entspricht
+	// Wir berechnen den Peak nur fÃ¼r einen Quadranten, wobei 0,0 dem Maximum entspricht
 	{
 		const PPM dx = sx.getDelta();
 		const PPM dy = sy.getDelta();
@@ -172,8 +172,8 @@ void BackCalculation::fillPlane(Buffer & buffer, Dimension x, Dimension y,
 			{
 				p1[ x ] = float( i ) * dx;
 				peak.setAt( i, j, mdl.calcBell( dim, p1, p0, 1.0 ) );
-				// peak erhält einen Verlauf entlang des Radius über einen Quadranten
-				// RISK: die Annäherung berücksichtigt nur das Hauptmodell.
+				// peak erhÃ¤lt einen Verlauf entlang des Radius Ã¼ber einen Quadranten
+				// RISK: die AnnÃ¤herung berÃ¼cksichtigt nur das Hauptmodell.
 			}
 		}
 	}
@@ -212,7 +212,7 @@ void BackCalculation::fillPlane(Buffer & buffer, Dimension x, Dimension y,
 		{
 			for( i = 0; i < nx; i++ )
 			{
-				// ... und superponiere für jeden die Peak-Vorlage auf das Ziel.
+				// ... und superponiere fÃ¼r jeden die Peak-Vorlage auf das Ziel.
 				v = peak[ i + nx * j ] * a; 
 				super( buffer, nx, ny, ox + i, oy + j, v ); // x,y
 				if( i != 0 && j != 0 )
@@ -349,8 +349,8 @@ void BackCalculation::fillBuffer( Buffer& b, const Rotation& r, const Root::Cube
 		throw Root::Exception( "No master peak list available" );
 	if( c.size() != d_spec->getDimCount() )
 		throw Root::Exception( "Invalid dimension count" );
-	// NOTE: Backcalc verlangt, dass die Anzahl Dim des Spektrums vollständig
-	// auf PeakList abgebildet werden können. Es ist also nicht möglich,
+	// NOTE: Backcalc verlangt, dass die Anzahl Dim des Spektrums vollstÃ¤ndig
+	// auf PeakList abgebildet werden kÃ¶nnen. Es ist also nicht mÃ¶glich,
 	// aus einer 2D-Peakliste ein 3D-Backcalc herzustellen.
 	switch( r.size() )
 	{

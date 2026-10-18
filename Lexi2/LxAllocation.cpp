@@ -93,7 +93,7 @@ void Allocation::setAllotment(Dimension d, const Allotment & a)
 
 bool Allotment::equals(const Allotment & a ) const
 {
-	// RISK: ursprünglich alles mit equal()
+	// RISK: ursprÃ¼nglich alles mit equal()
     if( d_origin != a.d_origin ) 
 	{
         return false;

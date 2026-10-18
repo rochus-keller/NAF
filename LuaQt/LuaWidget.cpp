@@ -55,8 +55,8 @@ LuaWidgetPeer::LuaWidgetPeer(QObject* obj,lua_State* L):
 LuaWidgetPeer::~LuaWidgetPeer()
 {
 	// Dadurch dass dieses Object ein Subobject von d_obj ist, wird
-	// dieser Destruktor automatisch aufgerufen, sobald d_obj gelöscht wird.
-	// d_obj kann entweder durch :destroy() oder durch User gelöscht werden.
+	// dieser Destruktor automatisch aufgerufen, sobald d_obj gelÃ¶scht wird.
+	// d_obj kann entweder durch :destroy() oder durch User gelÃ¶scht werden.
 	lua_State* L = LuaGui::getCtx();
 	if( d_data != LUA_NOREF )
 	{
@@ -77,7 +77,7 @@ int LuaWidgetPeer::getData(lua_State * L)
 		lua_getref( L, d_data );
 	}else
 	{
-		// Falls kein DataTable vorhanden, erzeuge eines und gebe es zurück.
+		// Falls kein DataTable vorhanden, erzeuge eines und gebe es zurÃ¼ck.
 		lua_newtable( L );
 		lua_pushvalue(L, lua_gettop( L ) );
 		d_data = lua_ref( L, true );
@@ -147,7 +147,7 @@ void* LuaWidgetPeer::operator new(size_t, void* p)
 void LuaWidgetPeer::operator delete(void *, size_t)
 {
 	// Diese Methode wird von Parent-Object automatisch nach
-	// Destructor aufgerufen, sobald dieses mit delete gelöscht wird.
+	// Destructor aufgerufen, sobald dieses mit delete gelÃ¶scht wird.
 	// Es ist hier wichtig, dass kein Memory dealloziiert wird, da
 	// wir Lua-Memory verwenden.
 

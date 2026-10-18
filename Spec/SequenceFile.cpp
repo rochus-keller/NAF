@@ -70,7 +70,7 @@ void SequenceFile::loadFromFile(Repository* rep, const char *path, Root::Index s
 				d_hasId = true;
 			}else if( start == 0 )
 			{
-				// hit < 2: Die Zeile enthält keine IDs
+				// hit < 2: Die Zeile enthÃ¤lt keine IDs
 				// Caller hat mit start==0 mitgeteilt, dass id irgend einen Wert haben darf.
 				nr = id;
 			}else

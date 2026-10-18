@@ -222,7 +222,7 @@ int LuaWidget2::setBgColor(lua_State *L) // unique
 	return 0;
 }
 
-int LuaWidget2::show(lua_State *L) // w‰re slot, aber AutoLink ruft die Methode mit Parametern auf, was Fehler verursacht
+int LuaWidget2::show(lua_State *L) // w√§re slot, aber AutoLink ruft die Methode mit Parametern auf, was Fehler verursacht
 {
 	QWidget* obj = QtObject<QWidget>::check( L, 1 );
 	obj->show();
@@ -437,7 +437,7 @@ int LuaWidgetCallbacks::setCallback(lua_State *L) // unique
     LuaWidgetCallbacks* peer = LuaWidgetCallbacks::inst();
     pushSlotTable(L, peer);
     const int slotTable = lua_gettop(L);
-    // Lˆsche zuerst, falls eine Funktion bereits gesetzt wurde oder bei nil
+    // L√∂sche zuerst, falls eine Funktion bereits gesetzt wurde oder bei nil
     if( peer->d_hash.value( obj ).contains( callbackId ) )
     {
         luaL_unref( L, slotTable, peer->d_hash.value( obj ).value( callbackId ) );

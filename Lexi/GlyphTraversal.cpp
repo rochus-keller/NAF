@@ -133,7 +133,7 @@ void GlyphTraversal::reset(Viewport * v, VisitType t, SendTo & c, Message * m)
 // return = continue
 bool GlyphTraversal::traverse(Glyph* g, const Allocation& a)
 {
-	// Diese Methode wird von Glyph::traverse für jede dessen Komponenten aufgerufen.
+	// Diese Methode wird von Glyph::traverse fÃ¼r jede dessen Komponenten aufgerufen.
 	if( g == nil )
 		return true;
 	bool accepted = accepts( g, a );
@@ -143,12 +143,12 @@ bool GlyphTraversal::traverse(Glyph* g, const Allocation& a)
 	switch( d_this.d_visit )
 	{
 	case All:
-		// Alle Glyphs erhalten Rechenzeit für handle()
+		// Alle Glyphs erhalten Rechenzeit fÃ¼r handle()
 		done = g->handle( a, *this );
 		g->traverse( a, *this );
 		break;
 	case AllAccept:
-		// Alle akzeptierten Glyphs erhalten Rechenzeit für handle()
+		// Alle akzeptierten Glyphs erhalten Rechenzeit fÃ¼r handle()
 		if( accepted )
 		{
 			done = g->handle( a, *this );
@@ -157,14 +157,14 @@ bool GlyphTraversal::traverse(Glyph* g, const Allocation& a)
 		break;
 	case AnyAccept:	
 	case AnyAcceptDF:
-		// Nur erster akzeptierter Glyphs erhält Rechenzeit für handle().
+		// Nur erster akzeptierter Glyphs erhÃ¤lt Rechenzeit fÃ¼r handle().
 		if( !d_this.d_accepted )
 		{
 			if( !accepted )
 				g->traverse( a, *this );
 			else
 			{
-				d_this.d_accepted = true;	// Any wurde akzeptiert, daher erfüllt.
+				d_this.d_accepted = true;	// Any wurde akzeptiert, daher erfÃ¼llt.
 				done = g->handle( a, *this );
 				// hit( g, 0, g );
 				d_this.d_done = done;
@@ -173,7 +173,7 @@ bool GlyphTraversal::traverse(Glyph* g, const Allocation& a)
 		carryOn = !d_this.d_accepted;
 		break;
 	case AllDone:
-		// Alle akzeptierten Glyphs erhalten Rechenzeit für handle() solange done.
+		// Alle akzeptierten Glyphs erhalten Rechenzeit fÃ¼r handle() solange done.
 		if( accepted )
 		{
 			done = g->handle( a, *this );
@@ -183,7 +183,7 @@ bool GlyphTraversal::traverse(Glyph* g, const Allocation& a)
 		}
 		break;
 	case AnyDone:
-		// Alle akzeptierten Glyphs erhalten Rechenzeit für handle(), bis done.
+		// Alle akzeptierten Glyphs erhalten Rechenzeit fÃ¼r handle(), bis done.
 		if( accepted )
 			done = g->handle( a, *this );
 		if( done )
@@ -196,7 +196,7 @@ bool GlyphTraversal::traverse(Glyph* g, const Allocation& a)
 		carryOn = !d_this.d_done;
 		break;
 	case AllDF:
-		// Alle Glyphs erhalten Rechenzeit für handle()
+		// Alle Glyphs erhalten Rechenzeit fÃ¼r handle()
 		g->traverse( a, *this );
 		done = g->handle( a, *this );
 		break;
@@ -255,7 +255,7 @@ bool GlyphTraversal::traverse(Glyph* g, const Allocation& a)
 			}
 		}
 		carryOn = !d_this.d_done || !d_this.d_accepted;
-		// TODO: wie kann man verhindern, dass er auf dem Rückweg zuerst weiter taucht?
+		// TODO: wie kann man verhindern, dass er auf dem RÃ¼ckweg zuerst weiter taucht?
 		break;
 	}
 	if( done  )

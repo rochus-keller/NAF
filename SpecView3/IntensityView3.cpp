@@ -299,9 +299,9 @@ void IntensityView3::paint( QPainter& painter )
         QRectF damage = damages[ i ];
         const Points firstX = ( damage.left() - l ) / ppsX;
         const Points firstY = ( damage.top() - t ) / ppsY;
-        range[DimX].first = firstX; // runde abw‰rts, so dass angeschnittenes Sample immer ganz
+        range[DimX].first = firstX; // runde abw√§rts, so dass angeschnittenes Sample immer ganz
         range[DimY].first = firstY;
-        range[DimX].second = ( ( damage.right() - l ) / ppsX ) + 1; // runde aufw‰rts, so dass immer mindestens ein Sample
+        range[DimX].second = ( ( damage.right() - l ) / ppsX ) + 1; // runde aufw√§rts, so dass immer mindestens ein Sample
         range[DimY].second = ( ( damage.bottom() - t ) / ppsY ) + 1;
         const Points offX = firstX - Points( range[DimX].first );
         const Points offY = firstY - Points( range[DimY].first ); // Rundungsabweichung
@@ -310,9 +310,9 @@ void IntensityView3::paint( QPainter& painter )
 
         if( damage.width() < 30.0 || damage.height() < 30.0 )
         {
-            // Ohne diesen Trick wird der Image am Rand des damage (Breite mehrere Pixel) nicht ¸berall gezeichnet.
+            // Ohne diesen Trick wird der Image am Rand des damage (Breite mehrere Pixel) nicht √ºberall gezeichnet.
             // Vermutlich ein Qt-Fehler bringt den QPainter dazu, mit drawImage nicht immer an den Rand zu fahren,
-            // sondern mehrere Pixel davor aufzuhˆren. Das liegt nachweislich nicht daran, dass ich mit QPointF zeichne.
+            // sondern mehrere Pixel davor aufzuh√∂ren. Das liegt nachweislich nicht daran, dass ich mit QPointF zeichne.
             // Man kann das vermeiden, indem clipping ausgeschaltet wird.
             QPixmap pix( damages[ i ].width(), damages[ i ].height() );
             pix.fill( Qt::transparent );

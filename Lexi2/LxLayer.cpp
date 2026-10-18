@@ -69,12 +69,12 @@ void Layer::request(Requisition & r)
 {
 	// TODO: ev. ein Align verwenden statt Handbetrieb.
 	Requisition sub;
-	// Nullen nicht nötig, da r als Default -CoordMax, was immer kleiner ist als sub.Natural.
+	// Nullen nicht nÃ¶tig, da r als Default -CoordMax, was immer kleiner ist als sub.Natural.
 	Requirement& rx = r.getRequirement( DimX );
 	Requirement& ry = r.getRequirement( DimY );
 	if( getCount() == 0)
 	{
-		// NOTE: Nullen dennoch nötig, da undefiniert, wenn Layer leer. Tile wird sonst
+		// NOTE: Nullen dennoch nÃ¶tig, da undefiniert, wenn Layer leer. Tile wird sonst
 		// Null-Allocation zuweisen. RISK
 		rx = Requirement( 0, CoordMax, 0 );
 		ry = Requirement( 0, CoordMax, 0 );

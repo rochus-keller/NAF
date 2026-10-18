@@ -158,7 +158,7 @@ bool TypeBase::rename(ResidueType * rt, const char * name)
 		return false;
 	if( rt->getName() == name )
 		return true;
-	/* NOTE wir ändern hier nicht Short
+	/* NOTE wir Ã¤ndern hier nicht Short
 	Root::Ref<ResidueType> tmp = rt; // man weiss ja nie.
 	d_residueTypes.erase( rt->getName() );
 	d_residueTypes[ name ] = tmp;
@@ -276,7 +276,7 @@ NmrExperiment* TypeBase::getOrCreateExperiment(SpectrumType* st, ResidueType * m
 	NmrExperiment* e = d_models[ Key( st, mid, lhs, rhs, scheme ) ];
 	if( e == 0 )
 	{ 
-		// CARA 1.9.1: hier sollen lhs und rhs nicht mehr verändert werden.
+		// CARA 1.9.1: hier sollen lhs und rhs nicht mehr verÃ¤ndert werden.
 //		if( lhs == 0 )
 //			lhs = getGenFromType( mid );
 //		if( rhs == 0 )
@@ -302,7 +302,7 @@ NmrExperiment* TypeBase::inferExperiment2(SpectrumType* st, SpinSystem * sys, Sp
 		return getOrCreateExperiment( st );	// Crossproduct
 	if( sys->getAssig() )
 	{
-		// Verwende die tatsächlichen Nachbarn in der Sequenz, weil sie hier bekannt sind
+		// Verwende die tatsÃ¤chlichen Nachbarn in der Sequenz, weil sie hier bekannt sind
 		ResidueType* lhs = 0;
 		ResidueType* rhs = 0;
 		if( sys->getAssig()->getPred() && sys->getAssig()->getChain() == sys->getAssig()->getPred()->getChain() )

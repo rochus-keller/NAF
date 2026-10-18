@@ -101,13 +101,13 @@ static QtObjectPeerPrivate* s_peer = 0;
 
 QObject* QtObjectBase::rawCheck(lua_State *L, int narg)
 {
-    // für index und Invoker ist das ein akzeptables Risiko, weil die Funktionen nur via
-    // MetaTable überhaupt zugänglich sind. Ab Lua besteht kein Zugriff darauf, d.h. niemand
+    // fÃ¼r index und Invoker ist das ein akzeptables Risiko, weil die Funktionen nur via
+    // MetaTable Ã¼berhaupt zugÃ¤nglich sind. Ab Lua besteht kein Zugriff darauf, d.h. niemand
     // ausser QtObject kann die Funktionen aufrufen. Auch wegen Check in install.
     if( lua_isnil( L, narg ) || !lua_isuserdata( L, narg ) )
         luaL_typerror( L, narg, "QObject" );
     QPointer<QObject>* p = static_cast< QPointer<QObject>* >( lua_touserdata( L, narg ) );
-	// nicht nötig:
+	// nicht nÃ¶tig:
 //    if( p->data() == 0 )
 //        luaL_error( L, "dereferencing null pointer!" );
     return p->data();
@@ -133,9 +133,9 @@ int QtObjectBase::index2(lua_State *L)
 	if( ValueBindingBase::fetch( L, true, false ) )
 		return 1; // name wurde in der method table gefunden
 	else
-		lua_pop( L, 1 ); // übriges nil
+		lua_pop( L, 1 ); // Ã¼briges nil
 
-	// Versuche nun, name über das Qt Meta Object System aufzulösen
+	// Versuche nun, name Ã¼ber das Qt Meta Object System aufzulÃ¶sen
 	if( obj == 0 )
 		luaL_error( L, "dereferencing null pointer!" );
     const QMetaObject* mo = obj->metaObject();
@@ -166,7 +166,7 @@ int QtObjectBase::index2(lua_State *L)
     // Versuche nun, name als Signal/Slot zu interpretieren
     for( i = 0; i < mo->methodCount(); i++ )
     {
-        // Leider erwartet mo->indexOf eine vollstädige Signatur. Es gibt also
+        // Leider erwartet mo->indexOf eine vollstÃ¤dige Signatur. Es gibt also
         // nie einen Match.
         QByteArray sig = mo->method( i ).signature();
         if( sig.startsWith( name ) )
@@ -347,26 +347,26 @@ int QtObjectPeerPrivate::disconnectFunction(lua_State *L)
     QtObjectPeerPrivate* peer = QtObjectPeerPrivate::inst(L);
 	QHash<QObject*,QHash<int,QList<int> > >::iterator objIter = peer->d_hash.find( obj );
 	if( objIter == peer->d_hash.end() )
-		return 0; // für obj wurde noch kein Callback registriert
+		return 0; // fÃ¼r obj wurde noch kein Callback registriert
 	QHash<int,QList<int> >::iterator sigIter = objIter.value().find( sigIndex );
 	if( sigIter == objIter.value().end() )
-		return 0; // für sigIndex wurde noch kein Callback registriert
+		return 0; // fÃ¼r sigIndex wurde noch kein Callback registriert
 
     pushSlotTable(L, peer);
     const int slotTable = lua_gettop(L);
 
-	const QList<int> refs = sigIter.value(); // mache Kopie, da Original in Loop geändert wird
+	const QList<int> refs = sigIter.value(); // mache Kopie, da Original in Loop geÃ¤ndert wird
 	foreach( int ref, refs )
 	{
 		if( !hasFuncArg )
-			// Wenn keine Funktion angegeben, lösche alle Funktionen zu diesem sigIndex
+			// Wenn keine Funktion angegeben, lÃ¶sche alle Funktionen zu diesem sigIndex
 			luaL_unref( L, slotTable, ref );
 		else
 		{
-			// Es wurde eine Funktion angegeben. Lösche nur diese
+			// Es wurde eine Funktion angegeben. LÃ¶sche nur diese
 			lua_rawgeti( L, slotTable, ref );
 			// Stack: slotTable, function
-			if( lua_equal( L, 3, -1 ) ) // vergleiche übergebene Funktion mit der referenzierten
+			if( lua_equal( L, 3, -1 ) ) // vergleiche Ã¼bergebene Funktion mit der referenzierten
 			{
 				luaL_unref( L, slotTable, ref );
 				// peer->d_hash[ obj ][ sigIndex ].removeAll( ref );
@@ -403,7 +403,7 @@ int QtObjectPeerPrivate::qt_metacall(QMetaObject::Call call, int id, void **a)
 
     if (call == QMetaObject::InvokeMetaMethod)
     {
-        // habe verifiziert, dass folgendes nötig ist, um sigIndex zu rekonstruieren:
+        // habe verifiziert, dass folgendes nÃ¶tig ist, um sigIndex zu rekonstruieren:
         executeCall( sender()->staticMetaObject.methodCount() + id, a );
         --id;
     }
@@ -427,7 +427,7 @@ void QtObjectPeerPrivate::pushSlotTable(lua_State *L, QtObjectPeerPrivate* _this
 
 int QtObjectBase::invokeMethod(lua_State *L, const char *name, QObject *target)
 {
-    // 1:1 von ObjectPeer übernommen
+    // 1:1 von ObjectPeer Ã¼bernommen
 
 	Q_ASSERT( target != 0 );
     const int maxArg = 10;
@@ -505,7 +505,7 @@ void QtObjectPeerPrivate::executeCall(int sigIndex, void ** a)
 				params << QVariant( typeCode, a[i+1]); // Standard QVariant
 			else if( typeCode == QMetaType::VoidStar ||
 					 typeCode == QMetaType::QObjectStar || typeCode == QMetaType::QWidgetStar )
-				params << QVariant(QVariant::UserType, *(void **)a[i+1]); // Nicht unterstützt von QVariant
+				params << QVariant(QVariant::UserType, *(void **)a[i+1]); // Nicht unterstÃ¼tzt von QVariant
 			else if( QMetaType::User )
 			{
 				const int varTypeCode = QVariant::nameToType( paramTypes.at(i) );

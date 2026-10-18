@@ -148,7 +148,7 @@ void StackMdl::onNotify(int messageType, QByteArray val1, int val2)
     {
 	case Engine2::LineHit:
 	case Engine2::BreakHit:
-        // Stack wird gültig
+        // Stack wird gÃ¼ltig
         createStackTrace();
         break;
 	case Engine2::Started:

@@ -24,7 +24,7 @@
 #include <QApplication>
 using namespace Spec;
 
-static const float g_page = 0.75; // TODO: ev. änderbarer Parameter
+static const float g_page = 0.75; // TODO: ev. Ã¤nderbarer Parameter
 
 ScrollCtrl3::ScrollCtrl3(ViewAreaMdl3 *m, bool doX, bool doY ):
     SpecView3( m )

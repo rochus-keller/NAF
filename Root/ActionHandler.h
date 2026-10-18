@@ -49,8 +49,8 @@ namespace Root
 		/// Hash mit dem Constructor zu initialisieren.
 		static const Slot d_slots[];
 
-		/// Optionales Konstrukt für statische Deklaration des ActionHandlers. Der Action-Handler kann aber im Prinzip
-		/// auch als Member-Variable von T oder anderswo leben; dadurch ist lediglich d_handlers unnötigerweise redundant.
+		/// Optionales Konstrukt fÃ¼r statische Deklaration des ActionHandlers. Der Action-Handler kann aber im Prinzip
+		/// auch als Member-Variable von T oder anderswo leben; dadurch ist lediglich d_handlers unnÃ¶tigerweise redundant.
 		static const ActionHandler<T> s_this;
 
 		bool handle( T* to, Action& t ) const
@@ -98,7 +98,7 @@ namespace Root
 	ACTION_SLOTS_END( Class )
 */
 
-// Anwenden für explizite Definition/Implementation von handle(Message&)
+// Anwenden fÃ¼r explizite Definition/Implementation von handle(Message&)
 #define EXECUTE_ACTION( T, action ) Root::ActionHandler<T>::s_this.handle( this, action )
 #define FRIEND_ACTION_HANDLER( T ) friend class Root::ActionHandler<T>;
 #define ACTION_SLOTS_BEGIN( T ) \
@@ -107,7 +107,7 @@ namespace Root
 #define ACTION_SLOTS_END( T ) { 0, 0 } }; \
         template<> const Root::ActionHandler<T> Root::ActionHandler<T>::s_this( Root::ActionHandler<T>::d_slots );
 
-	// RISK: sobald Reactor auf Linux etc. verwendet wird, muss man nochmals überprüfen,
+	// RISK: sobald Reactor auf Linux etc. verwendet wird, muss man nochmals Ã¼berprÃ¼fen,
 	// ob folgender static member wirklich initialisiert wird.
 // #define ACTION_SLOTS_END( X ) { 0, 0 } }; template<class T> const Root::ActionHandler<T> Root::ActionHandler<T>::s_this = Root::ActionHandler<T>( Root::ActionHandler<T>::d_slots );
 // see http://groups-beta.google.com/group/comp.lang.c++.moderated/browse_thread/thread/867bbc2fcb128592/b20b8ee7e4522888?lnk=gst&q=static+template+member&rnum=1#b20b8ee7e4522888

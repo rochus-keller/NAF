@@ -30,11 +30,11 @@
 
 namespace Spec
 {
-	// Diese Klasse definiert den Funktor, der f¸r die Berechnung des Intensit‰tsprofils
-	// eines Peaks verwendet werden kann. Die Funktion ist grunds‰tzlich stetig, hat das
-	// Maximum bei Punkt P0 mit Wert 1 und f‰llt mit wachsendem Radius stetig ab.
-	// Es handelt sich somit um eine Sph‰re um den Mittelpunkt P0, auf der sich
-	// P bewegen kann. F¸r jedes P l‰sst sich eine Amplitude berechnen.
+	// Diese Klasse definiert den Funktor, der f√ºr die Berechnung des Intensit√§tsprofils
+	// eines Peaks verwendet werden kann. Die Funktion ist grunds√§tzlich stetig, hat das
+	// Maximum bei Punkt P0 mit Wert 1 und f√§llt mit wachsendem Radius stetig ab.
+	// Es handelt sich somit um eine Sph√§re um den Mittelpunkt P0, auf der sich
+	// P bewegen kann. F√ºr jedes P l√§sst sich eine Amplitude berechnen.
 
 	class PeakModel : public Root::Subject 
 	{
@@ -45,7 +45,7 @@ namespace Spec
 			// Dies ist der Toleranzfaktor (initial 0), der angibt, in welchem Teil
 			// des Cubus aus d_width nach dem Maximum gesucht wird.
 			PeakPos d_width;
-			// Dies ist die ÷ffnungsweite von p0, bzw. die PPM-Breite f¸r die 
+			// Dies ist die √ñffnungsweite von p0, bzw. die PPM-Breite f√ºr die 
 			// Varianz 1 in Gauss.
 			PeakPos d_gain;	// LorentzGain
 			PeakPos d_bal;	// Gauss/Lorentz-Balance
@@ -116,7 +116,7 @@ namespace Spec
 		// Distanz entspricht somit Radius 1.
 		PPM getMaxWidth( Dimension d ) const
 			{ return d_par.calcMaxWidth( d ); }
-		//. Die Breite, in der noch mit Intensit‰t zu rechnen ist.
+		//. Die Breite, in der noch mit Intensit√§t zu rechnen ist.
 		Amplitude getAmplitude( const PeakPos& p, const PeakPos& p0, Amplitude a0 ) const
 			{ return d_par.calcBell( d_dim, p, p0, a0 ); }
 		// Berechne Amplitude bei p, wobei p0 der Mittelpunkt ist und Amplitude a0 hat.

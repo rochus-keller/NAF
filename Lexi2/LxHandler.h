@@ -33,10 +33,10 @@
 namespace Lexi2
 {
 	//* Handler
-	//. Dies ist ein Interface, das für die Verarbeitung von Maus-, Tastatur-
-	//. und Fokusereignissen zuständig ist. Normalerweise gehört der Controller
+	//. Dies ist ein Interface, das fÃ¼r die Verarbeitung von Maus-, Tastatur-
+	//. und Fokusereignissen zustÃ¤ndig ist. Normalerweise gehÃ¶rt der Controller
 	//. zu einem Viewer und bildet mit diesem zusammen eine Komponente.
-	//. Ein Controller ist auch zuständig für die Umwandlung eines Events in ein Command.
+	//. Ein Controller ist auch zustÃ¤ndig fÃ¼r die Umwandlung eines Events in ein Command.
 
 	class Handler : public MonoGlyph
 	{

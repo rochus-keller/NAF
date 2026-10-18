@@ -595,7 +595,7 @@ int LuaProject::unassignSpinSystem(lua_State *L)
 	{
 		SpinSystemString frag;
 		obj()->getSpins()->fillString( sys->obj(), frag );
-		// Wir müssen immer das gesamte Fragment unassignen.
+		// Wir mÃ¼ssen immer das gesamte Fragment unassignen.
 		for( int i = 0; i < frag.size(); i++ )
 		{
 			obj()->getSpins()->unassignSystem( frag[ i ] );
@@ -658,7 +658,7 @@ int LuaProject::linkSpinSystem(lua_State *L)
 			if( succAss )
 				obj()->getSpins()->assignFragment( rhs->obj(), succAss );
 		}
-		// Prüft auf Cycles und Freiheit
+		// PrÃ¼ft auf Cycles und Freiheit
 		obj()->getSpins()->link( lhs->obj(), rhs->obj() );
 	}catch( Root::Exception& e )
 	{

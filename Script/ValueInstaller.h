@@ -47,7 +47,7 @@ namespace Lua
 
 			if( creatable )
 			{
-				// Mache, dass mit "Klasse()" Instanzen erzeugt werden können
+				// Mache, dass mit "Klasse()" Instanzen erzeugt werden kÃ¶nnen
                 Util::pushCreatorMeta( L );
 				lua_setmetatable(L, methods );
 
@@ -73,7 +73,7 @@ namespace Lua
 				lua_pushstring(L, name );
 			lua_rawset(L, meta );
 
-			// Für den User sichtbare Meta-Table via Klassennamen zugänglich machen
+			// FÃ¼r den User sichtbare Meta-Table via Klassennamen zugÃ¤nglich machen
 			if( prettyName )
 				lua_pushstring(L, prettyName );
 			else
@@ -82,7 +82,7 @@ namespace Lua
 			lua_settable(L, LUA_GLOBALSINDEX );
 			
 			// setze Attribut __metatable von meta. Dies ist der Wert, der
-			// von getmetatable( obj ) zurückgegeben wird.
+			// von getmetatable( obj ) zurÃ¼ckgegeben wird.
 			lua_pushliteral(L, "__metatable");
 			lua_pushvalue(L, methods );
 			lua_settable(L, meta);  // hide meta from Lua getmetatable()
@@ -91,8 +91,8 @@ namespace Lua
 			lua_rawset(L, meta);  // hide meta from Lua getmetatable()
 
 			// The indexing access table[key].
-			// Wenn table[key] ein Wert ist, wird dieser zurückgegeben. Wenn es eine Funktion f ist,
-			// wird diese mit f(table, key) aufgerufen und deren Ergebnis als Wert zurückgegeben.
+			// Wenn table[key] ein Wert ist, wird dieser zurÃ¼ckgegeben. Wenn es eine Funktion f ist,
+			// wird diese mit f(table, key) aufgerufen und deren Ergebnis als Wert zurÃ¼ckgegeben.
 			lua_pushliteral(L, "__index");
 			lua_pushcfunction(L, __index );
 			lua_rawset(L, meta );
@@ -188,9 +188,9 @@ namespace Lua
 				*t = *ValueInstaller::cast( L, 1 );
 			}else if( param > 0 )
 			{
-				// Alle übrigen Param-Konstruktoren werden auf "init" abgebildet
+				// Alle Ã¼brigen Param-Konstruktoren werden auf "init" abgebildet
 				lua_pushstring(L, Util::s_init );
-				lua_gettable( L, inst ); // Berücksichtigt Meta-Table
+				lua_gettable( L, inst ); // BerÃ¼cksichtigt Meta-Table
 				if( !lua_isnil( L, -1 ) )
 				{
 					lua_pushvalue(L, inst );
@@ -239,7 +239,7 @@ namespace Lua
 			lua_replace( L, meta );
 			// Stack: super | nil
 
-			// Rufe rekursiv auf für super
+			// Rufe rekursiv auf fÃ¼r super
 			return lookupMethod( L, name );
 		}
 
@@ -265,7 +265,7 @@ namespace Lua
 				return 1;
 			}
 
-			// Versuche zuerst Methodentabelle. Diese kann Meta-Features überschreiben.
+			// Versuche zuerst Methodentabelle. Diese kann Meta-Features Ã¼berschreiben.
 			lua_getmetatable( L, 1 );
 			if( lookupMethod( L, name ) )
 				return 1;

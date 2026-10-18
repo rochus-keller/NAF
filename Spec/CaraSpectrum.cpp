@@ -255,7 +255,7 @@ static inline void putCompU8Gauss( QFile& out, Root::Byte* buf,
 						 Amplitude pmean, Amplitude nmean )
 {
 	// Diese Funktion bildet grosse Werte auf Index 0 und kleine Werte auf Index 128 ab,
-	// sowohl für positive als auch negative a
+	// sowohl fÃ¼r positive als auch negative a
 	const float n = s_span;
 	Root::UInt8 val;
 	const float pos = loader( pmean, pmax );
@@ -271,7 +271,7 @@ static inline void putCompU8Gauss( QFile& out, Root::Byte* buf,
 
 static inline float ungauss( float y, float w )
 {
-	// Diese Funktion ist unendlich für y==0 und wird komplex für y > 1.0
+	// Diese Funktion ist unendlich fÃ¼r y==0 und wird komplex fÃ¼r y > 1.0
 	return w * ::sqrt( - 2.0 * ::log( y ) ) / 2.0;
 }
 
@@ -279,14 +279,14 @@ static inline void putCompU8( QFile& out, Root::Byte* buf,
 						 Amplitude a, Amplitude pmax, Amplitude nmax )
 {
 	// Diese Funktion bildet grosse kleine auf Index 0 und grosse Werte auf Index 128 ab,
-	// sowohl für positive als auch negative a
+	// sowohl fÃ¼r positive als auch negative a
 	const float n = s_span - 1;
 	Root::UInt8 val;
 
 	const float pos = ::log( pmax );
 	const float neg = ::log( -nmax );
 
-	// Beide Seitenbänder haben 128 Stufen zur Verfügung. Beide haben einen
+	// Beide SeitenbÃ¤nder haben 128 Stufen zur VerfÃ¼gung. Beide haben einen
 	// eigenen "Nullpunkt": bei Positiven ist es id0, bei Negativen id128
 	if( a >= 1.0 && pmax > 0.0 )
 		val = s_startPos + Math::min( ::log( a ) * n / pos, n );
@@ -321,9 +321,9 @@ static inline void putCompU8Adapt( QFile& out, Root::Byte* buf,
 	const float pos = ::log( pmax );
 	const float neg = ::log( -nmax );
 
-	// Beide Seitenbänder haben maximal 128 Stufen zur Verfügung. Beide haben einen
+	// Beide SeitenbÃ¤nder haben maximal 128 Stufen zur VerfÃ¼gung. Beide haben einen
 	// eigenen "Nullpunkt": bei Positiven ist es id0, bei Negativen id zero.
-	// Selbst wenn zero==0 oder zero==255 ist id0 ein gültiger Nullpunkt
+	// Selbst wenn zero==0 oder zero==255 ist id0 ein gÃ¼ltiger Nullpunkt
 	if( a >= 1.0 && pmax > 0.0 )
 		val = Math::min( ::log( a ) * pn / pos, pn );
 	else if( a <= -1.0 && nmax < 0.0 )
@@ -446,7 +446,7 @@ void CaraSpectrum::writeToFile(const char * path, Spectrum * source,
 	putU32( out, buf, off1 );		// 4 Start of SpectrumBlock in Bytes ab 0
     if( off2 > 0xffffffff )
         putU32( out, buf, 0 );
-    // 1.9.1: Falls Spektrum zu lang, verzichten wir auf off2 (sonst müssten wir Format ändern)
+    // 1.9.1: Falls Spektrum zu lang, verzichten wir auf off2 (sonst mÃ¼ssten wir Format Ã¤ndern)
     else
         putU32( out, buf, off2 );		// 4 Start of VariableBlock in Bytes ab 0
 	putU32( out, buf, now.getDate().getValue() );	// 4 DateCreated
@@ -496,7 +496,7 @@ void CaraSpectrum::writeToFile(const char * path, Spectrum * source,
 		for( i = 0; i < slice.getCellCount(); i++ )
 		{
 			a = slice.getAt( i );
-			// getRaw verwenden, aber Rotation berücksichtigen.
+			// getRaw verwenden, aber Rotation berÃ¼cksichtigen.
 			switch( kind )
 			{
 			case CompU8:
@@ -621,7 +621,7 @@ void CaraSpectrum::readParams()
 	totalByteCount *= Root::Int64(d_word);
 	if( Root::Int64(d_off) + totalByteCount > stream()->getSize() )
 		throw Root::Exception( "Invalid file format (file is too short)" );
-    // 1.9.1: Wir können uns das folgende sparen; ansonsten müsste off2 als 64 Bit gespeichert werden!
+    // 1.9.1: Wir kÃ¶nnen uns das folgende sparen; ansonsten mÃ¼sste off2 als 64 Bit gespeichert werden!
 	if( off2 != 0 && off2 != ( d_off + totalByteCount ) )
 		throw Root::Exception( "Invalid file format (wrong offsets)" );
 

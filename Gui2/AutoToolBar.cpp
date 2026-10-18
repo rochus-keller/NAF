@@ -38,7 +38,7 @@ void AutoToolBar::timerEvent(QTimerEvent *e)
 { 
     if( e->timerId() == d_updater.timerId() ) 
 	{
-		// Gehe durch alle Actions und löse einen Update-Cycle aus
+		// Gehe durch alle Actions und lÃ¶se einen Update-Cycle aus
 		QList<QAction*> l = actions();
 		foreach( QAction* a, l )
 		{

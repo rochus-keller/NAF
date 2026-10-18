@@ -85,7 +85,7 @@ void SpecViewer::allocate( const  Allocation& a)
 
 void SpecViewer::pick( Coord x, Coord y, const Allocation & a, GlyphTraversal & t)
 {
-	// Der SpecViewer hält den Fokus für alle darin enthaltenen Glyphs
+	// Der SpecViewer hÃ¤lt den Fokus fÃ¼r alle darin enthaltenen Glyphs
     if( a.isHit( x, y ) )
 		t.append( this );
 }

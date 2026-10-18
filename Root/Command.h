@@ -30,11 +30,11 @@
 namespace Root
 {
 	//* Command
-	//. Ein Command ist im wesentlichen eine Transaktion, d.h. eine zusammengehörende
-	//. Menge von Aktionen, welche als Ganzes ausgeführt oder verworfen werden.
+	//. Ein Command ist im wesentlichen eine Transaktion, d.h. eine zusammengehÃ¶rende
+	//. Menge von Aktionen, welche als Ganzes ausgefÃ¼hrt oder verworfen werden.
 	//. Im allgemeinen entsteht ein Command in einem Controller aufgrund eines Stimulus
-	//. (z.B. Input-Events oder Menü-Actions). Es wird vom Controller angelegt, ausgeführt
-	//. und anschliessend einem Undo-Manager zur Aufbewahrung übergeben.
+	//. (z.B. Input-Events oder MenÃ¼-Actions). Es wird vom Controller angelegt, ausgefÃ¼hrt
+	//. und anschliessend einem Undo-Manager zur Aufbewahrung Ã¼bergeben.
 
 	class Command : public Transaction 
 	{

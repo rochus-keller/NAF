@@ -27,10 +27,10 @@
 using namespace Spec2;
 using namespace Lexi2;
 
-static const Coord g_w = 60;	// Länge eines Kreuzsegments
+static const Coord g_w = 60;	// LÃ¤nge eines Kreuzsegments
 static const Coord g_tol = 160;
 static const Coord g_p = 20;	
-static const Coord g_d = 40;	// Länge eines diag Kreuzsegments
+static const Coord g_d = 40;	// LÃ¤nge eines diag Kreuzsegments
 
 
 static char s_buf[32];
@@ -143,7 +143,7 @@ void PeakPlaneView::draw(Canvas& c, const Lexi2::Allocation& a)
 
 	Coord x, y, lx, ly;
 	PeakModel* mdl = 0;
-	// NOTE Alias wird von PeakSpace automatisch berücksichtigt.
+	// NOTE Alias wird von PeakSpace automatisch berÃ¼cksichtigt.
 	QColor clr = d_color;
 	if( d_label != NONE )
 	{
@@ -384,7 +384,7 @@ void PeakPlaneView::selectSingle(PPM x, PPM y, bool replace)
 
 void PeakPlaneView::damage(const PeakPos & p)
 {
-	// TODO: Damage müsste noch d_off und d_angle berücksichtigen
+	// TODO: Damage mÃ¼sste noch d_off und d_angle berÃ¼cksichtigen
 	assert( d_buf );
 	ViewAreaMdl* area = d_buf->getViewArea();
 	Coord y = area->toTwip( p[ DimY ], DimY );

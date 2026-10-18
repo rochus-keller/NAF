@@ -184,7 +184,7 @@ Rotation Spec::createRotation( const ColorMap& view, const ColorMap& spec )
 	Rotation rot( Root::Math::_min( view.size(), spec.size() ) );
 	if( view == spec )
 	{
-		// Zuf‰llig gleich
+		// Zuf√§llig gleich
 		for( d = 0; d < rot.size(); d++ )
 			rot[ d ] = d;
 		return rot;
@@ -197,8 +197,8 @@ Rotation Spec::createRotation( const ColorMap& view, const ColorMap& spec )
 	for( d = 0; d < spec.size(); d++ )
 	{
 		mapSpec[ spec[ d ] ].insert( d ); 
-		// F¸r jede Farbe eine eindeutige Angabe der From-Dimension
-		// mapSpec enth‰lt alle Farben von spec und die Dim
+		// F√ºr jede Farbe eine eindeutige Angabe der From-Dimension
+		// mapSpec enth√§lt alle Farben von spec und die Dim
 		// z.B. H, H, C auf H:1,2 und C:3
 	}
 
@@ -223,7 +223,7 @@ Rotation Spec::createRotation2( const ColorMap& view, const ColorMap& spec )
 	Rotation rot( spec.size() );
 	if( view == spec )
 	{
-		// Zuf‰llig gleich
+		// Zuf√§llig gleich
 		for( d = 0; d < rot.size(); d++ )
 			rot[ d ] = d;
 		return rot;
@@ -237,12 +237,12 @@ Rotation Spec::createRotation2( const ColorMap& view, const ColorMap& spec )
 	for( d = 0; d < spec.size(); d++ )
 	{
 		mapSpec[ spec[ d ] ].insert( d ); 
-		// F¸r jede Farbe eine eindeutige Angabe der From-Dimension
-		// mapSpec enth‰lt alle Farben von spec und die Dim
+		// F√ºr jede Farbe eine eindeutige Angabe der From-Dimension
+		// mapSpec enth√§lt alle Farben von spec und die Dim
 		// z.B. H, H, C auf H:1,2 und C:3
 	}
 
-	for( d = 0; d < view.size(); d++ )	// Versuche, view zu best¸cken
+	for( d = 0; d < view.size(); d++ )	// Versuche, view zu best√ºcken
 	{
 		if( mapSpec[ view[ d ] ].empty() )
 			return Rotation();

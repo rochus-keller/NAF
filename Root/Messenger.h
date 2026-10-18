@@ -34,9 +34,9 @@ namespace Root
 {
 	//* Messenger (Bote)
 	//. Dies ist die Top-Level-Basisklasse, also noch oberhalb von Resource und
-	//. somit Memory-Management. Sie dient als reines Interface für Mixin in
-	//. Qt-Klassen, damit diese Messages von Root/Lexi übernehmen können. Diese
-	//. würde aber an release() nur leiden, daher diese Stufe.
+	//. somit Memory-Management. Sie dient als reines Interface fÃ¼r Mixin in
+	//. Qt-Klassen, damit diese Messages von Root/Lexi Ã¼bernehmen kÃ¶nnen. Diese
+	//. wÃ¼rde aber an release() nur leiden, daher diese Stufe.
 
 	//* Resource
 	//. Dies ist die Oberklasse aller heap-alliziierten Klassen.
@@ -52,16 +52,16 @@ namespace Root
 
     public:
 		/// Behandle die Message und transportiere sie weiter, falls !isConsumed().
-		/// Für die Behandlung der Message ist handle() zuständig.
-		/// Es sind beide Notification-Alternativen möglich: via traditionelles Subject oder via Qt Signal/Slot
+		/// FÃ¼r die Behandlung der Message ist handle() zustÃ¤ndig.
+		/// Es sind beide Notification-Alternativen mÃ¶glich: via traditionelles Subject oder via Qt Signal/Slot
 		virtual void traverse( Message& );
 	protected:
 		virtual void handle( Message& );
 		//. Behandle die Message. Sender bezeichnet den Aufrufer dieser Methode.
-		//. Diese Methode ist nur für die Verarbeitung, nicht den 
-		//. Transport zuständig. Für Transport ist traverse() zuständig. 
-		//. Message ist nicht const, damit allenfalls (Rückgabe-)Werte gesetzt
-        //. werden können. Handle soll nicht direkt aufgerufen werden, sondern via traverse().
+		//. Diese Methode ist nur fÃ¼r die Verarbeitung, nicht den 
+		//. Transport zustÃ¤ndig. FÃ¼r Transport ist traverse() zustÃ¤ndig. 
+		//. Message ist nicht const, damit allenfalls (RÃ¼ckgabe-)Werte gesetzt
+        //. werden kÃ¶nnen. Handle soll nicht direkt aufgerufen werden, sondern via traverse().
     private:
         friend class Subject;
         void addSubject(Subject*);

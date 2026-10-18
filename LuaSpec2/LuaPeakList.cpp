@@ -504,9 +504,9 @@ int LuaPeakList::setBatchList(lua_State *L)
 	lua_pushnil(L);
 	while( lua_next( L, 2 ) != 0 )
 	{
-		// ‘key’ is at index -2 and ‘value’ at index -1
+		// Â‘keyÂ’ is at index -2 and Â‘valueÂ’ at index -1
 		l.push_back( luaL_checknumber( L, -1 ) );
-		lua_pop(L, 1); // removes ‘value’; keeps ‘key’ for next iteration
+		lua_pop(L, 1); // removes Â‘valueÂ’; keeps Â‘keyÂ’ for next iteration
 	}
 	obj->setSpecs( l );
 	return 0;

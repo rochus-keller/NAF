@@ -88,7 +88,7 @@ namespace Lua
 
 
     // Alternatives Binding zu ObjectPeer/Installer/Helper mit kleinerem Footprint und einiges eleganter.
-    // Nur noch minimale Abh‰ngigkeit von ein paar statischen Funktionen von ObjectPeer.
+    // Nur noch minimale Abh√§ngigkeit von ein paar statischen Funktionen von ObjectPeer.
     template <class T, class SuperClass = T, template<class> class Initializer = DefaultCreateObject >
     class QtObject : public ValueBinding< QPointer<T>,QPointer<SuperClass> >, public QtObjectBase
     {
@@ -105,7 +105,7 @@ namespace Lua
             Super::pushMetaTable( L );
             const int metaTable = lua_gettop( L );
 
-            lua_pushstring(L, typeid(T).name() ); // Mache MetaTable auch unter T zug‰nglich f¸r metaCreate
+            lua_pushstring(L, typeid(T).name() ); // Mache MetaTable auch unter T zug√§nglich f√ºr metaCreate
             lua_pushvalue(L, metaTable );
             lua_rawset( L, LUA_REGISTRYINDEX );
 
@@ -198,7 +198,7 @@ namespace Lua
                 *p = t;
                 if( findSubclassMeta )
                 {
-                    // Erzeuge QtObject von der tats‰chlichen Unterklasse von T
+                    // Erzeuge QtObject von der tats√§chlichen Unterklasse von T
                     lua_pushstring(L, typeid(*t).name() );
                     lua_rawget( L, LUA_REGISTRYINDEX );
                     // Stack: obj, meta | nil

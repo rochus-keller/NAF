@@ -29,9 +29,9 @@
 
 namespace Root
 {
-	// Stellt ein Datum im Gregorianischen Kalender dar. Es können gültige Daten
+	// Stellt ein Datum im Gregorianischen Kalender dar. Es kÃ¶nnen gÃ¼ltige Daten
 	// von 14 September 1752 bis 31 December 7999 dargestellt werden.
-	// Faktisch gleich wie QDate von Qt, aber davon unabhängig.
+	// Faktisch gleich wie QDate von Qt, aber davon unabhÃ¤ngig.
 	class Date
 	{
 	public:

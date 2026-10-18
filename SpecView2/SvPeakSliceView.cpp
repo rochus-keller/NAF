@@ -27,7 +27,7 @@ using namespace Spec2;
 using namespace Lexi2;
 
 static char s_buf[32];
-static const Coord g_w = 60;	// Länge eines Kreuzsegments
+static const Coord g_w = 60;	// LÃ¤nge eines Kreuzsegments
 static const Coord g_tol = 160;
 
 PeakSliceView::PeakSliceView(SpecBufferMdl* b, PeakSpace* mdl,
@@ -50,7 +50,7 @@ void PeakSliceView::draw(Canvas& c, const Lexi2::Allocation& a)
 	
 	Coord x, lx;
 	PeakModel* mdl = 0;
-	// NOTE Alias wird von PeakSpace automatisch berücksichtigt.
+	// NOTE Alias wird von PeakSpace automatisch berÃ¼cksichtigt.
 	QColor clr = d_color;
 
 	for( int pos = 0; pos < peaks.size(); ++pos )
@@ -167,7 +167,7 @@ void PeakSliceView::selectPeak(PPM x, bool replace)
 void PeakSliceView::damage(const PeakPos & p)
 {
 	assert( d_buf );
-	// TODO: Damage müsste noch d_off und d_angle berücksichtigen
+	// TODO: Damage mÃ¼sste noch d_off und d_angle berÃ¼cksichtigen
 	ViewAreaMdl* area = d_buf->getViewArea();
 	Coord x = area->toTwip( p[ DimX ], DimX );
 	const Allocation& a = area->getAllocation();

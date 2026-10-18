@@ -34,21 +34,21 @@ namespace Root
 	class Messenger;
 
 	//* Message
-	//. Root für alle Messages, welche von Objekt dynamisch verarbeitet werden.
+	//. Root fÃ¼r alle Messages, welche von Objekt dynamisch verarbeitet werden.
 	//. Message kann entweder auf Stack oder Heap (im Falle von Actions) alloziiert werden. 
-	//. Messages sind grundsätzlich Value-Objekte. Falls sie aber auf dem Heap erstellt
-	//. werden müssen (wie z.B. bei postEvent), müssen sie explizit wieder gelöscht werden.
-    class Message : public QEvent // TODO: künftig wieder unabhängig von Qt!
+	//. Messages sind grundsÃ¤tzlich Value-Objekte. Falls sie aber auf dem Heap erstellt
+	//. werden mÃ¼ssen (wie z.B. bei postEvent), mÃ¼ssen sie explizit wieder gelÃ¶scht werden.
+    class Message : public QEvent // TODO: kÃ¼nftig wieder unabhÃ¤ngig von Qt!
 	{
 	public:
         enum { ID = QEvent::User + 19384 };
 
         virtual bool isConsumed() const { return isAccepted(); }
 		//. Gibt an, ob bereits jemand consume() aufgerufen hat.
-		//. In diesem Fall würde die Message nicht weiter herumgegeben,
+		//. In diesem Fall wÃ¼rde die Message nicht weiter herumgegeben,
 		//. sondern handle() beendet.
 		virtual void consume();
-		//. Erkläre diese Message für nicht länger relevant.
+		//. ErklÃ¤re diese Message fÃ¼r nicht lÃ¤nger relevant.
 
 		// Helper
 		void sendTo( Messenger* to );
@@ -77,7 +77,7 @@ namespace Root
 */
 
 	//* InputEvent
-	//. Repräsentiert ein Ereignis, das an den Handler mit dem Fokus oder den
+	//. ReprÃ¤sentiert ein Ereignis, das an den Handler mit dem Fokus oder den
 	//. Handler der durch den Mausklick getroffenen Glyph geht.
 
 	class InputEvent : public Message 
@@ -88,7 +88,7 @@ namespace Root
 	};
 
 	//* WindowEvent
-	//. Dies ist die Oberklasse für alle direkt mit einem Fenster verbundenen Events
+	//. Dies ist die Oberklasse fÃ¼r alle direkt mit einem Fenster verbundenen Events
 	//. wie z.B. Close, AboutToClose, etc.
 
 	class WindowEvent : public Message
@@ -99,7 +99,7 @@ namespace Root
 	};
 
 	//* ApplicationEvent
-	//. Dies ist die Oberklasse für alle direkt mit der Anwendung assoziierten Events,
+	//. Dies ist die Oberklasse fÃ¼r alle direkt mit der Anwendung assoziierten Events,
 	//. z.B. AboutToQuit.
 
 	class ApplicationEvent : public Message
@@ -121,8 +121,8 @@ namespace Root
 	};
 
 	//* InternalMessage
-	//. Dies sind alle Messages, die systeminhärent zu Lexi, Root, DB, etc. sind. Sie
-	//. werden benötigt für einwandfreies Funktionieren der Komponenten, z.B. Undo.
+	//. Dies sind alle Messages, die systeminhÃ¤rent zu Lexi, Root, DB, etc. sind. Sie
+	//. werden benÃ¶tigt fÃ¼r einwandfreies Funktionieren der Komponenten, z.B. Undo.
 
 	class InternalMessage : public Message
 	{
@@ -132,7 +132,7 @@ namespace Root
 	};
 
 	//* UserMessage
-	//. Kann als Oberklasse für kundenspezifische Messages in Anwendungen verwendet
+	//. Kann als Oberklasse fÃ¼r kundenspezifische Messages in Anwendungen verwendet
 	//. werden, die auf Lexi etc. basieren.
 
 	class UserMessage : public Message

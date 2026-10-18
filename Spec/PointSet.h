@@ -38,7 +38,7 @@ namespace Spec
 	using Root::Tag;
 
 	//* PointSet
-	//. Dies ist die (abstrakte) Basisklasse für konkrete Implementationen von
+	//. Dies ist die (abstrakte) Basisklasse fÃ¼r konkrete Implementationen von
 	//. ladbaren und speicherbaren Peaklisten verschiedener Formate.
 
 	class PointSet : public Subject
@@ -49,22 +49,22 @@ namespace Spec
 
 		//* Point Interface
 		virtual void setComment( Index id, const char* );
-		//. Ändere nur den Kommentar eines *bestehenden* Points.
+		//. Ã„ndere nur den Kommentar eines *bestehenden* Points.
 		virtual const char* getComment( Index id ) const;
-		//. Gebe den mit Point id assoziierten Kommentar zurück.
+		//. Gebe den mit Point id assoziierten Kommentar zurÃ¼ck.
 		virtual void setPoint( Index id, const PeakPos& );
-		//. Füge einen neuen Point ein oder ändere einen bestehenden.
+		//. FÃ¼ge einen neuen Point ein oder Ã¤ndere einen bestehenden.
 		virtual const PeakPos& getPoint( Index id ) const = 0;
 		virtual void deletePoint( Index id );
 		//. Entferne den Punkt mit der id aus der Liste.
 		virtual bool isDefined( Index id ) const;
-		//. Gebe zurück, ob eine id bereits belegt ist.
+		//. Gebe zurÃ¼ck, ob eine id bereits belegt ist.
 		virtual Index getNextId();
-		//. Ermittle die nächste freie id, unter der ein Point gespeichert werden kann.
+		//. Ermittle die nÃ¤chste freie id, unter der ein Point gespeichert werden kann.
 		virtual Selection find( const PpmCube& ) const;
-		//. Gebe eine Selection zurück mit allen Punkten, die in Cube liegen.
+		//. Gebe eine Selection zurÃ¼ck mit allen Punkten, die in Cube liegen.
 		virtual Selection findAll() const;
-		//. Gebe die IDs aller enthaltenen Peaks zurück.
+		//. Gebe die IDs aller enthaltenen Peaks zurÃ¼ck.
 		virtual const Assig& getAssig( Index ) const;  
 		virtual void setAssig( Index, const Assig& );
 		//. Setze und lese Assignment pro Dimension.
@@ -88,9 +88,9 @@ namespace Spec
 		virtual void saveToFile( const char* path = "" ) {}
 		//. Implementiert SaveAs (path!="") oder Save (path=="").
 		virtual const char* getFilePath() const { return ""; }
-		//. Gibt "" zurück, wenn Liste nicht mit einer Datei verknüpft ist.
+		//. Gibt "" zurÃ¼ck, wenn Liste nicht mit einer Datei verknÃ¼pft ist.
 		virtual bool isDirty() const { return false; }
-		//. Gibt true zurück, falls ungesicherte Änderungen vorhanden
+		//. Gibt true zurÃ¼ck, falls ungesicherte Ã„nderungen vorhanden
 		//- 
 
 		PointSet();

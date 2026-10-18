@@ -120,7 +120,7 @@ int LuaRepository::getProject(lua_State *L)
 	int n = lua_gettop(L);  /* number of arguments */
 	if( n == 1 && obj->getProjects().size() == 1 )
 	{
-		// Abkürzung, wenn eindeutig
+		// AbkÃ¼rzung, wenn eindeutig
 		RefBinding<Project>::create( L, (*obj->getProjects().begin()).second.deref() );
 		return 1;
 	}

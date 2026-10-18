@@ -30,9 +30,9 @@
 namespace Root
 {
 	//* Tag
-	//. Ein Tag ist ein Symbol-String konstanter Länge, der sich in
-	//. einen Integer konvertieren lässt. Ein Tag hat sowohl symbolische
-	//. Bedeutung für die Verarbeitungssteuerung oder als Zustandsattribut, 
+	//. Ein Tag ist ein Symbol-String konstanter LÃ¤nge, der sich in
+	//. einen Integer konvertieren lÃ¤sst. Ein Tag hat sowohl symbolische
+	//. Bedeutung fÃ¼r die Verarbeitungssteuerung oder als Zustandsattribut, 
 	//. und kann zugleich als Zeichenkette dargestellt werden.
 
 	class Tag  
@@ -49,7 +49,7 @@ namespace Root
 		bool operator==( const Tag& ) const;
 		bool operator ==(const char *) const;
 
-		void getString( char*, int len ) const; // Länge inkl. Null
+		void getString( char*, int len ) const; // LÃ¤nge inkl. Null
 		QByteArray  getString() const;
 		const char* data() const;
 

@@ -118,8 +118,8 @@ namespace Lua
 			Error,		// Ausgaben von _ALERT bzw. stderr
 			LineHit,    // RunToNextLine ist eingetreten
 			BreakHit,   // RunToBreakPoint ist auf einen BreakPoint gestossen
-			BreakPoints,// Breakpoint Zufügen oder Löschen. d_title ist Scriptname
-			ActiveLevel,// Der aktive Level wurde verändert
+			BreakPoints,// Breakpoint ZufÃ¼gen oder LÃ¶schen. d_title ist Scriptname
+			ActiveLevel,// Der aktive Level wurde verÃ¤ndert
 			Started,	// Beginne ein Script laufen zu lassen.
 			Continued,  // Fahre nach einem Break weiter
 			Finished,  	// Script ist abgelaufen.

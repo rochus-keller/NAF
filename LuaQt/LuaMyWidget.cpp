@@ -29,7 +29,7 @@ _LuaMyWidget::_LuaMyWidget( QWidget* p ):
 {
   if( p == 0 )
 	setAttribute( Qt::WA_DeleteOnClose );
-	setKeyCompression( false ); // Wir wollen ein Event für jeden Key incl. Autorepeat.
+	setKeyCompression( false ); // Wir wollen ein Event fÃ¼r jeden Key incl. Autorepeat.
 }
 
 // Overrides von QWidget
@@ -301,7 +301,7 @@ void LuaMyWidget::paintEvent ( QPaintEvent * e )
 		LuaPainter* p;
 		if( d_painter == LUA_NOREF )
 		{
-			// Es gibt noch keinen Painter, erstelle einen für dieses Widget
+			// Es gibt noch keinen Painter, erstelle einen fÃ¼r dieses Widget
 			p = PeerHelper<LuaPainter>::instance( getLua() );
 			lua_pushvalue( getLua(), lua_gettop( getLua() ) );
 			d_painter = lua_ref( getLua(), true );

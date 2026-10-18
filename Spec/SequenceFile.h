@@ -48,7 +48,7 @@ namespace Spec
 			Root::Index start = 0 ); // throws Exception
 			// start == 0 heisst, dass nur automatische ID generiert wird, wenn keine Nr. angegeben.
 		bool checkSystems() const;
-		//. Prüfe ob alle d_sys unique 
+		//. PrÃ¼fe ob alle d_sys unique 
 		bool addResidue( Residue*, Root::Index = 0 );
 		void addResidue( Repository*, Root::Index, Root::SymbolString ); // throws Exception
 		void writeToFile( const char*, bool useNr = false );

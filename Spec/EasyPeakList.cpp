@@ -165,7 +165,7 @@ void EasyPeakList::readPeakList()
 	d_labels.assign( dimCount, "" );
 	d_colors.assign( dimCount, AtomType() );
 	char ch = 0;
-	while( ( ch = getc( fp ) ) == '#' )	// NOTE: GCC auf Irix verträgt kein :: vor getc.
+	while( ( ch = getc( fp ) ) == '#' )	// NOTE: GCC auf Irix vertrÃ¤gt kein :: vor getc.
 	{
 		char parName[ 50 ];
 		int dim;
@@ -173,7 +173,7 @@ void EasyPeakList::readPeakList()
 		::fgets( lineBuffer, sizeof( lineBuffer ), fp );
 		if( ::sscanf( lineBuffer, "INAME%d", &dim ) )
 		{
-			dim--; // Zählung beginnt mit Null
+			dim--; // ZÃ¤hlung beginnt mit Null
 			if( dim >= dimCount || dim < 0 )
 			{
 				::fclose( fp );
@@ -197,7 +197,7 @@ void EasyPeakList::readPeakList()
 	{
 		do
 		{
-			// Überlese Whitespace
+			// Ãœberlese Whitespace
 			ch = ::fgetc( fp );
 		}while( ch == ' ' || ch == '\t' );
 		if( ch == '#' )
@@ -208,7 +208,7 @@ void EasyPeakList::readPeakList()
 			for( i = 0; i < lineSize; i++ )
 				if( lineBuffer[ i ] == 13 || lineBuffer[ i ] == 10 )
 				{
-					lineBuffer[ i ] = 0; // fgets liefert CR zurück.
+					lineBuffer[ i ] = 0; // fgets liefert CR zurÃ¼ck.
 					break;
 				}
 			char* start = lineBuffer;
@@ -250,7 +250,7 @@ void EasyPeakList::readPeakList()
 #endif
 			peak.d_color = parInt;
 
-			// Überlese die Null
+			// Ãœberlese die Null
 			success &= ( ::fscanf( fp, "%*d" ) == 0 );
 			// Lese die Atomnummern
 			for( i = 0; i < dimCount; i++ )

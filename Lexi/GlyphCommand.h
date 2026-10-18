@@ -36,8 +36,8 @@ namespace Lexi
 
 	//* GlyphCommand
 	//. Dies ist ein Command, das innerhalb der Glyph-Hierarchie entsteht und
-	//. normalerweise über visuelles Feedback verfügt. Während der Feedback-Ausführung 
-	//. verhält sich das Command wie ein Controller.
+	//. normalerweise Ã¼ber visuelles Feedback verfÃ¼gt. WÃ¤hrend der Feedback-AusfÃ¼hrung 
+	//. verhÃ¤lt sich das Command wie ein Controller.
 
 	class GlyphCommand : public Command
 	{
@@ -47,8 +47,8 @@ namespace Lexi
 		enum Result { 
 			Rejected,	// Die Message wurde vom Command nicht angenommen
 			Continue,	// Die Message wurde akzeptiert und man wartet auf weitere
-			Commit,		// Die Message führte zu einem execute().
-			Rollback	// Die Message führte zu einem Abbruch.
+			Commit,		// Die Message fÃ¼hrte zu einem execute().
+			Rollback	// Die Message fÃ¼hrte zu einem Abbruch.
 		};
 
 		Glyph* getController() const { return d_controller; }

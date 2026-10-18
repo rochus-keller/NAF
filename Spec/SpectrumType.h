@@ -56,7 +56,7 @@ namespace Spec
 		struct Step	
 		{
 			AtomType d_atom;
-			Root::Index d_hops; // Anzahl zu überwindender Bonds (-1..unendlich)
+			Root::Index d_hops; // Anzahl zu Ã¼berwindender Bonds (-1..unendlich)
 			bool d_repeat;		// Tocsy-Regel
 			DisPar d_range;		// Eingrenzung der Atome nach dp, falls nicht Undefined
 			Dimension d_dim;	// Detektierte Dim (unique) oder DimUndefined
@@ -64,11 +64,11 @@ namespace Spec
 			Step():d_hops(0),d_repeat(false),d_dim(DimUndefined){}
 		};
 		// Man beginnt mit allen Spins des Systems und wendet darauf den ersten Step an.
-		// Dessen Output wird dann als Input für den nächsten Step verwendet, usw.
+		// Dessen Output wird dann als Input fÃ¼r den nÃ¤chsten Step verwendet, usw.
 		typedef Root::Vector<Step> Procedure;
 
 		const Procedure& getProc() const { return d_proc; }
-		bool setProc( const Procedure& ); // False, wenn ungültig. Darf empty sein.
+		bool setProc( const Procedure& ); // False, wenn ungÃ¼ltig. Darf empty sein.
 		void checkValid( const Procedure& ) const; // throws
 
 		void setName( Dimension, const char* );
@@ -78,10 +78,10 @@ namespace Spec
 		bool removeLabel( Dimension, SpinLabel );
 		bool addLabel( Dimension, SpinLabel );
 		SpinLabel getKeyLabel( Dimension ) const;
-		// Finde ein eindeutiges Label in der Dimension oder gebe Null zurück.
+		// Finde ein eindeutiges Label in der Dimension oder gebe Null zurÃ¼ck.
 		static bool rotateToUniqueKeys( Spectrum*, Rotation&, bool reduce = false );
-		// Versuche, übergebenes Spektrum so zu rotieren, dass X und Y unique Labels sind.
-		// Wirft Exception mit Fehlermeldung auf, wenn nicht möglich. Gibt false zurück,
+		// Versuche, Ã¼bergebenes Spektrum so zu rotieren, dass X und Y unique Labels sind.
+		// Wirft Exception mit Fehlermeldung auf, wenn nicht mÃ¶glich. Gibt false zurÃ¼ck,
 		// wenn bereits richtig rotiert.
 
 		void setColor( Dimension, AtomType );

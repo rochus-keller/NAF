@@ -113,14 +113,14 @@ static void fillColorsRedGreen256( QImage& img, Root::Long zero, Root::Long blac
 								  Root::Float gain )
 {
 	assert( zero >= 0 && zero <= ColorMax );
-	blackout = Math::_max( blackout, 0 );	// Wird wegen Überlauf negativ
+	blackout = Math::_max( blackout, 0 );	// Wird wegen Ãœberlauf negativ
 	Root::Long i;
 	// Positive
 	for( i = zero; i <= ColorMax; i++ )
 		img.setColor( i, qRgb( Math::_min( ( i - zero ) * gain, ColorMax ), 0, 0 ) );
 	// Negative
 	for( i = 0; i < zero; i++ )
-		// TODO: Blau oder Grün oder einstellbar?
+		// TODO: Blau oder GrÃ¼n oder einstellbar?
 		img.setColor( i, qRgb( 0, Math::_min( ( zero - i ) * gain, ColorMax ), 0 ) );
 	img.setColor( zero, qRgb( 0, 0, 0 ) );
 
@@ -206,7 +206,7 @@ void IntensityView::fillMatrix()
 	}
 	*/
 	{
-		// TODO Füllkonzept aus Neasy
+		// TODO FÃ¼llkonzept aus Neasy
 		const int black = 2 * dLevels;
 		const int white = 2 * dLevels + 1;
 		Root::Byte exponent, mantissa;
@@ -261,15 +261,15 @@ void IntensityView::draw(Canvas& c, const Allocation& a)
 	ViewAreaMdl* area = d_model->getViewArea();
 	const Buffer& buffer = d_model->getBuffer();
 	// Das Image entspricht dem Buffer. Ein Pixel ist ein Sample.
-	// x und y sind die Positionen auf dem Screen, wo idx0 des Buffers hingehören.
-	// Durch AreaUpdate wurde bereits TwipsPerPixel an Image übermittelt. Dies
-	// hätte aber auch ohne Problem mit draw() erfolgen können (wäre ev. sogar besser).
+	// x und y sind die Positionen auf dem Screen, wo idx0 des Buffers hingehÃ¶ren.
+	// Durch AreaUpdate wurde bereits TwipsPerPixel an Image Ã¼bermittelt. Dies
+	// hÃ¤tte aber auch ohne Problem mit draw() erfolgen kÃ¶nnen (wÃ¤re ev. sogar besser).
 	Coord x = area->toTwip( buffer.getScale( DimX ).getRange().first, a.getLeft(), DimX );
 	Coord y = area->toTwip( buffer.getScale( DimY ).getRange().first, a.getTop(), DimY );
 	Allocation aa = a;
 	aa.setOrigin( x, y );
 	d_image->draw( c, aa );	
-	// TODO: eigentlich sollte a nicht geändert werden. Stattdessen müsste in Image
+	// TODO: eigentlich sollte a nicht geÃ¤ndert werden. Stattdessen mÃ¼sste in Image
 	// ein expliziter Offset gesetzt werden (damit Clipping noch geht).
 }
 

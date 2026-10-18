@@ -37,8 +37,8 @@
 namespace Root
 {
 	//* Object
-	//. Diese Classe enthält die quasiabstrakte Definition des generischen Message-
-	//. Handlers. Grundsätzlich könnte jede Methode einer Klasse auch als Message
+	//. Diese Classe enthÃ¤lt die quasiabstrakte Definition des generischen Message-
+	//. Handlers. GrundsÃ¤tzlich kÃ¶nnte jede Methode einer Klasse auch als Message
 	//. implementiert werden. Ein Interface wird somit zur Menge aller Messages,
 	//. welche von einer abgeleiteten Klasse verstanden werden.
 
@@ -46,7 +46,7 @@ namespace Root
 	{
 	public:
 		/// Statische und dynamische Attribute
-		/// Fields können entweder statisch in einer Klasse eingebaut sein, oder dynamisch gesetzt und gelöscht werden.
+		/// Fields kÃ¶nnen entweder statisch in einer Klasse eingebaut sein, oder dynamisch gesetzt und gelÃ¶scht werden.
 		typedef SymbolString Field;
 		struct  FieldValues : public QList< QPair<Field,Any> >
 		{
@@ -67,9 +67,9 @@ namespace Root
 		//-
 
 		virtual const char* getClassName() const;
-		//. Gebe den Namen dieser Klasse zurück. 
+		//. Gebe den Namen dieser Klasse zurÃ¼ck. 
 		virtual QByteArray  getInstanceName(bool alphasort = false) const;
-		//. Gebe einen eindeutigen String zur Identifikation dieses Objekts zurück.
+		//. Gebe einen eindeutigen String zur Identifikation dieses Objekts zurÃ¼ck.
 	protected:
 		Object();
 		virtual ~Object();
@@ -79,8 +79,8 @@ namespace Root
 
 	//* UpdateMessage
 	//. Diese Message sendet ein Subject an seine Observer, wenn immer
-	//. der Zustand geändert hat. Spezifische Subjects werden diese
-	//. Message ableiten, um die Art der Zustandsänderung genauer
+	//. der Zustand geÃ¤ndert hat. Spezifische Subjects werden diese
+	//. Message ableiten, um die Art der ZustandsÃ¤nderung genauer
 	//. zu spezifizieren.
 
 	class UpdateMessage : public Message
@@ -92,7 +92,7 @@ namespace Root
 		void pretendOrigin( Resource* o ) { d_origin = o; }
 		// Damit kann ein Mediator die Message unter eigenem Absender weitergeben.
 	private:
-		Ptr<Resource> d_origin; // Da in vielen Constructors Notification mit this als Origin stattfindet, Ref nicht zulässig.
+		Ptr<Resource> d_origin; // Da in vielen Constructors Notification mit this als Origin stattfindet, Ref nicht zulÃ¤ssig.
 	};
 #define UPDATE_MESSAGE_DEF( name, type ) struct name : public Root::UpdateMessage { name( type* t ):UpdateMessage(t) {} type* sender() const { return static_cast<type*>( getOrigin() ); } };
 #define UPDATE_MESSAGE_DEF2( name, type, hint ) struct name : public Root::UpdateMessage { name( type* t, hint h ):UpdateMessage(t),d_hint(h) {} type* sender() const { return static_cast<type*>( getOrigin() ); } hint d_hint; };

@@ -94,7 +94,7 @@ DomDocument::DomDocument()
 
 DomDocument::~DomDocument()
 {
-	// Um Stacküberlauf bei grossen Docs zu verhindern, iteriere hier explizit den
+	// Um StackÃ¼berlauf bei grossen Docs zu verhindern, iteriere hier explizit den
 	// den Baum runter mit einem auf dem Heap alloziierten Stack.
 	std::deque<DomNode*> stack;
 	stack.push_back( d_root );
@@ -246,7 +246,7 @@ bool DomElement::normalize()
 
 bool DomText::write( std::ostream& out ) const
 {
-	// Gleicher Code wie in Serializer für Procedure-Output
+	// Gleicher Code wie in Serializer fÃ¼r Procedure-Output
 	const char* str = d_text.data();
 	int j = 0;
 	int i = 0;

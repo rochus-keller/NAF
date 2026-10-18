@@ -97,16 +97,16 @@ void AnchorSpace::handle( Root::Message & msg )
 		// case Spin::Update::Create: // Irrelevant
 		// case Spin::Update::System: // Wird von System::Add behandelt
 		// case Spin::Update::All:	// Kommt nicht vor
-		case Spin::Update::Delete: // Nur möglich nach SpinSystem::remove
+		case Spin::Update::Delete: // Nur mÃ¶glich nach SpinSystem::remove
 			// updateRemoveLink( a->getSpin() );
 			// Das darf nicht vorkommen, da immer unlink aufgerufen wird vor
-			// löschen des Spins
+			// lÃ¶schen des Spins
 			break;
-		case Spin::Update::Shift:		// Führt zu MovePeak
+		case Spin::Update::Shift:		// FÃ¼hrt zu MovePeak
 			if( d_sys.isNull() || a->getSpin()->getSystem() == d_sys )
 				updateSpinShift( a );
 			break;
-		case Spin::Update::Label:		// Führt zu Delete/Create Peak
+		case Spin::Update::Label:		// FÃ¼hrt zu Delete/Create Peak
 			if( d_sys.isNull() || a->getSpin()->getSystem() == d_sys )
 				updateSpinLabel( a );
 			break;
@@ -196,9 +196,9 @@ void AnchorSpace::fillTuples( Element& point, SpinSystem* sys,
 #ifdef _DEBUG
 	assert( d_st );
 #endif
-	// Wandert entlang den Anchor-Dimensions und fügt zuletzt das Tuple ein,
-	// wenn man überhaupt soweit kommt. Implizit findet auch eine 
-	// Multiplikation über alle non-final-Kombinationen statt.
+	// Wandert entlang den Anchor-Dimensions und fÃ¼gt zuletzt das Tuple ein,
+	// wenn man Ã¼berhaupt soweit kommt. Implizit findet auch eine 
+	// Multiplikation Ã¼ber alle non-final-Kombinationen statt.
 
 	SpinSystem::Spins s;
 	const SpinLabel& l = cur[ d_rot[ dim ] ];
@@ -210,7 +210,7 @@ void AnchorSpace::fillTuples( Element& point, SpinSystem* sys,
 		s = sys->findSpins( l.getTag(), l.getOff(),
 			d_st->getColor( d_rot[ dim ] ), d_showNulls, d_showOffs, d_showUnknown );
 			// Es werden auch non-finals verwendet. 
-			// Diese müssen zumindest im Label übereinstimmen
+			// Diese mÃ¼ssen zumindest im Label Ã¼bereinstimmen
 	}
 	const Dimension dmax = d_rot.size();
 	SpinSystem::Spins::const_iterator q;
@@ -334,9 +334,9 @@ void AnchorSpace::updateSpinShift( Spin::Update* a )
 
 void AnchorSpace::updateSpinLabel( Spin::Update* a )
 {
-	// Suche alle Points, wo Spin vorkommt, und lösche den Peak
-	// Füge dann die Peaks des Spin mit dem neuen Label ein.
-	// Alternativ die Peak nur zufügen, nicht löschen.
+	// Suche alle Points, wo Spin vorkommt, und lÃ¶sche den Peak
+	// FÃ¼ge dann die Peaks des Spin mit dem neuen Label ein.
+	// Alternativ die Peak nur zufÃ¼gen, nicht lÃ¶schen.
 
 	updateRemovePeak( a->getSpin() );
 	updateAddPeak( a->getSpin() );
@@ -358,7 +358,7 @@ inline static void _merge( AnchorSpace* s, SpinSpace::Result& res,
 
 void AnchorSpace::updateAddPeak( Spin* s )
 {
-	// Dasselbe wie refill, aber nur für einen einzelnen Spin
+	// Dasselbe wie refill, aber nur fÃ¼r einen einzelnen Spin
 	if( !d_st.isNull() )
 	{
 		ElementSet inf;
@@ -372,7 +372,7 @@ void AnchorSpace::updateAddPeak( Spin* s )
 
 void AnchorSpace::updateRemovePeak( Spin* s )
 {
-	// Entferne den Peak nur, wenn er nicht durch einen Link begründet wird
+	// Entferne den Peak nur, wenn er nicht durch einen Link begrÃ¼ndet wird
 	Result::iterator i, last;
 	const Dimension dim = getDimCount();
 	Dimension d;
@@ -391,7 +391,7 @@ void AnchorSpace::updateRemovePeak( Spin* s )
 				next = false;
 				SpinSpace::Update msg( this, SpinSpace::Update::Delete, e );
 				notifyObservers( msg );
-				break; // Nächstes i
+				break; // NÃ¤chstes i
 			}
 		}
 		if( next )
@@ -499,7 +499,7 @@ void AnchorSpace::getKeyLabels(KeyLabels & s) const
 {
 	const PathTable& tbl = 
 		// d_types->inferExperiment( d_st, false )->getTable();
-		// TODO sonst sind QZ/NZ plötzlich auch im Pfad
+		// TODO sonst sind QZ/NZ plÃ¶tzlich auch im Pfad
 		d_types->inferExperiment3( d_st, d_doPathsim )->getTable();
 
 	PathTable::Table test;
@@ -518,7 +518,7 @@ void AnchorSpace::getKeyLabels(KeyLabels & s) const
 		}
 		test.insert( path );
 	}
-	// TODO: was soll dieser Code? Der führt dazu, dass HNCACB nicht, aber HNCA Fragment darstellen kann.
+	// TODO: was soll dieser Code? Der fÃ¼hrt dazu, dass HNCACB nicht, aber HNCA Fragment darstellen kann.
 	//if( test.size() != 1 )
 	//	s.clear();
 }

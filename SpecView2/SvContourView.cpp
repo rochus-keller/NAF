@@ -148,7 +148,7 @@ void ContourView::draw(Canvas& v, const Allocation& a)
 {
 	if( !d_visi )
 		return;
-	// TODO: die Auswahl hat noch Fehler: immer wenn Fl‰che ausserhalb sichtbar,
+	// TODO: die Auswahl hat noch Fehler: immer wenn Fl√§che ausserhalb sichtbar,
 	//		 wird bei Drag-Scroll nicht sauber neugezeichnet.
 	// TODO: Cursor-Redraw scheint gewisse Teile mehrfach zu zeichnen oder ist sonst langsam.
 	ViewAreaMdl* area = d_model->getViewArea();
@@ -161,7 +161,7 @@ void ContourView::draw(Canvas& v, const Allocation& a)
 	Coord t = area->toTwip( ry.first, a.getTop(), DimY );
 	Coord r = area->toTwip( rx.second, a.getLeft(), DimX );
 	Coord b = area->toTwip( ry.second, a.getTop(), DimY );
-	// l, t, r und b sind die Coordinaten, die zu rx und ry auf der View gehˆren.
+	// l, t, r und b sind die Coordinaten, die zu rx und ry auf der View geh√∂ren.
 	TwipPerSample zx = d_model->getTwipPerSample( DimX );
 	TwipPerSample zy = d_model->getTwipPerSample( DimY );
 
@@ -216,7 +216,7 @@ void ContourView::draw(Canvas& v, const Allocation& a)
 
 void ContourView::createLevelsAuto(Float f, Option o, Float gain )
 {
-	// Anwendung f¸r AutoContour
+	// Anwendung f√ºr AutoContour
 	assert( f > 1.0 );
 	assert( gain > 0.0 );
 	d_gain = gain;
@@ -227,7 +227,7 @@ void ContourView::createLevelsAuto(Float f, Option o, Float gain )
 
 void ContourView::createLevelsAuto()
 {
-	// Anwendung f¸r AutoContour
+	// Anwendung f√ºr AutoContour
 	Amplitude nmean,pmean;
 	Amplitude nmax, pmax;
 	d_model->getBuffer().calcMeanMinMax( nmean, pmean, nmax, pmax );
@@ -386,7 +386,7 @@ void ContourView::drawContour(
 	time_t cur, start = ::time( 0 );
 	_begin();
 
-	//. NOTE: es werden f¸r die Fl‰che des Buffers Kontourlinien erzeugt. Diese haben
+	//. NOTE: es werden f√ºr die Fl√§che des Buffers Kontourlinien erzeugt. Diese haben
 	//. Float-Koordinaten in der Einheit "Samples". 
 	const Buffer& scalars = d_model->getBuffer();
 	Root::Extension ext = scalars.getExtension();
@@ -521,7 +521,7 @@ void ContourView::drawContour(
 						{
 							x[ jj ] = x1[ jj ] + t * ( x2[ jj ] - x1[ jj ] );
 						}
-						// Point erh‰lt Einheit Twips
+						// Point erh√§lt Einheit Twips
 						p[ ii ] = _ContourPoint( x[ 0 ] * 20.0 /* + 0.5 */, 
 							x[ 1 ] * 20.0 /* + 0.5 */ );
 					}

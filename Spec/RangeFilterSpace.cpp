@@ -649,13 +649,13 @@ bool RangeFilterSpaceND::filter(SpinSpace::Element &e)
                 if( shift < inner.second )
 					e.setLower();
             }else
-				return false; // Der Point ist weder im inneren noch äusseren Range
+				return false; // Der Point ist weder im inneren noch Ã¤usseren Range
         }
     }
 	if( d_sys )
 	{
 		// Wenn ein System angegeben wurde, lasse nur diejenigen passieren, wo mind. ein Spin
-		// diesem System zugehört.
+		// diesem System zugehÃ¶rt.
 		bool found = false;
 		for( Dimension d = 0; d < d_host->getDimCount(); d++ )
 		{

@@ -36,7 +36,7 @@ MainWindow::MainWindow( Agent* parent, bool statusBar, bool topLevel, bool delet
 	Root::Agent( parent )
 {
 	// MainWindow ist ein QObject und der Parent von Imp.
-	// Imp kann sich nicht selber löschen, sondern gibt derartige Anforderungen an MainWindow weiter
+	// Imp kann sich nicht selber lÃ¶schen, sondern gibt derartige Anforderungen an MainWindow weiter
 	d_this = new Imp( this, statusBar, deleteOnClose );
 	
 }
@@ -70,7 +70,7 @@ void MainWindow::handle(Message& msg )
 	{
 		if( *a == Action::WindowClose )
 		{
-			// Wir erhalten einen Schliessbefehl ab einem Menü
+			// Wir erhalten einen Schliessbefehl ab einem MenÃ¼
 			msg.consume(); 
 			if( a->isUpdate() )
 				a->setEnabled();
@@ -190,7 +190,7 @@ void MainWindow::Imp::closeEvent(QCloseEvent * e)
 	if( d_that && d_that->askToCloseWindow() )
 	{
 		e->accept();
-		// Falls nicht Destructive, wird Fenster nur versteckt, nicht gelöscht
+		// Falls nicht Destructive, wird Fenster nur versteckt, nicht gelÃ¶scht
 
 		WindowClosed m2( d_that );
 		d_that->traverseUp( m2 ); // Gebe den abgeleiteten Windows auch Handlungsgelegenheit.

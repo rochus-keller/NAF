@@ -31,12 +31,12 @@
 namespace Root
 {
 	//* Any
-	//. Dies ist ein generischer Value, der als Container für alle von
+	//. Dies ist ein generischer Value, der als Container fÃ¼r alle von
 	//. C++ vorgesehenen Datentypen dient. Any ist ein Smart-Value, der
-	//. für die Allocation/Deallocation selber sorgt und die Daten-Ownership
+	//. fÃ¼r die Allocation/Deallocation selber sorgt und die Daten-Ownership
 	//. weitergeben kann (Operator <<=). Wenn man eine Kopie des enthaltenen
 	//. Datenwerts will, muss man clone aufrufen. Werte mit weniger als vier
-	//. Bytes Länge werden direkt in d_data gespeichert. Andere mit Heap-Record.
+	//. Bytes LÃ¤nge werden direkt in d_data gespeichert. Andere mit Heap-Record.
 	//. Ein Pointer ist ein Object ohne Refcount.
 
 	class Resource;
@@ -129,7 +129,7 @@ namespace Root
 		virtual ~Any();
 
 		Any& operator=( const Any& );
-		// Vorsicht: der folgende Operator überträgt die Ownership der
+		// Vorsicht: der folgende Operator Ã¼bertrÃ¤gt die Ownership der
 		// Daten von rhs nach lhs. rhs verbleibt mit Typ Null. 
 		Any& operator<<=( Any& );
 

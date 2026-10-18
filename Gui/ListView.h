@@ -30,7 +30,7 @@ namespace Gui
 	class ListViewItem;
 	class _ListViewModel;
 
-	// Drop-In für Q3ListView
+	// Drop-In fÃ¼r Q3ListView
 	class ListView : public QTreeView
 	{
 		Q_OBJECT

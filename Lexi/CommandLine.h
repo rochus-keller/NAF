@@ -50,9 +50,9 @@ namespace Lexi
 
 	//* CommandLine
 	//. Dies ist ein generischer CmdStr-Interpreter, der von irgendwoher
-	//. Tastatureingaben erhält, diese mit einer konfigurierbaren Liste
+	//. Tastatureingaben erhÃ¤lt, diese mit einer konfigurierbaren Liste
 	//. von Commands vergleicht und die Commands allenfalls feuert.
-	//. Ähnlich einsetzbar wie Handler (in InputHandler, Redirector, etc.).
+	//. Ã„hnlich einsetzbar wie Handler (in InputHandler, Redirector, etc.).
 
 	class CommandLine : public Glyph
 	{
@@ -88,10 +88,10 @@ namespace Lexi
 		bool interpretParam();
 		QObject* d_actionHandler;
 		//. Kanal, in welchen die Commands abgesetzt werden sollen.
-		//. Auf Ref verzichtet gegen Zirkulärreferenzen.
+		//. Auf Ref verzichtet gegen ZirkulÃ¤rreferenzen.
 		QObject* d_outputHandler;
-		//. Kanal für den CmdStr-Line-Output (Echo, Fehler, etc.)
-		Commands d_commands; // Klasse hat Ownership und löscht die Commands am Schluss.
+		//. Kanal fÃ¼r den CmdStr-Line-Output (Echo, Fehler, etc.)
+		Commands d_commands; // Klasse hat Ownership und lÃ¶scht die Commands am Schluss.
 
 		enum State { Idle, ReadSymbol, ReadParam } d_state;
 		Root::Ptr<ActionCommand> d_current;
@@ -100,7 +100,7 @@ namespace Lexi
 		bool d_active;
 		//. Entscheidet, ob der Interpreter Tastatureingaben entgegennimmt.
 		bool d_caseSensitive;
-		//. Entscheidet, ob Case für Matching gegen Commands von Bedeutung ist.
+		//. Entscheidet, ob Case fÃ¼r Matching gegen Commands von Bedeutung ist.
 	};
 }
 

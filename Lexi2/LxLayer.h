@@ -30,10 +30,10 @@
 namespace Lexi2
 {
 	//* Layer
-	//. Ähnlich wie Deck, jedoch sind immer alle enthaltenenen Glyphs
-	//. gleichzeitig sichtbar. Request richtet sich nach dem grössten Glyph.
+	//. Ã„hnlich wie Deck, jedoch sind immer alle enthaltenenen Glyphs
+	//. gleichzeitig sichtbar. Request richtet sich nach dem grÃ¶ssten Glyph.
 	//. Allocate gibt den Space 1:1 an alle Glyphs weiter, so dass diese
-	//. links oben bündig sind.
+	//. links oben bÃ¼ndig sind.
 
 	class Layer : public PolyGlyph
 	{
@@ -41,7 +41,7 @@ namespace Lexi2
 		Layer(Glyph* owner = 0);
 
 		GlyphIndex find( Glyph* ) const;
-		//. Gibt Index von g zurück oder -1.
+		//. Gibt Index von g zurÃ¼ck oder -1.
 		void moveToBack( Glyph* );
 		void moveToFront( Glyph* );
 		void remove( Glyph* );

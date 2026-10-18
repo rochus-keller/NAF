@@ -32,8 +32,8 @@ namespace Spec
 {
 	//* SpecRotator
 	//. Diese Klasse kann einem beliebigen Spektrum transparent vorgeschaltet werden,
-	//. um die Rotation zu ändern, ohne die Originalklasse 
-	//. tangieren zu müssen. 
+	//. um die Rotation zu Ã¤ndern, ohne die Originalklasse 
+	//. tangieren zu mÃ¼ssen. 
 
 	class SpecRotator : public Spectrum
 	{

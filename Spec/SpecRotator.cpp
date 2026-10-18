@@ -52,7 +52,7 @@ SpecRotator::~SpecRotator()
 
 void SpecRotator::setRotation(Dimension from, Dimension to)
 {
-	// Nur für einfacheren Init
+	// Nur fÃ¼r einfacheren Init
 	d_rot[ from ] = to;
 	//	notifyObservers( Spectrum::Update( this, Spectrum::Update::Rotation ) );
 }

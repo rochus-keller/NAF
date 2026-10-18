@@ -158,7 +158,7 @@ void CursorSet::setCursor(const PpmPoint & p)
 
 void CursorSet::setCursor(Index i, const PpmPoint & p)
 {
-	// TODO: Dimensionsprüfung
+	// TODO: DimensionsprÃ¼fung
 	if( i == -1 )
 		i = (d_active==-1)?d_lastActive:d_active;
 	Base::iterator cur = d_cursors.find( i );

@@ -119,7 +119,7 @@ namespace Spec
         virtual Iterator begin() const;
         virtual Iterator end() const;
         virtual Spectrum* getSpec() const { return 0; }
-        //. Abgeleitete Klassen können konkret auf ein Spektrum referenzieren. Kann
+        //. Abgeleitete Klassen kÃ¶nnen konkret auf ein Spektrum referenzieren. Kann
         //. unabhngig von getSpecType() null oder rotiert sein.
         virtual SpectrumType* getSpecType() const { return 0; }
         //-
@@ -265,7 +265,7 @@ namespace Spec
     // Ein SpinSpace ohne Automatismus, wo man die SpinPoints manuell einfgt
     // und entfernt, bzw. diese nicht automatisch generiert werden. Man braucht
     // diese Klasse primr, um Cursors oder Lineale zu verwalten.
-    // In dieser Klasse haben getSpec und getSpecType nicht die übliche Bedeutung.
+    // In dieser Klasse haben getSpec und getSpecType nicht die Ã¼bliche Bedeutung.
 	class ManualSpinSpace : public SpinSpace
 	{
 	public:

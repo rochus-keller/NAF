@@ -280,11 +280,11 @@ bool SpectrumType::autoRotate( const ColorMap& soll, Spectrum* spec, Rotation& o
 	if( neededJokers > availJokers )
 		return false; // In Spec gibt es eine Farbe, die nicht auf Type passt.
 	else if( availJokers == 0 && countSoll != countIst )
-		return false; // Nicht gleichviel Farben bzw. Anzahl. Rotation unmöglich.
-		// TODO: diese Prüfung für availJokers != 0 auch vornehmen
+		return false; // Nicht gleichviel Farben bzw. Anzahl. Rotation unmÃ¶glich.
+		// TODO: diese PrÃ¼fung fÃ¼r availJokers != 0 auch vornehmen
 	else if( equal && ambigSoll.empty() )
 	{
-		// Zufällig gleich und keine mehrdeutigen Farben
+		// ZufÃ¤llig gleich und keine mehrdeutigen Farben
 		for( d = 0; d < dim; d++ )
 			rot[ d ] = d;
 		out = rot;
@@ -307,7 +307,7 @@ bool SpectrumType::autoRotate( const ColorMap& soll, Spectrum* spec, Rotation& o
 		{
 			if( ambigSoll.count( soll[ d ] ) == 0 && !soll[ d ].isNone() )
 			{
-				assert( countIst[ ist[ d ] ] == 1 ); // Bereits oben geprüft
+				assert( countIst[ ist[ d ] ] == 1 ); // Bereits oben geprÃ¼ft
 				// Farbe im Typ eindeutig und auch im Spektrum
 				rot[ d ] = translateTo[ soll[ d ] ];
 				used[ rot[ d ] ] = true;
@@ -334,10 +334,10 @@ bool SpectrumType::autoRotate( const ColorMap& soll, Spectrum* spec, Rotation& o
 
 					}
 				}
-				ambigSoll.erase( soll[ d ] ); // gerade alle der Farbe zurücksetzen.
-				// Dies ist nötig, da gerade alle ambigSoll auf einmal erledigt
+				ambigSoll.erase( soll[ d ] ); // gerade alle der Farbe zurÃ¼cksetzen.
+				// Dies ist nÃ¶tig, da gerade alle ambigSoll auf einmal erledigt
 				Order::reverse_iterator q = order.rbegin();
-				k = 0; // Gehe rückwärts, um die besten zuerst zuzuordnen
+				k = 0; // Gehe rÃ¼ckwÃ¤rts, um die besten zuerst zuzuordnen
 				int l = 0;
 				while( k < dim && q != order.rend() )
 				{
@@ -460,7 +460,7 @@ bool SpectrumType::rotateToUniqueKeys(Spectrum * spec, Rotation & res, bool redu
 	assert( spec->getType() );
 
 	// Diese Routine findet alle unique Keys des Spektrums. Wenn diese
-	// nicht bei 0 beginnen und zusammenhängend sind, wird das Spektrum
+	// nicht bei 0 beginnen und zusammenhÃ¤ngend sind, wird das Spektrum
 	// rotiert. Die Reihenfolge der Dim wird dabei relativ gewahrt.
 	KeyLabels kl( spec->getDimCount() );
 	Dimension d;
@@ -497,7 +497,7 @@ bool SpectrumType::rotateToUniqueKeys(Spectrum * spec, Rotation & res, bool redu
 	KeyLabels k( nn );
 	for( d = 0; d < kl.size(); d++ )
 	{
-		// Rotiere nun so, dass alle nn zusammenhängend und bei 0 beginnend.
+		// Rotiere nun so, dass alle nn zusammenhÃ¤ngend und bei 0 beginnend.
 		if( !kl[ d ].isNull() )
 		{
 			rot[ i ] = d;

@@ -26,8 +26,8 @@
 #endif // _MSC_VER > 1000
 
 #ifdef _WIN32
-// Unterdrücke Warnung 4291. Diese besagt, dass es keinen geeigneten
-// delete-Operator gibt. Das ist aber egal, da Lua für free zuständig ist.
+// UnterdrÃ¼cke Warnung 4291. Diese besagt, dass es keinen geeigneten
+// delete-Operator gibt. Das ist aber egal, da Lua fÃ¼r free zustÃ¤ndig ist.
 #pragma warning( disable: 4291 )
 #endif
 

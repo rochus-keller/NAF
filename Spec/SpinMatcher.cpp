@@ -86,9 +86,9 @@ void SpinMatcher::getStripMatch(SpinSystem* pred, SpinSystem* succ, Fit& out,
     * 2) Wenn ein Strip zu zwei Kandidaten nur in einem Link passt, hat derjenige
     *    mit der besseren Passung die Nase vorn.
     * 3) Wenn Strips zwei Links anbieten und wenigstens einer davon gar nicht passt,
-    *    gehören die Strips nicht zusammen.
+    *    gehÃ¶ren die Strips nicht zusammen.
     * Ergo folgender Algorithmus
-    * 1) Berechne für jeden Link die Passung zw. 0 und 1 für gegebene Toleranz.
+    * 1) Berechne fÃ¼r jeden Link die Passung zw. 0 und 1 fÃ¼r gegebene Toleranz.
     *    Der Toleranzbereich ist einstellbar ein Dreieck oder Rechteck (oder dazwischen).
     * 2) Addiere die Passung aller realisierten Links oder setze diese Null, wenn wenigstens
     *    ein Link nicht passt.
@@ -96,15 +96,15 @@ void SpinMatcher::getStripMatch(SpinSystem* pred, SpinSystem* succ, Fit& out,
     * Note:
     * 1) Geometrisches Mittel zwischen Links-Passungen ist zu streng, d.h. schlecht
     *    passende Werte werden kollektiv zu stark nach unten gezogen. Dasselbe gilt
-    *    bereits für deren Multiplikation (unter Annahme unabhängige Ereignisse).
-    * 2) Wenn man letzte Mult weglässt,
+    *    bereits fÃ¼r deren Multiplikation (unter Annahme unabhÃ¤ngige Ereignisse).
+    * 2) Wenn man letzte Mult weglÃ¤sst,
 	*/
 #ifdef _DEBUG
 	assert( pred != 0 && succ != 0 );
 #endif
 	out = Fit(); // Nullen
 
-	// Stelle sicher, dass nicht zwei Systeme aus verschiedenen Molekültypen
+	// Stelle sicher, dass nicht zwei Systeme aus verschiedenen MolekÃ¼ltypen
 	// kombiniert werden (also z.B. nicht Amino und Nucleic).
 	if( pred->getSysType() && succ->getSysType() &&
 		pred->getSysType()->getClass() != succ->getSysType()->getClass() )
@@ -123,11 +123,11 @@ void SpinMatcher::getStripMatch(SpinSystem* pred, SpinSystem* succ, Fit& out,
 		if( ( unlabeled || !(*peakIdx)->getLabel().isNull() ) && 
 			(*peakIdx)->getLabel().getOffset() == 1 )
 		{
-			// Falls der aktuelle Peak in pred über einen Link mit succ verbunden ist...
+			// Falls der aktuelle Peak in pred Ã¼ber einen Link mit succ verbunden ist...
 			for( targetIdx = succPeaks.begin(); targetIdx != succPeaks.end(); ++targetIdx )
 			{
 				if( ( 
-						// Falls unlabeled zugelassen müssen wenigstens Atomtypen übereinstimmen
+						// Falls unlabeled zugelassen mÃ¼ssen wenigstens Atomtypen Ã¼bereinstimmen
                         ( unlabeled &&
                             ( (*targetIdx)->getLabel().isNull() || (*peakIdx)->getLabel().isNull() ) &&
                             (*peakIdx)->getAtom() == (*targetIdx)->getAtom() ) ||
@@ -158,7 +158,7 @@ void SpinMatcher::getStripMatch(SpinSystem* pred, SpinSystem* succ, Fit& out,
 		if( ( unlabeled || !(*peakIdx)->getLabel().isNull() ) && 
 			(*peakIdx)->getLabel().getOffset() == -1 )
 		{
-			// Falls der aktuelle Peak in pred über einen Link mit succ verbunden ist...
+			// Falls der aktuelle Peak in pred Ã¼ber einen Link mit succ verbunden ist...
 			for( targetIdx = predPeaks.begin(); targetIdx != predPeaks.end(); ++targetIdx )
 			{
 				// TEST SpinLabel predLabel = (*targetIdx)->getLabel();
@@ -193,7 +193,7 @@ void SpinMatcher::getStripMatchAll(SpinSystem* pred, SpinSystem* succ, Fit& out,
 #endif
 	out = Fit(); // Nullen
 
-	// Stelle sicher, dass nicht zwei Systeme aus verschiedenen Molekültypen
+	// Stelle sicher, dass nicht zwei Systeme aus verschiedenen MolekÃ¼ltypen
 	// kombiniert werden (also z.B. nicht Amino und Nucleic).
 	if( pred->getSysType() && succ->getSysType() &&
 		pred->getSysType()->getClass() != succ->getSysType()->getClass() )
@@ -206,7 +206,7 @@ void SpinMatcher::getStripMatchAll(SpinSystem* pred, SpinSystem* succ, Fit& out,
 	SpinSystem::Spins::const_iterator peakIdx;
 	SpinSystem::Spins::const_iterator targetIdx;
 	Fitness res;
-	// Mache vollständige Kreuzkorrelation zwischen pred und succ
+	// Mache vollstÃ¤ndige Kreuzkorrelation zwischen pred und succ
 	for( peakIdx = predPeaks.begin(); peakIdx != predPeaks.end(); ++peakIdx )
 	{
 		for( targetIdx = succPeaks.begin(); targetIdx != succPeaks.end(); ++targetIdx )
@@ -240,7 +240,7 @@ void SpinMatcher::getStripMatchOne(Spin* ref, SpinSystem* succ, Fit& out, Spectr
 void SpinMatcher::getStripMatchList(const SpinList& refs, SpinSystem* succ, 
 									Fit& out, Spectrum* spec )
 {
-	// Wie getStripMatchOne, einfach für eine Liste von Spins
+	// Wie getStripMatchOne, einfach fÃ¼r eine Liste von Spins
 #ifdef _DEBUG
 	assert( succ != 0 );
 #endif
@@ -271,7 +271,7 @@ void SpinMatcher::getStripMatchList(const SpinList& refs, SpinSystem* succ,
 			}
 		}
 		if( weight == out.d_weight )	// Es sind keine neuen Komponenten hinzugekommen
-			out.d_zero++;				// Zählt, bei wievielen Referenzen das System nicht passt
+			out.d_zero++;				// ZÃ¤hlt, bei wievielen Referenzen das System nicht passt
 	}
 }
 
@@ -296,8 +296,8 @@ void SpinMatcher::getSeqMatch(SpinSystem * strip, Root::Index off,
 	const SpinSystem::Spins& peaks = strip->getSpins();
 	SpinSystem::Spins::const_iterator peakIdx;
 
-	// Folgende beiden Flags müssen false sein, wenn der Strip nicht direkt dem
-	// residue gegenübersteht bzw. off != 0.
+	// Folgende beiden Flags mÃ¼ssen false sein, wenn der Strip nicht direkt dem
+	// residue gegenÃ¼bersteht bzw. off != 0.
 	out.d_excluded = false;
 	
 	// Wenn System-Candidates definiert und ResidueType nicht darunter, dann sperren.
@@ -335,7 +335,7 @@ void SpinMatcher::getSeqMatch(SpinSystem * strip, Root::Index off,
 			value = resi->getDisPar( l.getTag() );
 			if( value.isValid() )
 			{
-				// Peak trägt nur zur Fitness bei, wenn Sequenz einen Wert zum Tag kennt.
+				// Peak trÃ¤gt nur zur Fitness bei, wenn Sequenz einen Wert zum Tag kennt.
 				f = value.triangle( (*peakIdx)->getShift( spec ) ); 
 				if( f == 0.0 )
 					out.d_zero++;

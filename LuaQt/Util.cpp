@@ -29,7 +29,7 @@ const char* Util::s_clone = "clone";
 void Util::addRef(lua_State *L, void* me)
 {
 	// Damit me von GC als in Gebrauch erkannt wird, kommt Ref auf Registry.
-	// Wert ist ein Referenzz‰hler.
+	// Wert ist ein Referenzz√§hler.
 	lua_pushuserdata( L, me );
 	lua_rawget( L, LUA_REGISTRYINDEX );
 	// Refcount oder nil

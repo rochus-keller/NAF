@@ -35,7 +35,7 @@ static const double s_maxFac = 0.98;
 static inline double hOffFromNOff( double Noff, double j, double c )
 {
 	// Nehme eine N-Koordinate und rechne sie um in einen
-	// Offset für die H-Koordinate
+	// Offset fÃ¼r die H-Koordinate
 
 	// Noff...... die variable N frequenz relativ zu Wcw (also Wn-Wcw). 
 	// ppm muss in Hz umgerechnet werden, darum Ws*rf (radiofrequenz von 70.95 MHz)
@@ -52,7 +52,7 @@ static inline double hOffFromNOff( double Noff, double j, double c )
 
 	// Formel: r = j * ( Ws*rf - Wcw*rf ) / ( (Ws*rf-Wcw*rf)^2 + c^2 )^0.5
 	// Wurde umgerechnet aus Wn = Wcw (+|-) r * c / ( j^2 - r^2 )^0.5 (aus JACS)
-	// eigentlich wäre +|-( Wn - Wcw ) die korrekte Lösung
+	// eigentlich wÃ¤re +|-( Wn - Wcw ) die korrekte LÃ¶sung
 
 	// c=700
 	// j=92
@@ -75,11 +75,11 @@ static inline double hOffFromNOff( double Noff, double j, double c )
 static inline double nOffFromHOff( double Hoff, double j, double c )
 {
 	// Nehme eine H-Offset-Koordinate und rechne sie um in einen
-	// Offset für die N-Koordinate (ab Referenz cw)
-	// Auch hier nur die positive Variante berücksichtigt.
+	// Offset fÃ¼r die N-Koordinate (ab Referenz cw)
+	// Auch hier nur die positive Variante berÃ¼cksichtigt.
 	// Formel: Wn = Wcw (+|-) r * c / ( j^2 - r^2 )^0.5
-	// Wcw entfernt und fabs eingefügt, damit unabhängig von asc/desc
-	// Noff wird zurückgegeben
+	// Wcw entfernt und fabs eingefÃ¼gt, damit unabhÃ¤ngig von asc/desc
+	// Noff wird zurÃ¼ckgegeben
 
 	// assert( j >= Hoff );
 	if( j <= Hoff )
@@ -116,7 +116,7 @@ SitarSpectrum::SitarSpectrum(const char* path):
 {
 	readParams();
 
-	/* TEST: die Asserts sind ziemlich erfüllt. Hin- und Rück sind faktisch identisch
+	/* TEST: die Asserts sind ziemlich erfÃ¼llt. Hin- und RÃ¼ck sind faktisch identisch
 	double h = hOffFromNOff( 2130.0, 92.0, 700.0 );
 	double nn = nOffFromHOff( h, 92.0, 700.0 );
 	double n = nOffFromHOff( 87.4, 92.0, 700.0 );
@@ -154,7 +154,7 @@ void SitarSpectrum::readParams()
 			if( ret != 1 )
 				continue;
 
-			if( ::strlen( parName ) > 80 )	// Falls versehentlich ein Binärfile geöffnet wird.
+			if( ::strlen( parName ) > 80 )	// Falls versehentlich ein BinÃ¤rfile geÃ¶ffnet wird.
 				parName[ 0 ] = 0;
 			if( ::strcmp( parName, "lhs" ) == 0 || ::strcmp( parName, "lhp" ) == 0 ) // lhs
 			{
@@ -387,7 +387,7 @@ void SitarSpectrum::readParams()
 		d_z = Scale( cw + sw, cw, AtomType::parse( d_lbl.data(), cw + sw / 2.0 ),
 		Scale::Unfolded, sc );
 	else
-		// cw ist der grössere, z.B. 129 ppm
+		// cw ist der grÃ¶ssere, z.B. 129 ppm
 		d_z = Scale( cw, cw - sw, AtomType::parse( d_lbl.data(), cw - sw / 2.0 ),
 		Scale::Unfolded, sc );
 }
@@ -457,7 +457,7 @@ void SitarSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	if( tdimCount > dimCount )
 		throw Root::Exception( "target dimension out of range" );
 
-	//* Bringe den Buffer auf die nötige Grösse, um Cube darin zu speichern. Setze Skalenausschnitt.
+	//* Bringe den Buffer auf die nÃ¶tige GrÃ¶sse, um Cube darin zu speichern. Setze Skalenausschnitt.
 	{
 		ScaleVector sv( tdimCount );
 		for( d = 0; d < tdimCount; d++ )
@@ -470,7 +470,7 @@ void SitarSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	//* Überführe Cube in normalisierte roi
+	//* ÃœberfÃ¼hre Cube in normalisierte roi
 	Cube roi( dimCount ); // Bereinigt mit first < second
 	for( d = 0; d < dimCount; d++ )
 	{
@@ -481,7 +481,7 @@ void SitarSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	/* const */ Point flip;		// Target-Achse verläuft parallel oder antiparallel
+	/* const */ Point flip;		// Target-Achse verlÃ¤uft parallel oder antiparallel
 	/* const */ Point flipOff;	// Arithmetischer Trick um Achse zu drehen
 	for( d = 0; d < tdimCount; d++ )
 	{
@@ -525,7 +525,7 @@ void SitarSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	double _off, _fac;
 	Sample _idx;
 
-	// Faktor 2 willkürlich, damit Pegel gross genug für AC
+	// Faktor 2 willkÃ¼rlich, damit Pegel gross genug fÃ¼r AC
 	const double _ampMax = ( ::fabs( d_l.d_pMax ) > ::fabs( d_l.d_nMax ) )?
 		::fabs( d_l.d_pMax ) : ::fabs( d_l.d_nMax ); 
 	const double _ampMaxSqrt = ::sqrt( _ampMax );
@@ -537,7 +537,7 @@ void SitarSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	{
 		currentSamp[ DimY ] = y;
 
-		// Hole den gesamten Riemen entlang X über das ganze Spektrum für gegebenes Y
+		// Hole den gesamten Riemen entlang X Ã¼ber das ganze Spektrum fÃ¼r gegebenes Y
 		sroi[ DimY ].first = y;
 		sroi[ DimY ].second = y;
 		d_lhs->fillBuffer( lhs, sdir, sroi );
@@ -546,11 +546,11 @@ void SitarSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 		for( z = roi[ DimZ ].first; z <= roi[ DimZ ].second; z++ )
 		{
 			currentSamp[ DimZ ] = z;
-			// * 0.5 da getHOffFromN den ganzen Abstand zw. den Zwillingen zurückgibt
+			// * 0.5 da getHOffFromN den ganzen Abstand zw. den Zwillingen zurÃ¼ckgibt
 			_off = resol * getHOffFromN( d_z.getFreq( z ) ) * 0.5;
 			assert( _off >= 0.0 );
 			_idx = _off; // Runde nach unten
-			// Anteil des näheren Stützwertes, also _ampLib und _ampRib
+			// Anteil des nÃ¤heren StÃ¼tzwertes, also _ampLib und _ampRib
 			_fac = 1.0 - ( _off - double( _idx ) ); // 0.0..1.0
 
 			//if( dims.size() == 1 && dims[ DimX ] == DimZ )
@@ -603,7 +603,7 @@ void SitarSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 				}
 
 				/*
-				// Versuch Geometrischer Mittelwert: Rauschen nimmt zu, Selektivität ab
+				// Versuch Geometrischer Mittelwert: Rauschen nimmt zu, SelektivitÃ¤t ab
 				// Versuch Potenzierung: Unterschied i und i-1 wird zu gross
 				_amp = ::fabs( ::pow( _ampLib, power ) * 
 					::pow( _ampRib, power ) / _ampMaxSqrt );
@@ -643,7 +643,7 @@ void SitarSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 						_amp = 0;				
 				}else if( d_rectify )
 				{
-					// Wenn beide Spektren gleiche Polarität, dann müssen
+					// Wenn beide Spektren gleiche PolaritÃ¤t, dann mÃ¼ssen
 					// auch die Signale gleiches Vorteichen haben, egal ob negativ oder positiv.
 					if( positive(_ampL) != positive( _ampR ) )
 						_amp = 0;

@@ -62,7 +62,7 @@ void Stripper::recalcAll()
 	const SpinBase::SpinSystemMap& strips = d_base->getSystems();
 	SpinBase::SpinSystemMap::const_iterator sidx;
 	SpinBase::SpinSystemMap::const_iterator tidx;
-	// Gehe durch alle Strips durch und berechne f¸r jeden die Menge aller
+	// Gehe durch alle Strips durch und berechne f√ºr jeden die Menge aller
 	// Predecessors. Trage dabei jeden Kandidaten in die Successor-Liste ein.
 	for( sidx = strips.begin(); sidx != strips.end(); ++ sidx )
 		for( tidx = strips.begin(); tidx != strips.end(); ++ tidx )
@@ -129,7 +129,7 @@ void Stripper::unmatch(SpinSystem* i, bool notify )
 	Matches::iterator pos = d_matches.lowerBound( qMakePair( i, (SpinSystem*)0 ) );
 	while( pos.key().first == i )
 	{
-		// Lˆsche in den Successors diesen Strip aus der Predecessor-Liste
+		// L√∂sche in den Successors diesen Strip aus der Predecessor-Liste
 		if( notify )
 		{
 			if( pos.value() > 0.0 )
@@ -184,7 +184,7 @@ void Stripper::match(SpinSystem* pred, SpinSystem* succ, bool notify)
 		if( !( d_strict && fit.d_zero ) && fit.d_sum > 0.0 )
 		{
 			Root::Float f = fit.d_sum;
-			// Gewichtung nur zul‰ssig wenn nicht excluded. Andernfalls im
+			// Gewichtung nur zul√§ssig wenn nicht excluded. Andernfalls im
 			// Falle von nicht-strict auch grosses Gewicht bei Nicht-Match.
 			if( !fit.d_zero )
 				f *= Fitness( fit.d_weight );

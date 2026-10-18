@@ -24,7 +24,7 @@
 using namespace Spec2;
 using namespace Lexi2;
 
-static const float g_page = 0.75; // TODO: ev-> änderbarer Parameter
+static const float g_page = 0.75; // TODO: ev-> Ã¤nderbarer Parameter
 
 ScrollCtrl::ScrollCtrl(ViewAreaMdl* m, bool doX, bool doY, bool immediate ):
 	d_area( m ), d_immediate( immediate )

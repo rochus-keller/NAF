@@ -81,7 +81,7 @@ void MemSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	if( tdimCount > dimCount )
 		throw Root::Exception( "target dimension out of range" );
 
-	//* Bringe den Buffer auf die nötige Grösse, um Cube darin zu speichern. Setze Skalenausschnitt.
+	//* Bringe den Buffer auf die nÃ¶tige GrÃ¶sse, um Cube darin zu speichern. Setze Skalenausschnitt.
 	{
 		ScaleVector sv( tdimCount );
 		for( d = 0; d < tdimCount; d++ )
@@ -94,7 +94,7 @@ void MemSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	//* Überführe Cube in normalisierte roi
+	//* ÃœberfÃ¼hre Cube in normalisierte roi
 	Cube roi( dimCount ); // Bereinigt mit first < second
 	for( d = 0; d < dimCount; d++ )
 	{
@@ -105,7 +105,7 @@ void MemSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	/* const */ Point flip;		// Target-Achse verläuft parallel oder antiparallel
+	/* const */ Point flip;		// Target-Achse verlÃ¤uft parallel oder antiparallel
 	/* const */ Point flipOff;	// Arithmetischer Trick um Achse zu drehen
 	for( d = 0; d < tdimCount; d++ )
 	{
@@ -129,7 +129,7 @@ void MemSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	Point off;
 	off.assign( tdimCount, 0 );
 
-	Point f1; // Faktor für Indexberechnung: 
+	Point f1; // Faktor fÃ¼r Indexberechnung: 
 			  // f1[ 0 ] * f1[ 1 ] * at( 2 ) + at( 1 ) * f1[ 0 ] + at( 0 )
 	f1.assign( dimCount, 1 );
 	for( d = 1; d < dimCount; d++ )
@@ -147,7 +147,7 @@ void MemSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	{
 		//* Berechne den seriellen Index von currentSamp relativ zu currentTile.
 		pointIndex = 0;
-		// Optimierung für currentSamp.getIndex( d_tileSize ):
+		// Optimierung fÃ¼r currentSamp.getIndex( d_tileSize ):
 		for( d = 0; d < dimCount; d++ ) 
 			pointIndex += currentSamp[ d ] * f1[ d ];
 		//-

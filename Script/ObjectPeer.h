@@ -33,7 +33,7 @@
 namespace Lua
 {
 	//* ObjectPeer
-	//. Wenn Lua einen Pointer auf ein QObject benötigt, wird diese Klasse verwendet,
+	//. Wenn Lua einen Pointer auf ein QObject benÃ¶tigt, wird diese Klasse verwendet,
 	//. um Userdata zu instanziieren.
 
 	class ObjectPeer : public QObject
@@ -65,10 +65,10 @@ namespace Lua
 		}
 
 		lua_State* getLua() const { return d_lua; }
-		void pushMe(); // pushPeer für this
+		void pushMe(); // pushPeer fÃ¼r this
 		static ObjectPeer* getPeer( QObject* o );
 
-		// Gebe QObjekt frei ohne es zu löschen.
+		// Gebe QObjekt frei ohne es zu lÃ¶schen.
 		void unattach(); 
 		bool isAttached() const;
 		QObject* getObject() const { return d_obj; }
@@ -121,7 +121,7 @@ namespace Lua
 		void addRef();
 		void release();
 
-		//* new/delete werden hier überladen, da Lua Memory kontrolliert:
+		//* new/delete werden hier Ã¼berladen, da Lua Memory kontrolliert:
 		void operator delete( void* );
 		void operator delete( void *, size_t );
         void* operator new( size_t, void* ) throw();

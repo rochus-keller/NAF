@@ -197,7 +197,7 @@ void PeakPlaneView3::paint( QPainter& painter )
 				{
 					if( peak.isAlias() )
 					{
-                        // schr‰ges Kreuz
+                        // schr√§ges Kreuz
                         painter.drawLine( QPointF( x - g_d, y - g_d ), QPointF( x + g_d + 1.0, y + g_d + 1.0 ) );
                         painter.drawLine( QPointF( x - g_d, y + g_d ), QPointF( x + g_d + 1.0, y - g_d - 1.0 ) );
                     }else

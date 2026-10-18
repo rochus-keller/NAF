@@ -133,7 +133,7 @@ void ResidueType::find( Atom* start, AtomType to, Root::Index hops, bool repeat,
 			// Ausgehend von start durch alle Nachbarn gehen...
 			if( to.isNone() || (*p)->getType() == to )
 			{
-				// Wenn der Nachbar die gewünschte Farbe hat, registrieren...
+				// Wenn der Nachbar die gewÃ¼nschte Farbe hat, registrieren...
 				//qDebug( "_found %s from=%s dep=%d", (*p)->getLabel().data(), 
 				//	start->getLabel().data(), depth ); // TEST
 				if( dp.isNull() || ( (*p)->getMean() != DisPar::Undefined &&
@@ -147,8 +147,8 @@ void ResidueType::find( Atom* start, AtomType to, Root::Index hops, bool repeat,
 				}
 			}
 			// RISK: ev. hier ein else, um Suche ab erstem Fund abzubrechen im Ast
-			// Führe Suche fort bis hops aufgebraucht
-			// RISK: falls dp.isValid, darf Suche über einen unpassenden hinweggehen?
+			// FÃ¼hre Suche fort bis hops aufgebraucht
+			// RISK: falls dp.isValid, darf Suche Ã¼ber einen unpassenden hinweggehen?
 			find( (*p), to, hops, repeat, depth + 1, res, withGroup, dp );
 		}
 	}
@@ -165,7 +165,7 @@ SpinLabelSet ResidueType::find(Root::SymbolString start,
 	{
 		if( !withGroup )
 			return SpinLabelSet();
-		// start kann eine Gruppe sein. In diesem Fall verwenden wir für
+		// start kann eine Gruppe sein. In diesem Fall verwenden wir fÃ¼r
 		// die Suche rekursiv alle in der Gruppe enthaltenen Atome anstelle
 		// der Gruppe.
 		GroupMap::const_iterator aa = d_groups.find( start );
@@ -203,7 +203,7 @@ SpinLabelSet ResidueType::find(Root::SymbolString start,
 			cur = *starts.begin();
 			unmarkAll();
 			a = d_atoms.find( cur.getTag() );
-			if( a != d_atoms.end() )	// cur könnte eine Gruppe sein
+			if( a != d_atoms.end() )	// cur kÃ¶nnte eine Gruppe sein
 			{
 				//qDebug( "*** repeat %s", (*a).first.data() );
 				sel2.clear();
@@ -211,7 +211,7 @@ SpinLabelSet ResidueType::find(Root::SymbolString start,
 				for( i = sel2.begin(); i != sel2.end(); ++i )
 					if( sel.count( (*i) ) == 0 )
 					{
-						// Die neu gefundenen müssen selber auch noch als start dienen.
+						// Die neu gefundenen mÃ¼ssen selber auch noch als start dienen.
 						sel.insert( (*i) );
 						starts.insert( (*i) );
 					}
@@ -422,7 +422,7 @@ ResidueType* ResidueType::clone(Root::Int16 offset) const
 	res->d_name = d_name;
 	res->d_short = d_short;
 	res->d_letter = d_letter;
-	// d_sysType nicht benötigt.
+	// d_sysType nicht benÃ¶tigt.
 	AtomMap::const_iterator i;
 	for( i = d_atoms.begin(); i != d_atoms.end(); ++i )
 	{

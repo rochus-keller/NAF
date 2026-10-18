@@ -133,8 +133,8 @@ namespace Root
 	};
 
 
-	// Dies ist ein erweiterbarer Vektor, der für Eindeutigkeit
-	// der Elemente sorgt. Einfügen und löschen sind langsam.
+	// Dies ist ein erweiterbarer Vektor, der fÃ¼r Eindeutigkeit
+	// der Elemente sorgt. EinfÃ¼gen und lÃ¶schen sind langsam.
 	template<class T>
 	class UniqueSeq
 	{

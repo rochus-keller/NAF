@@ -227,7 +227,7 @@ void PhasedSpec::fillSlice(Buffer &b, const Rotation& r, const Cube &c) const
 	{
 		const Sample cx = c[ r[ DimX ] ].second + 
 			c[ r[ DimX ] ].first - c[ r[ DimX ] ].second;
-		// Buffer(0) repr‰sentiert die andere Seite, ist also eigentlich Buffer(N).
+		// Buffer(0) repr√§sentiert die andere Seite, ist also eigentlich Buffer(N).
 		// Zudem ist cube verkehrt, da Caller eine Achsenspiegelung will
 		for( int x = 0; x < b.getSize( DimX ); x++ )
 		{
@@ -243,7 +243,7 @@ void PhasedSpec::fillPlane(Buffer &b, const Rotation& r, const Cube &c) const
 {
 	// r[ DimX ], r[ DimY ]
 
-	// TODO: Ortsabh‰ngiger Anteil
+	// TODO: Ortsabh√§ngiger Anteil
 	d_real->fillBuffer( b, r, c );
 #ifdef _TODO
 	Root::Vector<Buffer> im( d_real->getDimCount() );

@@ -54,12 +54,12 @@ namespace Lua
             QVector<int> d_codeLines;    // Proto.lineinfo, map from opcodes to source lines
             QVector<Vars> d_localVars;   // Proto.ocvars, information about local variables
             QVector<QByteArray> d_upValNames; // Proto.upvalues, upvalue names
-            int d_nr; // Index der Funktion im übergeordneten d_funcs;
+            int d_nr; // Index der Funktion im Ã¼bergeordneten d_funcs;
             QByteArray d_name; // ermittelter Name der Funktion
         };
 
         // NOTE zu d_varArgs:
-        // bei VARARG_HASARG wird noch ein parameter dazugezählt
+        // bei VARARG_HASARG wird noch ein parameter dazugezÃ¤hlt
         // VARARG_ISVARARG ist immer gesetzt sobald variable Argumente, egal in welcher Art
         // VARARG_NEEDSARG und VARARG_HASARG schliessen sich gegenseitig aus.
 

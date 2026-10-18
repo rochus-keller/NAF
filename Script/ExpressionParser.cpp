@@ -51,7 +51,7 @@ bool Lua::ExpressionParser::parse(const QByteArray & str)
     // var ::=  Name | prefixexp '[' exp ']' | prefixexp '.' Name
     // binop ::= '+' | '-' | '*' | '/' | '^' | '%' | '..' | '<' | '<=' | '>' | '>=' | '==' | '~=' | and | or
     // unop ::= '-' | not | '#'
-    // Leider ist die Syntax mehrdeutig; Lösungen siehe http://www.engr.mun.ca/~theo/Misc/exp_parsing.htm
+    // Leider ist die Syntax mehrdeutig; LÃ¶sungen siehe http://www.engr.mun.ca/~theo/Misc/exp_parsing.htm
     // Siehe auch http://lua-users.org/lists/lua-l/2011-10/msg00438.html
 
     if( d_top )
@@ -811,7 +811,7 @@ bool SourceBuffer::read(char *buf, int size)
 
 void SourceBuffer::eat(int count)
 {
-    // Nach peak steht d_peekPtr auf dem nächsten zu lesenden Zeichen
+    // Nach peak steht d_peekPtr auf dem nÃ¤chsten zu lesenden Zeichen
     if( count == -1 || d_peekPtr - d_eaten < count )
         d_eaten = d_peekPtr;
     else
@@ -1058,7 +1058,7 @@ void ExpressionParser::prefixexp(AstNode* n)
     case Lexer::Token::Name:
         n->d_left = new AstNode( Name, tok.d_val );
         // singlevar wird gleich hier alles erledigt
-        tok = d_lex.next(); // singlevar enthält str_checkname was das Token weiterschaltet!
+        tok = d_lex.next(); // singlevar enthÃ¤lt str_checkname was das Token weiterschaltet!
         return;
     default:
         error("unexpected symbol");

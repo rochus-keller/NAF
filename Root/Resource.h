@@ -91,11 +91,11 @@ namespace Root
 		static void flushDeferreds();
 
 		//* Serialisierung
-		/// Schreibe das Objekt vollständig, d.h. mit Start/End Frame
+		/// Schreibe das Objekt vollstÃ¤ndig, d.h. mit Start/End Frame
 		virtual bool write( ValueWriter&, AtomManager* ) const;
 		typedef Resource* (*ObjectCreator)(const char* className);
 		/// Lese nur den Inhalt des Objekts, d.h. Start/End Frame wird von Umgebung gelesen.
-		/// Aggregate benötigen ev. den ObjectCreator zum Erzeugen der richtigen Objekte.
+		/// Aggregate benÃ¶tigen ev. den ObjectCreator zum Erzeugen der richtigen Objekte.
 		virtual bool read( ValueReader&, AtomManager*, ObjectCreator = 0 );
 
 	protected:

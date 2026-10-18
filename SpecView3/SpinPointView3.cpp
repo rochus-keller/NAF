@@ -55,7 +55,7 @@ static const Points g_d = 2.0;	// Offset eines diag Kreuzsegments
 static const Points g_tol = 10.0;
 
 QFont SpinPointView3::s_defaultFont( "", 8 ); // Wenn Application::font().family oder Default-Constructor -> Probleme
-// Das Problem entsteht prim‰r dadurch, dass bei statischer Initialisierung QApplication::font() aufgerufen wird!
+// Das Problem entsteht prim√§r dadurch, dass bei statischer Initialisierung QApplication::font() aufgerufen wird!
 // besser Q_GLOBAL_STATIC_WITH_ARGS(QFont, s_font, ( QApplication::font().family(), 8 ) )
 
 static QColor s_posClr = Qt::cyan;
@@ -246,10 +246,10 @@ void SpinPointView3::paint( QPainter& painter )
             painter.setPen( QPen( clr, d_pw ) );
             if( d_peakColors == 0 )
             {
-                // Normalfall, zeichne Kreuz und Farben f¸r Ghosts
+                // Normalfall, zeichne Kreuz und Farben f√ºr Ghosts
                 if( aliasX || aliasY )
                 {
-                    // schr‰ges Kreuz
+                    // schr√§ges Kreuz
                     painter.drawLine( QPointF( x - g_d, y - g_d ), QPointF( x + g_d + 1.0, y + g_d + 1.0 ) );
                     painter.drawLine( QPointF( x - g_d, y + g_d ), QPointF( x + g_d + 1.0, y - g_d - 1.0 ) );
                 }else
@@ -265,7 +265,7 @@ void SpinPointView3::paint( QPainter& painter )
                 {
                     if( !e.isHigher() && !e.isLower() )
                     {
-                        // schr‰ges Kreuz
+                        // schr√§ges Kreuz
                         painter.drawLine( QPointF( x - g_d, y - g_d ), QPointF( x + g_d + 1.0, y + g_d + 1.0 ) );
                         painter.drawLine( QPointF( x - g_d, y + g_d ), QPointF( x + g_d + 1.0, y - g_d - 1.0 ) );
                     }else if( e.isHigher() )

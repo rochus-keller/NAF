@@ -93,13 +93,13 @@ void Fragmenter::rebuildAll()
 	typedef std::map<SpinSystem*,bool> Marker;
 	Marker strips;
 
-	// Fülle Strips mit allen vorhandenen StripIds.
+	// FÃ¼lle Strips mit allen vorhandenen StripIds.
 	const SpinBase::SpinSystemMap& sel = d_base->getSystems();
 	SpinBase::SpinSystemMap::const_iterator p1;
 	for( p1 = sel.begin(); p1 != sel.end(); ++p1 )
 		strips[ (*p1).second ] = false;	
 
-	// Gehe sequenziell durch gesamte Strip-Menge durch und ermittle für jede
+	// Gehe sequenziell durch gesamte Strip-Menge durch und ermittle fÃ¼r jede
 	// Position das Fragment, falls die nicht bereits true ist.
 	Fragment temp; // Temp. Fragment
 	SpinSystem* sys;
@@ -114,7 +114,7 @@ void Fragmenter::rebuildAll()
 		temp.clear();
 		temp.push_back( (*p2).first );
 
-		// Suche alle zum Fragment gehörigen Strips nach links.
+		// Suche alle zum Fragment gehÃ¶rigen Strips nach links.
 		sys = (*p2).first->getPred();
 		while( sys )
 		{
@@ -123,7 +123,7 @@ void Fragmenter::rebuildAll()
 			sys = sys->getPred();
 		}
 
-		// Suche alle zum Fragment gehörigen Strips nach rechts.
+		// Suche alle zum Fragment gehÃ¶rigen Strips nach rechts.
 		sys = (*p2).first->getSucc();
 		while( sys )
 		{
@@ -132,7 +132,7 @@ void Fragmenter::rebuildAll()
 			sys = sys->getSucc();
 		}
 
-		// Registriere das Fragment, falls Mindestlänge übersteigt.
+		// Registriere das Fragment, falls MindestlÃ¤nge Ã¼bersteigt.
 		addFragment( temp );
 	}
 }
@@ -174,17 +174,17 @@ void Fragmenter::handleLink(Index pred, Index succ)
 	// assert( pred.succ == nil && succ.pred == nil )
 	if( aaa == d_stripToFrag.end() && bbb == d_stripToFrag.end() )
 	{
-		// Weder Pred noch Succ Teil eines Fragments. Aus Konsistenzgründen muss es
+		// Weder Pred noch Succ Teil eines Fragments. Aus KonsistenzgrÃ¼nden muss es
 		// sich um eine ungebundene Stripkette handeln, d.h. keine Strips der
-		// Kette dürfen sich in d_stripToFrag befinden.
+		// Kette dÃ¼rfen sich in d_stripToFrag befinden.
 		Fragment frag;
 		fillFragment( frag, pred );
 		if( addFragment( frag ) )
 			notifyAdd( d_frags.size() - 1 ); 
 	}else if( aaa != d_stripToFrag.end() )
 	{
-		// aaa ist das C-Terminal eines bestehenden Fragments. Aus Konsistenzgründen
-		// dürfen bbb und alle daran gehängten Strips noch nicht in d_stripToFrag stehen.
+		// aaa ist das C-Terminal eines bestehenden Fragments. Aus KonsistenzgrÃ¼nden
+		// dÃ¼rfen bbb und alle daran gehÃ¤ngten Strips noch nicht in d_stripToFrag stehen.
 		Fragment frag;
 		frag.push_back( succ );
 		// Suche von succ aus nach rechts nach weiteren gelinkten Strips
@@ -197,14 +197,14 @@ void Fragmenter::handleLink(Index pred, Index succ)
 		// Registriere alle Strips des neuen Fragments
 		for( i = 0; i < frag.size(); i++ )
 			d_stripToFrag[ frag[ i ] ] = (*aaa).second;
-		// Füge neues Fragment an bestehendes an
+		// FÃ¼ge neues Fragment an bestehendes an
 		Fragment& f = d_frags[ (*aaa).second ];
 		f.insert( f.end(), frag.begin(), frag.end() );
 		notifyChange( (*aaa).second );
 	}else if( bbb != d_stripToFrag.end() )
 	{
-		// bbb ist das N-Terminal eines bestehenden Fragments. Aus Konsistenzgründen
-		// dürfen aaa und alle daran gehängten Strips noch nicht in d_stripToFrag stehen.
+		// bbb ist das N-Terminal eines bestehenden Fragments. Aus KonsistenzgrÃ¼nden
+		// dÃ¼rfen aaa und alle daran gehÃ¤ngten Strips noch nicht in d_stripToFrag stehen.
 		Fragment frag;
 		frag.push_back( pred );
 		// Suche von succ aus nach rechts nach weiteren gelinkten Strips
@@ -217,17 +217,17 @@ void Fragmenter::handleLink(Index pred, Index succ)
 		// Registriere alle Strips des neuen Fragments
 		for( i = 0; i < frag.size(); i++ )
 			d_stripToFrag[ frag[ i ] ] = (*bbb).second;
-		// Füge neues Fragment vor bestehendes ein
+		// FÃ¼ge neues Fragment vor bestehendes ein
 		Fragment& f = d_frags[ (*bbb).second ];
 		f.insert( f.begin(), frag.begin(), frag.end() );
 		notifyChange( (*bbb).second );
 	}else if( aaa != d_stripToFrag.end() && bbb != d_stripToFrag.end() )
 	{
 		// Pred- und Succ-Strip sind bereits Teil eines Fragments. Wegen der Konsistenz
-		// müssen sich die beiden Strips am Anfang oder Ende des Fragments befinden.
+		// mÃ¼ssen sich die beiden Strips am Anfang oder Ende des Fragments befinden.
 		assert( aaa != bbb ); // Fragment darf sich nicht schliessen.
-		// Pred und Succ sind in verschiedenen Fragmenten. Füge das Succ-Fragment
-		// ans Ende des Pred-Fragments und lösche dann dessen Fragmentnummer.
+		// Pred und Succ sind in verschiedenen Fragmenten. FÃ¼ge das Succ-Fragment
+		// ans Ende des Pred-Fragments und lÃ¶sche dann dessen Fragmentnummer.
 		const Fragment& frag = d_frags[ (*bbb).second ];
 		for( Index i = 0; i < frag.size(); i++ )
 			d_stripToFrag[ frag[ i ] ] = (*aaa).second;
@@ -242,8 +242,8 @@ void Fragmenter::handleLink(Index pred, Index succ)
 void Fragmenter::handleUnlink(Index pred, Index succ)
 {
 #ifdef _todo_
-	// Wegen Konsistenzbedingung müssen entweder pred und succ oder kein Strip
-	// in d_stripToFrag enthalten sein. Falls beide enthalten sind, müssen
+	// Wegen Konsistenzbedingung mÃ¼ssen entweder pred und succ oder kein Strip
+	// in d_stripToFrag enthalten sein. Falls beide enthalten sind, mÃ¼ssen
 	// beide im selben Fragment sein.
 	StripToFrag::const_iterator aaa = d_stripToFrag.find( pred );
 	if( aaa == d_stripToFrag.end() )
@@ -271,7 +271,7 @@ void Fragmenter::handleUnlink(Index pred, Index succ)
 		d_frags[ (*aaa).second ] = left; 
 		notifyChange( (*aaa).second );
 	}
-	// Das rechte Fragment wird selbständig
+	// Das rechte Fragment wird selbstÃ¤ndig
 	if( addFragment( right ) )
 		notifyAdd( d_frags.size() - 1 );
 	else
@@ -306,7 +306,7 @@ void Fragmenter::fillFragment(Fragment & frag, SpinSystem* sys)
 	frag.clear();
 	frag.push_back( sys );
 
-	// Suche alle zum Fragment gehörigen Strips nach links.
+	// Suche alle zum Fragment gehÃ¶rigen Strips nach links.
 	SpinSystem* i = sys->getPred();
 	while( i )
 	{
@@ -314,7 +314,7 @@ void Fragmenter::fillFragment(Fragment & frag, SpinSystem* sys)
 		i = i->getPred();
 	}
 
-	// Suche alle zum Fragment gehörigen Strips nach rechts.
+	// Suche alle zum Fragment gehÃ¶rigen Strips nach rechts.
 	i = sys->getSucc();
 	while( i )
 	{

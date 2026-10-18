@@ -78,7 +78,7 @@ static void sendTo( Glyph* g, Root::Message& msg )
 	while( target && !msg.isConsumed() )
 	{
 		target->traverse( msg );	// TODO: Kein Transport verwenden?
-		target = target->getOwner(); // Alle auf Rückweg bis done.
+		target = target->getOwner(); // Alle auf RÃ¼ckweg bis done.
 	}
 }
 
@@ -90,7 +90,7 @@ GlyphWidget::GlyphWidget(QWidget * parent1, bool transparent, bool owns ):
 	// Wer hat den Default-Focus?
 	setFocusPolicy( Qt::StrongFocus );
 
-	setAttribute( Qt::WA_KeyCompression, false ); // Wir wollen ein Event für jeden Key incl. Autorepeat.
+	setAttribute( Qt::WA_KeyCompression, false ); // Wir wollen ein Event fÃ¼r jeden Key incl. Autorepeat.
 	if( transparent )
 		setAutoFillBackground( false );
 
@@ -197,7 +197,7 @@ void GlyphWidget::keyReleaseEvent(QKeyEvent * e)
 
 void GlyphWidget::focusInEvent(QFocusEvent * e)
 {
-	// Wenn der Fokus kurzzeitig an ein Popup-Menü geht, soll deshalb der Fokus-Handler nicht ändern.
+	// Wenn der Fokus kurzzeitig an ein Popup-MenÃ¼ geht, soll deshalb der Fokus-Handler nicht Ã¤ndern.
 	if( e->reason() == Qt::PopupFocusReason )
 		return;
 	if( d_body->getFocus() )
@@ -319,7 +319,7 @@ bool GlyphWidget::event(QEvent * e)
 	{
 	case QEvent::KeyPress: 
 		{
-			// NOTE: wir müssen hier Tab und Shift-Tab abfangen, befor Qt sie sieht.
+			// NOTE: wir mÃ¼ssen hier Tab und Shift-Tab abfangen, befor Qt sie sieht.
 			// Andernfalls erhalten wir nie die Gelegenheit.
 
 			QKeyEvent *k = (QKeyEvent *)e;

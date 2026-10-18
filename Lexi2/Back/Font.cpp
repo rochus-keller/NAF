@@ -1,10 +1,10 @@
 /****************************************************************
-    Klassifizierung:    GESCHÄFTSGEHEIM
+    Klassifizierung:    GESCHÃ„FTSGEHEIM
     Modul:              
     Projekt:            GlyphWorks
     Owner-Unit:         Lexi2
 
-    Für Versionsinformationen wird auf Datei Lexi2.sud verwiesen.
+    FÃ¼r Versionsinformationen wird auf Datei Lexi2.sud verwiesen.
 
     Copyright (c) 1987, 1988, 1989, 1990, 1991 Stanford University
     Copyright (c) 1991 Silicon Graphics, Inc.
@@ -111,13 +111,13 @@ void Font::fillBox(Viewport*, const char* s,BoundingBox & b) const
 	}
 	b.d_fontAscent = P2C( m.ascent() );
 	b.d_fontDescent = P2C( m.descent() ) + 
-		TwipsPerPoint; // Ein zusätzlicher Point für Baseline.
+		TwipsPerPoint; // Ein zusÃ¤tzlicher Point fÃ¼r Baseline.
 }
 
 
 void Font::BoundingBox::request(Requisition & requisition)
 {
-	// Requisition umschliesst den gesamten Zeichenbereich, der Pixel enthält.
+	// Requisition umschliesst den gesamten Zeichenbereich, der Pixel enthÃ¤lt.
 	// Normalerweise ist alignment horizontal negativ, da Ursprung links
 	// des gemalten Bereichs liegt.
 	Requirement& rx = requisition.getRequirement( DimX );
@@ -130,11 +130,11 @@ void Font::BoundingBox::request(Requisition & requisition)
 	Coord rb = getRightBearing();
 	Coord w = getWidth();
 	if( rb < 0 )
-		w += -rb;	// zähle den w überragenden Teil dazu.
-		// den leeren Rand (rb > 0) könnte man eigentlich entfernen.
+		w += -rb;	// zÃ¤hle den w Ã¼berragenden Teil dazu.
+		// den leeren Rand (rb > 0) kÃ¶nnte man eigentlich entfernen.
 	if( lb < 0 )
 	{
-		lb = -lb;	// logischer Ursprung wird links von gemalten Pixeln überragt.
+		lb = -lb;	// logischer Ursprung wird links von gemalten Pixeln Ã¼berragt.
 		w += lb;
 	}else
 	{

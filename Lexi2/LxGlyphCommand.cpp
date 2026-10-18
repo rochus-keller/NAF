@@ -81,7 +81,7 @@ GlyphCommand::Result GlyphCommand::handleKeyRelease( KeyEvent& )
 
 void GlyphCommand::draw(Canvas &, const Allocation &)
 {
-	// NOP. Dient für visual Feedback.
+	// NOP. Dient fÃ¼r visual Feedback.
 }
 
 void GlyphCommand::startFeedback()

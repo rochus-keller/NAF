@@ -80,7 +80,7 @@ bool GlyphCommander::installCommand(GlyphCommand * cmd, Message* msg )
 	d_command = cmd;
 	if( msg )
 	{
-		// In jedem Fall True zurückgeben, da ja Event bereits mit der
+		// In jedem Fall True zurÃ¼ckgeben, da ja Event bereits mit der
 		// Auswahl des Commands konsumiert wurde.
 		feedCommand( *msg );
 		return true;

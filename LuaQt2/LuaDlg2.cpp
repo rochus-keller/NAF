@@ -371,7 +371,7 @@ static int require(lua_State *L)
 	Script* s = (*p).second;
 
 	if( s->isCompiled() )
-		return 0;	// Nur ausführen, wenn nicht bereits ausgeführt.
+		return 0;	// Nur ausfÃ¼hren, wenn nicht bereits ausgefÃ¼hrt.
 	int status = luaL_loadbuffer( L, s->getCode(), strlen( s->getCode() ), name );
 	if( status == 0 )
 	{
@@ -383,7 +383,7 @@ static int require(lua_State *L)
 		luaL_error( L, lua_tostring( L, -1) );
 	}
 	s->setCompiled();
-	// TODO: es soll package.loaded[modname] zurückgegeben werden
+	// TODO: es soll package.loaded[modname] zurÃ¼ckgegeben werden
 	return 0;
 }
 

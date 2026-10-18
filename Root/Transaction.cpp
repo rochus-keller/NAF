@@ -68,7 +68,7 @@ MakroTransaction::~MakroTransaction()
 
 void MakroTransaction::unexecute()
 {
-	// TODO: müsste man hier nicht in umgekehrter Richtung voranschreiten?
+	// TODO: mÃ¼sste man hier nicht in umgekehrter Richtung voranschreiten?
 	for( int pos = 0; pos < d_content.size(); ++pos )
 	{
 		if( d_content[pos]->hasUndo() )

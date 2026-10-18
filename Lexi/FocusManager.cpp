@@ -110,8 +110,8 @@ bool FocusManager::handle(const Allocation & a, GlyphTraversal & t)
 					if( current == d_children.size() - 1 )
 					{
 						current = 0;
-						// NOTE: wenn nicht circle schieben wir dennoch focus zum nächsten
-						// Glyph, da dieser beim nächsten GlyphWidget::focusIn den Fokus erhält.
+						// NOTE: wenn nicht circle schieben wir dennoch focus zum nÃ¤chsten
+						// Glyph, da dieser beim nÃ¤chsten GlyphWidget::focusIn den Fokus erhÃ¤lt.
 						bool res = t.getViewport()->setFocus( d_children[ current ] );
 						if( d_circle )
 							done = res;
@@ -145,7 +145,7 @@ bool FocusManager::handle(const Allocation & a, GlyphTraversal & t)
 					count--;
 				}
 			}
-			//if( !done )	// Unnötig wegen dem focusIn-Trick.
+			//if( !done )	// UnnÃ¶tig wegen dem focusIn-Trick.
 				//d_focus = 0;
 		} // Press Tab
 	} // KeyEvent

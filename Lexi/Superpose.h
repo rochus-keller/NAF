@@ -31,8 +31,8 @@
 namespace Lexi
 {
 	//* Superpose
-	//. Dies ist ein Layout, das aus bis zu fünf anderen Layouts durch Superposition
-	//. entsteht. Normalerweise werden zwei Layouts superponiert: eines für X und eines für Y.
+	//. Dies ist ein Layout, das aus bis zu fÃ¼nf anderen Layouts durch Superposition
+	//. entsteht. Normalerweise werden zwei Layouts superponiert: eines fÃ¼r X und eines fÃ¼r Y.
 
 	class Superpose : public Layout
 	{

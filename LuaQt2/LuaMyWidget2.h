@@ -38,7 +38,7 @@ namespace Lua
 		static int setAcceptFocus(lua_State *L);
 		LuaMyWidget2(QWidget* p):QWidget(p) 
 		{
-			setKeyCompression( false ); // Wir wollen ein Event für jeden Key incl. Autorepeat.
+			setKeyCompression( false ); // Wir wollen ein Event fÃ¼r jeden Key incl. Autorepeat.
 		}
 		~LuaMyWidget2()
 		{

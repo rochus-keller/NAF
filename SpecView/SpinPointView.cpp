@@ -248,7 +248,7 @@ void SpinPointView::draw( Canvas& v, const Lexi::Allocation& a)
 		{
             if( d_peakColors == 0 )
             {
-                // Normalfall, zeichne Kreuz und Farben für Ghosts
+                // Normalfall, zeichne Kreuz und Farben fÃ¼r Ghosts
                 if( alias )
                 {
                     c.drawLine( x - g_d, y - g_d, x + g_d + g_p - 20, y + g_d + g_p - 20, clr, d_pw );
@@ -265,7 +265,7 @@ void SpinPointView::draw( Canvas& v, const Lexi::Allocation& a)
                 {
                     if( !e.isHigher() && !e.isLower() )
                     {
-                        // schräges Kreuz
+                        // schrÃ¤ges Kreuz
                         c.drawLine( x - g_d, y - g_d, x + g_d + 20, y + g_d + 20, clr, d_pw );
                         c.drawLine( x - g_d, y + g_d, x + g_d + 20, y - g_d - 20, clr, d_pw );
                     }else if( e.isHigher() )

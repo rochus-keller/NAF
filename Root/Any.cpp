@@ -89,7 +89,7 @@ static const int g_sizes[] =
 };
 
 //. Die Typen mit true werden direkt in d_data gespeichert, d.h. ohne Daten zu alloziieren.
-//. Es sind dies ausschliesslich die Fixlängentypen mit Länge <= 4.
+//. Es sind dies ausschliesslich die FixlÃ¤ngentypen mit LÃ¤nge <= 4.
 static const bool g_direct[] =
 {
 	false,	// Null
@@ -468,7 +468,7 @@ void Any::setULong(Root::ULong d)
 void Any::setObject(Root::Resource * o, bool refcount )
 {
 	if( refcount )
-		Resource::addRef( o );	// Zuerst, falls man selbes Objekt zuordnet, es nicht zuerst gelöscht wird.
+		Resource::addRef( o );	// Zuerst, falls man selbes Objekt zuordnet, es nicht zuerst gelÃ¶scht wird.
     setWord( (quintptr)o );
 	if( refcount )
 		d_type = Any::Object;
@@ -503,15 +503,15 @@ Any& Any::operator<<=( Any & rhs)
 
 void Any::resize(Root::ULong size)
 {
-	// für target==direct wird resize immer mit 0 aufgerufen.
+	// fÃ¼r target==direct wird resize immer mit 0 aufgerufen.
 
 	if( d_type == Any::Object )
 		Resource::release( (Root::Resource*)getWord() );
 
 	if( g_direct[ d_type ] || sizeOf( d_type, d_data ) != size )
 	{
-		// Im Falle des Vorgängers von direct immer hierher, da sonst
-		// ev. für len(string)<4 kein data alloziiert wird.
+		// Im Falle des VorgÃ¤ngers von direct immer hierher, da sonst
+		// ev. fÃ¼r len(string)<4 kein data alloziiert wird.
 		if( d_data && !g_direct[ d_type ] )
 			Mem::free( d_data );
 		if( size > 0 ) // TODO: nur wenn neuer Type direct ist.
@@ -887,7 +887,7 @@ bool Any::parse(const char *value, Type t)
 	case Any::Xml:
 		setXml( value );
 		return true;
-	case Any::Literal:	// Literal wird in CStr verwandelt aus Sicherheitsgründen
+	case Any::Literal:	// Literal wird in CStr verwandelt aus SicherheitsgrÃ¼nden
 	case Any::CStr: 
 		setCStr( value );
 		return true;

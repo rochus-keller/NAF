@@ -224,7 +224,7 @@ bool ResidueBase::read(const char* path, Repository* rep )
 
 struct _StatsLine 
 {
-	// Eine reguläre Zeile ist 76 Zeichen lang.
+	// Eine regulÃ¤re Zeile ist 76 Zeichen lang.
 	int d_line;
 	QByteArray  d_rt;
 	QByteArray  d_label;
@@ -282,7 +282,7 @@ static _StatsLine* readFile( const char* path, QByteArray & err )
 	{
 		if( res >=76 && res <= 78 )
 		{
-			// Es handelt sich um eine reguläre Zeile.
+			// Es handelt sich um eine regulÃ¤re Zeile.
 			str = QByteArray ( buf, 7 ).data();
 			tmp.d_rt = str.stripWhiteSpace().toLatin1();
 			str = QByteArray ( buf + 8, 8 ).data();

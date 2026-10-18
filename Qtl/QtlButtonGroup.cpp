@@ -58,7 +58,7 @@ int ButtonGroup::buttons(lua_State * L) // const : QList<QAbstractButton *>
 		Util::push( L, i + 1 );
 		ObjectHelper<QAbstractButton>::create( L, r[i], true );
         ObjectPeer::pinPeer( L, -1 );
-        // Pinne sofort, damit der GC nicht Button mitlöscht
+        // Pinne sofort, damit der GC nicht Button mitlÃ¶scht
         lua_rawset( L, t );
 	}
 	return r.size();

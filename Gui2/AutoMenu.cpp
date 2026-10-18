@@ -28,8 +28,8 @@
 using namespace Gui2;
 
 // Wir verwenden nicht direkt UiFunction selber als Shortcut, da diese mit setEnabled(false) gleich
-// auch den Shortcut deaktiviert und wir somit bei Betätigung des Shortcut nicht mehr prüfen können,
-// ob der Befehl verfügbar ist, sobald das Item einmal als deaktiviert erkannt wurde.
+// auch den Shortcut deaktiviert und wir somit bei BetÃ¤tigung des Shortcut nicht mehr prÃ¼fen kÃ¶nnen,
+// ob der Befehl verfÃ¼gbar ist, sobald das Item einmal als deaktiviert erkannt wurde.
 class AutoMenuShortcut : public QShortcut
 {
 public:
@@ -44,7 +44,7 @@ public:
     }
     bool event(QEvent *e)
     {
-        // QShortcut wird vom System über diesen Event benachtrichtigt und ruft dann
+        // QShortcut wird vom System Ã¼ber diesen Event benachtrichtigt und ruft dann
         // triggered auf.
         if( e->type() == QEvent::Shortcut )
         {
@@ -89,7 +89,7 @@ AutoMenu::AutoMenu(const QString& title, QWidget *parent, bool addMenuBar)
 
 void AutoMenu::onShow()
 {
-	// Gehe durch alle Actions und löse einen Update-Cycle aus
+	// Gehe durch alle Actions und lÃ¶se einen Update-Cycle aus
 	QList<QAction*> l = actions();
 	foreach( QAction* a, l )
 	{
@@ -138,7 +138,7 @@ static QWidget* _climbToNonMenu( QObject* o )
 
 static void _setShortCut( UiFunction* f, const QKeySequence & s, bool createShortcut )
 {
-    f->setShortcut( s ); // Damit Shortcut in jedem Fall im Menü angezeigt wird.
+    f->setShortcut( s ); // Damit Shortcut in jedem Fall im MenÃ¼ angezeigt wird.
     if( !s.isEmpty() && createShortcut )
     {
         f->setShortcutContext( Qt::WidgetShortcut  );   // damit keine Mehrdeutigkeit mit AutoMenuShortcut
@@ -158,7 +158,7 @@ QAction* AutoMenu::addAutoCommand( const QString& text, const char* member,
     UiFunction* a = new NamedFunction( text, member, this );
 	addAction( a );
     _setShortCut( a, s, addAutoShortcut || d_noPopup );
-    // nur bei Popups soll es möglich sein, dass kein AutoMenuShortcut erzeugt wird.
+    // nur bei Popups soll es mÃ¶glich sein, dass kein AutoMenuShortcut erzeugt wird.
 	return a;
 }
 

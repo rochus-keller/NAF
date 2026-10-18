@@ -35,9 +35,9 @@ namespace Lexi2
 {
 	//* CommandLine
 	//. Dies ist ein generischer Command-Interpreter, der von irgendwoher
-	//. Tastatureingaben erhält, diese mit einer konfigurierbaren Liste
+	//. Tastatureingaben erhÃ¤lt, diese mit einer konfigurierbaren Liste
 	//. von Commands vergleicht und die Commands allenfalls feuert.
-	//. Ähnlich einsetzbar wie Handler (in InputHandler, Redirector, etc.).
+	//. Ã„hnlich einsetzbar wie Handler (in InputHandler, Redirector, etc.).
 
 	class CommandLine : public QObject
 	{
@@ -72,7 +72,7 @@ namespace Lexi2
 		void writeCommand();
 		bool nextParam();
 		bool interpretParam();
-		Commands d_commands; // Klasse hat Ownership und löscht die Commands am Schluss.
+		Commands d_commands; // Klasse hat Ownership und lÃ¶scht die Commands am Schluss.
 
 		enum State { Idle, ReadSymbol, ReadParam } d_state;
 		Root::ActionCommand* d_current;
@@ -81,7 +81,7 @@ namespace Lexi2
 		bool d_active;
 		//. Entscheidet, ob der Interpreter Tastatureingaben entgegennimmt.
 		bool d_caseSensitive;
-		//. Entscheidet, ob Case für Matching gegen Commands von Bedeutung ist.
+		//. Entscheidet, ob Case fÃ¼r Matching gegen Commands von Bedeutung ist.
 	};
 }
 

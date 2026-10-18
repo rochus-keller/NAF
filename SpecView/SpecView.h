@@ -48,8 +48,8 @@ namespace Spec
 	//* SpecView
 	//. Dies ist eine View, die im SpecViewer dargestellt wird.
 	//. Der Viewer kann beliebig viele gestapelte Views enthalten.
-	//. Diese übermalen sich von vorne nach hinten, d.h. nur die vorderste
-	//. ist vollständig sichtbar.
+	//. Diese Ã¼bermalen sich von vorne nach hinten, d.h. nur die vorderste
+	//. ist vollstÃ¤ndig sichtbar.
 
 	class SpecView : public Glyph 
 	{

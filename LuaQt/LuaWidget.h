@@ -34,7 +34,7 @@
 namespace Spec
 {
 	// LuaWidgetPeer wird von Lua alloziiert und dealloziiert. Es wird dem
-	// übergebenen Object als Subobject namens "__data" eingefügt.
+	// Ã¼bergebenen Object als Subobject namens "__data" eingefÃ¼gt.
 
 	class LuaWidgetPeer : public QObject
 	{
@@ -54,7 +54,7 @@ namespace Spec
 		int destroy(lua_State *L);
 		int pushPeer( lua_State* );
 
-		LuaWidgetPeer(QObject*, lua_State* = 0); // State ist nun überflüssig, da Singleton.
+		LuaWidgetPeer(QObject*, lua_State* = 0); // State ist nun Ã¼berflÃ¼ssig, da Singleton.
 		virtual ~LuaWidgetPeer();
 		void* operator new( size_t );
 		void* operator new( size_t, void* );
@@ -75,7 +75,7 @@ namespace Spec
 		void unthis();
 	};
 
-// RISK: folgende Zeilen müssen als Unix-File gespeichert werden, sonst GCC-Fehler
+// RISK: folgende Zeilen mÃ¼ssen als Unix-File gespeichert werden, sonst GCC-Fehler
 #define DECLARE_WIDGET( _class, _host )  \
 static const char s_className[]; \
 static PeerHelper<_class>::MethodSlot s_methods[]; \

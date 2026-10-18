@@ -208,7 +208,7 @@ int TextEdit::setDocument(lua_State * L) // ( QTextDocument * document )
 	QTextEdit* obj = QtObject<QTextEdit>::check( L, 1);
 	QTextDocument* document = QtObject<QTextDocument>::check( L, 2 );
 	if( obj->document() && obj->document()->parent() == obj )
-		obj->document()->deleteLater(); // QT-BUG: QTextEdit::setDocument löscht das alte sonst nicht
+		obj->document()->deleteLater(); // QT-BUG: QTextEdit::setDocument lÃ¶scht das alte sonst nicht
 	obj->setDocument( document );
 	return 0;
 }/*

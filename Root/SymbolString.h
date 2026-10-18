@@ -32,11 +32,11 @@
 namespace Root
 {
 	//* SymbolString
-	//. Value-Object. Repräsentiert einen "immutable" String, d.h. einer,
-	//. der nach seiner Erzeugung nicht mehr geändert wird. Ein neuer
+	//. Value-Object. ReprÃ¤sentiert einen "immutable" String, d.h. einer,
+	//. der nach seiner Erzeugung nicht mehr geÃ¤ndert wird. Ein neuer
 	//. String wird wenn vorhanden auf einen gleichlautenden bestehenden
-	//. abgebildet. Zeichenkettenvergleiche erübrigen sich daher, es muss
-	//. nur die Adresse auf Gleichheit geprüft werden.
+	//. abgebildet. Zeichenkettenvergleiche erÃ¼brigen sich daher, es muss
+	//. nur die Adresse auf Gleichheit geprÃ¼ft werden.
 
 	class SymbolString  
 	{
@@ -58,7 +58,7 @@ namespace Root
 		bool operator!=( const SymbolString& rhs ) const { return d_str != rhs.d_str; }
 		bool operator==( const char* rhs ) const { return d_str == getAtom( rhs ); }
 		bool operator!=( const char* rhs ) const { return d_str != getAtom( rhs ); }
-		// RISK: da STL diesen Operator für map und set benötigt, muss hier Adresse 
+		// RISK: da STL diesen Operator fÃ¼r map und set benÃ¶tigt, muss hier Adresse 
 		// verglichen werden, ansonsten Vorteil weg. Stringvergleich mit getString() und <.
 		operator const char*() const { return d_str; }
 		operator const QByteArray () const { return d_str; }

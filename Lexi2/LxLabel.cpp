@@ -48,7 +48,7 @@ void Label::request( Requisition& requisition)
 	}
 	Requirement& rx = requisition.getRequirement( DimX );
 	Requirement& ry = requisition.getRequirement( DimY );
-	// Es schadet nichts, das Label zu vergrössern oder zu verkleinern
+	// Es schadet nichts, das Label zu vergrÃ¶ssern oder zu verkleinern
 	rx.setStretch( CoordMax );
 	rx.setShrink( rx.getNatural() ); // RISK
 	// TEST ry.setStretch( CoordMax );

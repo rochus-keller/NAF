@@ -31,7 +31,7 @@ namespace Root
 {
 	//* UpstreamFilter
 	//. Dieses Filter unterbindet den Message-Traversal von unten nach oben.
-	//. Dazu wird traverseUp() überschrieben.
+	//. Dazu wird traverseUp() Ã¼berschrieben.
 
 	class UpstreamFilter : public Agent
 	{

@@ -72,13 +72,13 @@ namespace Spec
 		SpinLabel d_name; 
 		//. Rolle (z.B. HA). Muss unique sein innerhalb ResidueType. Eigentlich Tag.
 		Atoms d_atoms;	
-		//. Liste aller über Bonds verbundenen Nachbaratomen oder aller Gruppenmitglieder
+		//. Liste aller Ã¼ber Bonds verbundenen Nachbaratomen oder aller Gruppenmitglieder
 		AtomType d_type;
-		Types d_types; // Alternative Typen abhängig von LabelingScheme
+		Types d_types; // Alternative Typen abhÃ¤ngig von LabelingScheme
 		//. Bei AtomGroup ist d_type.isNone();
 		ResidueType* d_owner;
 
-		mutable bool d_mark;		// Hilfe für Suchalgorithmus 
+		mutable bool d_mark;		// Hilfe fÃ¼r Suchalgorithmus 
 	};
 
 	class Atom : public MetaAtom
@@ -110,7 +110,7 @@ namespace Spec
 		friend class NmrExperiment;	// Wegen Neighbours
 
 		DisPar d_dp;
-		Root::UInt16 d_num;	// Anzahl effektiver Atome (z.B. für QB mit 3 Hs)
+		Root::UInt16 d_num;	// Anzahl effektiver Atome (z.B. fÃ¼r QB mit 3 Hs)
 		Root::UInt8 d_x, d_y;	// Position auf einem Raster von 256 x 256 Feldern
 		AtomGroup* d_group; // Keine Ownership
 	};
@@ -245,7 +245,7 @@ namespace Spec
 						  int depth, SpinLabelSet& res, bool withGroup, DisPar dp );
 		Selection findNeighbours( Root::SymbolString start, 
 			AtomType = AtomType(), bool withGroup = true, DisPar = DisPar() ) const;
-		// AtomType::None bedeutet grundsätzlich alle Nachbarn
+		// AtomType::None bedeutet grundsÃ¤tzlich alle Nachbarn
 
 		ResidueType* getMinusOne() const;
 		ResidueType* getPlusOne() const;

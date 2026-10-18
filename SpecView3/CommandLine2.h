@@ -32,9 +32,9 @@ namespace Spec
 {
 	//* CommandLine
 	//. Dies ist ein generischer Command-Interpreter, der von irgendwoher
-	//. Tastatureingaben erhält, diese mit einer konfigurierbaren Liste
+	//. Tastatureingaben erhÃ¤lt, diese mit einer konfigurierbaren Liste
 	//. von Commands vergleicht und die Commands allenfalls feuert.
-	//. Ähnlich einsetzbar wie Handler (in InputHandler, Redirector, etc.).
+	//. Ã„hnlich einsetzbar wie Handler (in InputHandler, Redirector, etc.).
 
 	class CommandLine2 : public QObject
 	{
@@ -95,7 +95,7 @@ namespace Spec
 		bool interpretParam();
         void printToLog();
         void printToLog( const Command *cmd );
-		Commands d_commands; // Klasse hat Ownership und löscht die Commands am Schluss.
+		Commands d_commands; // Klasse hat Ownership und lÃ¶scht die Commands am Schluss.
 
 		enum State { Idle, ReadSymbol, ReadParam } d_state;
         const Command* d_cur;
@@ -104,7 +104,7 @@ namespace Spec
 		bool d_active;
 		//. Entscheidet, ob der Interpreter Tastatureingaben entgegennimmt.
 		bool d_caseSensitive;
-		//. Entscheidet, ob Case für Matching gegen Commands von Bedeutung ist.
+		//. Entscheidet, ob Case fÃ¼r Matching gegen Commands von Bedeutung ist.
 	};
 }
 

@@ -87,7 +87,7 @@ int LuaRepository::getProject(lua_State *L)
 	int n = lua_gettop(L);  /* number of arguments */
 	if( n == 0 && obj()->getProjects().size() == 1 )
 	{
-		// Abkürzung, wenn eindeutig
+		// AbkÃ¼rzung, wenn eindeutig
 		PeerHelper<LuaProject>::instance( L, (*obj()->getProjects().begin()).second.deref() );
 		return 1;
 	}

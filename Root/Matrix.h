@@ -74,7 +74,7 @@ namespace Root
 		Range( const Range& r ):IndexPair( r ) {}
 		bool isParallel() const { return second >= first; }
 		Index getWidth() const { return Math::_abs( second - first ) + 1; }
-		// Anzahl enthaltener Zellen (+1, da second einen gültigen Index enthält).
+		// Anzahl enthaltener Zellen (+1, da second einen gÃ¼ltigen Index enthÃ¤lt).
 		Index getSign() const { return (second >= first)?1.0:-1.0; }
 		bool contains( Index p ) const
 		{
@@ -106,8 +106,8 @@ namespace Root
 		// Ehemals Range
 		// Dies ist ein kubischer Bereich innerhalb einer mehrdim. Matrix.
 		// Der Bereich wird in jeder Dimension von first bis und mit
-		// second abgedeckt, der letzte gültige Index ist somit second.
-		// first entspricht dem kleineren und second dem grösseren Index.
+		// second abgedeckt, der letzte gÃ¼ltige Index ist somit second.
+		// first entspricht dem kleineren und second dem grÃ¶sseren Index.
 	public:
 #ifdef _DEBUG
 		void dump( const char* title ) const;

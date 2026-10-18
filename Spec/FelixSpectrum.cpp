@@ -230,7 +230,7 @@ void FelixSpectrum::readParams()
 		if( data_size[ i ] <= 0.0 )
 			throw Root::Exception( "Invalid number of samples <= 0.0" );
 
-		// vor 1.9.1; verworfen zu Gunsten nachfolgender Lösungen von Sparky und Yingang Feng:
+		// vor 1.9.1; verworfen zu Gunsten nachfolgender LÃ¶sungen von Sparky und Yingang Feng:
 //		if( g_useXeasyN )
 //		{
 //			const double delta = w[ i ] / double( data_size[ i ] );

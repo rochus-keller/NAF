@@ -100,7 +100,7 @@ namespace Gui
         QModelIndex parent(const QModelIndex & index ) const
         {
             if( !index.isValid() )
-                return QModelIndex(); // Dürfte gar nicht vorkommen
+                return QModelIndex(); // DÃ¼rfte gar nicht vorkommen
             ListViewItem* i = getItem( index );
             if( i->parent() )
             {

@@ -73,7 +73,7 @@ namespace Lexi
 	//. Dies ist gleichzeitig ein Agent in der PAC-Hierarchie und eine Presentation.
 	//. Zudem ist diese Klasse eine Kapselung von Qt. Da von QMainWindow protected
 	//. geerbt wird, ist Qt ausserhalb der Klasse nicht sichtbar. Alles Qt-spezifische
-	//. muss im Konstruktor der abgeleiteten Klassen installiert werden (Widgets, Menüs, etc.).
+	//. muss im Konstruktor der abgeleiteten Klassen installiert werden (Widgets, MenÃ¼s, etc.).
 
 	class MainWindow : public Root::Agent
 	{
@@ -91,7 +91,7 @@ namespace Lexi
 			friend class MainWindow;
 		};
 
-		bool closeIfPossible(); // Ruft runter. Gibt true zurück wenn geschlossen
+		bool closeIfPossible(); // Ruft runter. Gibt true zurÃ¼ck wenn geschlossen
 
 		void showStatusBar( bool on );
 		//. Stellt die Anzeige des Statusbars ein oder aus.

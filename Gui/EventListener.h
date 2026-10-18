@@ -26,8 +26,8 @@
 namespace Gui
 {
 	/// Diese Klasse dient dazu, das Event-Handling aus einem Widget auszulagern bzw.
-	/// an einen unabhängigen Controller zu delegieren, so dass Widget nicht direkt 
-	/// vererbt werden muss. Damit kann ein gewöhnliches Widget als View/Controller-Host
+	/// an einen unabhÃ¤ngigen Controller zu delegieren, so dass Widget nicht direkt 
+	/// vererbt werden muss. Damit kann ein gewÃ¶hnliches Widget als View/Controller-Host
 	/// verwendet und die ganze Arbeit an ein oder mehrere EventListener delegiert werden.
 	class EventListener : public Reactor
 	{

@@ -98,14 +98,14 @@ void ViewAreaMdl::allocate(const Allocation& a)
 	{
 		if( d_inUse[ DimX ] && changed[ DimX ] && !d_autoZoom[ DimX ] )
 		{
-			// Fenster‰nderung ohne AutoZoom: sichtbarer Spektrenausschnitt ‰ndert
-			// X-Richtung nachf¸hren, so dass sich Position des Spektrums nicht ‰ndert
+			// Fenster√§nderung ohne AutoZoom: sichtbarer Spektrenausschnitt √§ndert
+			// X-Richtung nachf√ºhren, so dass sich Position des Spektrums nicht √§ndert
 			// TODO
 		}
 		if( d_inUse[ DimY ] && changed[ DimY ] && !d_autoZoom[ DimY ] )
 		{
-			// Fenster‰nderung ohne AutoZoom: sichtbarer Spektrenausschnitt ‰ndert
-			// Y-Richtung nachf¸hren, so dass sich Position des Spektrums nicht ‰ndert
+			// Fenster√§nderung ohne AutoZoom: sichtbarer Spektrenausschnitt √§ndert
+			// Y-Richtung nachf√ºhren, so dass sich Position des Spektrums nicht √§ndert
 			// TODO
 		}
 
@@ -113,14 +113,14 @@ void ViewAreaMdl::allocate(const Allocation& a)
 
 		if( !d_autoZoom[ DimX ] || !d_autoZoom[ DimY ] )
 		{
-			// Die Fenstergrˆsse hat ge‰ndert, der Zoom bleibt aber konstant, es
+			// Die Fenstergr√∂sse hat ge√§ndert, der Zoom bleibt aber konstant, es
 			// musste daher der sichtbare PpmRange angepasst werden.
 			UpdRange m( this, d_inUse[ DimX ] && !d_autoZoom[ DimX ], d_inUse[ DimY ] && !d_autoZoom[ DimY ] ) ;
 			notifyObservers( m );
 		}
 		if( d_autoZoom[ DimX ] || d_autoZoom[ DimY ] )
 		{
-			// Die Fenstergrˆsse hat ge‰ndert, der Zoom ‰ndert mit dieser, der
+			// Die Fenstergr√∂sse hat ge√§ndert, der Zoom √§ndert mit dieser, der
 			// sichtbare PpmRange ist derselbe, aber der TwipPerPpm wurde angepasst
 			UpdZoom m( this, d_inUse[ DimX ] && d_autoZoom[ DimX ] && changed[ DimX ],
 							d_inUse[ DimY ] && d_autoZoom[ DimY ] && changed[ DimY ] );
@@ -143,7 +143,7 @@ void ViewAreaMdl::setRange(const PpmRange &x, const PpmRange &y, bool notify )
 		change = true;
 	}
 
-	// NOTE: Damit wird potentiell Zoom und Origin ver‰ndert.
+	// NOTE: Damit wird potentiell Zoom und Origin ver√§ndert.
 
 	if( d_model == 0 && notify && change )
 	{
@@ -209,7 +209,7 @@ void ViewAreaMdl::centerPoint(PPM x, PPM y)
 		}
 	}
 
-	// NOTE: Damit wird potentiell Zoom und Origin ver‰ndert.
+	// NOTE: Damit wird potentiell Zoom und Origin ver√§ndert.
 
 	if( d_model == 0 )
 	{
@@ -236,7 +236,7 @@ void ViewAreaMdl::centerPointDim(Dimension d, PPM v)
 		}
 	}
 
-	// NOTE: Damit wird potentiell Zoom und Origin ver‰ndert.
+	// NOTE: Damit wird potentiell Zoom und Origin ver√§ndert.
 
 	if( d_model ) 
 	{

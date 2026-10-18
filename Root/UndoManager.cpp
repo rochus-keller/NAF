@@ -22,8 +22,8 @@
 #include <stdio.h>
 using namespace Root;
 
-// TODO: die Stacks sollten nicht unendlich gross werden und über einen
-//		 Überlauf verfügen. Ev. benötigen wir für Redo nur eine Variable statt Stack.
+// TODO: die Stacks sollten nicht unendlich gross werden und Ã¼ber einen
+//		 Ãœberlauf verfÃ¼gen. Ev. benÃ¶tigen wir fÃ¼r Redo nur eine Variable statt Stack.
 
 UndoManager::UndoManager(Agent* parent, Index max):
 	Agent( parent ), d_max( max )

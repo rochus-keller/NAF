@@ -34,8 +34,8 @@ namespace Spec
 	//* AtomType
 	//. Die "Atomfarbe" umfasst potentiell das ganze Periodensystem. Im NMR sind
 	//. C, N und H relevant (bzw. in den jeweiligen Isotopen). Aber es gibt auch
-	//. andere Atome in Aminosäuren bzw. anderen interessanten Molekülen.
-	//. Die verwendeten PPM-Werte sind nur für NMR-Anwendungen sinnvoll.
+	//. andere Atome in AminosÃ¤uren bzw. anderen interessanten MolekÃ¼len.
+	//. Die verwendeten PPM-Werte sind nur fÃ¼r NMR-Anwendungen sinnvoll.
 
 	class AtomType 
 	{
@@ -75,7 +75,7 @@ namespace Spec
 		static Isotope parse( const char* label, PPM, bool insens = false );
 		//. Ermittle den Typ aufgrund Label und optional min und max.
 		//. Wenn Label fehlt, sollte zumindest aufgrund min und max auf
-		//. den Skalentyp geschlossen werden können.
+		//. den Skalentyp geschlossen werden kÃ¶nnen.
 		static PPM getStdTolerance( AtomType );
 
 		static const char* s_labels[];
@@ -92,7 +92,7 @@ namespace Spec
 
 	extern Rotation createRotation( const ColorMap& view, const ColorMap& spec );
 	//. Versuche eine Rotation zu berechnen nur aufgrund der Atomfarben.
-	//. Wenn Abbildung nicht möglich, wird leere Rotation zurückgegeben.
+	//. Wenn Abbildung nicht mÃ¶glich, wird leere Rotation zurÃ¼ckgegeben.
 	//. z.B. Abbildung Peaklist (spec) auf Spektrum (view). Die Rotation ist dann
 	//. aus Sicht von Spektrum: Dim Peaklist = rot[ Dim Spectrum ]
 	//. z.B. View x=H, y=C, z=N auf Spec H/N/C gibt rot[ 0,2,1 ]

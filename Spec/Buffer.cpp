@@ -81,7 +81,7 @@ void Buffer::calcMean(Amplitude & negative, Amplitude & positive) const
 	double nv = 0, pv = 0;
 	Sample nc = 1, pc = 1;
 	const Cells& c = getRawData();
-	// TODO: effizienter und Überlauf verhindern
+	// TODO: effizienter und Ãœberlauf verhindern
 	for( Sample i = 0; i < c.size(); i++ )
 	{
 		if( c[ i ] >= 0 )
@@ -126,7 +126,7 @@ void Buffer::insert(const Buffer & buf)
 
 	Sample a, b;
 	Cube roi( dim ); // Region of Interest.
-	/* const */ Point flip;	// Target-Achse verläuft parallel oder antiparallel
+	/* const */ Point flip;	// Target-Achse verlÃ¤uft parallel oder antiparallel
 	/* const */ Point flipOff; // Arithmetischer Trick um Achse zu drehen
 	for( d = 0; d < dim; d++ )
 	{ 
@@ -135,7 +135,7 @@ void Buffer::insert(const Buffer & buf)
 		roi[ d ].first = Math::min( a, b );
 		roi[ d ].second = Math::max( a, b );
 
-		// a, b sind Samples. Diese müssen per Definition first<second sein.
+		// a, b sind Samples. Diese mÃ¼ssen per Definition first<second sein.
 		if( a > b )	
 		{
 			flip.push_back( -1 );
@@ -160,8 +160,8 @@ void Buffer::insert(const Buffer & buf)
 		const Index off1 = roi.getFirst().getIndex( d_ext ); // Startindex relativ this Buffer
 		Index off2;
 		Index off3;
-		// TODO: aus irgendwelchen Gründen ist ext grösser als roi. Dadurch out of bounds.
-		// Dies dürfte eigentlich nicht passieren. Fehler vermutlich beim Füllen von buf.
+		// TODO: aus irgendwelchen GrÃ¼nden ist ext grÃ¶sser als roi. Dadurch out of bounds.
+		// Dies dÃ¼rfte eigentlich nicht passieren. Fehler vermutlich beim FÃ¼llen von buf.
 		const Index max1 = Math::min( buf.d_ext[ 1 ], roi[ 1 ].second - roi[ 1 ].first + 1 );
 		const Index max2 = Math::min( buf.d_ext[ 0 ], roi[ 0 ].second - roi[ 0 ].first + 1 );
 		/*
@@ -181,7 +181,7 @@ void Buffer::insert(const Buffer & buf)
 			// Adresse des Riemens j in this Buffer
 			off2 = off1 + d_ext[ 0 ] * j; 
 			// Adresse des Riemens j in buf. Mit flip/Off wird Ausleserichtung bei
-			// Bedarf gedreht, d.h. buf wird rückwärts ausgelesen.
+			// Bedarf gedreht, d.h. buf wird rÃ¼ckwÃ¤rts ausgelesen.
 			off3 = buf.d_ext[ 0 ] * ( flip[ 1 ] * j + flipOff[ 1 ] ); 
 			for( Index i = 0; i < max2; i++ )
 			{
@@ -220,8 +220,8 @@ void Buffer::resample(const Extension & e, bool interpolate )
 	assert( e.size() == dim );
 	if( dim == 2 )
 	{
-		// Skaliere nur, wenn die Anzahl Samples grösser als die in e geforderte
-		// Auflösung. Verzichte ganz darauf, wenn beide Dim nicht erfüllt.
+		// Skaliere nur, wenn die Anzahl Samples grÃ¶sser als die in e geforderte
+		// AuflÃ¶sung. Verzichte ganz darauf, wenn beide Dim nicht erfÃ¼llt.
 		// TEST if( e[ DimX ] >= d_ext[ DimX ] && e[ DimY ] >= d_ext[ DimY ] )
 			// return;
 		// TODO: not interpolate
@@ -405,8 +405,8 @@ void Buffer::insert(const Buffer &src, const Cube &wo)
 	Dimension d;
 	const Dimension dim = getDimCount();
 
-	Cube to( dim ); // Koordinaten wo in diesem Buffer src eingefügt werden soll
-	/* const */ Point flip;	// Target-Achse verläuft parallel oder antiparallel
+	Cube to( dim ); // Koordinaten wo in diesem Buffer src eingefÃ¼gt werden soll
+	/* const */ Point flip;	// Target-Achse verlÃ¤uft parallel oder antiparallel
 	/* const */ Point flipOff; // Arithmetischer Trick um Achse zu drehen
 	for( d = 0; d < dim; d++ )
 	{ 
@@ -445,7 +445,7 @@ void Buffer::insert(const Buffer &src, const Cube &wo)
 			// Adresse des Riemens j in this Buffer
 			off2 = off1 + d_ext[ 0 ] * j; 
 			// Adresse des Riemens j in src. Mit flip/Off wird Ausleserichtung bei
-			// Bedarf gedreht, d.h. src wird rückwärts ausgelesen.
+			// Bedarf gedreht, d.h. src wird rÃ¼ckwÃ¤rts ausgelesen.
 			off3 = src.d_ext[ 0 ] * ( flip[ 1 ] * j + flipOff[ 1 ] ); 
 			for( Index i = 0; i < max2; i++ )
 			{
@@ -488,7 +488,7 @@ void Buffer::calcMeanMinMax(Amplitude &negative, Amplitude &positive,
 	double nv = 0, pv = 0;
 	Sample nc = 1, pc = 1;
 	const Cells& c = getRawData();
-	// TODO: effizienter und Überlauf verhindern
+	// TODO: effizienter und Ãœberlauf verhindern
 	if( c.empty() )
 		minimum = maximum = 0;
 	else

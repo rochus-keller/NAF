@@ -83,7 +83,7 @@ static int openDocument( lua_State* L )
 	{
 		f.close();
 		luaL_error( L, "Error parsing XML document: syntax errors" );
-		// TODO: vernünftige Fehlermeldung
+		// TODO: vernÃ¼nftige Fehlermeldung
 	}
 	f.close();
 	return 1;
@@ -108,7 +108,7 @@ static int parseDocument( lua_State* L )
 	if( !doc->d_obj.setContent( QByteArray( luaL_checkstring( L, 1 ) ) ) )
 	{
 		luaL_error( L, "Error parsing XML document: syntax errors" );
-		// TODO: vernünftige Fehlermeldung
+		// TODO: vernÃ¼nftige Fehlermeldung
 	}
 	return 1;
 }
@@ -316,7 +316,7 @@ int LuaDomElement::createText(lua_State *L)
 int LuaDomElement::createElement(lua_State *L)
 {
 	// Param: Name
-	// Erzeugt ein neues Element und fügt es ans Ende der Liste
+	// Erzeugt ein neues Element und fÃ¼gt es ans Ende der Liste
 	QDomDocument doc = d_obj.ownerDocument();
 	LuaDomElement* e = PeerHelper<LuaDomElement>::instance( L );
 	e->d_obj = doc.createElement( luaL_checkstring( L, 1 ) );

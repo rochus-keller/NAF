@@ -34,7 +34,7 @@ extern "C"
     /// Setzt den lokalen Data-Table von User-Object an objindex auf pre und poppt table.
     /// Stack pre: table / post: -
     LUA_API int   (lua_setdatatable) (lua_State *L, int objindex);
-    /// Setzt das userdata auf den Stack. RISK: Keine Prüfung, ob wirklich UserData.
+    /// Setzt das userdata auf den Stack. RISK: Keine PrÃ¼fung, ob wirklich UserData.
     /// Stack pre: - / post: object
     LUA_API void  (lua_pushuserdata) (lua_State *L, void* userdata );
 }

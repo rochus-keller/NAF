@@ -50,12 +50,12 @@ namespace Lexi2
 	private:
 		QImage d_image;
 		float d_twipPerPixel[ MaxDim ];
-		//. Vergrösserungsfaktor in beide Achsenrichtungen.
+		//. VergrÃ¶sserungsfaktor in beide Achsenrichtungen.
 	};
 
 	//. Note: wenn man QPixmap statt QImage verwendet, ist zwar der Bildschirmaufbau
 	//.		  schneller, jedoch lassen sich die Farben nicht mehr verstellen (selbst
-	//.		  wenn man das Pixmap temporär in ein Image konvertiert).
+	//.		  wenn man das Pixmap temporÃ¤r in ein Image konvertiert).
 }
 
 #endif // !defined(AFX_IMAGE_H__A2777EC1_FE86_11D4_B847_00D00918E99C__INCLUDED_)

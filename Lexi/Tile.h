@@ -31,8 +31,8 @@
 namespace Lexi
 {
 	//* Tile
-	//. Dies ist ein Layout, das seine Komponenten entlang der gewünschten
-	//. Dimension gleichmässig verteilt.
+	//. Dies ist ein Layout, das seine Komponenten entlang der gewÃ¼nschten
+	//. Dimension gleichmÃ¤ssig verteilt.
 
 	class Tile : public Layout
 	{

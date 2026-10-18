@@ -53,7 +53,7 @@ int Widget::actions(lua_State * L) // const : QList<QAction *>
 		Util::push( L, i + 1 );
 		ObjectHelper<QAction>::create( L, r[i], true );
         ObjectPeer::pinPeer( L, -1 );
-        // Pinne sofort, damit der GC nicht Action mitlöscht
+        // Pinne sofort, damit der GC nicht Action mitlÃ¶scht
         lua_rawset( L, t );
 	}
 	return 1;

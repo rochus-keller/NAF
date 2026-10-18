@@ -131,8 +131,8 @@ void EasySpectrum::readParams()
 	int parInt;
 	int zeile = 1;
 	Dimension dimCount = 0;
-	// Wir verwenden tempor‰re Maps, damit Reihenfolge der Parameter nicht mehr
-	// ins Gewicht f‰llt.
+	// Wir verwenden tempor√§re Maps, damit Reihenfolge der Parameter nicht mehr
+	// ins Gewicht f√§llt.
 	std::map<int, int> sizes;			// Size of spectrum: Dimension x Size
 	std::map<int, int> xdims;			// Submatrix size: Dimension x Size
 	std::map<int, float> ppmax;			// Maximum chemical shift: Dimension x ppm
@@ -149,7 +149,7 @@ void EasySpectrum::readParams()
 		if( ret != 1 )
 			continue;
 
-		if( ::strlen( parName ) > 80 )	// Falls versehentlich ein Bin‰rfile geˆffnet wird.
+		if( ::strlen( parName ) > 80 )	// Falls versehentlich ein Bin√§rfile ge√∂ffnet wird.
 			parName[ 0 ] = 0;
 
 		if( ::strncmp( parName, "Number of dimensions", 20 ) == 0 ) 
@@ -255,7 +255,7 @@ void EasySpectrum::readParams()
 
 	PpmPoint::checkDimCount( dimCount );
 
-	// Die optionalen Parameter m¸ssen entweder ganz fehlen oder vorhanden sein.
+	// Die optionalen Parameter m√ºssen entweder ganz fehlen oder vorhanden sein.
     if( labels.size() != 0 && int(labels.size()) != dimCount )
 		throw Root::Exception( "Wrong number of labels" );
     if( specFreq.size() != 0 && int(specFreq.size()) != dimCount )
@@ -265,7 +265,7 @@ void EasySpectrum::readParams()
     if( folding.size() != 0 && int(folding.size()) != dimCount )
 		throw Root::Exception( "Wrong number of folding types" );
 
-	// Pr¸fe Korrektheit der Permutation
+	// Pr√ºfe Korrektheit der Permutation
 	int i;
 	Rotation rot;
 	for( i = 0; i < dimCount; i++ )
@@ -295,7 +295,7 @@ void EasySpectrum::readParams()
 	d_scales.assign( dimCount, Scale() );
 	d_tileCount.assign( dimCount, 0 );
 
-	// ‹bernehme die tempor‰ren Parameter definitiv in das Spektrumobjekt
+	// √úbernehme die tempor√§ren Parameter definitiv in das Spektrumobjekt
 	for( i = 0; i < dimCount; i++ )
 	{
 		if( sizes.count( i + 1 ) == 0 )
@@ -455,7 +455,7 @@ static void _writeParamFileBody( FILE* fp, Spectrum* sp, const Extension& subs,
 
 void EasySpectrum::saveParamFile()
 {
-	// Spezifisch f¸r Xeasy-Spektren
+	// Spezifisch f√ºr Xeasy-Spektren
 	QFileInfo info( d_paramFile.data() );
 	if( !info.isWritable() )
 	{
@@ -496,7 +496,7 @@ void EasySpectrum::saveParamFile()
 
 void EasySpectrum::writeParamFile(const char* pf, Spectrum* sp, const Extension& subs )
 {
-	// F¸r beliebige Spektren, aber nur 16 Bit und ohne Submatrizen.
+	// F√ºr beliebige Spektren, aber nur 16 Bit und ohne Submatrizen.
 
 	FILE *fp;
 	fp = ::fopen( pf, "w" );
@@ -567,7 +567,7 @@ void EasySpectrum::writeToFile(const char * path, Spectrum * source,
 				EasyNumber::compress( a, mantissa, exponent );
 				out.putch( mantissa );
 				out.putch( exponent );
-				// getRaw verwenden, aber Rotation ber¸cksichtigen.
+				// getRaw verwenden, aber Rotation ber√ºcksichtigen.
 			}
 		}while( increment( p, start, end, 1 ) );
 	}else
@@ -605,7 +605,7 @@ void EasySpectrum::writeToFile(const char * path, Spectrum * source,
 					EasyNumber::compress( a, mantissa, exponent );
 					out.putch( mantissa );
 					out.putch( exponent );
-					// getRaw verwenden, aber Rotation ber¸cksichtigen.
+					// getRaw verwenden, aber Rotation ber√ºcksichtigen.
 				}
 			}while( increment( p, start, end, 1 ) );
 		}while( increment( t, tstart, tend ) );

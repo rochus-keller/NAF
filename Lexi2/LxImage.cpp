@@ -42,7 +42,7 @@ void Image::draw(Canvas & v, const Allocation & a)
 	//		 if( v.isDamaged( a ) )
 
 	// NOTE: a.origin bezeichnet bereits den Ort auf Screen, wo 
-	// der (translierte) Origin des Bitmap effektiv hinkommt. Eigentlich müsste
+	// der (translierte) Origin des Bitmap effektiv hinkommt. Eigentlich mÃ¼sste
 	// a den sichtbaren Fensterausschnitt enthalten und der transliere Bitmap
 	// Origin mittels Offset verwaltet werden.
 	v.drawImage( a.getX(), a.getY(), this );

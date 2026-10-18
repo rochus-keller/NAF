@@ -33,10 +33,10 @@ namespace Spec2
 	class ViewAreaMdl;
 
 	//* SpecViewer
-	//. Dies ist ein Interactor in der Glyph-Hierarchie, der ähnlich
+	//. Dies ist ein Interactor in der Glyph-Hierarchie, der Ã¤hnlich
 	//. einem GIS-Viewer verschiedene Views und deren Controller als
-	//. Layer enthält. SpecViewer ist generisch. Views können beliebig
-	//. eingefügt und entfenrt werden. Sie sind alle bzgl. Ausschnitt
+	//. Layer enthÃ¤lt. SpecViewer ist generisch. Views kÃ¶nnen beliebig
+	//. eingefÃ¼gt und entfenrt werden. Sie sind alle bzgl. Ausschnitt
 	//. und Zoom synchronisiert.
 
 	class SpecViewer : public Lexi2::Layer 
@@ -61,7 +61,7 @@ namespace Spec2
 		void allocate(const Allocation&);
 		void pick( Coord x, Coord y, const Allocation&, GlyphTraversal&);
 	protected:
-		//* Überdeckung
+		//* Ãœberdeckung
 		void setController( Lexi2::Glyph* ) {}
 		void setBody( Lexi2::Glyph* ) {}
 

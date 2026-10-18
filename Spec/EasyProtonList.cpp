@@ -68,7 +68,7 @@ void EasyProtonList::readFromFile()
 		line[0] = '\0';
 		::fgets( line, MAXLINE, fp );
 		// strcore( line );
-		if( line[0] != '\0' && line[0] != '#' ) // Leerzeilen und Kommentare überlesen
+		if( line[0] != '\0' && line[0] != '#' ) // Leerzeilen und Kommentare Ã¼berlesen
 		{
 			res = ::sscanf(line, "%d %f %f %s %d",
 				&atom.d_spin, &atom.d_shift, &dummy1,

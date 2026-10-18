@@ -337,7 +337,7 @@ void CommandLine::handleReadParam(char ch)
 				arg( d_current->getTypes().size() ).toLatin1() );
 		}else
 		{
-			// Beginne den nächsten Parameter. Validiere den vorhergehenden.
+			// Beginne den nÃ¤chsten Parameter. Validiere den vorhergehenden.
 			if( interpretParam() )
 				nextParam();
 		}

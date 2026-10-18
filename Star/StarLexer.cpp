@@ -61,8 +61,8 @@ bool StarLexer::setStream(QIODevice *in, const char *codec)
 	{
 		if( d_in )
 			delete d_in;
-		// das muss so sein; wenn erst im Destruktor gelöscht oder Stream sogar ein Value Object, dann stürzt
-		// Prozess beim Löschen von Lexer in QObject bzw. dessen Mutex.
+		// das muss so sein; wenn erst im Destruktor gelÃ¶scht oder Stream sogar ein Value Object, dann stÃ¼rzt
+		// Prozess beim LÃ¶schen von Lexer in QObject bzw. dessen Mutex.
 		d_in = 0;
 		return false;
 	}
@@ -328,7 +328,7 @@ StarLexer::Token StarLexer::readTrippleQuotString(int sym)
 			return Token( Token::SyntaxError, d_lineNr, d_colNr, res );
 	}else if( lhsPos == -1 )
 	{
-		// Ende auf künftiger Zeile
+		// Ende auf kÃ¼nftiger Zeile
 		QString res = escapeString( d_line.mid( d_colNr ), sym, &ok ) + QChar('\n');
 		if( !ok )
 			return Token( Token::SyntaxError, d_lineNr, d_colNr, res );
@@ -385,7 +385,7 @@ StarLexer::Token StarLexer::readSemicolonString()
 			return Token( Token::Multiline, line, col, res );
 		}else
 		{
-			// Ende noch nicht gefunden; ganze Zeile gehört zu String
+			// Ende noch nicht gefunden; ganze Zeile gehÃ¶rt zu String
 			res += d_line + QChar('\n');
 		}
 	}

@@ -38,12 +38,12 @@ namespace Spec
 
 	//* SpectrumPeer
 	//. Diese Klasse kann einem beliebigen Spektrum transparent vorgeschaltet werden,
-	//. um den Namen, die Rotation und den Offset zu ändern, ohne die Originalklasse 
-	//. tangieren zu müssen. Normalerweise wird jedem geladenen Spektrum ein Adapter
+	//. um den Namen, die Rotation und den Offset zu Ã¤ndern, ohne die Originalklasse 
+	//. tangieren zu mÃ¼ssen. Normalerweise wird jedem geladenen Spektrum ein Adapter
 	//. vorgeschaltet, um die Kalibration zu verwalten und dieses an den
 	//. Spektrentyp anzupassen. Hier werden auch alle Attribute gespeichert.
 
-	//. NOTE: um Rechenzeit zu sparen, wird die Ausführung des Offsets an das 
+	//. NOTE: um Rechenzeit zu sparen, wird die AusfÃ¼hrung des Offsets an das 
 	//. Originalspektrum delegiert. Hier werden zwar die Werte gespeichert, jedoch
 	//. der eigentliche Adjust findet in Scale des verdeckten Spektrums statt.
 
@@ -79,7 +79,7 @@ namespace Spec
 		//. Stelle die Rotation so ein, dass die Colors des Spektrums in der Reihenfolge des
 		//. vorgegebenen SpectrumType sind.
 		bool checkRotation() const;
-		//. Prüfe, ob Rotation disjunkt.
+		//. PrÃ¼fe, ob Rotation disjunkt.
 
 		Spectrum* getSpectrum() const { return d_spec; }
 		Root::SymbolString getSymName() const { return d_name; }
@@ -103,8 +103,8 @@ namespace Spec
 		int open() const { return d_spec->open(); }
 		int close() const { return d_spec->close(); }
 		BioSample* getSample() const { return d_sample; }
-		// Hier muss mapToType nicht übersteuert werden, da d_rot so eingestellt ist,
-		// dass SpectrumPeer bzgl. Rotation mit SpectrumType übereinstimmt
+		// Hier muss mapToType nicht Ã¼bersteuert werden, da d_rot so eingestellt ist,
+		// dass SpectrumPeer bzgl. Rotation mit SpectrumType Ã¼bereinstimmt
 		bool canSave() const { return d_spec->canSave(); }
 		void saveParamFile();
 		MHz getRfFreq( Dimension d ) const { return d_spec->getRfFreq( d ); }

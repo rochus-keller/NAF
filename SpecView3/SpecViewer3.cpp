@@ -158,25 +158,25 @@ void SpecViewer3::paintEvent(QPaintEvent *event)
     p.setRenderHint( QPainter::TextAntialiasing, false );
     p.setRenderHint( QPainter::SmoothPixmapTransform, false );
     // const QRect a = allocation( size() );
-    p.setClipRegion( event->region() ); // Damit z.B. Contour nur das nötigste zeichnet
+    p.setClipRegion( event->region() ); // Damit z.B. Contour nur das nÃ¶tigste zeichnet
     // Es ist nicht bereits vorher ein Clipping gesetzt; dennoch scheint mit update(rect) ein internes Clipping auf
-    // rect gemacht zu werden. Anscheinend werden dadurch auch Linien in Contour um ein Pixel verkürzt, was die eigentliche
-    // Ursache für das Schmieren ist. Auch folgendes nützt nichts:
+    // rect gemacht zu werden. Anscheinend werden dadurch auch Linien in Contour um ein Pixel verkÃ¼rzt, was die eigentliche
+    // Ursache fÃ¼r das Schmieren ist. Auch folgendes nÃ¼tzt nichts:
     //   QPen( clr, d_width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ).
-    // Es nützt jedoch p.setRenderHint( QPainter::Antialiasing, true ); oder den Background auch nicht ganz an den Rand zu
-    // füllen, was jedoch andere Dreckeffekte erzeugt.
+    // Es nÃ¼tzt jedoch p.setRenderHint( QPainter::Antialiasing, true ); oder den Background auch nicht ganz an den Rand zu
+    // fÃ¼llen, was jedoch andere Dreckeffekte erzeugt.
     foreach( QRect r, event->region().rects() )
     {
 //        const int x = qrand();
 //        p.fillRect( rect(), QColor( ( x >> 8 ) & 0xff, ( x >> 16 ) & 0xff, x & 0xff ) );
-        //p.fillRect( r.adjusted(1,1,-1,-1), Qt::black ); // adjusted nötig, damit es nicht schmiert
+        //p.fillRect( r.adjusted(1,1,-1,-1), Qt::black ); // adjusted nÃ¶tig, damit es nicht schmiert
         p.fillRect( r, Qt::black );
         //p.fillRect( rect(), Qt::white );
         //p.fillRect( a, Qt::black );
     }
     for( int i = 0; i < d_views.size(); i++ )
     {
-        // n überdeckt n-1
+        // n Ã¼berdeckt n-1
         if( d_views[i] && d_views[i]->isVisible() )
             d_views[i]->paint(p);
     }

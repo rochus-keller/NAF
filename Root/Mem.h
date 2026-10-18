@@ -37,9 +37,9 @@ namespace Root
 		static void* alloc( size_t );
 		static void* realloc( void*, size_t );
 		static void* allocAtomic( size_t );
-		// Für Objekte, die keine GC-Pointer enthalten
+		// FÃ¼r Objekte, die keine GC-Pointer enthalten
 		static void* allocExtern( size_t );	
-		// Für Objekte, die GC-Pointer enthalten, aber selber nicht von GC gelöscht werden.
+		// FÃ¼r Objekte, die GC-Pointer enthalten, aber selber nicht von GC gelÃ¶scht werden.
 		static void free( void* );
 		static void collect();
 		static void enableGc();
@@ -48,7 +48,7 @@ namespace Root
 		static void addGuard(void **ptr); // registriere Variable, in der Pointer gespeichert
 		static void removeGuard(void **ptr);
 		static void changeGuard(void **ptr, void *obj);
-		static void notifyGuard(void* obj); // Das Objekt teilt dem Guard mit, dass es gelöscht wird
+		static void notifyGuard(void* obj); // Das Objekt teilt dem Guard mit, dass es gelÃ¶scht wird
 											// Damit werden alle Variablen, die darauf zeigen, auf Null gesetzt.
 	};
 }

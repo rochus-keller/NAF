@@ -44,7 +44,7 @@ int Action::associatedWidgets(lua_State * L) // const : QList<QWidget *>
 		Util::push( L, i + 1 );
 		ObjectHelper<QWidget>::create( L, r[i], true );
         ObjectPeer::pinPeer( L, -1 );
-        // Pinne sofort, damit der GC nicht Widget mitlöscht
+        // Pinne sofort, damit der GC nicht Widget mitlÃ¶scht
         lua_rawset( L, t );
 	}
 	return 1;

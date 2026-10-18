@@ -71,11 +71,11 @@ void Subject::removeObserver(Messenger *o)
 
 void Subject::notifyObservers(UpdateMessage& msg, bool all )
 {
-    foreach( Messenger* m, d_observers ) // foreach macht automatisch eine Kopie wegen Änderungen während dem Loop
+    foreach( Messenger* m, d_observers ) // foreach macht automatisch eine Kopie wegen Ã„nderungen wÃ¤hrend dem Loop
 	{
 		if( !all && msg.isConsumed() )
 			return;
-        if( m && d_observers.contains( m ) ) // es kommt vor, dass während dem Loop ein Messenger gelöscht wird
+        if( m && d_observers.contains( m ) ) // es kommt vor, dass wÃ¤hrend dem Loop ein Messenger gelÃ¶scht wird
             m->traverse( msg );
 	}
 }

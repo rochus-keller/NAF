@@ -80,12 +80,12 @@ void CursorView3::damage(Dimension d, PPM c )
     QRectF damage;
     if( d == DimX )
     {
-        // die X-Koordinate hat geändert
+        // die X-Koordinate hat geÃ¤ndert
         damage = QRectF( getArea()->toPoints( c, DimX ) - 3.0, getArea()->getOrig( DimY ),
                          7.0, getArea()->getSpan( DimY ) );
     }else if( d == DimY )
     {
-        // die Y-Koordinate hat geändert
+        // die Y-Koordinate hat geÃ¤ndert
         damage = QRectF( getArea()->getOrig( DimX ), getArea()->toPoints( c, DimY ) - 3.0,
                          getArea()->getSpan( DimX ), 7.0 );
     }

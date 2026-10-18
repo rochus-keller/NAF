@@ -61,7 +61,7 @@ namespace Lua
 
 		static void expect( lua_State *L, int n = 1 )
 		{
-			// Der erste Parameter ist sowieso immer this, darum hier nur die übrigen gezählt
+			// Der erste Parameter ist sowieso immer this, darum hier nur die Ã¼brigen gezÃ¤hlt
 			if( lua_gettop(L) < n )
 				luaL_error( L, "expecting at least %d parameters", n - 1 );
 		}
@@ -184,7 +184,7 @@ namespace Lua
 		static void pushWeakMeta( lua_State *L );
 
 		// Das PeerBoard ist eine weak globale Liste von void* auf Lua-Objekte mit 
-		// dem Zweck, für ein gegebenes void* immer denselben Lua-Peer zu verwenden.
+		// dem Zweck, fÃ¼r ein gegebenes void* immer denselben Lua-Peer zu verwenden.
 		// Stack pre: - / post: table
 		static void pushPeerBoard( lua_State *L );
 		// Stack pre: peer / post: -
@@ -204,7 +204,7 @@ namespace Lua
 		/// Stack pre: - / post: table
 		static void pushDataTable(lua_State *L, int n = -1 );
 
-		// Setzte einen Datenwert für das Objekt an Position n
+		// Setzte einen Datenwert fÃ¼r das Objekt an Position n
 		/// Stack pre: key, value / post: -
 		static void setData(lua_State* L, int n);
 

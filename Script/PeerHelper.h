@@ -26,8 +26,8 @@
 #endif // _MSC_VER > 1000
 
 #ifdef _WIN32
-// Unterdrücke Warnung 4291. Diese besagt, dass es keinen geeigneten
-// delete-Operator gibt. Das ist aber egal, da Lua für free zuständig ist.
+// UnterdrÃ¼cke Warnung 4291. Diese besagt, dass es keinen geeigneten
+// delete-Operator gibt. Das ist aber egal, da Lua fÃ¼r free zustÃ¤ndig ist.
 #pragma warning( disable: 4291 )
 #endif
 
@@ -65,7 +65,7 @@ namespace Lua
 				lua_setmetatable( L, meta );
 				// Auch die Methodentabelle folgt der Vererbungshierarchie.
 				// Dadurch funktioniert der Dispatch an die Oberklassen. 
-				// Ansonsten müsste man wie in ValueInstaller __index as Funktion führen.
+				// Ansonsten mÃ¼sste man wie in ValueInstaller __index as Funktion fÃ¼hren.
 				lua_setmetatable( L, methods );
 			}
 			lua_pushstring(L, Lua::Util::s_class );
@@ -75,7 +75,7 @@ namespace Lua
 				lua_pushstring(L, name );
 			lua_rawset(L, meta );
 
-			// Für den User sichtbare Meta-Table via Klassennamen zugänglich machen
+			// FÃ¼r den User sichtbare Meta-Table via Klassennamen zugÃ¤nglich machen
 			if( prettyName )
 				lua_pushstring(L, prettyName );
 			else
@@ -84,7 +84,7 @@ namespace Lua
 			lua_settable(L, LUA_GLOBALSINDEX );
 			
 			// setze Attribut __metatable von meta. Dies ist der Wert, der
-			// von getmetatable( obj ) zurückgegeben wird.
+			// von getmetatable( obj ) zurÃ¼ckgegeben wird.
 			lua_pushliteral(L, "__metatable");
 			lua_pushvalue(L, methods );
 			lua_rawset(L, meta);  // hide meta from Lua getmetatable()
@@ -93,8 +93,8 @@ namespace Lua
 			lua_rawset(L, meta);  // hide meta from Lua getmetatable()
 
 			// The indexing access table[key].
-			// Wenn table[key] ein Wert ist, wird dieser zurückgegeben. Wenn es eine Funktion f ist,
-			// wird diese mit f(table, key) aufgerufen und deren Ergebnis als Wert zurückgegeben.
+			// Wenn table[key] ein Wert ist, wird dieser zurÃ¼ckgegeben. Wenn es eine Funktion f ist,
+			// wird diese mit f(table, key) aufgerufen und deren Ergebnis als Wert zurÃ¼ckgegeben.
 			lua_pushliteral(L, "__index");
 			lua_pushvalue(L, methods);
 			lua_rawset(L, meta );
@@ -171,7 +171,7 @@ namespace Lua
 			}
 			/*
 			// NOTE: hier darf kein catch( ... ) stehen, da die aufgerufenen Methoden
-			// lua_error aufrufen können, dessen longjump ansonsten von catch abgefangen wird.
+			// lua_error aufrufen kÃ¶nnen, dessen longjump ansonsten von catch abgefangen wird.
 			// stattdessen werden alle Exceptions in Engine abgefangen. Es macht hier jedoch
 			// Sinn, Cara-Exceptions in Lua-Meldungen umzuwandeln
 			catch( ... )

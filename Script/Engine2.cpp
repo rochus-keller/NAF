@@ -82,7 +82,7 @@ Engine2::Engine2(QObject *p):QObject(p),
 
 	d_ctx = ctx;
 
-	addLibrary( BASE );	// Das muss hier stehen, sonst wird ev. print wieder überschrieben
+	addLibrary( BASE );	// Das muss hier stehen, sonst wird ev. print wieder Ã¼berschrieben
 
 	lua_pushcfunction( ctx, _print );
 	lua_setglobal( ctx, "print" );
@@ -113,7 +113,7 @@ void Engine2::addLibrary(Lib what)
 		lua_pushstring(d_ctx, LUA_LOADLIBNAME );
 		lua_call(d_ctx, 1, 0);
 
-        // am 28.12.11 Konzept geändert. Neu werden wieder Lua-Standard-Loader verwendet.
+        // am 28.12.11 Konzept geÃ¤ndert. Neu werden wieder Lua-Standard-Loader verwendet.
 		break;
 #endif
 	case BASE:
@@ -618,7 +618,7 @@ QByteArray Engine2::getValueString(int arg) const
         {
 			const QByteArray name = ValueBindingBase::getBindingName( d_ctx, arg );
 			if( !name.isEmpty() )
-				return __tostring( arg ); // Alle haben eine gültige tostring-Konvertierung
+				return __tostring( arg ); // Alle haben eine gÃ¼ltige tostring-Konvertierung
 			else
 				return "<unknown>";
         }
@@ -631,7 +631,7 @@ int Engine2::pushLocalOrGlobal(const QByteArray &name)
 {
     if( d_waitForCommand )
     {
-        // Wir können auf den Stack zugreifen
+        // Wir kÃ¶nnen auf den Stack zugreifen
         lua_Debug ar;
         if( lua_getstack( d_ctx, d_activeLevel, &ar ) )
         {

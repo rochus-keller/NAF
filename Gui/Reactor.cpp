@@ -52,7 +52,7 @@ bool Reactor::eventFilter(QObject *watched, QEvent *event)
 
 void Reactor::dispatch(Root::Action & e)
 {
-	// Unnötig qDebug( "Reactor::handle( %s ) not implemented", e.getCommand().data() );
+	// UnnÃ¶tig qDebug( "Reactor::handle( %s ) not implemented", e.getCommand().data() );
 }
 
 

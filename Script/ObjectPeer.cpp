@@ -51,7 +51,7 @@ static QHash<QByteArray,int> s_slotSig;			// Abbildung von Signatur auf Slot-ID
 /////////////////////////////////////////////////////////////////////////////////
 
 /* Konzept:
-	Jede Signatur ist einer eindeutigen Slot-ID zugeordnet, über alle Klassen hinweg.
+	Jede Signatur ist einer eindeutigen Slot-ID zugeordnet, Ã¼ber alle Klassen hinweg.
 	Ein Callback findet anhand dieser Slot-ID die Parameterliste
 */
 
@@ -59,7 +59,7 @@ int ObjectPeer::registerSlot( lua_State *L, const QByteArray& sig, const QMetaMe
 {
 	int slot = s_slotSig.value( sig, -1 );
 	if( slot != -1 )
-		return slot; // Wir kennen die Signatur bereits und gegen die bekannte Slot-ID zurück
+		return slot; // Wir kennen die Signatur bereits und gegen die bekannte Slot-ID zurÃ¼ck
 
 	// Wir kennen die Signatur noch nicht.
     QList<int> args;
@@ -73,7 +73,7 @@ int ObjectPeer::registerSlot( lua_State *L, const QByteArray& sig, const QMetaMe
     }
 	slot = s_nextSlot;
 	s_nextSlot++;
-	s_slotSig[sig] = slot; // Wird nur benötigt, um anhand Signatur Slot-ID wiederzuverwenden
+	s_slotSig[sig] = slot; // Wird nur benÃ¶tigt, um anhand Signatur Slot-ID wiederzuverwenden
 
 	s_slotArgTypes[slot] = args;
 	return slot;
@@ -224,13 +224,13 @@ ObjectPeer::ObjectPeer(QObject* o,lua_State* L):
 ObjectPeer::~ObjectPeer()
 {
 #ifdef _DEBUG
-    Q_ASSERT( d_lua ); // Nur durch Destruktor wird d_lua auf null gesetzt. Es wäre also ein Hinweis auf doppelte Finalisierung
+    Q_ASSERT( d_lua ); // Nur durch Destruktor wird d_lua auf null gesetzt. Es wÃ¤re also ein Hinweis auf doppelte Finalisierung
 	if( isAttached() )
 		qWarning( "ObjectPeer::~ObjectPeer: deleting attached ObjectPeer!" );
 	s_inst.remove( this );
 #endif
 
-	d_lua = 0; // Für alive-Check
+	d_lua = 0; // FÃ¼r alive-Check
 }
 
 #ifdef _DEBUG
@@ -261,7 +261,7 @@ void* ObjectPeer::operator new(size_t, void* p) throw()
 void ObjectPeer::operator delete(void * )
 {
 	// Diese Methode wird von Parent-Object automatisch nach
-	// Destructor aufgerufen, sobald dieses mit delete gelöscht wird.
+	// Destructor aufgerufen, sobald dieses mit delete gelÃ¶scht wird.
 	// Es ist hier wichtig, dass kein Memory dealloziiert wird, da
 	// wir Lua-Memory verwenden.
 	qDebug( "ObjectPeer::operator delete(void * ) called" );
@@ -273,11 +273,11 @@ void ObjectPeer::operator delete( void *, size_t )
 }
 
 /* Wir pinnen ein ObjectPeer, so dass er vom Garbage Collector nicht
-   gelöscht wird. Das ist wichtig, wenn irgend ein Qt-Objekt "attached" ist, bzw.
+   gelÃ¶scht wird. Das ist wichtig, wenn irgend ein Qt-Objekt "attached" ist, bzw.
    mit dem property(s_peerName) darauf zeigt. In diesem Property ist ein
    ObjectPeerNotifier gespeichert, der einen rohen Pointer auf den ObjectPeer
-   enthält. Wenn also GC den ObjectPeer löschen würde, während ein property darauf zeigt
-   wäre dies ein Dangling Pointer.
+   enthÃ¤lt. Wenn also GC den ObjectPeer lÃ¶schen wÃ¼rde, wÃ¤hrend ein property darauf zeigt
+   wÃ¤re dies ein Dangling Pointer.
    pinPeer wird nicht automatisch aufgerufen.
 */
 
@@ -349,7 +349,7 @@ void ObjectPeer::release()
 	d_refCount--;
 	if( d_refCount == 0 )
 	{
-		// Vollziehe unattach, indem ObjectPeer dem GC zugänglich gemacht wird.
+		// Vollziehe unattach, indem ObjectPeer dem GC zugÃ¤nglich gemacht wird.
 		unpin();
 	}
 }
@@ -430,7 +430,7 @@ bool ObjectPeer::connect3(lua_State *L, ObjectPeer* peer, QObject* sender, const
 bool ObjectPeer::connect2(lua_State *L, QObject* obj, QObject* sender, const QByteArray& normSig, int sigIndex )
 {
 	// 2: this, sender, SIGNAL, SLOT
-	// Verbinde sender nach this direkt in Qt. Es wird C++ ausgeführt, nicht Lua.
+	// Verbinde sender nach this direkt in Qt. Es wird C++ ausgefÃ¼hrt, nicht Lua.
 
 	const char* slot = luaL_checkstring( L, 4 );
 	const QByteArray normSlot = QMetaObject::normalizedSignature( slot );
@@ -486,8 +486,8 @@ bool ObjectPeer::connect1(lua_State *L)
 	if( lua_isfunction( L, 3 ) )
 	{
 		// NOTE: Da ich aufgrund QSignalSpy skeptisch wurde und folgende undokumentierte
-		// Methode im Quelltext analysierte, habe ich festgestellt, dass slotIndex-ID nicht geprüft
-		// wird. Man kann also irgend eine Nummer eingeben. Ich benötige also das Theater
+		// Methode im Quelltext analysierte, habe ich festgestellt, dass slotIndex-ID nicht geprÃ¼ft
+		// wird. Man kann also irgend eine Nummer eingeben. Ich benÃ¶tige also das Theater
 		// mit Rekonstruktion von MetaObject nicht.
 		res = QMetaObject::connect( obj, sigIndex, peer, slotIndex, Qt::DirectConnection, 0);
 		lua_pushlightuserdata( L, (void*) slotIndex );
@@ -526,7 +526,7 @@ ObjectPeer* ObjectPeer::createPeer(lua_State *L, QObject *obj, const char *class
 	// Assoziiere UserData mit dem MetaTable der Peer-Klasse
 	lua_setmetatable( L, t );
 
-	// Lässt UserData ObjectPeer auf Stack zurück.
+	// LÃ¤sst UserData ObjectPeer auf Stack zurÃ¼ck.
 
 	// Setze den ObjectPeer in die Weaktable unter dem Pointer-Key, damit pushMe darauf zugreifen kann
 	lua_pushvalue( L, t );
@@ -574,7 +574,7 @@ ObjectPeer* ObjectPeer::castStackToPeer( lua_State *L, int narg,
 	// Hier static_cast, weil wir sicher sind, dass es sich um ObjectPeer handelt.
 	ObjectPeer* peer = static_cast<ObjectPeer*>( lua_touserdata( L, narg ) );
 	if( peer )
-        Q_ASSERT( peer->d_lua ); // Destruktor löscht d_lua, also hier zur Sicherheit prüfen, ob peer noch lebt
+        Q_ASSERT( peer->d_lua ); // Destruktor lÃ¶scht d_lua, also hier zur Sicherheit prÃ¼fen, ob peer noch lebt
 
 	if( peer && peer->isAttached() )
 		return peer;

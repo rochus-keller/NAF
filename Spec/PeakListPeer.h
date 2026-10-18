@@ -34,7 +34,7 @@ namespace Spec
 	// PeakListPeer:
 	// Dies ist der Adapter von der Welt der PeakSpaces auf die Welt der PeakLists.
 	// Der PeakListPeer hat immer dieselbe Anzahl Dimensionen wie die PeakListe.
-	// Das beigegebene Spektrum wird nur als Hinweis für Alias-Gewinnung verwendet.
+	// Das beigegebene Spektrum wird nur als Hinweis fÃ¼r Alias-Gewinnung verwendet.
 	class PeakListPeer : public PeakSpace
 	{
 	public:

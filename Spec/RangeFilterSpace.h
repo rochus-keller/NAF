@@ -65,7 +65,7 @@ namespace Spec
 	};
 
     // vormals SubRangeSpace
-    // Wie SysFilterSpace, aber zusätzlich noch in Richtung d_dim filtern.
+    // Wie SysFilterSpace, aber zusÃ¤tzlich noch in Richtung d_dim filtern.
     class RangeFilterSpace : public SysFilterSpace
 	{
 	public:
@@ -96,7 +96,7 @@ namespace Spec
 	};
 
     // vormals SubRangeSpaceND
-    // Gleich wie RangeFilterSpace, jedoch für mehr als eine Tiefendimension.
+    // Gleich wie RangeFilterSpace, jedoch fÃ¼r mehr als eine Tiefendimension.
     // Der Spin ist nur sichtbar, wenn er in allen Tiefendimensionen passt.
     class RangeFilterSpaceND : public SysFilterSpace
 	{

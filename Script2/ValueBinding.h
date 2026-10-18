@@ -337,7 +337,7 @@ namespace Lua
 			*p = v;
 			if( findSubclassMeta )
 			{
-				// Finde Meta von der tats‰chlichen Unterklasse von T
+				// Finde Meta von der tats√§chlichen Unterklasse von T
 				lua_pushstring(L, typeid(v).name() );
 				lua_rawget( L, LUA_REGISTRYINDEX );
 				// Stack: obj, meta | nil

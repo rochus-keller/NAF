@@ -32,9 +32,9 @@
 namespace Spec
 {
 	//* SpecProjector
-	//. Diese Klasse lässt ein n-dimensionales Spektrum (m>=n>=1) wie ein mD-Spektrum
+	//. Diese Klasse lÃ¤sst ein n-dimensionales Spektrum (m>=n>=1) wie ein mD-Spektrum
 	//. erscheinen. Man kann sowohl die Rotation (bzw. Dimensionsauswahl) wie auch
-	//. den Fixpunkt (für n>m) angeben.
+	//. den Fixpunkt (fÃ¼r n>m) angeben.
 
 	class SpecProjector : public Spectrum 
 	{

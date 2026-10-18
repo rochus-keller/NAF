@@ -67,7 +67,7 @@ void ViewStack::paint(QPainter & painter)
 {
     for( int i = 0; i < d_views.size(); i++ )
     {
-        // n überdeckt n-1
+        // n Ã¼berdeckt n-1
         if( d_views[i] && d_views[i]->isVisible() )
             d_views[i]->paint(painter);
     }

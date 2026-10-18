@@ -31,7 +31,7 @@ uint qHash( const Root::SymbolString& s )
 
 #define NELEMS(a) ((int)(sizeof (a)/sizeof ((a)[0])))
 #define NEW(p,t) ( (p) = (t*)malloc( sizeof(t) ) )
-// Verwende hier malloc, da w‰hrend ganzer Anwendung persistent und Allokation vor GC_INIT
+// Verwende hier malloc, da w√§hrend ganzer Anwendung persistent und Allokation vor GC_INIT
 
 static struct _Block 
 {

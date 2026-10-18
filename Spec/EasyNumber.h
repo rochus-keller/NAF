@@ -49,7 +49,7 @@ namespace Spec
 
 		static Amplitude getIntensity( Root::Byte mantissa, Root::Byte exponent )
 		{ 
-//#ifdef _DEBUG	// NOTE: wegen Freds 1D ist dies grundsätzlich nötig.
+//#ifdef _DEBUG	// NOTE: wegen Freds 1D ist dies grundsÃ¤tzlich nÃ¶tig.
 			//if( exponent < 0 || exponent >= 96 )
 			//	 exponent = Root::Byte( exponent ) % 96;
             if( exponent >= 96 )

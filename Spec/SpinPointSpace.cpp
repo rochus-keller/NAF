@@ -96,9 +96,9 @@ void SpinPointSpace::updateSpinShift( Spin::Update* a )
 
 void SpinPointSpace::updateSpinLabel( Spin::Update* a )
 {
-	// Suche alle Points, wo Spin vorkommt, und lösche den Peak
-	// Füge dann die Peaks des Spin mit dem neuen Label ein.
-	// Alternativ die Peak nur zufügen, nicht löschen.
+	// Suche alle Points, wo Spin vorkommt, und lÃ¶sche den Peak
+	// FÃ¼ge dann die Peaks des Spin mit dem neuen Label ein.
+	// Alternativ die Peak nur zufÃ¼gen, nicht lÃ¶schen.
 
 	updateForceRemove( a->getSpin() );
 	updateNeighbour( a->getSpin()->getSystem(), a->getLabel() ); 
@@ -122,7 +122,7 @@ inline static void _merge( SpinPointSpace* s, SpinSpace::Result& res,
 
 void SpinPointSpace::updateAddPeak( Spin* s )
 {
-	// Dasselbe wie refill, aber nur für einen einzelnen Spin
+	// Dasselbe wie refill, aber nur fÃ¼r einen einzelnen Spin
 	if( !d_st.isNull() )
 	{
 		const bool showLink = d_showLinks && d_noesy != DimUndefined && 
@@ -174,7 +174,7 @@ void SpinPointSpace::updateForceRemove( Spin* s )
 				next = false;
 				SpinSpace::Update msg( this, SpinSpace::Update::Delete, e );
 				notifyObservers( msg );
-				break; // Nächstes i
+				break; // NÃ¤chstes i
 			}
 		}
 		if( next )
@@ -187,7 +187,7 @@ void SpinPointSpace::updateForceRemove( Spin* s )
 
 void SpinPointSpace::updateRemovePeak( Spin* s )
 {
-	// Entferne den Peak nur, wenn er nicht durch einen Link begründet wird
+	// Entferne den Peak nur, wenn er nicht durch einen Link begrÃ¼ndet wird
 	Result::iterator i, last;
 	const Dimension dim = getDimCount();
 	Dimension d;
@@ -207,9 +207,9 @@ void SpinPointSpace::updateRemovePeak( Spin* s )
                         ( d_noesy != DimUndefined && (*i).isLink( d, d_noesy ) ) )
 					{
 						// Wenn es sich um einen von einem Link verantworteten Spin
-						// handelt, dann lösche den Peak nicht.
+						// handelt, dann lÃ¶sche den Peak nicht.
 						(*i).setInfer( false ); // Aber entferne Grund
-						break; // Nächstes i
+						break; // NÃ¤chstes i
 					}else
 					{
 						Element e = (*i);
@@ -217,7 +217,7 @@ void SpinPointSpace::updateRemovePeak( Spin* s )
 						next = false;
 						SpinSpace::Update msg( this, SpinSpace::Update::Delete, e );
 						notifyObservers( msg );
-						break; // Nächstes i
+						break; // NÃ¤chstes i
 					}
 				}
 			}
@@ -245,7 +245,7 @@ void SpinPointSpace::updateRemoveLink( Spin* lhs, Spin* rhs )
 		next = true;
 		if( (*i).d_point[ d_noesy ] == lhs || (*i).d_point[ d_noesy ] == rhs )
 		{
-			// Im Link-Falle müsste mindestens d_noesy entw. rhs od. lhs entsprechen
+			// Im Link-Falle mÃ¼sste mindestens d_noesy entw. rhs od. lhs entsprechen
 			for( d = 0; d < dim; d++ )
 			{
 				if( d != d_noesy && (*i).isLink( d, d_noesy ) && 
@@ -253,7 +253,7 @@ void SpinPointSpace::updateRemoveLink( Spin* lhs, Spin* rhs )
 				{
 					if( (*i).isInfer() )
 					{
-						// Der Peak bleibt, da auch durch Infer begründet
+						// Der Peak bleibt, da auch durch Infer begrÃ¼ndet
 						(*i).setLink( d, d_noesy, false );
 					}else
 					{
@@ -263,7 +263,7 @@ void SpinPointSpace::updateRemoveLink( Spin* lhs, Spin* rhs )
 						next = false;
 						SpinSpace::Update msg( this, SpinSpace::Update::Delete, e );
 						notifyObservers( msg );
-						break; // Nächstes i
+						break; // NÃ¤chstes i
 					}
 				}
 			}
@@ -289,7 +289,7 @@ void SpinPointSpace::updateLink( Spin* lhs, Spin* rhs )
 	{
 		if( (*i).d_point[ d_noesy ] == lhs || (*i).d_point[ d_noesy ] == rhs )
 		{
-			// Im Link-Falle müsste mindestens d_noesy entw. rhs od. lhs entsprechen
+			// Im Link-Falle mÃ¼sste mindestens d_noesy entw. rhs od. lhs entsprechen
 			for( d = 0; d < dim; d++ )
 			{
 				if( d != d_noesy && (*i).isLink( d, d_noesy ) && 
@@ -389,15 +389,15 @@ void SpinPointSpace::handle( Root::Message & msg )
 		// case Spin::Update::Create: // Irrelevant
 		// case Spin::Update::System: // Wird von System::Add behandelt
 		// case Spin::Update::All:	// Kommt nicht vor
-		case Spin::Update::Delete: // Nur möglich nach SpinSystem::remove
+		case Spin::Update::Delete: // Nur mÃ¶glich nach SpinSystem::remove
 			// updateRemoveLink( a->getSpin() );
 			// Das darf nicht vorkommen, da immer unlink aufgerufen wird vor
-			// löschen des Spins
+			// lÃ¶schen des Spins
 			break;
-		case Spin::Update::Shift:		// Führt zu MovePeak
+		case Spin::Update::Shift:		// FÃ¼hrt zu MovePeak
 			updateSpinShift( a );
 			break;
-		case Spin::Update::Label:		// Führt zu Delete/Create Peak
+		case Spin::Update::Label:		// FÃ¼hrt zu Delete/Create Peak
 			updateSpinLabel( a );
 			break;
 		case Spin::Update::Visi:		// SpinLinkVisibility
@@ -421,7 +421,7 @@ void SpinPointSpace::handle( Root::Message & msg )
 			break;
 		case SpinSystem::Update::Remove:
 			updateRemovePeak( a->getSpin() ); // Keep Links
-			updateNeighbour( a->getSystem(), a->getSpin()->getLabel() ); // Sorge dafür, dass x-y Peaks wieder kommen
+			updateNeighbour( a->getSystem(), a->getSpin()->getLabel() ); // Sorge dafÃ¼r, dass x-y Peaks wieder kommen
 			break;
 		case SpinSystem::Update::All:
 			refill(); // TODO
@@ -447,7 +447,7 @@ void SpinPointSpace::handle( Root::Message & msg )
 				{
 					updateRemovePeak( a->getSpin() ); 
 					updateNeighbour( a->getSystem(), a->getSpin()->getLabel() ); 
-					// Sorge dafür, dass x-y Peaks wieder kommen
+					// Sorge dafÃ¼r, dass x-y Peaks wieder kommen
 				}
 				*/
 			}
@@ -493,23 +493,23 @@ void SpinPointSpace::fillTuples( Element& elem, SpinSystem* sys,
 {
 	Q_ASSERT( d_st != 0 );
 	Q_ASSERT( sys != 0 );
-	// Wandert entlang den Anchor-Dimensions und fügt zuletzt das Tuple ein,
-	// wenn man überhaupt soweit kommt. Implizit findet auch eine 
-	// Multiplikation über alle non-final-Kombinationen statt.
+	// Wandert entlang den Anchor-Dimensions und fÃ¼gt zuletzt das Tuple ein,
+	// wenn man Ã¼berhaupt soweit kommt. Implizit findet auch eine 
+	// Multiplikation Ã¼ber alle non-final-Kombinationen statt.
 
 	SpinSystem::Spins spins;
 	const SpinLabel& label = path[ dim ];
-	if( false ) // dim == d_noesy ) // ab CARA 1.9.1 werden alle NOESY von NmrExperiment explizit in Atome aufgelöst
+	if( false ) // dim == d_noesy ) // ab CARA 1.9.1 werden alle NOESY von NmrExperiment explizit in Atome aufgelÃ¶st
 	{
 		spins = sys->findNoesySpins( d_st->getColor( dim ), d_showNulls, d_showOffs );
-		// Dieser Schritt holt sich einfach alle Spins der gegebenen Atomfarbe aus dem System, unabhängig
+		// Dieser Schritt holt sich einfach alle Spins der gegebenen Atomfarbe aus dem System, unabhÃ¤ngig
 		// vom SystemType bzw. ResidueType des Systems.
 	}else
 	{
 		spins = sys->findSpins( label.getTag(), label.getOff(), d_st->getColor( dim ),
 							d_showNulls, d_showOffs, d_showUnknown );
 			// Es werden auch non-finals verwendet. 
-			// Diese müssen zumindest im Label übereinstimmen
+			// Diese mÃ¼ssen zumindest im Label Ã¼bereinstimmen
 		if( label.getTag().isNull() )
 			elem.setInfer(false); // In diesem Fall hat findSpins ein cross-product gemacht; das
 								  // kommt nur vor, wenn ResiType nicht bekannt oder SpecType keine Proc hat.
@@ -537,9 +537,9 @@ void SpinPointSpace::fillLinks(const ElementSet& inf, ElementSet& res)
 #endif
 	// Finde zuerst raus, zwischen welchen Dim es Noesy gibt.
 	// Wir gehen hier davon aus, dass immer nur ein Noesy-Step vorhanden ist.
-	// 8.3.04 Fred meint, showAll sei nicht nötig und es genüge, die Links
-	// auf NOESY zu beschränken.
-	// Eigentlich könnte man den NOESY-Step sogar auf den letzten Step beschränken.
+	// 8.3.04 Fred meint, showAll sei nicht nÃ¶tig und es genÃ¼ge, die Links
+	// auf NOESY zu beschrÃ¤nken.
+	// Eigentlich kÃ¶nnte man den NOESY-Step sogar auf den letzten Step beschrÃ¤nken.
 
 	const Dimension dim = d_st->getDimCount();
     const AtomType noesyColor = d_st->getColor( d_noesy );
@@ -555,7 +555,7 @@ void SpinPointSpace::fillLinks(const ElementSet& inf, ElementSet& res)
 				p.setLink( d, d_noesy );
                 Spin* me = p.d_point[ d ];
 
-				// Suche für jeden Pathsim-Point alle Links zur Noesy-Dim
+				// Suche fÃ¼r jeden Pathsim-Point alle Links zur Noesy-Dim
                 for( Spin::Links::const_iterator l = me->getLinks().begin();
 					l != me->getLinks().end(); ++l )
 				{

@@ -30,7 +30,7 @@ UiFunction::UiFunction(QObject *parent)
 {
     connect( this, SIGNAL( triggered( bool ) ), this, SLOT( execute() ) );
     setEnabled(true);
-	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild Menüs umplatziert und umbenennt
+	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild MenÃ¼s umplatziert und umbenennt
 }
 
 UiFunction::UiFunction(const QString& text, QObject *parent)
@@ -38,7 +38,7 @@ UiFunction::UiFunction(const QString& text, QObject *parent)
 {
     connect( this, SIGNAL( triggered( bool ) ), this, SLOT( execute() ) );
     setEnabled(true);
-	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild Menüs umplatziert und umbenennt
+	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild MenÃ¼s umplatziert und umbenennt
 }
 
 UiFunction::UiFunction(const QString& text, QObject *parent, QObject *receiver, const char* member)
@@ -47,7 +47,7 @@ UiFunction::UiFunction(const QString& text, QObject *parent, QObject *receiver, 
     connect( this, SIGNAL( triggered( bool ) ), this, SLOT( execute() ) );
     connect( this, SIGNAL( handle() ), receiver, member );
     setEnabled(true);
-	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild Menüs umplatziert und umbenennt
+	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild MenÃ¼s umplatziert und umbenennt
 }
 
 UiFunction::~UiFunction()
@@ -66,14 +66,14 @@ void UiFunction::prepare()
 
 void UiFunction::execute()
 {
-    // ENABLED_IF lässt in jedem Fall nur durch, wenn Condition erfüllt, auch wenn vorher kein prepare() aufgerufen
+    // ENABLED_IF lÃ¤sst in jedem Fall nur durch, wenn Condition erfÃ¼llt, auch wenn vorher kein prepare() aufgerufen
 	d_preparing = false;
 	s_sender = this;
 	emit handle();
 	s_sender = 0;
 }
 
-// QEvent::Shortcut muss hier nicht überschrieben werden, da die Default-Version lediglich triggered(bool) aufruft.
+// QEvent::Shortcut muss hier nicht Ã¼berschrieben werden, da die Default-Version lediglich triggered(bool) aufruft.
 //bool UiFunction::event(QEvent *e)
 //{
 //	if( e->type() == QEvent::Shortcut )

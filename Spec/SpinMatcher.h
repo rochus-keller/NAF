@@ -52,8 +52,8 @@ namespace Spec
 			Fitness getSeqFitness() const;
 
 			Fitness d_sum;
-			//. Der Übereinstimmungswert zwischen einem einzelnen Strip und einer
-			//. Sequenzposition als Summe über alle beteiligten Peaks.
+			//. Der Ãœbereinstimmungswert zwischen einem einzelnen Strip und einer
+			//. Sequenzposition als Summe Ã¼ber alle beteiligten Peaks.
 			Root::Byte d_weight;
 			//. Die Anzahl am Fit beteiligter Peaks.
 			Root::Byte d_zero;
@@ -61,7 +61,7 @@ namespace Spec
 			bool d_excluded;
 			//. Der Fit ist aufgrund des Exclude-Sets des Strips ausgeschlossen.
 			bool d_assigned;
-			//. Der Fit gehört zu einem fix zugeordneten Strip-/Residue-Tuple.
+			//. Der Fit gehÃ¶rt zu einem fix zugeordneten Strip-/Residue-Tuple.
 		};
 		PPM getTol( AtomType );
 		void setTol( AtomType, PPM );

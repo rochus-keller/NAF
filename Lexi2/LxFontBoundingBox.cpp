@@ -56,7 +56,7 @@ void FontBoundingBox::stringBox( const QFont& f, const char* s, Viewport* vp )
 
 void FontBoundingBox::request(Requisition & requisition)
 {
-	// Requisition umschliesst den gesamten Zeichenbereich, der Pixel enth‰lt.
+	// Requisition umschliesst den gesamten Zeichenbereich, der Pixel enth√§lt.
 	// Normalerweise ist alignment horizontal negativ, da Ursprung links
 	// des gemalten Bereichs liegt.
 	Requirement& rx = requisition.getRequirement( DimX );
@@ -70,11 +70,11 @@ void FontBoundingBox::request(Requisition & requisition)
 	Coord rb = getRightBearing();
 	Coord w = getWidth();
 	if( rb < 0 )
-		w += -rb;	// z‰hle den w ¸berragenden Teil dazu.
-		// den leeren Rand (rb > 0) kˆnnte man eigentlich entfernen.
+		w += -rb;	// z√§hle den w √ºberragenden Teil dazu.
+		// den leeren Rand (rb > 0) k√∂nnte man eigentlich entfernen.
 	if( lb < 0 )
 	{
-		lb = -lb;	// logischer Ursprung wird links von gemalten Pixeln ¸berragt.
+		lb = -lb;	// logischer Ursprung wird links von gemalten Pixeln √ºberragt.
 		w += lb;
 		//rx.setAlignment( lb / float( w ) );
 	}else

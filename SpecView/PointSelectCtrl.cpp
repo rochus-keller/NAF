@@ -104,7 +104,7 @@ bool PointSelectCtrl::handleMousePress( Viewport& v, const Allocation& a, const 
 		ViewAreaMdl* mdl = d_view->getViewArea();
 		d_view->selectPeak( mdl->toPpm( e.getX(), a.getLeft(), DimX ), 
 			mdl->toPpm( e.getY(), a.getTop(), DimY ) );	
-		// Nicht immer true zurück, damit Cursor funktioniert.
+		// Nicht immer true zurÃ¼ck, damit Cursor funktioniert.
 		notifySelection( d_view, SpinPointView::PairIdLabelSysOrResi );
 		return d_swallow;
 	}
@@ -177,7 +177,7 @@ bool PointSelect1DCtrl::handleMousePress( Viewport& v, const Allocation& a, cons
 			d_view->selectPeak( mdl->toPpm( e.getX(), a.getLeft(), DimX ) );
 		else
 			d_view->selectPeak( mdl->toPpm( e.getY(), a.getTop(), DimY ) );	
-		// Nicht immer true zurück, damit Cursor funktioniert.
+		// Nicht immer true zurÃ¼ck, damit Cursor funktioniert.
 		notifySelection( d_view, SpinPointView::SysOrResiTagAll );
 		return d_swallow;
 	}

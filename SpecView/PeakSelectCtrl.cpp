@@ -103,7 +103,7 @@ bool PeakSelectCtrl::handleMousePress( Viewport& v, const Allocation& a, const M
 		ViewAreaMdl* mdl = d_view->getViewArea();
 		d_view->selectPeak( mdl->toPpm( e.getX(), a.getLeft(), DimX ), 
 			mdl->toPpm( e.getY(), a.getTop(), DimY ), !e.isShift() );	
-		// Nicht immer true zurück, damit Cursor funktioniert.
+		// Nicht immer true zurÃ¼ck, damit Cursor funktioniert.
 		notifySelection( d_view );
 		return d_swallow;
 	}
@@ -167,7 +167,7 @@ bool PeakSelect1DCtrl::handleMousePress( Viewport& v, const Allocation& a, const
 	{
 		ViewAreaMdl* mdl = d_view->getViewArea();
 		d_view->selectPeak( mdl->toPpm( e.getX(), a.getLeft(), DimX ) );	
-		// Nicht immer true zurück, damit Cursor funktioniert.
+		// Nicht immer true zurÃ¼ck, damit Cursor funktioniert.
 		return d_swallow;
 	}
 	// else

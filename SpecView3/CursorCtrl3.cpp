@@ -72,7 +72,7 @@ bool CursorCtrl3::keyPressEvent ( QKeyEvent * event )
     {
         if( !( event->modifiers() & ( Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier ) ) )
         {
-            // NOTE: auf OSX kommt mit den Cursor-Keys immer der Qt::KeypadModifier, darum kompliziertere Tests nötig
+            // NOTE: auf OSX kommt mit den Cursor-Keys immer der Qt::KeypadModifier, darum kompliziertere Tests nÃ¶tig
             stepCursor( *event );
             return true;
         }else if( event->modifiers() & Qt::ShiftModifier && !( event->modifiers() & ( Qt::ControlModifier | Qt::AltModifier ) ) )
@@ -91,7 +91,7 @@ void CursorCtrl3::stepCursor(const QKeyEvent &e, float step )
     ViewAreaMdl3* area = d_view->getArea();
     Dimension dim = 0;
 	PPM delta = 0;
-	// TODO: Richtung hier noch abhängig ob Ppm0 > PpmN
+	// TODO: Richtung hier noch abhÃ¤ngig ob Ppm0 > PpmN
     if( e.key() == Qt::Key_Up )
 	{
 		dim = DimY;

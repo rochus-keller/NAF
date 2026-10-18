@@ -130,7 +130,7 @@ namespace Spec
 		virtual ~NmrExperiment();
 		void denormalize( PathNode* root, PathTable::Path& path, int pos );
 		//. Diese Routine bildet den errechneten Tree auf die PathTable ab,
-		//. passend zur Rotation von SpecType. Sie l‰uft entlang der 
+		//. passend zur Rotation von SpecType. Sie l√§uft entlang der 
 		//. Stepreihenfolge rekursiv durch den Baum.
 	private:
         Root::Ref<ResidueType> d_resiType;

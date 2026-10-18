@@ -107,7 +107,7 @@ namespace Lua
 	private:
         QWidget* d_numberArea;
         QSet<int> d_breakPoints;
-        int d_curPos; // Zeiger für die aktuelle Ausführungsposition oder -1
+        int d_curPos; // Zeiger fÃ¼r die aktuelle AusfÃ¼hrungsposition oder -1
 		QString d_find;
 		QString d_name;
 		bool d_undoAvail;

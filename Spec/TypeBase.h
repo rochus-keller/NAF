@@ -69,7 +69,7 @@ namespace Spec
 		typedef std::map<Root::SymbolString,Root::Ref<SpectrumType> > SpectrumTypeMap;
 		typedef std::map<Root::SymbolString,Root::Ref<ResidueType> > ResidueTypeMap;
 		typedef std::map<Root::Index,Root::Ref<LabelingScheme> > LabelingSchemeMap;
-		// NOTE: für ID von ResidueType wird d_short verwendet.
+		// NOTE: fÃ¼r ID von ResidueType wird d_short verwendet.
 		// NOTE: SpectrumTypes und ResidueTypes werden initial ab Projektdatei
 		// geladen oder aus anderem Projekt importiert. Kein Editor vorgesehen.
 		typedef std::map<Root::Index,Root::Ref<SystemType> > SystemTypeMap;

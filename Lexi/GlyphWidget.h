@@ -46,10 +46,10 @@ namespace Lexi
 	struct _GlyphWidgetImp;
 
 	//* GlyphWidget
-	//. Diese Klasse ist das Verbindungsstück zwischen Qt und Lexi.
+	//. Diese Klasse ist das VerbindungsstÃ¼ck zwischen Qt und Lexi.
 	//. Es handelt sich um ein Widget, in dessen innerem eine Glyph-Hierarchie dargestellt wird.
-	//. Die Klasse enthält gleichzeitig eine Implementation von Agent bzw. Viewer, welche von
-	//. den Glyphs gesehen wird und als Kommunikationsknoten für den Message-Transfer dient.
+	//. Die Klasse enthÃ¤lt gleichzeitig eine Implementation von Agent bzw. Viewer, welche von
+	//. den Glyphs gesehen wird und als Kommunikationsknoten fÃ¼r den Message-Transfer dient.
 
 	class GlyphWidget : public QWidget
 	{

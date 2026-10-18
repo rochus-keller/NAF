@@ -34,7 +34,7 @@ namespace Root
 {
 	//* UndoManager
 	//* Dies ist ein Agent, der irgendwo in der Agent-Hierarchie sitzt und von oben
-	//* oder unten Commands (mittels RegisterForUndo) erh‰lt.
+	//* oder unten Commands (mittels RegisterForUndo) erh√§lt.
 	//* Der Manager reagiert auf die Actions Edit.Undo, Edit.Redo und System.KillUndo.
 
 	class UndoManager : public Agent

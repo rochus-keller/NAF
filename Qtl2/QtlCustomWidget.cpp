@@ -113,7 +113,7 @@ int CustomWidget::index(lua_State *L)
 
 	if( !lua_isnil( L, methods ) )
 	{
-		// pr¸fe, ob diese Tabelle eine Funktion unter gegebenem Namen hat.
+		// pr√ºfe, ob diese Tabelle eine Funktion unter gegebenem Namen hat.
 		lua_getfield( L, methods, name );
 		lua_remove( L, methods );
 
@@ -155,7 +155,7 @@ bool CustomWidget::pushMethodAndThis( const char *name) const
 	Engine2* e = Engine2::getInst();
 	Q_ASSERT( e != 0 );
 
-	const int preTop = lua_gettop(e->getCtx()); // muss nicht null sein, da z.B. :show direkt Callback auslˆst
+	const int preTop = lua_gettop(e->getCtx()); // muss nicht null sein, da z.B. :show direkt Callback ausl√∂st
 
 #ifdef __via_index
 	QtObject<CustomWidget>::create( e->getCtx(), const_cast<CustomWidget*>(this), false );

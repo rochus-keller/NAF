@@ -35,13 +35,13 @@ namespace Lexi2
 	class Image;
 	class Icon;
 
-	// Canvas ist nur ein dünner Wrapper um QPainter
+	// Canvas ist nur ein dÃ¼nner Wrapper um QPainter
 	class Canvas  
 	{
 	public:
 		bool isReady();
 		void drawText( const Allocation&, const char* str, const QFont* f, QColor c );
-		//. Zeichne str innerhalb Allocation, wobei Alignment berücksichtigt wird:
+		//. Zeichne str innerhalb Allocation, wobei Alignment berÃ¼cksichtigt wird:
 		//. Min=Left/Top, 0.5=Center, Max=Right/Bottom.
 		void drawFocusRect( Coord x, Coord y, Coord w, Coord h, QColor );
 		void drawPoint( Coord x, Coord y, QColor, Coord = 20 );
@@ -58,7 +58,7 @@ namespace Lexi2
 		void drawChar( Coord x, Coord y, char ch, const QFont* f, QColor c );
 		//. Zeichne ch, wobei y der Basislinie und x dem logischen Ursprung entspricht.
 		void fillRect( Coord x, Coord y, Coord w, Coord h, QColor c);
-		//. Zeichne ein gefülltes Rechteck mit (x,y)=(left,top).
+		//. Zeichne ein gefÃ¼lltes Rechteck mit (x,y)=(left,top).
 		void drawImage( Coord x, Coord y, Image* img, QColor bg = Qt::gray ) const;
 
 		void rollback();

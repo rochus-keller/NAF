@@ -91,7 +91,7 @@ namespace Spec
 		Matches d_matches;
 		bool d_run;
 		bool d_strict; // Schmeisse excludes raus.
-		bool d_unlabeled; // Berücksichtige auch Unlabeleds
+		bool d_unlabeled; // BerÃ¼cksichtige auch Unlabeleds
 	};
 
 }

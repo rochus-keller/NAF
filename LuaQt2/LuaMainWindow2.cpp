@@ -198,7 +198,7 @@ int LuaComboBox2::addItem(lua_State *L)
 	}else
 		obj->insertItem( luaL_checkstring( L, 2 ) );
 	lua_pushnumber( L, obj->count() );
-	// Wir beginnen mit 1 zu z‰hlen
+	// Wir beginnen mit 1 zu z√§hlen
 	return 1;
 }
 
@@ -227,7 +227,7 @@ int LuaComboBox2::getCurrentItem(lua_State *L)
 {
 	QComboBox* obj = ObjectHelper<QComboBox>::check( L, 1 );
 	lua_pushnumber( L, obj->currentItem() + 1 );
-	// Z‰hle von 1..n, mit 0..nicht selektiert
+	// Z√§hle von 1..n, mit 0..nicht selektiert
 	return 1;
 }
 

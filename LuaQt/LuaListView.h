@@ -71,8 +71,8 @@ namespace Spec
 		_LuaListItem* d_item;
 		int d_this;			// Referenz auf dieses Userdata-Object
 		// Peer muss einen eigenen Lua-Kontext haben, da ListView
-		// in Destruktor scheinbar zuerst alle owned-objects löscht
-		// bevor die Items gelöscht werden.
+		// in Destruktor scheinbar zuerst alle owned-objects lÃ¶scht
+		// bevor die Items gelÃ¶scht werden.
 	public:
 		int createItem(lua_State *L);
 		int getListView(lua_State *L);

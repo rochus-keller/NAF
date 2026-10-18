@@ -42,7 +42,7 @@ namespace Root
 		//. Diese Routine schneidet die Ebene (bzw. Scheibe) x,y an origin aus source heraus.
 		//. Beim kopieren wird mittels convert das Zellenformat von source in dasjenige von target konvertiert.
 		//. Converter ist ein Funktor oder eine Funktion mit Elementtyp von S als Argument.
-		//. Source benötigt die Routinen getExtension und getAt für Index und Point.
+		//. Source benÃ¶tigt die Routinen getExtension und getAt fÃ¼r Index und Point.
 		template< class T, class S, class Converter >
 		void cutPlane( T& target, const S& source, Dimension x, Dimension y, 
 			const Point& origin, Converter convert )
@@ -61,7 +61,7 @@ namespace Root
 			origin0[ x ] = 0;
 			origin0[ y ] = 0;
 
-			// Drei verschiedene Methoden, je nach gewählter Hauptebene.
+			// Drei verschiedene Methoden, je nach gewÃ¤hlter Hauptebene.
 			if( x == 0 && y == 1 )
 			{
 				Index sourceIndex = origin0.getIndex( sourceExt );
@@ -125,7 +125,7 @@ namespace Root
 		//. Diese Routine schneidet den Slice (bzw. Riemen) x an origin aus source heraus.
 		//. Beim kopieren wird mittels convert das Zellenformat von source in dasjenige von target konvertiert.
 		//. Converter ist ein Funktor oder eine Funktion mit Elementtyp von S als Argument.
-		//. Source benötigt die Routinen getExtension und getAt für Index und Point.
+		//. Source benÃ¶tigt die Routinen getExtension und getAt fÃ¼r Index und Point.
 		template< class T, class S, class Converter >
 		void cutSlice( T& target, const S& source, Dimension x, const Point& origin, Converter convert )
 		{
@@ -142,7 +142,7 @@ namespace Root
 			start[ x ] = 0;
 			Index index = start.getIndex( size );
 
-			// Drei verschiedene Methoden, je nach gewählter Hauptachse.
+			// Drei verschiedene Methoden, je nach gewÃ¤hlter Hauptachse.
 			if( x == 0 )
 			{
 				// Einfachster Fall, da die Achse bereits in serialisierter Form vorliegt.

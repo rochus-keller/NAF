@@ -46,9 +46,9 @@ namespace Lexi
 
 		//* Neue Traversalmethode
 		bool traverse( Glyph*, const Allocation& );
-		//. Jeder Glyph ruft diese Methode für jede seiner Komponenten auf. Der Rückgabewert
+		//. Jeder Glyph ruft diese Methode fÃ¼r jede seiner Komponenten auf. Der RÃ¼ckgabewert
 		//. bedeutet "CarryOn", d.h. Komponenten werden solange durchlaufen, bis false
-		//. zurückkommt.
+		//. zurÃ¼ckkommt.
 
 		Message* getMessage() const;
 		Glyph* getTarget() const;
@@ -56,28 +56,28 @@ namespace Lexi
 		//. Da der Traversal eine Referenz auf Viewport speichert, muss diese nicht mehr
 		//. in der Methodensignatur stehen.
 		bool accepts( const Glyph*, const Allocation& ) const;
-		//. Prüfe, ob Traversal den gegebenen Glyph mit der gegebenen Allocation 
+		//. PrÃ¼fe, ob Traversal den gegebenen Glyph mit der gegebenen Allocation 
 		//. akzeptiert (true) oder nicht (false). Ruft intern Condition::check auf.
 
 		enum VisitType { 
-			All,			// Alle Glyphs erhalten Rechenzeit für handle()
-			AllAccept,		// Alle akzeptierten Glyphs erhalten Rechenzeit für handle()
-			AnyAccept,		// Nur erster akzeptierter Glyphs erhält Rechenzeit für handle().
-			AllDone,		// Alle akzeptierten Glyphs erhalten Rechenzeit für handle() solange done.
-			AnyDone,		// Alle akzeptierten Glyphs erhalten Rechenzeit für handle(), bis done
-			AllDF,			// Alle Glyphs erhalten Rechenzeit auf Rückweg für handle()
-			AllAcceptDF,	// Gehe in Tiefe solange accepted. Rückweg handle für alle.
+			All,			// Alle Glyphs erhalten Rechenzeit fÃ¼r handle()
+			AllAccept,		// Alle akzeptierten Glyphs erhalten Rechenzeit fÃ¼r handle()
+			AnyAccept,		// Nur erster akzeptierter Glyphs erhÃ¤lt Rechenzeit fÃ¼r handle().
+			AllDone,		// Alle akzeptierten Glyphs erhalten Rechenzeit fÃ¼r handle() solange done.
+			AnyDone,		// Alle akzeptierten Glyphs erhalten Rechenzeit fÃ¼r handle(), bis done
+			AllDF,			// Alle Glyphs erhalten Rechenzeit auf RÃ¼ckweg fÃ¼r handle()
+			AllAcceptDF,	// Gehe in Tiefe solange accepted. RÃ¼ckweg handle fÃ¼r alle.
 			AnyAcceptDF,	// Identisch mit AnyAccept.
-			AllDoneDF,		// Gehe in die Tiefe solange accepted. Rückweg handle solange done.
-			AnyDoneDF,		// Gehe in die Tiefe solange accepted. Rückweg handle() bis done.
-			AnyAcceptDoneDF	// Gehe in die Tiefe bis accepted. Rückweg handle() bis done.
+			AllDoneDF,		// Gehe in die Tiefe solange accepted. RÃ¼ckweg handle solange done.
+			AnyDoneDF,		// Gehe in die Tiefe solange accepted. RÃ¼ckweg handle() bis done.
+			AnyAcceptDoneDF	// Gehe in die Tiefe bis accepted. RÃ¼ckweg handle() bis done.
 		};
-		//. DF...Depth First, d.h. zuerst traverse() dann handle() (bzw. handle() erst beim Rückweg).
+		//. DF...Depth First, d.h. zuerst traverse() dann handle() (bzw. handle() erst beim RÃ¼ckweg).
 
 		VisitType getType() const;
 
 		void push( Glyph* container, GlyphIndex component, Glyph* = nil );
-		//. Wird von einem getroffenen PolyGlyph für jede Component aufgerufen (statt hit), bevor 
+		//. Wird von einem getroffenen PolyGlyph fÃ¼r jede Component aufgerufen (statt hit), bevor 
 		//. deren pick aufgerufen wird (d.h. innerhalb der for-Schleife). Dies nur dann, 
 		//. wenn er selber nicht auf die Liste kommen soll, falls seine Components keinen 
 		//. Hit haben. Sonst hit verwenden.
@@ -112,15 +112,15 @@ namespace Lexi
 			//. Der erste Glyph, der auf dem Pfad zum Hit registriert wurde.
 			// Root::Sequence<Glyph*> d_handlers;
 			//. Handler aller getroffenen Glyphs sowie derjenigen auf dem Weg dorthin. Der Handler des
-			//. in der visuellen Hierarchie vordersten Glyph hat den grössten Index.
+			//. in der visuellen Hierarchie vordersten Glyph hat den grÃ¶ssten Index.
 			SendTo d_condition;
 			//. Die Condition, an welche check delegiert. Traversal wird Owner.
 			Message* d_message;
 			//. Die Message, welche im Rahmen des vorliegenden Traversals behandelt werden soll. Traversal wird Owner.
 			Viewport* d_port;
 			GlyphTraversal::VisitType d_visit;
-			bool d_done;	// Separat von Message::consume, da letzteres extern zurückgesetzt werden kann.
-							// Glyph::traverse implementiert einen von consume unabhängigen Zustellmechanismus.
+			bool d_done;	// Separat von Message::consume, da letzteres extern zurÃ¼ckgesetzt werden kann.
+							// Glyph::traverse implementiert einen von consume unabhÃ¤ngigen Zustellmechanismus.
 			bool d_accepted;
 
 		public:

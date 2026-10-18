@@ -169,7 +169,7 @@ void UcsfSpectrum::readParams()
         const double delta = w / double( size );
         w -= delta;
         // Damit entspricht Scale genau dem Bruker Spektrum und Slices in PolyScope sind kongruent.
-        // Anscheinend ist idx0 bereits die Mitte des Samples, darum "-= delta / 2.0" unnötig.
+        // Anscheinend ist idx0 bereits die Mitte des Samples, darum "-= delta / 2.0" unnÃ¶tig.
 
 		d_scales.push_back( Scale( idx0 + w / 2.0, idx0 - w / 2.0,
 			AtomType::parse( d_label.back().data(), idx0 ),

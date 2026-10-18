@@ -38,8 +38,8 @@ namespace Lexi2
 	class Viewport;
 
 	//* Glyph
-	//. Ein Glyph ist die Oberklasse für alles, was sich in einem Bildschirmfenster
-	//. (bzw. Canvas oder Viewport) darstellen lässt. 
+	//. Ein Glyph ist die Oberklasse fÃ¼r alles, was sich in einem Bildschirmfenster
+	//. (bzw. Canvas oder Viewport) darstellen lÃ¤sst. 
 
 	class Glyph : public Root::Resource
 	{
@@ -69,39 +69,39 @@ namespace Lexi2
 		virtual void replace(GlyphIndex, Glyph*);
 
 		//* Allocation-Methoden
-		//. Diese sorgen dafür, dass allfällige lokale Allocations aktualisiert werden.
-		//. Der changed-State wird durch diese Methoden zurückgesetzt.
+		//. Diese sorgen dafÃ¼r, dass allfÃ¤llige lokale Allocations aktualisiert werden.
+		//. Der changed-State wird durch diese Methoden zurÃ¼ckgesetzt.
 		virtual void pick( Coord x, Coord y, const Allocation&, GlyphTraversal&);
-		//. Prüft, ob der Glyph vom Punkt getroffen wurde.
+		//. PrÃ¼ft, ob der Glyph vom Punkt getroffen wurde.
 		//. Falls ja wird der Glyph im Traversal registriert.
 		//. Methode kann lokal persistente Allocation setzen.
 		virtual void draw(Canvas&, const Allocation&);
-		//. Zeichnet den Glyph auf dem Viewport, wobei Position, Breite und Höhe des
+		//. Zeichnet den Glyph auf dem Viewport, wobei Position, Breite und HÃ¶he des
 		//. des Glyphs relativ zum Viewport als Allocation mitgegeben wird. 
 		//. Methode kann lokal persistente Allocation setzen.
 		virtual void allocate(const Allocation&);
 		//. Teile dem Glyph seinen Viewport und darin die zugeteilte Allocation mit.
 		//. Methode kann lokal persistente Allocation setzen.
-		//. Ein Polyglyph ruft normalerweise allocate für all seine Komponenten auf,
-		//. während er sich in pick oder draw befindet und sich die mitgeteilte
-		//. Allocation gegenüber dem letzten Aufruf geändert hat oder eine Komponente
-		//. sich anlässlich changed als ungültig erklärt hat.
+		//. Ein Polyglyph ruft normalerweise allocate fÃ¼r all seine Komponenten auf,
+		//. wÃ¤hrend er sich in pick oder draw befindet und sich die mitgeteilte
+		//. Allocation gegenÃ¼ber dem letzten Aufruf geÃ¤ndert hat oder eine Komponente
+		//. sich anlÃ¤sslich changed als ungÃ¼ltig erklÃ¤rt hat.
 
 		virtual void deallocate();
 		//. Teile dem Glyph mit, dass er nicht mehr Teil eines Viewport ist (ehemals undraw).
-		//. Gegenstück zu Allocation-Methoden
+		//. GegenstÃ¼ck zu Allocation-Methoden
 		virtual void modified(Glyph* me);
 		//. This notifies a Container that its component me has 
 		//. changed its requisition, and therefore it might be necessary to reallocate it. 
 
-		//* Frage nach Geometrie oder Geometrieänderungen
+		//* Frage nach Geometrie oder GeometrieÃ¤nderungen
 		virtual void request( Requisition& );
-		//. Erfrage vom Glyph die gewünschte Höhe und Breite, die ihn selber und
+		//. Erfrage vom Glyph die gewÃ¼nschte HÃ¶he und Breite, die ihn selber und
 		//. allenfalls enthaltene Glyphs umfasst.
-		//. Nur Character könnte auch Viewport brauchen wegen Character-Metrics.
+		//. Nur Character kÃ¶nnte auch Viewport brauchen wegen Character-Metrics.
 		virtual bool allocation( Allocation& ) const;
-		//. Gebe die lokal gehaltene Allocation des Component-Glyphs zurück.
-		//. Gibt false zurück, wenn keine lokalen Informationen verfügbar.
+		//. Gebe die lokal gehaltene Allocation des Component-Glyphs zurÃ¼ck.
+		//. Gibt false zurÃ¼ck, wenn keine lokalen Informationen verfÃ¼gbar.
 
 
 		Glyph(Glyph* = 0);

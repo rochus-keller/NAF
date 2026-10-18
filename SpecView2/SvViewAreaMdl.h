@@ -36,7 +36,7 @@ namespace Spec2
 	using namespace Spec;
 
 	//* ViewAreaMdl
-	//. Diese Klasse ist verantwortlich für die Abbildung des Fensterausschnitts auf
+	//. Diese Klasse ist verantwortlich fÃ¼r die Abbildung des Fensterausschnitts auf
 	//. den Spektrenausschnitt (mit allen Umrechnungen). Die beiden Dimensionen X und Y
 	//. beziehen sich auf den Bildschirm. Die PPM-Y-Skala ist entsprechend invertiert.
 	//. Die Klasse SpecBufferMdl verwendet diese PPM-Skala, um den Buffer aus dem
@@ -138,11 +138,11 @@ namespace Spec2
 		enum { DimCount = 2 };
 		Allocation d_allocation;		// Der aktuell zugeteilte Bildschirmausschnitt
 		PpmRange d_range[ DimCount ];	// Der aktuell im Viewer dargestellte PPM-Bereich
-		bool d_inUse[ DimCount ];		// Für welche PPM-Dimensionen sind wir zuständig.
-		bool d_autoZoom[ DimCount ];	// True:  Der PPM-Bereich ändert nicht mit Allocation, 
-										//        d.h. er wird mit Fenstergrösse skaliert.
-										// False: Der PPM-Bereich ist unabhängig von Fenstergrösse,
-										//        d.h. er ändert mit Allocation.
+		bool d_inUse[ DimCount ];		// FÃ¼r welche PPM-Dimensionen sind wir zustÃ¤ndig.
+		bool d_autoZoom[ DimCount ];	// True:  Der PPM-Bereich Ã¤ndert nicht mit Allocation, 
+										//        d.h. er wird mit FenstergrÃ¶sse skaliert.
+										// False: Der PPM-Bereich ist unabhÃ¤ngig von FenstergrÃ¶sse,
+										//        d.h. er Ã¤ndert mit Allocation.
 		Dimension d_target[ DimCount ];
 		Root::Ref<CubeMdl> d_model;
 	};

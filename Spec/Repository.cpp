@@ -502,7 +502,7 @@ void Script::setCompiled()
 {
 	d_compiled = true;
 	assert( d_rep );
-	// Unnötig. d_rep->notifyObservers( Script::Changed( this, Script::Compiled ) );
+	// UnnÃ¶tig. d_rep->notifyObservers( Script::Changed( this, Script::Compiled ) );
 }
 
 QByteArray  Script::getInstanceName(bool) const

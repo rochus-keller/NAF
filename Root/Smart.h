@@ -30,8 +30,8 @@ namespace Root
 	// Wie Ref und entweder Ptr (guarded==false) oder guard (guarded==true).
 	// Im Falle von guarded==false ist Ptr Default (d.h. Konstruktor und op=).
 
-	// TODO refcounted muss anderst gelöst werden, damit Compiler nur diejenigen
-	// von addRef abhängig macht, wenn ref ein.
+	// TODO refcounted muss anderst gelÃ¶st werden, damit Compiler nur diejenigen
+	// von addRef abhÃ¤ngig macht, wenn ref ein.
 	template<class T, bool guarded = true, bool refcounted = false >
 	class Smart
 	{
@@ -60,7 +60,7 @@ namespace Root
 			void guard( T* t )
 			{
 				// guard t muss im Originalzustand belassen werden, da addGuard
-				// direkt den Wert verwendet, der ansonsten nicht mit this übereinstimmt
+				// direkt den Wert verwendet, der ansonsten nicht mit this Ã¼bereinstimmt
 				check( t );
 				d_ptr = t;
 			}

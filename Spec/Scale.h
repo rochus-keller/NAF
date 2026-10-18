@@ -32,11 +32,11 @@
 namespace Spec
 {
 	//* Scale
-	//. Diese Klasse repräsentiert eine PPM-Skala entlang einer Dimension eines
+	//. Diese Klasse reprÃ¤sentiert eine PPM-Skala entlang einer Dimension eines
 	//. Spektrums (bzw. Plane, Slice oder Buffer).
 
 	//. Bei der Umwandlung von PPM nach Sample wird PPM quantisiert auf den
-	//. jeweils im Bereich +- 0.5 delta nächstgelegenen Index.
+	//. jeweils im Bereich +- 0.5 delta nÃ¤chstgelegenen Index.
 	class Scale  
 	{
 	public:
@@ -56,21 +56,21 @@ namespace Spec
 			//return getFloatFreq( d_count * 0.5 );
 		}
 
-		/// Liefere die genaue Frequenz zu Sample idx. idx darf kleiner 0 oder grösser N sein. 
-		/// Sample 0 gibt d_ppm.first zurück, Sample n-1 analog d_ppm.second.
+		/// Liefere die genaue Frequenz zu Sample idx. idx darf kleiner 0 oder grÃ¶sser N sein. 
+		/// Sample 0 gibt d_ppm.first zurÃ¼ck, Sample n-1 analog d_ppm.second.
 		/// Index kann ganzzahlig oder gebrochen sein.
 		PPM getFreq( double idx ) const
 		{
 			return d_ppm.first + idx * getDeltaSigned();
 		}
 
-		//. Wie getFloatFreq, jedoch für relative Indizes.
+		//. Wie getFloatFreq, jedoch fÃ¼r relative Indizes.
 		PPM getFreqRel( double idx ) const
 		{
 			return idx * getDeltaSigned();
 		}
 
-		//. Gibt den auf 0.5 delta gerundeten Sample-Index von p zurück. Alle p im Bereich
+		//. Gibt den auf 0.5 delta gerundeten Sample-Index von p zurÃ¼ck. Alle p im Bereich
 		//. p +- delta/2 werden auf dasselbe Sample abgebildet.
 		Sample getIndex( PPM p ) const
 		{
@@ -85,13 +85,13 @@ namespace Spec
 			*/
 		}
 
-		//. Gibt den genauen Index ohne Rundung zurück.
+		//. Gibt den genauen Index ohne Rundung zurÃ¼ck.
 		double getFloatIndex( PPM p ) const
 		{
 			return ( p - d_ppm.first ) / getDeltaSigned();
 		}
 
-		/// Gibt den PPM-Bereich zurück, den das Sample idx abdeckt.
+		/// Gibt den PPM-Bereich zurÃ¼ck, den das Sample idx abdeckt.
 		PpmRange getIndexRange( Sample idx ) const;
 
 		/// PPM-Abstand zwischen zwei Sample-Punkten. Positiv wenn idx0 < idxN.
@@ -118,7 +118,7 @@ namespace Spec
 
 		Scale( PPM idx0, PPM idxN, const AtomType&, PPM delta, Folding = Unfolded );
 		Scale( PPM idx0, PPM idxN, const AtomType& = AtomType(), Folding = Unfolded, Sample count = 1 );
-		Scale( const Scale&, bool invert = false ); // NOTE: ohne gab es plötzlich Probleme mit VC-Default.
+		Scale( const Scale&, bool invert = false ); // NOTE: ohne gab es plÃ¶tzlich Probleme mit VC-Default.
 		Scale();
 		~Scale();
 
@@ -134,14 +134,14 @@ namespace Spec
 		//. Innerhalb Range=0, links von Idx0<=-1, rechts von IdxN>=+1
 		const PpmRange& getRange() const { return d_ppm; }
 		inline PpmRange getRange( bool invert ) const;
-		//. Gebe das ganze von der Scale repräsentierte Intervall zurück, 1:1 oder seitenverkehrt.
+		//. Gebe das ganze von der Scale reprÃ¤sentierte Intervall zurÃ¼ck, 1:1 oder seitenverkehrt.
 		PpmRange getRange( PPM center, bool invert = false ) const { return getRange( center, getDelta(), invert ); }
 		PpmRange getRange( PPM center, PPM span, bool invert = false ) const;
 		//. Erzeuge einen Range, dessen Mittenfrequenz center ist und links/rechts 1/2 span ausdehnt.
 		const AtomType& getColor() const { return d_color; }
 		void setColor( const AtomType& c ) { d_color = c; }
 		bool isParallel() const { return d_ppm.isParallel(); }
-		//. True, falls die PPM-Skala parallel mit Sample-Index verläuft. Normalerweise antiparallel.
+		//. True, falls die PPM-Skala parallel mit Sample-Index verlÃ¤uft. Normalerweise antiparallel.
 		float getSign() const { return d_ppm.getSign(); }
 		//. +1.0, falls PPM-Skala parallel mit Sample-Index, sonst -1.0.
 		Folding getFolding() const { return d_fold; }

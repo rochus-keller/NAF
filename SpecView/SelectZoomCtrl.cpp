@@ -29,7 +29,7 @@ using namespace Lexi;
 class _SelectZoomCmd : public SelectorCmd
 {
 	Root::Ref<ViewAreaMdl> d_model;
-	bool d_do[ 2 ];	// TODO: eleganter lösen.
+	bool d_do[ 2 ];	// TODO: eleganter lÃ¶sen.
 public:
 	_SelectZoomCmd( Glyph* ctrl, ViewAreaMdl* m, bool x, bool y ):
 	  SelectorCmd( ctrl ), d_model( m ) 

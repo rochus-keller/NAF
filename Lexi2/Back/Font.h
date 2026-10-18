@@ -1,10 +1,10 @@
 /****************************************************************
-    Klassifizierung:    GESCHÄFTSGEHEIM
+    Klassifizierung:    GESCHÃ„FTSGEHEIM
     Modul:              
     Projekt:            GlyphWorks
     Owner-Unit:         Lexi2
 
-    Für Versionsinformationen wird auf Datei Lexi2.sud verwiesen.
+    FÃ¼r Versionsinformationen wird auf Datei Lexi2.sud verwiesen.
 
     Copyright (c) 1987, 1988, 1989, 1990, 1991 Stanford University
     Copyright (c) 1991 Silicon Graphics, Inc.
@@ -48,7 +48,7 @@ namespace Lexi2
 			Coord getDescent() const { return d_fontDescent; }
 			//. FontBoundingBox::descent returns the extent below the font's baseline
 			Coord getHeight() const { return d_fontAscent + d_fontDescent; }
-			//. Höhe des Zeichens.
+			//. HÃ¶he des Zeichens.
 		private:
 			friend class Font;
 
@@ -62,26 +62,26 @@ namespace Lexi2
 			//. Zeichens liegt. Definition wie in Qt.
 			//. VORSICHT: X definiert rbearing ausgehend vom Ursprung dieses Zeichens (nicht des Folgezeichens)!
 			Coord d_width;			// XTextWidth16
-			//. Distanz des Origins des Zeichens bis zum Origin des nächsten Zeichens. Kann
+			//. Distanz des Origins des Zeichens bis zum Origin des nÃ¤chsten Zeichens. Kann
 			//. kleiner sein als die Gesamtbreite des Zeichens (damit Zeichen kompakt zusammengeschoben
-			//. werden können).
+			//. werden kÃ¶nnen).
 			//- Coord d_ascent;			// XCharStruct.ascent
-			//. Distanz ab Baseline bis Oberkante Zeichen, wobei Basline-Pixel nicht dazugehört.
+			//. Distanz ab Baseline bis Oberkante Zeichen, wobei Basline-Pixel nicht dazugehÃ¶rt.
 			//- Coord d_descent;		// XCharStruct.descent
-			//. Distanz ab Baseline bis Unterkante Zeichen inkl. ein Pixel für Baseline.
+			//. Distanz ab Baseline bis Unterkante Zeichen inkl. ein Pixel fÃ¼r Baseline.
 			Coord d_fontAscent;	// XFontStruct.ascent
-			//. Maximaler ascent für die gesamte Schrift.
+			//. Maximaler ascent fÃ¼r die gesamte Schrift.
 			Coord d_fontDescent;	// XFontStruct.descent
-			//. Maximaler descent für die gesamte Schrift.
+			//. Maximaler descent fÃ¼r die gesamte Schrift.
 
-			//. Die Baseline befindet sich gerade im nächsten Pixel unterhalb von "A". Der
+			//. Die Baseline befindet sich gerade im nÃ¤chsten Pixel unterhalb von "A". Der
 			//. Buchstabe schneidet sich folglich nicht mit der Baseline.
 		};
 
 		Font( const QFont& );
 		Font( const char* family, const char* style, Coord size );
 		Font( const char* family, Coord size );
-		//. Size ist die Grösse in Coords (also Twips).
+		//. Size ist die GrÃ¶sse in Coords (also Twips).
 		virtual ~Font();
 
 		Coord getSize() const;
@@ -89,10 +89,10 @@ namespace Lexi2
 		void fontBox( BoundingBox&, Viewport* = nil ) const;
 		void charBox( char, BoundingBox&, Viewport* = nil ) const;
 		void stringBox( const char*, BoundingBox&, Viewport* = nil ) const;
-		//. Berechne die BoundingBox für a) die durchschnittliche
-		//. Zeichengrösse (fontBox), b) die effektive Zeichengrösse (charBox)
-		//. und c) die Grösse eines gegebenen Strings (stringBox). Die
-		//. Grösse bezieht sich auf Viewport. Wenn nil, wird Screen verwendet.
+		//. Berechne die BoundingBox fÃ¼r a) die durchschnittliche
+		//. ZeichengrÃ¶sse (fontBox), b) die effektive ZeichengrÃ¶sse (charBox)
+		//. und c) die GrÃ¶sse eines gegebenen Strings (stringBox). Die
+		//. GrÃ¶sse bezieht sich auf Viewport. Wenn nil, wird Screen verwendet.
 		Coord getWidth(char) const;
 		Coord getWidth(const char*) const;
 		//. Ermittle die Breite a) eines Zeichens und b) eines Strings auf dem Screen.

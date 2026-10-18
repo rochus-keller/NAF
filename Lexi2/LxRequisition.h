@@ -38,11 +38,11 @@ namespace Lexi2
 	{
 	private:
 		Coord d_natural;
-			//. Gewünschte, absolute Breite in der Dimension.
+			//. GewÃ¼nschte, absolute Breite in der Dimension.
 		Coord d_stretch;
-			//. Maximal erlaubte Verlängerung der Breite (additiv).
+			//. Maximal erlaubte VerlÃ¤ngerung der Breite (additiv).
 		Coord d_shrink;
-			//. Maximal erlaubte Verkürzung der Breite (subtraktiv).
+			//. Maximal erlaubte VerkÃ¼rzung der Breite (subtraktiv).
 	public:
 		bool equals( const Requirement& ) const;
 		Coord getDescent() const;
@@ -74,9 +74,9 @@ namespace Lexi2
 	};
 
 	//* Requisition
-	//. Eine Requisition enthält für alle Dimensionen eines Glyphs ein Requirement.
-	//. Die Klasse ermöglicht es, das Requirement für alle Dimensionen in einem
-	//. Methodenaufruf zurückzugeben und damit Rechenzeit zu sparen.
+	//. Eine Requisition enthÃ¤lt fÃ¼r alle Dimensionen eines Glyphs ein Requirement.
+	//. Die Klasse ermÃ¶glicht es, das Requirement fÃ¼r alle Dimensionen in einem
+	//. Methodenaufruf zurÃ¼ckzugeben und damit Rechenzeit zu sparen.
 	//. Standard-Alignment ist Left/Top.
 
 	class Requisition 

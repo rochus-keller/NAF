@@ -307,7 +307,7 @@ void Canvas::drawText(const Allocation & a, const char * str, const QFont * f, Q
 		d_painter->setFont( *f );
 
 	int tf = 0; // RISK
-	// Hier Origin verwenden, da getLeft()/getTop() von Alignment abhängig.
+	// Hier Origin verwenden, da getLeft()/getTop() von Alignment abhÃ¤ngig.
 	d_painter->drawText( QRect( t2p( a.getAllotment( DimX ).getOrigin() ), 
 			t2p( a.getAllotment( DimY ).getOrigin() ), 
 			t2p( a.getWidth() ), 

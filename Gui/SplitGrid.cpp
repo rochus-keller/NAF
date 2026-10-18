@@ -41,7 +41,7 @@ SplitGrid::SplitGrid(QWidget* p):
 	setOpaqueResize( false );
 
 	/*
-		Horizontaler Splitter als Spalten enth‰lt n vertikale Splitter als Zeilen.
+		Horizontaler Splitter als Spalten enth√§lt n vertikale Splitter als Zeilen.
 	*/
 }
 

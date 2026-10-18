@@ -41,7 +41,7 @@ namespace Root
 	{
 	public:
 		void traverse( Message& );
-		//. Ruft defaultmässig traverseUp() auf.
+		//. Ruft defaultmÃ¤ssig traverseUp() auf.
 		virtual void traverseDown( Message& );
 		//. Verarbeite die Message oder gebe sie an Children weiter.
 		virtual void traverseUp( Message& );

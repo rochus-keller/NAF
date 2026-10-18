@@ -43,7 +43,7 @@ namespace Lexi2
 		bool focusIn() const { return d_focusIn; }
 		void reset( bool in );
 		Glyph* accepted() const { return d_target; }
-		//* Mit den folgenden Methoden legt der Controller fest, wer effektiv den Fokus erh‰lt.
+		//* Mit den folgenden Methoden legt der Controller fest, wer effektiv den Fokus erh√§lt.
 		//.	GlyphWidget verwendet den accepted und nicht den send-to Target.
 		void accept( Glyph* g ) { d_target = g; }
 		//. Wird vom Handler aufgerufen, wenn dieser bereit ist, den Fokus abzugeben oder anzunehmen.

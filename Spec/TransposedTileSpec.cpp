@@ -74,7 +74,7 @@ TransposedTileSpec::~TransposedTileSpec()
 void TransposedTileSpec::fillBuffer(Buffer & buffer, const Rotation & dims, 
 									const Root::Cube & cube, const Root::Point& ns) const
 {
-// NOTE: diese Routine ist recht ähnlich zu TileSpectrum::fillBuffer, ausser dass
+// NOTE: diese Routine ist recht Ã¤hnlich zu TileSpectrum::fillBuffer, ausser dass
 // an den meisten Orten die T-Versionen verwendet werden.
 
 	Dimension d;
@@ -84,7 +84,7 @@ void TransposedTileSpec::fillBuffer(Buffer & buffer, const Rotation & dims,
 	if( tdimCount > dimCount )
 		throw Root::Exception( "target dimension out of range" );
 
-	//* Bringe den Buffer auf die nötige Grösse, um Cube darin zu speichern. 
+	//* Bringe den Buffer auf die nÃ¶tige GrÃ¶sse, um Cube darin zu speichern. 
 	// Setze Skalenausschnitt.
 	bool downSize = false;
 	{
@@ -123,9 +123,9 @@ void TransposedTileSpec::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	// TODO: muss hier nicht auch Scale::getSign berücksichtigt werden?
+	// TODO: muss hier nicht auch Scale::getSign berÃ¼cksichtigt werden?
 
-	//* Überführe Cube in normalisierte roi
+	//* ÃœberfÃ¼hre Cube in normalisierte roi
 	Cube roi( dimCount ); // Bereinigt mit first < second
 	for( d = 0; d < dimCount; d++ )
 	{
@@ -136,7 +136,7 @@ void TransposedTileSpec::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	/* const */ Point flip;		// Target-Achse verläuft parallel oder antiparallel
+	/* const */ Point flip;		// Target-Achse verlÃ¤uft parallel oder antiparallel
 	/* const */ Point flipOff;	// Arithmetischer Trick um Achse zu drehen
 	for( d = 0; d < tdimCount; d++ )
 	{
@@ -169,15 +169,15 @@ void TransposedTileSpec::fillBuffer(Buffer & buffer, const Rotation & dims,
 	off.assign( tdimCount, 0 );
 
 	Root::FixVector<Root::Int64> f1;
-	// Faktor für Indexberechnung: f1[ 2 ] * f1[ 1 ] * at( 0 ) + f1[ 2 ] * at( 1 ) + at( 2 )
-	// f1 enthält jeweils die konstanden Multiplikatoren, die dann zum konreten at() 
+	// Faktor fÃ¼r Indexberechnung: f1[ 2 ] * f1[ 1 ] * at( 0 ) + f1[ 2 ] * at( 1 ) + at( 2 )
+	// f1 enthÃ¤lt jeweils die konstanden Multiplikatoren, die dann zum konreten at() 
 	// multipliziert werden.
 	f1.assign( dimCount, 1 );
 	for( d = dimCount - 2; d >= 0; d-- )
 		f1[ d ] = Root::Int64(d_tileSize[ d + 1 ]) * f1[ d + 1 ];
 
 	Point f2;
-	// Faktor für Indexberechnung: f2[ 0 ] * f2[ 1 ] * at( 2 ) + f2[ 0 ] * at( 1 ) + at( 0 )
+	// Faktor fÃ¼r Indexberechnung: f2[ 0 ] * f2[ 1 ] * at( 2 ) + f2[ 0 ] * at( 1 ) + at( 0 )
 	f2.assign( tdimCount, 1 );
 	for( d = 1; d < tdimCount; d++ )
 		f2[ d ] = buffer.getExtension()[ d - 1 ] * f2[ d - 1 ];
@@ -220,7 +220,7 @@ void TransposedTileSpec::fillBuffer(Buffer & buffer, const Rotation & dims,
 
 			//* Berechne den seriellen Index von currentSamp relativ zu currentTile.
 			Root::Int64 pointIndex = 0;
-			// Optimierung für currentSamp.getIndexT( d_tileSize ):
+			// Optimierung fÃ¼r currentSamp.getIndexT( d_tileSize ):
 			for( d = 0; d < dimCount; d++ ) 
 				pointIndex += Root::Int64(currentSamp[ d ]) * f1[ d ];
 			pointIndex *= Root::Int64(d_word);

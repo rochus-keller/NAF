@@ -181,8 +181,8 @@ void Terminal2::keyPressEvent(QKeyEvent *e)
 
 void Terminal2::inputMethodEvent(QInputMethodEvent * e)
 {
-    // Auf Linux ist diese Methode nötig für Ü, Ö, etc.
-    // Das ist eine sehr vereinfachte Methode. Für eine vollständige Behandlung siehe
+    // Auf Linux ist diese Methode nÃ¶tig fÃ¼r Ãœ, Ã–, etc.
+    // Das ist eine sehr vereinfachte Methode. FÃ¼r eine vollstÃ¤ndige Behandlung siehe
     // QTextControlPrivate::inputMethodEvent in Qt/src/qui/text/qtextcontrol.cpp
     QString text = e->commitString();
 

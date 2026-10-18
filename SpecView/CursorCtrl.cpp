@@ -79,7 +79,7 @@ void CursorCtrl::stepCursor(const KeyEvent & e, float step )
 	ViewAreaMdl* area = d_view->getViewArea();
     Dimension dim = 0;
 	PPM delta = 0;
-	// TODO: Richtung hier noch abhängig ob Ppm0 > PpmN
+	// TODO: Richtung hier noch abhÃ¤ngig ob Ppm0 > PpmN
 	if( e.isUp() )
 	{
 		dim = DimY;

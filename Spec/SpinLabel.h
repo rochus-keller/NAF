@@ -96,16 +96,16 @@ namespace Spec
 		//. Der Zeichencode des Labels. Generalisierbar, wobei die erste
 		//. Stelle links normalerweise der Atomfarbe entspricht.
 		Root::Int16 d_offset;
-		//. Legt fest, zu welchem System in der Kette der Spin gehört. Mit
-		//. dieser Information ist eine automatische Kettenbildung möglich.
+		//. Legt fest, zu welchem System in der Kette der Spin gehÃ¶rt. Mit
+		//. dieser Information ist eine automatische Kettenbildung mÃ¶glich.
 		Root::Int8 d_state; // State
 		//. Die Zuweisung ist definitiv. Das Label muss daher innerhalb des
-		//. zugehörigen SpinSystems eindeutig sein 
-		//. (gilt nur für eigene, d.h. offset=0).
+		//. zugehÃ¶rigen SpinSystems eindeutig sein 
+		//. (gilt nur fÃ¼r eigene, d.h. offset=0).
 
 	};
 
-	// Diese Klasse dient dazu, ein SpinLabel z.B. als Param eines Menüs zu führen (boxing)
+	// Diese Klasse dient dazu, ein SpinLabel z.B. als Param eines MenÃ¼s zu fÃ¼hren (boxing)
 	class SpinLabelHolder : public Root::Resource
 	{
 	public:

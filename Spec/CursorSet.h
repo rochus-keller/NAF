@@ -68,10 +68,10 @@ namespace Spec
 		public:
 			enum Type { Active, Add, Remove, Upd, Rotate, Clear };
 
-			// Für Rotate und Clear
+			// FÃ¼r Rotate und Clear
 			Update( CursorSet* m, Type t, Index id = -1 ):
 				Root::UpdateMessage( m ), d_type( t ), d_id( id ) {}
-			// Für Active, Add, Remove und Update
+			// FÃ¼r Active, Add, Remove und Update
 			Update( CursorSet* m, Type t, Index id, const PpmPoint& old ):
 				Root::UpdateMessage( m ), d_type( t ), d_id( id ), d_old( old ) {}
 

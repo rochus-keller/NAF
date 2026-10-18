@@ -33,22 +33,22 @@ namespace Root
 	class Any;
 
 	//* Action
-	//. Eine Action ist ein parameterloser Benützerbefehl, der
-	//. entweder via Menü, Toolbar oder Interpreter-Command ins
-	//. System gelangt. Eine Action ist ein Message, die etwas über ihre
-	//. eigene Identität und Verfügbarkeit weiss. In diesem
-	//. Sinne bietet sie ihrem Owner Properties für ihren
-	//. eigenen Aktivitätszustand und Dekorationsattribute.
-	//. Alle Objekte, die auf Actions reagieren, müssen die beiden Fälle
+	//. Eine Action ist ein parameterloser BenÃ¼tzerbefehl, der
+	//. entweder via MenÃ¼, Toolbar oder Interpreter-Command ins
+	//. System gelangt. Eine Action ist ein Message, die etwas Ã¼ber ihre
+	//. eigene IdentitÃ¤t und VerfÃ¼gbarkeit weiss. In diesem
+	//. Sinne bietet sie ihrem Owner Properties fÃ¼r ihren
+	//. eigenen AktivitÃ¤tszustand und Dekorationsattribute.
+	//. Alle Objekte, die auf Actions reagieren, mÃ¼ssen die beiden FÃ¤lle
 	//. Execution (isUpdate=false) und Update (isUpdate=true) unterscheiden.
 	//. Mit diesem Unterschied kann dieselbe Action vor der eigentlichen 
-	//. Ausführung zur Prüfung ihrer Verfügbarkeit und allenfalls ihres 
+	//. AusfÃ¼hrung zur PrÃ¼fung ihrer VerfÃ¼gbarkeit und allenfalls ihres 
 	//. Flipflop-Zustands verwendet werden.
-	//. Actions können einfach in den Chain-Of-Command geworfen werden, ohne
+	//. Actions kÃ¶nnen einfach in den Chain-Of-Command geworfen werden, ohne
 	//. an einen konkreten Executor gebunden zu sein. Auf diese Weise wandert
-	//. die Action solange durch das System, bis sie jemand ausführt. Normalerweise
+	//. die Action solange durch das System, bis sie jemand ausfÃ¼hrt. Normalerweise
 	//. geht eine Action an den Focus-Glyph.
-	//. Im Gegensatz zu den übrigen Messages unterscheidet man eine konkrete
+	//. Im Gegensatz zu den Ã¼brigen Messages unterscheidet man eine konkrete
 	//. Action durch den Command-String (operator==). Ein Command ist ein statischer
 	//. const-String, dessen Adresse als Identifikation des Commands dient.
 
@@ -62,46 +62,46 @@ namespace Root
 		//* Lokale Helper
 		bool checkAndRun();
 		//. Ruft zuerst update() auf und dann execute(), falls isEnabled().
-		//. Gibt true zurück, falls execute() aufgerufen wurde.
+		//. Gibt true zurÃ¼ck, falls execute() aufgerufen wurde.
 
-		//* Interface für Executor
+		//* Interface fÃ¼r Executor
 		virtual void setEnabled( bool = true );
 		virtual void setOn( bool = true );
-		//. Executors können dieser Action während einem Update-Zyklus oder
+		//. Executors kÃ¶nnen dieser Action wÃ¤hrend einem Update-Zyklus oder
 		//. auch sonst Enabled setzen.
 		virtual CmdSym getCommand() const;
-		//. Gibt die mit der Action assoziierte Befehlszeile zurück.
+		//. Gibt die mit der Action assoziierte Befehlszeile zurÃ¼ck.
 		virtual bool isUpdate() const;
 		//. Falls True handelt es sich nur um einen Update
 		//. Request (initiiert durch update() ) und nicht
-		//. die Ausführung (initiiert durch execute() ).
+		//. die AusfÃ¼hrung (initiiert durch execute() ).
 		virtual bool operator==( CmdStr ) const;
 		virtual Index getParamCount() const;
 		virtual const Any& getParam( Index ) const;
-		//. Die Action kann optional über Parameter verfügen. getParamCount()
-		//. gibt die Anzahl enthaltener Parameter zurück. getParam() erlaubt
+		//. Die Action kann optional Ã¼ber Parameter verfÃ¼gen. getParamCount()
+		//. gibt die Anzahl enthaltener Parameter zurÃ¼ck. getParam() erlaubt
 		//. Lesezugriff auf die Parameter.
 
-		//* Interface zu Menü/Toolbar
+		//* Interface zu MenÃ¼/Toolbar
 		virtual bool isFlipFlop() const;
-		//. Gibt dem Caller an, ob die Action über einen
-		//. binären Schalterzustand verfügt oder nur ein Event ist.
+		//. Gibt dem Caller an, ob die Action Ã¼ber einen
+		//. binÃ¤ren Schalterzustand verfÃ¼gt oder nur ein Event ist.
 		virtual const char* getPrettyName() const;
-		//. Der Caller erhält eine Bezeichnung der Action zur 
+		//. Der Caller erhÃ¤lt eine Bezeichnung der Action zur 
 		//. Darstellung im GUI (z.B. Menue-Item). 
 		//. RISK: Internationalisierung.
 		virtual void execute();
 		//. Wird vom Client aufgerufen, um die mit dieser Action
-		//. verbundene Aktivitäten auszuführen.
+		//. verbundene AktivitÃ¤ten auszufÃ¼hren.
 		virtual void update();
-		//. Bereitet die Action darauf vor, dass demnächst isEnabled und
+		//. Bereitet die Action darauf vor, dass demnÃ¤chst isEnabled und
 		//. isOn aufgerufen werden. 
 		virtual bool isEnabled() const;
 		//. Der Client fragt, ob die mit der Action verbundenen
-		//. Aktivitäten zur Zeit ausgeführt werden könnten.
+		//. AktivitÃ¤ten zur Zeit ausgefÃ¼hrt werden kÃ¶nnten.
 		virtual bool isOn() const;
 		//. Der Client fragt, ob die Aktion den Zustand "eingeschaltet"
-		//. hat, was sich im GUI mit einem Häkchen oder einem gedrückten
+		//. hat, was sich im GUI mit einem HÃ¤kchen oder einem gedrÃ¼ckten
 		//. Button manifestiert.
 
 		//* TODO
@@ -162,7 +162,7 @@ namespace Root
 	};
 
 	//* StateAction
-	//. Diese Variante führt den Zustand redundant mit. Dies ist dann praktisch,
+	//. Diese Variante fÃ¼hrt den Zustand redundant mit. Dies ist dann praktisch,
 	//. wenn - im Falle eines FlipFlops - der betroffene Executor die Action gerade
 	//. als Zustandsvariable einsetzt.
 

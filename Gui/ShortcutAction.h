@@ -25,7 +25,7 @@
 
 namespace Gui
 {
-	//* Wie MenuParamAction, aber für QObject als Target
+	//* Wie MenuParamAction, aber fÃ¼r QObject als Target
 	class ShortcutAction : public Root::StateAction
 	{
 	public:

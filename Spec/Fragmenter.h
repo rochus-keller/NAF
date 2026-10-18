@@ -85,7 +85,7 @@ namespace Spec
 
 		Root::Ref<SpinBase> d_base;
 		FragmentMap d_frags;
-		//. Menge aller erkannten Fragmente l‰nger als d_minLen;
+		//. Menge aller erkannten Fragmente l√§nger als d_minLen;
 		typedef std::map<SpinSystem*,Index> StripToFrag;
 		StripToFrag d_stripToFrag;
 		//. Map von StripId auf Index in d_frags.

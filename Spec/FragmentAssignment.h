@@ -42,12 +42,12 @@ namespace Spec
 			void init( Residue* );	// Setze Fit auf 0 und start auf seq.
 
 			Residue* d_start; 
-			// Position des Fragments auf der Sequenz, SeqId, bündig zu Offset.
+			// Position des Fragments auf der Sequenz, SeqId, bÃ¼ndig zu Offset.
 			FitnessVector d_fits; // Size muss d_frag entsprechen!
-			Fitness d_lJoker;	// Passung der Link-Enden (Ca' etc.) auf d_start-1 oder -1 bei ungültig
-			Fitness d_rJoker;	// Passung der Link-Enden (Ca' etc.) auf end+1 oder -1 bei ungültig
+			Fitness d_lJoker;	// Passung der Link-Enden (Ca' etc.) auf d_start-1 oder -1 bei ungÃ¼ltig
+			Fitness d_rJoker;	// Passung der Link-Enden (Ca' etc.) auf end+1 oder -1 bei ungÃ¼ltig
 			Fitness d_total;	// Die Gesamt-Fitness, berechnet aus den Einzel-Fits.
-			bool d_assigned;	// Falls true enthält der Match mind. ein Assignment.
+			bool d_assigned;	// Falls true enthÃ¤lt der Match mind. ein Assignment.
 		};
 		typedef Root::Vector<Match> Matches;
 
@@ -72,7 +72,7 @@ namespace Spec
 		SpinSystemString d_frag;
 		Root::Ref<SpinBase> d_base;
 		Root::Ref<SpinMatcher> d_matcher;
-		Fitness d_min;	// Es werden nur Matches mit Fitness > d_min übernommen.
+		Fitness d_min;	// Es werden nur Matches mit Fitness > d_min Ã¼bernommen.
 		Matches d_matches;
 		bool d_geometric;
 		bool d_strict;

@@ -70,16 +70,16 @@ namespace Lua
 						
 			if( typeid(AbstractObjectFactory<T>) != typeid(Factory<T>) )
 			{
-				// Mache, dass mit "Klasse()" Instanzen erzeugt werden können
+				// Mache, dass mit "Klasse()" Instanzen erzeugt werden kÃ¶nnen
 				Lua::Util::pushCreatorMeta( L );
 				lua_setmetatable(L, methods );
 
-				// Objekte können exlizit mit class._new erzeugt werden
+				// Objekte kÃ¶nnen exlizit mit class._new erzeugt werden
 				lua_pushstring(L, Lua::Util::s_new );
 				lua_pushcfunction(L, __new );
 				lua_rawset(L, methods);
 
-				// Objekte können explizit mit obj:delete() gelöscht werden
+				// Objekte kÃ¶nnen explizit mit obj:delete() gelÃ¶scht werden
 				lua_pushstring(L, "delete" );
 				lua_pushcfunction(L, ObjectHelper<T>::deleteObject );
 				lua_rawset(L, methods);
@@ -240,13 +240,13 @@ namespace Lua
 			ObjectPeer* peer = static_cast<ObjectPeer*>( lua_touserdata( L, 1 ) );
 			assert( peer );
 
-			// Wir löschen das eigentliche Object in jedem Fall, wenn es noch existiert.
-			// Wenn wir das nicht wollen, müssen wir Peer pinnen, damit GC den Peer nicht vorzeitig wegräumt.
+			// Wir lÃ¶schen das eigentliche Object in jedem Fall, wenn es noch existiert.
+			// Wenn wir das nicht wollen, mÃ¼ssen wir Peer pinnen, damit GC den Peer nicht vorzeitig wegrÃ¤umt.
 			if( peer->isAttached() )
 			{
 				QObject* obj = peer->getObject();
 				peer->unattach();
-				obj->deleteLater(); // RISK: ev. sofort löschen
+				obj->deleteLater(); // RISK: ev. sofort lÃ¶schen
 			}
 			peer->~ObjectPeer();
 			return 0;
@@ -305,7 +305,7 @@ namespace Lua
 			lua_replace( L, meta );
 			// Stack: super | nil
 
-			// Rufe rekursiv auf für super
+			// Rufe rekursiv auf fÃ¼r super
 			return lookupMethod( L, name );
 		}
 
@@ -335,7 +335,7 @@ namespace Lua
 				return 1;
 			}
 
-			// Versuche zuerst Methodentabelle. Diese kann Meta-Features überschreiben.
+			// Versuche zuerst Methodentabelle. Diese kann Meta-Features Ã¼berschreiben.
 			lua_getmetatable( L, 1 );
 			if( lookupMethod( L, name ) )
 				return 1;
@@ -371,7 +371,7 @@ namespace Lua
 			// Versuche nun, name als Signal/Slot zu interpretieren
 			for( i = 0; i < mo->methodCount(); i++ )
 			{
-				// Leider erwartet mo->indexOf eine vollstädige Signatur. Es gibt also
+				// Leider erwartet mo->indexOf eine vollstÃ¤dige Signatur. Es gibt also
 				// nie einen Match.
 				QByteArray sig = mo->method( i ).signature();
 				if( sig.startsWith( name ) )

@@ -29,7 +29,7 @@ static QColor s_posClr = Qt::cyan;
 static QColor s_negClr = Qt::magenta;
 static QColor s_midClr = Qt::gray;
 static char s_buf[32];
-static const Coord g_w = 60;	// Länge eines Kreuzsegments
+static const Coord g_w = 60;	// LÃ¤nge eines Kreuzsegments
 static const Coord g_tol = 160;
 
 SpinPoint1DView::SpinPoint1DView(ViewAreaMdl* v, Dimension dim, SpinSpace* stp, 

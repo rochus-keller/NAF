@@ -26,7 +26,7 @@
 namespace Lua
 {
     
-    // Abgeleitet aus ValueBinding; dient als Peer für Referenzen auf abgeleitete Klassen von Root::Resource.
+    // Abgeleitet aus ValueBinding; dient als Peer fÃ¼r Referenzen auf abgeleitete Klassen von Root::Resource.
     template <class T, class SuperClass = T >
     class RefBinding : public ValueBinding<T*,SuperClass*>
     {
@@ -35,7 +35,7 @@ namespace Lua
         static void install( lua_State *L, const char* publicName, const luaL_reg* ms = 0 )
 		{
             ValueBinding<T*,SuperClass*>::install( L, publicName, ms, false );
-            ValueBinding<T*,SuperClass*>::addMetaMethod( L, "__gc", finalizeRef ); // überschreibe die Methode von ValueBinding
+            ValueBinding<T*,SuperClass*>::addMetaMethod( L, "__gc", finalizeRef ); // Ã¼berschreibe die Methode von ValueBinding
             Super::pushMetaTable( L );
             const int metaTable = lua_gettop( L );
 

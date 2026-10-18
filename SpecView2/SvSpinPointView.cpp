@@ -50,9 +50,9 @@ const char* SpinPointView::menuText[] =
 "Numbers and Labels", // PairAll
 };
 
-static const Coord g_w = 60;	// Länge eines Kreuzsegments
+static const Coord g_w = 60;	// LÃ¤nge eines Kreuzsegments
 static const Coord g_p = 20;	
-static const Coord g_d = 40;	// Länge eines diag Kreuzsegments
+static const Coord g_d = 40;	// LÃ¤nge eines diag Kreuzsegments
 static const Coord g_tol = 160;
 
 static char s_buf[32];

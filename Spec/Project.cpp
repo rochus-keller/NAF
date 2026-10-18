@@ -88,7 +88,7 @@ Project::~Project()
 	// Peaks, Specs
 	SpectrumMap::const_iterator p1;
 	for( p1 = d_specs.begin(); p1 != d_specs.end(); ++p1 )
-		if( (*p1).second ) // Hack ist nötig wegen Deserialize im Falle von Spec-Exception
+		if( (*p1).second ) // Hack ist nÃ¶tig wegen Deserialize im Falle von Spec-Exception
 		{
 			(*p1).second->removeObserver( this );
 		}
@@ -194,7 +194,7 @@ Project::SpecSet Project::findSpectra(const KeyLabels & key) const
 	bool dimFit, specFit;
 	for( p = d_specs.begin(); p != d_specs.end(); ++p )
 	{
-		// Gehe durch alle Spektren und prüfe Kompatibilität zu key.
+		// Gehe durch alle Spektren und prÃ¼fe KompatibilitÃ¤t zu key.
 
 		Rotation rot( key.size() );
 		Root::Vector<bool> used( key.size() );
@@ -202,7 +202,7 @@ Project::SpecSet Project::findSpectra(const KeyLabels & key) const
 		needRot = false;
 		if( (*p).second->getDimCount() == key.size() )
 		{
-			// Nur Spektren mit der korrekten Anzahl Dim berücksichtigen.
+			// Nur Spektren mit der korrekten Anzahl Dim berÃ¼cksichtigen.
 			specFit = true;
 
 			assert( (*p).second->getType() );
@@ -314,7 +314,7 @@ void Project::saveIntegTable(PeakList * pl, const char* name ) const
 	}
 	out << std::endl;
 
-	// Gehe durch alle Spektren und schreibe für jeden Peak das Volume.
+	// Gehe durch alle Spektren und schreibe fÃ¼r jeden Peak das Volume.
 	// Wenn kein Volume definiert oder wenn 0.0 wird Space ausgegeben.
 	Spectrum* spec;
 	Amplitude a;

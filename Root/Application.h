@@ -66,7 +66,7 @@ namespace Root
 		static const char* getCurrentDir() { return d_currentDir.data(); }
 		static void setCurrentDir( const char* s ) { d_currentDir = s; }
 
-		//* Folgende für langdauernde Operationen
+		//* Folgende fÃ¼r langdauernde Operationen
 		static bool begin( int id = 0 );	// true..continue
 		static bool yield( int id = 0, float done = 0.0 ); // true..continue
 		static void escape();

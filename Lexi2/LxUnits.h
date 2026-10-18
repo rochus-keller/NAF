@@ -33,7 +33,7 @@ namespace Lexi2
 
 	//* Twips und Coord
 	typedef Root::Long Twips;
-		//. Absolutes, logisches Mass für Koordinaten. Es gilt: 1 Twip == 20 Point und
+		//. Absolutes, logisches Mass fÃ¼r Koordinaten. Es gilt: 1 Twip == 20 Point und
 		//. 1 Point == 1/72 Inch. Somit ist 1 Twip == 1/1440 Inch.
 	typedef Twips Coord;
 		//. Logische, absolute Koordinaten, in welchen die Geometrie der Glyphs angegeben wird.
@@ -57,7 +57,7 @@ namespace Lexi2
 
 	//* Intensity
 	typedef Root::Float Intensity;
-		//. Gibt den Wertebereich für Farben und Helligkeiten an.
+		//. Gibt den Wertebereich fÃ¼r Farben und Helligkeiten an.
 	const Intensity IntensityMax = 1.0;
 	const Intensity IntensityMin = 0.0;
 

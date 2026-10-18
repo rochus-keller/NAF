@@ -28,7 +28,7 @@ void ValueBindingBase::ensureSuperClass(lua_State *L, const int metaTable )
     // sicher, dass lua_getmetatable auf die richtige Tabelle zeigt.
     if( lua_getmetatable( L, metaTable ) )
     {
-		// Mission erfüllt, es ist eine Metatable vorhanden
+		// Mission erfÃ¼llt, es ist eine Metatable vorhanden
         lua_pop( L, 1 );
         return;
     }else
@@ -115,7 +115,7 @@ int ValueBindingBase::newindex(lua_State *L)
 bool ValueBindingBase::isSubOrSameClass(lua_State *L, int narg, const char* typeName, bool recursive )
 {
     StackTester test( L, 0 );
-    // Prüfe, ob Userdata bei narg eine Unterklasse von T ist.
+    // PrÃ¼fe, ob Userdata bei narg eine Unterklasse von T ist.
     if( !lua_getmetatable(L, narg ) )
         return false;
     const int subMeta = lua_gettop( L );
@@ -132,7 +132,7 @@ bool ValueBindingBase::isSubOrSameClass(lua_State *L, int narg, const char* type
     while( !lua_rawequal( L, superMeta, subMeta ) )
     {
         // Die Klassenhierarchie ist via Metatable-Kette abgebildet. Die Metatable der Oberklasse
-        // namens __super ist via lua_getmetatable zugänglich
+        // namens __super ist via lua_getmetatable zugÃ¤nglich
         ensureSuperClass( L, subMeta );
         if( !recursive || !lua_getmetatable( L, subMeta ) )
         {
@@ -156,7 +156,7 @@ bool ValueBindingBase::fetch(lua_State *L, bool doMethodLookup, bool doDataLooku
 
     if( fieldName == "class" || fieldName == "type" )
     {
-        // Spezialfeld: enthält den öffentlichen Namen der Klasse
+        // Spezialfeld: enthÃ¤lt den Ã¶ffentlichen Namen der Klasse
         if( !lua_getmetatable( L, 1 ) )
         {
             lua_pushstring(L, "<unknown class>" );
@@ -170,7 +170,7 @@ bool ValueBindingBase::fetch(lua_State *L, bool doMethodLookup, bool doDataLooku
 		return true;
     }else if( fieldName == "data" )
     {
-        // Spezialfeld: enthält die datatable
+        // Spezialfeld: enthÃ¤lt die datatable
         if( lua_getdatatable( L, 1 ) == 0 )
         {
             // Es gibt noch keine datatable.
@@ -190,7 +190,7 @@ bool ValueBindingBase::fetch(lua_State *L, bool doMethodLookup, bool doDataLooku
 
 	if( doMethodLookup )
 	{
-		// Prüfe nun, ob eine Methode mit diesem Namen vorhanden ist; muss vor Abfrage von data table geschehen!
+		// PrÃ¼fe nun, ob eine Methode mit diesem Namen vorhanden ist; muss vor Abfrage von data table geschehen!
 		if( !lua_getmetatable( L, 1 ) )
 			lua_pushnil(L);
 		lookupMethod( L, fieldName );
@@ -209,19 +209,19 @@ bool ValueBindingBase::fetch(lua_State *L, bool doMethodLookup, bool doDataLooku
 
 	if( doDataLookup )
 	{
-		// Prüfe nun noch, ob es sich allenfalls um einen Wert in der data table handelt;
+		// PrÃ¼fe nun noch, ob es sich allenfalls um einen Wert in der data table handelt;
 		// das ist ein shortcut, so dass statt obj.data.value direkt obj.value geschrieben werden kann
 		if( lua_getdatatable( L, 1 ) != 0 )
 		{
 			// Stack: dataTable
-			// Es ist eine datatable vorhanden. Prüfe, ob fieldName dort vorhanden ist
+			// Es ist eine datatable vorhanden. PrÃ¼fe, ob fieldName dort vorhanden ist
 			const int dataTable = lua_gettop( L );
 			lua_pushstring( L, fieldName );
 			lua_rawget( L, dataTable );
 			// Stack: dataTable, value | nil
 			if( !lua_isnil( L, -1 ) )
 			{
-				// Wir haben einen Wert gefunden und geben den zurück
+				// Wir haben einen Wert gefunden und geben den zurÃ¼ck
 				lua_remove( L, dataTable );
 				// Stack: value | nil
 				if( test.isViolation() )
@@ -249,7 +249,7 @@ int ValueBindingBase::index(lua_State *L)
 void ValueBindingBase::lookupMethod(lua_State *L, const char* fieldName, bool recursive )
 {
     // Erwartet Stack: metaTable | nil und gibt Ergebnis auch auf diese Position aus
-    StackTester test( L, 0 ); // Der Rückgabewert kommt auf den bereits bestehenden Stackplatz
+    StackTester test( L, 0 ); // Der RÃ¼ckgabewert kommt auf den bereits bestehenden Stackplatz
     const int metaTable = lua_gettop(L);
     while( lua_istable( L, metaTable ) )
     {
@@ -267,13 +267,13 @@ void ValueBindingBase::lookupMethod(lua_State *L, const char* fieldName, bool re
             // Stack: metaTable, methodTable, method | nil
             if( !lua_isnil( L, -1 ) )
             {
-                // Wir wurden fündig und geben method zurück
+                // Wir wurden fÃ¼ndig und geben method zurÃ¼ck
                 // Stack: metaTable, methodTable, method
                 lua_replace( L, metaTable );
                 // Stack: method, methodTable
                 lua_pop( L, 1 );
                 // Stack: method
-				// TODO: ev. cachen in erster Methodtable damit künftig schneller zugreifbar
+				// TODO: ev. cachen in erster Methodtable damit kÃ¼nftig schneller zugreifbar
                 return;
 			}else if( !recursive )
             {
@@ -291,7 +291,7 @@ void ValueBindingBase::lookupMethod(lua_State *L, const char* fieldName, bool re
         // Stack: metaTable
         // Die Metatable der metaTable ist diejenige der Oberklasse, welche ihrerseits wieder gleich
         // funktioniert wie die Metatable dieser Klasse.
-        // Verwende den für die metaTable reservierten Stackslot gleich wieder für die neue Metatable
+        // Verwende den fÃ¼r die metaTable reservierten Stackslot gleich wieder fÃ¼r die neue Metatable
         ensureSuperClass( L, metaTable );
         if( !lua_getmetatable( L, metaTable ) )
             lua_pushnil( L );
@@ -300,7 +300,7 @@ void ValueBindingBase::lookupMethod(lua_State *L, const char* fieldName, bool re
         // Stack: superMetaTable | nil
     }
     // Stack: nil
-    // Es gibt keine Superklasse, wir geben nil zurück.
+    // Es gibt keine Superklasse, wir geben nil zurÃ¼ck.
 }
 
 int ValueBindingBase::createInstanceByCall( lua_State *L )

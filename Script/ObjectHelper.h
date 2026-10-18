@@ -52,7 +52,7 @@ namespace Lua
 			ObjectPeer* peer = ObjectPeer::castStackToPeer( L, narg, false, false );
 			if( peer && peer->isAttached() )
 				return dynamic_cast<T*>( peer->getObject() ); 
-				// NOTE qobject_cast führt zu Compilerfehlern, wenn nicht Q_OBJECT
+				// NOTE qobject_cast fÃ¼hrt zu Compilerfehlern, wenn nicht Q_OBJECT
 			else 
 				return 0;
 		}
@@ -75,7 +75,7 @@ namespace Lua
 			return obj;  // pointer to T object
 		}
 
-		/// Lösche das Qt-Object (entweder defaultmässig sofort oder später). Peer ist davon nicht betroffen.
+		/// LÃ¶sche das Qt-Object (entweder defaultmÃ¤ssig sofort oder spÃ¤ter). Peer ist davon nicht betroffen.
 		static int deleteObject(lua_State *L)
 		{
 			// Entspricht Lua obj:delete()
@@ -89,11 +89,11 @@ namespace Lua
 			return 0;
 		}
 
-		/// Gebe das Qt-Objekt frei, ohne es zu löschen. Der Peer zeigt danach auf ein Null-Objekt.
+		/// Gebe das Qt-Objekt frei, ohne es zu lÃ¶schen. Der Peer zeigt danach auf ein Null-Objekt.
 		static int releaseObject(lua_State *L)
 		{
 			// Entspricht Lua obj:release()
-			// Das QObject wird dadurch frei und muss anderweitig gelöscht werden.
+			// Das QObject wird dadurch frei und muss anderweitig gelÃ¶scht werden.
 
 			ObjectPeer* peer = ObjectPeer::castStackToPeer( L, 1 );
 			if( peer == 0 )
@@ -120,7 +120,7 @@ namespace Lua
 			lua_getfield( L, meta, Lua::Util::s_class ); 
 			const char* name = Util::toStr( L, -1 );
 			lua_pop( L, 2 );
-			return name; // Das funktioniert tatsächlich, da luaL_checkstring den Pointer auf den persistenten String zurückgibt
+			return name; // Das funktioniert tatsÃ¤chlich, da luaL_checkstring den Pointer auf den persistenten String zurÃ¼ckgibt
 		}
 
 		static void addMethods( lua_State *L,  const luaL_reg* ms ) 

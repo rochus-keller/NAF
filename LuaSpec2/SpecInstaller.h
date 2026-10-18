@@ -26,7 +26,7 @@
 namespace Lua
 {
     // **** Obsolet ****
-    // Am 31.12.2014 abgelöst durch Script/RefBinding, da teilweise instabil (Nullpointer exceptions)
+    // Am 31.12.2014 abgelÃ¶st durch Script/RefBinding, da teilweise instabil (Nullpointer exceptions)
 	template< class T, template<class> class Factory = AbstractObjectFactory >
 	class SpecInstaller : public ObjectInstaller<T,Factory>
 	{
@@ -87,10 +87,10 @@ namespace Lua
 				peer->unattach();
 			T* t = dynamic_cast<T*>( peer->getObject() );
 			if( t )
-				t->release(); // Schliesslich geben wir T frei, der dadurch ev. gelöscht wird.
+				t->release(); // Schliesslich geben wir T frei, der dadurch ev. gelÃ¶scht wird.
 			peer->~ObjectPeer(); 
 			return 0;
-			// TODO: für Spectren close aufrufen
+			// TODO: fÃ¼r Spectren close aufrufen
 		}
 	};
 	template< class T>

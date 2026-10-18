@@ -105,11 +105,11 @@ namespace Spec
 		// Finde den Nachfolger von resi in der durch Index gegebenen Reihenfolge
 		// Obsolet nach reindex().
 		Residue* getPred( Residue* ) const;
-		// Finde den Vorläufer von resi in der durch Index gegebenen Reihenfolge
+		// Finde den VorlÃ¤ufer von resi in der durch Index gegebenen Reihenfolge
 		// Obsolet nach reindex().
 		Residue* getResidue( Root::Index ) const;
 		bool fillString( Residue*, ResidueString&, int left = -1, int right = -1 ) const;
-		// Fülle den String ausgehend von Residue in beiden Richtungen um Anzahl oder
+		// FÃ¼lle den String ausgehend von Residue in beiden Richtungen um Anzahl oder
 		// bis Ende (-1). Wenn left == right == 0 ist String == Residue
 		bool removeDisPar(Residue*, Root::SymbolString);
 		void setDisPar( Residue*, Root::SymbolString, DisPar );

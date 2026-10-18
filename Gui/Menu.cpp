@@ -27,8 +27,8 @@
 using namespace Gui;
 
 // Wir verwenden nicht direkt das MenuItem selber als Shortcut, da dieses mit setEnabled(false) gleich
-// auch den Shortcut deaktiviert und wir somit bei Betätigung des Shortcut nicht mehr prüfen können,
-// ob der Befehl verfügbar ist, sobald das Item einmal als deaktiviert erkannt wurde.
+// auch den Shortcut deaktiviert und wir somit bei BetÃ¤tigung des Shortcut nicht mehr prÃ¼fen kÃ¶nnen,
+// ob der Befehl verfÃ¼gbar ist, sobald das Item einmal als deaktiviert erkannt wurde.
 class MenuItemShortcut : public QShortcut
 {
 public:
@@ -42,7 +42,7 @@ public:
     }
     bool event(QEvent *e)
     {
-        // QShortcut wird vom System über diesen Event benachtrichtigt und ruft dann
+        // QShortcut wird vom System Ã¼ber diesen Event benachtrichtigt und ruft dann
         // triggered auf.
         if( e->type() == QEvent::Shortcut )
         {
@@ -78,7 +78,7 @@ MenuItem::MenuItem(Menu *owner, Root::Messenger *handler,
 {
     init();
     setCheckable( checkable );
-    setShortcut( key ); // damit in Menü angezeigt, nicht um auszuführen
+    setShortcut( key ); // damit in MenÃ¼ angezeigt, nicht um auszufÃ¼hren
     if( !key.isEmpty() )
     {
         QWidget* w = _climbToNonMenu( owner );
@@ -98,7 +98,7 @@ MenuItem::MenuItem(Menu *owner, const QString& text, Root::Action::CmdSym cmd,
 {
     init();
     setCheckable( checkable );
-    setShortcut( key ); // damit in Menü angezeigt, nicht um auszuführen
+    setShortcut( key ); // damit in MenÃ¼ angezeigt, nicht um auszufÃ¼hren
     if( !key.isEmpty() )
     {
         QWidget* w = _climbToNonMenu( owner );
@@ -116,7 +116,7 @@ void MenuItem::init()
     connect( this, SIGNAL( triggered( bool ) ), this, SLOT( handleTrigger( bool ) ) );
     setEnabled( false );
 	setChecked( false );
-	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild Menüs umplatziert und umbenennt
+	setMenuRole(QAction::NoRole); // damit Qt on OS X nicht wild MenÃ¼s umplatziert und umbenennt
 }
 
 MenuItem::~MenuItem()
@@ -137,7 +137,7 @@ void MenuItem::handleTrigger( bool on )
 
 bool MenuItem::event(QEvent *e)
 {
-	// auf Event hören und Broadcast auslösen, wenn d_autoEnabling
+	// auf Event hÃ¶ren und Broadcast auslÃ¶sen, wenn d_autoEnabling
     if( int(e->type()) == Root::Message::ID )
 	{
 		if( dynamic_cast<AutoEnable*>( e ) == 0 )
@@ -214,7 +214,7 @@ void Menu::purge()
 void Menu::handleShow()
 {
 	// Gehe durch alle Actions und sende ihnen irgend ein Message-Derivat.
-	// Das löst dann einen Update-Cycle aus
+	// Das lÃ¶st dann einen Update-Cycle aus
 	MenuItem::AutoEnable msg;
 	QList<QAction*> l = actions();
 	foreach( QObject* a, l )

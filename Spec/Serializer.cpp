@@ -44,8 +44,8 @@ using namespace Xml;
 // CARA 1.3.4 -> 36.0
 // CARA 1.8.4 -> 37.0
 
-const int Serializer::s_version = 37;	// TODO: bei jeder Element-Änderung anpassen
-const int Serializer::s_subversion = 0;	// TODO: bei jeder Attribut-Änderung anpassen
+const int Serializer::s_version = 37;	// TODO: bei jeder Element-Ã„nderung anpassen
+const int Serializer::s_subversion = 0;	// TODO: bei jeder Attribut-Ã„nderung anpassen
 
 static QString s_tmp; // RISK: Threads
 
@@ -126,7 +126,7 @@ namespace Spec
 		Root::ExRef<Residue> d_res;
 		Root::ExRef<ResidueType> d_restp;
 		Root::ExRef<SpectrumType> d_st;
-		SpecRef<SpectrumPeer> d_specPeer;	// Gerade öffnen
+		SpecRef<SpectrumPeer> d_specPeer;	// Gerade Ã¶ffnen
 		Root::ExRef<Project> d_pro;
 		Root::Index d_specId;
 		Root::ExRef<Spin> d_spin;
@@ -168,7 +168,7 @@ namespace Spec
 			const char* d_symbol;
 			const char* d_state; // Verlangter Zustand oder 0
 			Handler d_handler;
-			const char* d_next; // Nächster Zustand oder 0
+			const char* d_next; // NÃ¤chster Zustand oder 0
 			Poster d_post;		// Wird von endElement aufgerufen, falls vorhanden.
 			bool d_asTemplate;
 		};
@@ -533,7 +533,7 @@ namespace Spec
 		int kind = atts.value( "kind" ).toUInt( &ok );
 		if( !ok )
 		{
-			// TODO: Gültigkeit prüfen.
+			// TODO: GÃ¼ltigkeit prÃ¼fen.
 			d_error.sprintf( "Invalid model kind: %s", atts.value( "kind" ).data() );
 			return false;
 		}
@@ -655,7 +655,7 @@ namespace Spec
 		}
         if( d_currentPeakHome != d_currentPeakList->getHome() && d_specId == d_currentPeakHome )
             d_specId = d_currentPeakList->getHome();
-            // Sorge dafür, dass Peaks mit einem von PeakList abweichenden Home auf das Home
+            // Sorge dafÃ¼r, dass Peaks mit einem von PeakList abweichenden Home auf das Home
             // der PeakList abgebildet werden
 		if( d_specId != 0 && d_pro->d_specs.count( d_specId ) == 0 )
 		{
@@ -850,7 +850,7 @@ namespace Spec
 					(*pi).second->d_home == (*p2).first ) && 
 					(*p2).second.d_pos.size() != dim )
 					// NOTE: mind. Home-Alias muss Position enthalten. Ansonsten
-					// sind leere Positionen zulässig.
+					// sind leere Positionen zulÃ¤ssig.
 				{
 					d_error.sprintf( "Peak alias %d of peaklist %d has wrong number of dimensions", 
 						(*pi).first, d_peaks->getId() );
@@ -1500,7 +1500,7 @@ namespace Spec
 				s_tmp.sprintf( "Incompatible dimension atom types in spectrum %s", 
 				d_spec->getName() ) );
 		*/
-        /* Weggenommen 10.8.14; User soll calcLevels explizit wählen
+        /* Weggenommen 10.8.14; User soll calcLevels explizit wÃ¤hlen
 		if( !d_foundLevels || d_specPeer->getLevels().getNoise() == 0.0 )
 			d_specPeer->calcLevels();
             */
@@ -1561,7 +1561,7 @@ namespace Spec
         }
 		QString filePath = atts.value( "path" );
         QString relPath = atts.value( "relPath" );
-		SpecRef<Spectrum> spec;	// Schon hier open, damit vernünftige Fehlermeldung
+		SpecRef<Spectrum> spec;	// Schon hier open, damit vernÃ¼nftige Fehlermeldung
 
         QString errorString;
 		while( spec.isNull() )
@@ -1570,7 +1570,7 @@ namespace Spec
             errorString = "File not found!";
             if( fileCheck.exists() )
             {
-                // Datei existiert, versuche sie zu öffnen
+                // Datei existiert, versuche sie zu Ã¶ffnen
                 try
                 {
                     spec = Spec::Factory::createSpectrum( fileCheck.absFilePath() );
@@ -1581,7 +1581,7 @@ namespace Spec
                             "Spectrum doesn't meet expected number of dimensions!" );
                 }catch( Root::Exception& e )
                 {
-                    // Man kann die Datei zwar öffnen, aber sie passt nicht
+                    // Man kann die Datei zwar Ã¶ffnen, aber sie passt nicht
                     spec = 0;
                     errorString = e.what();
                     fileCheck = QFileInfo();
@@ -1594,7 +1594,7 @@ namespace Spec
                 }
             }else if( !relPath.isEmpty() )
             {
-                // Falls ein relativer Pfad gespeichert wurde, prüfe, ob dieser etwas bringt.
+                // Falls ein relativer Pfad gespeichert wurde, prÃ¼fe, ob dieser etwas bringt.
                 // Es wurde bereits Dir::setCurrentDir(repositoryPath) aufgerufen.
                 fileCheck.setFile( relPath );
                 if( fileCheck.exists() )
@@ -1673,7 +1673,7 @@ namespace Spec
 
         if( d_dummySpec )
         {
-            // Offensichtlich konnte das Spektrum nicht geöffnet werden.
+            // Offensichtlich konnte das Spektrum nicht geÃ¶ffnet werden.
             // Stelle sicher, dass hier dummy wieder den gespeicherten Pfad hat.
             filePath = atts.value( "path" );
             s_tmp.sprintf( "Could not open spectrum '%s' at '%s'; using dummy instead",
@@ -1681,7 +1681,7 @@ namespace Spec
             Root::MessageLog::inst()->warning( "Repository", s_tmp );
         }else if( filePath != atts.value( "path" ) )
         {
-            // Ansonsten konnte Spektrum zwar geöffnet werden, aber unter anderem Pfad.
+            // Ansonsten konnte Spektrum zwar geÃ¶ffnet werden, aber unter anderem Pfad.
             s_tmp.sprintf( "Changed path of spectrum '%s' to '%s'", atts.value( "name" ).data(),
                            filePath.toLatin1().data() );
             Root::MessageLog::inst()->warning( "Repository", s_tmp );
@@ -1690,7 +1690,7 @@ namespace Spec
 
 		d_specPeer = new SpectrumPeer( spec, filePath, id );
 		d_specPeer->d_owner = d_pro;
-		d_specPeer->setType( specType ); // Hier Farben nicht prüfen. Dim bereits ok.
+		d_specPeer->setType( specType ); // Hier Farben nicht prÃ¼fen. Dim bereits ok.
 		if( sample != 0 )
 		{
 			Project::SampleMap::const_iterator si = d_pro->d_samples.find( sample );
@@ -1713,7 +1713,7 @@ namespace Spec
 	{
 		bool ok = true;
 		Root::SymbolString atom = atts.value( "atom" ).data();
-		/* NOTE folgende Prüfung unnötig, da es nicht stört, wenn nicht Atom
+		/* NOTE folgende PrÃ¼fung unnÃ¶tig, da es nicht stÃ¶rt, wenn nicht Atom
 			TODO: ev. Warnung
 		if( d_res->getType()->d_atoms[ atom ] == 0 )
 		{
@@ -2291,7 +2291,7 @@ namespace Spec
 			d_error.sprintf( "Cannot find atom %s in residue", to.data() );
 			return false;
 		}
-		// Immer beide Seiten. Redundante Bonds stören nicht.
+		// Immer beide Seiten. Redundante Bonds stÃ¶ren nicht.
 		a->d_atoms.insert( b );
 		b->d_atoms.insert( a );
 		return true;
@@ -2728,7 +2728,7 @@ namespace Spec
 	{
 		int i = 0;
 		d_text = "";
-		while( d_slots[ i ].d_symbol != 0 )	// NOTE: gleich teuer wie früher if-Sequenz
+		while( d_slots[ i ].d_symbol != 0 )	// NOTE: gleich teuer wie frÃ¼her if-Sequenz
 		{
 			if( qName == d_slots[ i ].d_symbol )
 			{
@@ -2736,7 +2736,7 @@ namespace Spec
 					i++; 
                 else if( ( d_asTemplate && !d_slots[ i ].d_asTemplate ) ||
 					// Wenn Rep als Template dient, sollen nur die Template-Handler
-					// ausgeführt werden.
+					// ausgefÃ¼hrt werden.
 					(this->*d_slots[ i ].d_handler)( atts ) )
 				{
 					if( d_slots[ i ].d_next )
@@ -2762,14 +2762,14 @@ namespace Spec
 		{
 			if( d_asTemplate && !slot->d_asTemplate )
 				// Wenn Rep als Template dient, sollen nur die Template-Handler
-				// ausgeführt werden.
+				// ausgefÃ¼hrt werden.
 				; // NOP
 			else if( !(this->*slot->d_post)() )
 				return false;
 		}
 
 		if( slot->d_next )	
-			// Es wurde in startElement in den Zustand d_next gewechselt. Hier wieder zurück.
+			// Es wurde in startElement in den Zustand d_next gewechselt. Hier wieder zurÃ¼ck.
 			d_state.pop_back();
 
 		// else
@@ -3469,7 +3469,7 @@ void Serializer::writeSpectrum(QTextStream & out, SpectrumPeer * spec)
 		// 1.10.05 Da sonst Folding nicht geschrieben wird.
 		// if( spec->getOffset( d ) != 0.0 || spec->getWidths()[ d ] != 0.0 )
 		{
-            // NOTE: Range und Color werden redundant gespeichert für DummySpec im Falle des Fehlens der Datei
+            // NOTE: Range und Color werden redundant gespeichert fÃ¼r DummySpec im Falle des Fehlens der Datei
             s_tmp.sprintf( "<%s dim='%d' off='%f' width='%f' fold='%s' atom='%s' ppm1='%f' ppm2='%f'  />",
                            CALIBRATE, d, spec->getOffset( d ), spec->getWidths()[ d ],
 				Scale::getFoldingCode( spec->getSpectrum()->getScale( d ).getFolding() ),
@@ -3480,7 +3480,7 @@ void Serializer::writeSpectrum(QTextStream & out, SpectrumPeer * spec)
 		}
 		if( spec->getRotation( d ) != d )
 		{
-			// TODO: nur speichern, wenn spec tatsächlich vorhanden
+			// TODO: nur speichern, wenn spec tatsÃ¤chlich vorhanden
 			s_tmp.sprintf( "<%s view='%d' spec='%d'/>", ROTATE, d, 
 				spec->getRotation( d ) );
 			out << s_tmp.toAscii().data() << endl;
@@ -3514,7 +3514,7 @@ void Serializer::writeSpinSystem(QTextStream & out, SpinSystem * ss)
 void Serializer::writeSpin(QTextStream & out, Spin * sp)
 {
 	if( sp == 0 )
-		return; // RISK: Workaround für Problem 0624
+		return; // RISK: Workaround fÃ¼r Problem 0624
 
 	const SpinLabel& lbl = sp->getLabel();
 	if( lbl.isNull() )
@@ -3572,7 +3572,7 @@ void Serializer::writeLink(QTextStream & out, SpinSystem * ss)
 void Serializer::writePair(QTextStream & out, SpinBase* base, SpinLink* l )
 {
 	if( base->getSpin( l->getLhs() ) == 0 || base->getSpin( l->getRhs() ) == 0 )
-		return; // Schreibe nur gültige Links
+		return; // Schreibe nur gÃ¼ltige Links
 
 	s_tmp.sprintf( "<%s lhs='%d' rhs='%d'", PAIR, l->getLhs(), l->getRhs() );
 	out << s_tmp;
@@ -3727,7 +3727,7 @@ static void _writeObjectImp( QTextStream & out, T * obj)
 			(*p).second.getType() == Root::Any::Html ) // Mehrzeiliger String
 		{
 			// RISK out << "<!CDATA[" << v.getCStr() << "]]>";
-			// ev. genügt encode auch hier.
+			// ev. genÃ¼gt encode auch hier.
 			out << s_tmp;
 			writeScript( out, (*p).second.getCStr() );
 		}else if( (*p).second.getType() == Root::Any::Date )

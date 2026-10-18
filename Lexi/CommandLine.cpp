@@ -371,7 +371,7 @@ void CommandLine::handleReadParam(char ch)
 			notify( str );
 		}else
 		{
-			// Beginne den nächsten Parameter. Validiere den vorhergehenden.
+			// Beginne den nÃ¤chsten Parameter. Validiere den vorhergehenden.
 			if( interpretParam() )
 				nextParam();
 		}

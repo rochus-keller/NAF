@@ -45,9 +45,9 @@ void EasyNumber::init()
 }
 
 /**********************************************************************
-	Statistische Erhebung über ein paar Spektren bezüglich
+	Statistische Erhebung Ã¼ber ein paar Spektren bezÃ¼glich
 	a..Mantisse und e..Exponent in Bezug auf Minimal- und Maximalwerte.
-	i ist die aus e und a nach obiger Formel berechnete Intensität.
+	i ist die aus e und a nach obiger Formel berechnete IntensitÃ¤t.
 
 	signal2d.3D 
 		Val: amin=-128 amax=127 emin=1 emax=93 imin=-367.054535 imax=512.500061

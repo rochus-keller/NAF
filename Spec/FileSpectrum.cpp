@@ -78,7 +78,7 @@ int FileSpectrum::open() const
 {
 	if( d_stream == 0 )
 	{
-		// Öffne die Spektrendatei.
+		// Ã–ffne die Spektrendatei.
 		const Root::Int64 count = d_ext.getCellCount() * Root::Int64(d_word);
 		if( count == 0 || count >= Root::Int64(s_mapThreshold) )
 		{
@@ -131,7 +131,7 @@ void FileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	if( tdimCount > dimCount )
 		throw Root::Exception( "target dimension out of range" );
 
-	//* Bringe den Buffer auf die nötige Grösse, um Cube darin zu speichern. Setze Skalenausschnitt.
+	//* Bringe den Buffer auf die nÃ¶tige GrÃ¶sse, um Cube darin zu speichern. Setze Skalenausschnitt.
 	bool downSize = false;
 	{
 		ScaleVector sv( tdimCount );
@@ -172,7 +172,7 @@ void FileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	//* Überführe Cube in normalisierte roi
+	//* ÃœberfÃ¼hre Cube in normalisierte roi
 	Cube roi( dimCount ); // Bereinigt mit first < second
 	for( d = 0; d < dimCount; d++ )
 	{
@@ -183,7 +183,7 @@ void FileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	/* const */ Point flip;		// Target-Achse verläuft parallel oder antiparallel
+	/* const */ Point flip;		// Target-Achse verlÃ¤uft parallel oder antiparallel
 	/* const */ Point flipOff;	// Arithmetischer Trick um Achse zu drehen
 	for( d = 0; d < tdimCount; d++ )
 	{
@@ -205,7 +205,7 @@ void FileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	off.assign( tdimCount, 0 );
 
 	Root::FixVector<Root::Int64> f1;
-    // Faktor für Indexberechnung: f1[ 0 ] * f1[ 1 ] * at( 2 ) + at( 1 ) * f1[ 0 ] + at( 0 )
+    // Faktor fÃ¼r Indexberechnung: f1[ 0 ] * f1[ 1 ] * at( 2 ) + at( 1 ) * f1[ 0 ] + at( 0 )
 	f1.assign( dimCount, 1 );
 	for( d = 1; d < dimCount; d++ )
 		f1[ d ] = Root::Int64(d_ext[ d - 1 ]) * f1[ d - 1 ];
@@ -234,7 +234,7 @@ void FileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 
 		//* Berechne den seriellen Index von currentSamp relativ zu currentTile.
         Int64 pointIndex  = 0;
-		// Optimierung für currentSamp.getIndex( d_tileSize ):
+		// Optimierung fÃ¼r currentSamp.getIndex( d_tileSize ):
 		for( d = 0; d < dimCount; d++ ) 
 			pointIndex += Root::Int64(currentSamp[ d ]) * f1[ d ];
 		pointIndex *= Root::Int64(d_word);
@@ -243,7 +243,7 @@ void FileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 
 
 		// Entlang der direkten X-dim wird innerhalb der for-Schleife gewandert.
-		// do wechselt dann durch sämtliche X-Riemen, die gelesen werden müssen.
+		// do wechselt dann durch sÃ¤mtliche X-Riemen, die gelesen werden mÃ¼ssen.
 		if( downSize )
 			for( int i = 0; i < bufLen; currentSamp[ DimX ]++, i += d_word )
 			{
@@ -445,7 +445,7 @@ void TileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	if( tdimCount > dimCount )
 		throw Root::Exception( "target dimension out of range" );
 
-	//* Bringe den Buffer auf die nötige Grösse, um Cube darin zu speichern. 
+	//* Bringe den Buffer auf die nÃ¶tige GrÃ¶sse, um Cube darin zu speichern. 
 	// Setze Skalenausschnitt.
 	bool downSize = false;
 	{
@@ -484,9 +484,9 @@ void TileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	// TODO: muss hier nicht auch Scale::getSign berücksichtigt werden?
+	// TODO: muss hier nicht auch Scale::getSign berÃ¼cksichtigt werden?
 
-	//* Überführe Cube in normalisierte roi
+	//* ÃœberfÃ¼hre Cube in normalisierte roi
 	Cube roi( dimCount ); // Bereinigt mit first < second
 	for( d = 0; d < dimCount; d++ )
 	{
@@ -497,7 +497,7 @@ void TileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	}
 	//-
 
-	/* const */ Point flip;		// Target-Achse verläuft parallel oder antiparallel
+	/* const */ Point flip;		// Target-Achse verlÃ¤uft parallel oder antiparallel
 	/* const */ Point flipOff;	// Arithmetischer Trick um Achse zu drehen
 	for( d = 0; d < tdimCount; d++ )
 	{
@@ -528,7 +528,7 @@ void TileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 	off.assign( tdimCount, 0 );
 
     Root::FixVector<Root::Int64> f1;
-    // Faktor für Indexberechnung: f1[ 0 ] * f1[ 1 ] * at( 2 ) + at( 1 ) * f1[ 0 ] + at( 0 )
+    // Faktor fÃ¼r Indexberechnung: f1[ 0 ] * f1[ 1 ] * at( 2 ) + at( 1 ) * f1[ 0 ] + at( 0 )
 	f1.assign( dimCount, 1 );
 	for( d = 1; d < dimCount; d++ )
 		f1[ d ] = Root::Int64(d_tileSize[ d - 1 ]) * f1[ d - 1 ];
@@ -579,7 +579,7 @@ void TileSpectrum::fillBuffer(Buffer & buffer, const Rotation & dims,
 
 			//* Berechne den seriellen Index von currentSamp relativ zu currentTile.
 			Root::Int64 pointIndex = 0;
-			// Optimierung für currentSamp.getIndex( d_tileSize ):
+			// Optimierung fÃ¼r currentSamp.getIndex( d_tileSize ):
 			for( d = 0; d < dimCount; d++ ) 
 				pointIndex += Root::Int64(currentSamp[ d ]) * f1[ d ];
 			pointIndex *= Root::Int64(d_word);
@@ -635,11 +635,11 @@ Amplitude TileSpectrum::getAt(const Point & point) const
 
 void TileSpectrum::adjustNumOfSamples()
 {
-	// Es kann sein, dass Tiles etwas grösser sind als TotalSize/numOfTiles (wegen Kommastellen).
+	// Es kann sein, dass Tiles etwas grÃ¶sser sind als TotalSize/numOfTiles (wegen Kommastellen).
 	// In diesem Fall wird TotalSize und Sweep nach oben korrigiert. 
 	// MaxPpm ist kein Problem, da mit Index 0 assoziiert.
 	// Die effektive in der Spektrendatei gelieferte Anzahl Samples entspricht bereits
-	// dem adjustedCount, sodass kein Überlauf stattfinden darf!
+	// dem adjustedCount, sodass kein Ãœberlauf stattfinden darf!
 	Sample difference;
 	for( Dimension i = 0; i < d_scales.size(); i++ )
 	{
@@ -647,8 +647,8 @@ void TileSpectrum::adjustNumOfSamples()
 		difference = d_tileCount[ i ] * d_tileSize[ i ] - scale.getSampleCount();
 		if( difference < 0 ) 
 		{
-			// RISK: ist es zulässig, dass Summe aller Tiles < sampleCount?
-			// Falls ja gäbe es hier eine unauflösbare Mehrdeutigkeit.
+			// RISK: ist es zulÃ¤ssig, dass Summe aller Tiles < sampleCount?
+			// Falls ja gÃ¤be es hier eine unauflÃ¶sbare Mehrdeutigkeit.
 			d_tileCount[ i ]++;	
 			difference = d_tileCount[ i ] * d_tileSize[ i ] - scale.getSampleCount();
 		}

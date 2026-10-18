@@ -222,7 +222,7 @@ void LuaMyWidget2::paintEvent ( QPaintEvent * e )
 			assert( p );
 			if( p->d_p.isActive() ) 
 			{
-				// Oops, jemand anderst zeichnet schon damit. Mache einen temporären.
+				// Oops, jemand anderst zeichnet schon damit. Mache einen temporÃ¤ren.
 				lua_pop( peer->getLua(), 1 );
 				p = ValueInstaller<LuaPainter2>::create( peer->getLua() );
 			}
@@ -258,7 +258,7 @@ void LuaMyWidget2::closeEvent ( QCloseEvent * e )
 		peer->pushMe();
 		lua_State* L = peer->getLua();
 		LuaWidget2::call( L, 1, 1 );
-		if( lua_toboolean( L, 1 ) ) // close kann Widget löschen, darum hier L verwenden.
+		if( lua_toboolean( L, 1 ) ) // close kann Widget lÃ¶schen, darum hier L verwenden.
 			e->accept();
 		else
 			e->ignore();

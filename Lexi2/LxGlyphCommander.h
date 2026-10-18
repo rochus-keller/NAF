@@ -39,9 +39,9 @@ namespace Lexi2
 
 		bool installCommand( GlyphCommand*, Root::Message* = 0 );
 		//. Diese Methode wird in den abgeleiteten Klassen im Sinne einer Factory aufgerufen.
-		//. Dem neuen Command wird d_alloc und d_trav präsentiert falls forward
+		//. Dem neuen Command wird d_alloc und d_trav prÃ¤sentiert falls forward
 		void registerForUndo( Root::Command* ) const;
-		//. Diese Methode sendet das übergebene Command an den Undo-Manager, falls es
+		//. Diese Methode sendet das Ã¼bergebene Command an den Undo-Manager, falls es
 		//. undoable ist.
 
 		//* Overrides von Glyph

@@ -30,7 +30,7 @@
 namespace Gui
 {
 	//* Reactor
-	//. Diese Klasse ist eine Reaction für mehrere Actions
+	//. Diese Klasse ist eine Reaction fÃ¼r mehrere Actions
 	class Reactor : public QObject
 	{
 	public:
@@ -39,8 +39,8 @@ namespace Gui
 		//-
 
 		//* Calldowns
-		virtual void dispatch( Root::Action& );  // Für Root::Action-Messages
-		virtual void handle( Root::Message& );	 // Für alle übrigen Messages
+		virtual void dispatch( Root::Action& );  // FÃ¼r Root::Action-Messages
+		virtual void handle( Root::Message& );	 // FÃ¼r alle Ã¼brigen Messages
 		//-
 
 		void unobserve( QObject* o );
@@ -50,8 +50,8 @@ namespace Gui
 	};
 
 	// RISK: funktioniert mit dem neuen ActionHandler nicht so recht, da letzterer
-	// nicht initialisiert wird. Müsste in Body stehen oder sonst irgendwie die
-	// Ausführung von ACTION_SLOTS_END garantieren.
+	// nicht initialisiert wird. MÃ¼sste in Body stehen oder sonst irgendwie die
+	// AusfÃ¼hrung von ACTION_SLOTS_END garantieren.
 #define IMPLEMENT_REACTOR( T ) friend class Root::ActionHandler<T>; void dispatch( Root::Action& t ) { Root::ActionHandler<T>::s_this.handle( this, t ); }
 #define IMPLEMENT_REACTOR2( T, SUP ) friend class Root::ActionHandler<T>; \
 	void dispatch( Root::Action& t ) { \

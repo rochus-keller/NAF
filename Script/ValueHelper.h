@@ -51,7 +51,7 @@ namespace Lua
 
 			if( lua_isnil( L, narg ) )
 				return 0;
-			if( !lua_isuserdata( L, narg ) ) // Nur Userdata kann cast erfüllen.
+			if( !lua_isuserdata( L, narg ) ) // Nur Userdata kann cast erfÃ¼llen.
 				return 0;
 
 			if( !lua_getmetatable(L, narg ) ) 
@@ -100,7 +100,7 @@ namespace Lua
 			// Assoziiere UserData mit dem MetaTable der Peer-Klasse
 			Lua::Util::pushCheckMetaTable( L, Root::TypeInfo<T>::className(), metaMetaID );  
 			lua_setmetatable( L, -2 );
-			// Lässt UserData auf Stack zurück.
+			// LÃ¤sst UserData auf Stack zurÃ¼ck.
 			return p;
 		}
 
@@ -170,7 +170,7 @@ namespace Lua
 			lua_getfield( L, meta, Lua::Util::s_class ); 
 			const char* name = Util::toStr( L, -1 );
 			lua_pop( L, 2 );
-			return name; // Das funktioniert tatsächlich, da luaL_checkstring den Pointer auf den persistenten String zurückgibt
+			return name; // Das funktioniert tatsÃ¤chlich, da luaL_checkstring den Pointer auf den persistenten String zurÃ¼ckgibt
 		}
 	protected:
 		ValueHelper() {}  // hide default constructor

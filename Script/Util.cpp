@@ -137,9 +137,9 @@ void Util::pushWeakMeta( lua_State *L )
 	if( lua_isnil( L, -1 ) )
 	{
 		lua_pop(L, 1); // Drop nil
-		// Erzeuge eine gemeinsame Meta-Table für alle Databases, welche diese dann
-		// als Meta-Table für ihre lokalen Surrogate-Tables verwenden.
-		// Diese Table wird nur dafür verwendet, bzw. sie ist ansonsten konstant.
+		// Erzeuge eine gemeinsame Meta-Table fÃ¼r alle Databases, welche diese dann
+		// als Meta-Table fÃ¼r ihre lokalen Surrogate-Tables verwenden.
+		// Diese Table wird nur dafÃ¼r verwendet, bzw. sie ist ansonsten konstant.
 		lua_newtable ( L );
 		const int weak = lua_gettop(L);
 
@@ -252,7 +252,7 @@ void UserObject::getData(lua_State* L) const
 void Util::pushDataTable(lua_State *L, int n )
 {
 	StackTester _test(L,1);
-	// Füge das lokale Datenobjekt auf den Stack
+	// FÃ¼ge das lokale Datenobjekt auf den Stack
 	if( lua_getdatatable( L, n ) == 0 )
 	{
 		// Falls es noch nicht existiert, erzeuge es.
@@ -281,7 +281,7 @@ void Util::getData(lua_State* L, int n)
 {
 	StackTester _test(L,0);
 	// Stack: key
-	Util::pushDataTable( L, n ); // RISK: ist es vernünftig, in jedem Fall den Datatable zu erzeugen?
+	Util::pushDataTable( L, n ); // RISK: ist es vernÃ¼nftig, in jedem Fall den Datatable zu erzeugen?
 	// Stack: key, table
 	lua_insert( L, -2 );
 	// Stack: table, key
@@ -310,7 +310,7 @@ void Util::addRef(lua_State *L, UserObject* me)
 {
 	StackTester _test(L,0);
 	// Damit me von GC als in Gebrauch erkannt wird, kommt me als Key auf Registry.
-	// Wert ist ein Referenzzähler.
+	// Wert ist ein ReferenzzÃ¤hler.
 	lua_pushuserdata( L, me );
 	lua_rawget( L, LUA_REGISTRYINDEX );
 	// Refcount oder nil
