@@ -52,7 +52,6 @@ namespace Qtl
 		static int grabMouse(lua_State * L);
 		static int grabShortcut(lua_State * L); // ( const QKeySequence & key, Qt::ShortcutContext context = Qt::WindowShortcut ) : int
 		static int heightForWidth(lua_State * L); // ( int w ) const : int
-		static int inputContext(lua_State * L); // QInputContext
 		static int inputMethodQuery(lua_State * L); // ( Qt::InputMethodQuery query ) const : QVariant
 		static int insertAction(lua_State * L); // ( QAction * before, QAction * action )
 		static int insertActions(lua_State * L); // ( QAction * before, table {QAction action, QAction action ...} )
@@ -92,7 +91,6 @@ namespace Qtl
 		static int setFocus(lua_State * L); // ( Qt::FocusReason reason )
 		static int setFocusProxy(lua_State * L); // ( QWidget * w )
 		static int setForegroundRole(lua_State * L); // ( QPalette::ColorRole role )
-		static int setInputContext(lua_State * L); // ( QInputContext * context )
 		static int setLayout(lua_State * L); // ( QLayout * layout )
 		static int setMask(lua_State * L); // ( const QBitmap & bitmap )
 		// ( const QRegion & region )
@@ -148,7 +146,7 @@ namespace Qtl
 		}
 		static int numColors(lua_State *L)
 		{
-			Lua::Util::push( L, T::check( L, 1)->numColors() );
+			Lua::Util::push( L, T::check( L, 1)->colorCount() );
 			return 1;
 		}
 		static int paintingActive(lua_State *L)

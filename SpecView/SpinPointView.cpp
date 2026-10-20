@@ -710,7 +710,7 @@ void SpinPointView::formatLabel(char* buf, int len, const SpinPoint& tuple,
 		::strcpy( buf, "" );
 		break;
 	default:
-		assert( FALSE );
+		assert( false );
 	}
 }
 

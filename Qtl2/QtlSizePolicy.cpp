@@ -37,11 +37,11 @@ int SizePolicy::setHeightForWidth(lua_State * L)
 int SizePolicy::setHorizontalPolicy(lua_State * L)
     { return QtValue<QSizePolicy>::setEnum( L, &QSizePolicy::setHorizontalPolicy ); }
 int SizePolicy::setHorizontalStretch(lua_State * L) 
-    { return QtValue<QSizePolicy>::setUChar( L, &QSizePolicy::setHorizontalStretch ); }
+    { return QtValue<QSizePolicy>::setInt( L, &QSizePolicy::setHorizontalStretch ); }
 int SizePolicy::setVerticalPolicy(lua_State * L) 
     { return QtValue<QSizePolicy>::setEnum( L, &QSizePolicy::setVerticalPolicy ); }
 int SizePolicy::setVerticalStretch(lua_State * L) 
-    { return QtValue<QSizePolicy>::setUChar( L, &QSizePolicy::setVerticalStretch ); }
+    { return QtValue<QSizePolicy>::setInt( L, &QSizePolicy::setVerticalStretch ); }
 int SizePolicy::transpose(lua_State * L) 
 {
     QSizePolicy* lhs = QtValue<QSizePolicy>::check( L, 1 );

@@ -72,6 +72,8 @@ namespace Spec
 		void checkValid( const Procedure& ) const; // throws
 
 		void setName( Dimension, const char* );
+		void setName( Dimension d, const QString& n ) { setName( d, n.toLatin1().constData() ); }
+		void setName( Dimension d, const QByteArray& n ) { setName( d, n.constData() ); }
 		Root::SymbolString getName( Dimension d ) const; // Dimension-Name oder AtomType
 
 		const SpinLabelSet& getLabels( Dimension d ) const { return d_dims[d].d_labels; }
@@ -112,7 +114,13 @@ namespace Spec
 
 		TypeBase* getOwner() const { return d_owner; }
 		SpectrumType(const char* name, Dimension count);
+		SpectrumType( const QString& n, Dimension c ):SpectrumType( n.toLatin1().constData(), c ) {}
+		SpectrumType( const QByteArray& n, Dimension c ):SpectrumType( n.constData(), c ) {}
 		SpectrumType(const char* name, const SpectrumType& );
+		SpectrumType( const QString& n, const SpectrumType& s ):SpectrumType( n.toLatin1().constData(), s ) {}
+		SpectrumType( const QByteArray& n, const SpectrumType& s ):SpectrumType( n.constData(), s ) {}
+		SpectrumType( const Root::SymbolString& n, Dimension c ):SpectrumType( n.data(), c ) {}
+		SpectrumType( const Root::SymbolString& n, const SpectrumType& s ):SpectrumType( n.data(), s ) {}
 		SpectrumType():d_owner(0) {}
 
 		enum Hint { Color, Labels, DimName, ProcStep, Width, Name };

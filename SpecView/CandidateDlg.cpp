@@ -39,8 +39,9 @@ public:
 };
 
 CandidateDlg::CandidateDlg(QWidget * parent, Repository* rep ):
-	QDialog( parent, "", true ), d_rep( rep ) 
+	QDialog( parent ), d_rep( rep ) 
 {
+	setModal( true );
 	assert( rep );
 }
 
@@ -49,7 +50,7 @@ CandidateDlg::~CandidateDlg()
 
 }
 
-bool CandidateDlg::exec()
+int CandidateDlg::exec()
 {
 	Q3VBoxLayout* top = new Q3VBoxLayout(this, 10);
 	Q3HBoxLayout* buttons = new Q3HBoxLayout();
@@ -95,9 +96,9 @@ bool CandidateDlg::exec()
 			if( d_checks[ i ]->isChecked() )
 				d_cands.insert( d_checks[ i ]->d_acid.deref() );
 		}
-		return true;
+		return QDialog::Accepted;
 	}else
-		return false;
+		return QDialog::Rejected;
 }
 
 void CandidateDlg::handleAll(bool on)
@@ -113,7 +114,7 @@ void CandidateDlg::setTitle(SpinSystem * sys)
 	assert( sys );
 	QString str;
 	str.sprintf( "Assignment Candidates - Spin System %d", sys->getId() );
-	setCaption( str );
+	setWindowTitle( str );
 	d_cands = sys->getCands();
 }
 
@@ -130,5 +131,5 @@ void CandidateDlg::setTitle(SystemType * st)
 	}
 	QString str;
 	str.sprintf( "Assignment Candidates - Spin System Type '%s'", st->getName().data() );
-	setCaption( str );
+	setWindowTitle( str );
 }

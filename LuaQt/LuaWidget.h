@@ -126,7 +126,7 @@ static int installParent( lua_State* L, int m, Dispatcher, const char* );
 		int mapToParent(lua_State *L);
 		int mapFromGlobal(lua_State *L);
 		int mapToGlobal(lua_State *L);
-		int setCaption(lua_State *L);
+		int setWindowTitle(lua_State *L);
 		int setFixedSize(lua_State *L);
 		int setMaximumSize(lua_State *L);
 		int setMinimumSize(lua_State *L);

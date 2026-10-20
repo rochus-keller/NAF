@@ -215,7 +215,7 @@ bool StarParser::parseLoopTable(const Loop::Headers & headers, Loop::Table & tab
 				if( d_lex.isNewSyntax() )
 					table.last().append( t.d_text );
 				else
-					table.last().append( t.d_text.toAscii() );
+					table.last().append( t.d_text.toLatin1() );
 			}
 		}else if( t.d_type == StarLexer::Token::Stop )
 		{
@@ -269,7 +269,7 @@ bool StarParser::parseDataValue(QVariant & v)
 		if( d_lex.isNewSyntax() )
 			v = t.d_text;
 		else
-			v = t.d_text.toAscii();
+			v = t.d_text.toLatin1();
 		return true;
 	case StarLexer::Token::ListStart:
 		{

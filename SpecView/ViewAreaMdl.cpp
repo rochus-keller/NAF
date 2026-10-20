@@ -249,7 +249,7 @@ void ViewAreaMdl::printPpmRect( Viewport* p, const Allocation & r) const
 				d, 
 				c[ DimX ].second, c[ DimY ].second 
 			);
-		Lexi::ShowStatusMessage msg( str );
+		Lexi::ShowStatusMessage msg( str.toLatin1().constData() );
 		p->traverseUp( msg ); 
 	}else
 	{
@@ -267,7 +267,7 @@ void ViewAreaMdl::printPpmRect( Viewport* p, const Allocation & r) const
 			char( 'x' + dim ),
 			c[ DimX ].first, w, toHz( w, DimX ),
 			char( 'x' + dim ), c[ DimX ].second );
-		Lexi::ShowStatusMessage msg( str );
+		Lexi::ShowStatusMessage msg( str.toLatin1().constData() );
 		p->traverseUp( msg ); 
 	}
 }

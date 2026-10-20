@@ -24,7 +24,7 @@
 #include <SpecView/PathSimDlg.h>
 using namespace Spec;
 
-static const char*  c_higher[] = {
+static const char* const c_higher[] = {
     "14 15 2 1",
     " 	c None",
     ".	c #000000",
@@ -44,7 +44,7 @@ static const char*  c_higher[] = {
     "    .         ",
     "              "};
 
-static const char*  c_lower[] = {
+static const char* const c_lower[] = {
     "14 15 2 1",
     " 	c None",
     ".	c #000000",
@@ -64,7 +64,7 @@ static const char*  c_lower[] = {
     "    .         ",
     "              "};
 
-static const char*  c_ghost[] = {
+static const char* const c_ghost[] = {
 	"14 15 2 1",
 	" 	c None",
 	".	c #000000",
@@ -84,7 +84,7 @@ static const char*  c_ghost[] = {
 	"    ..        ",
 	"    .         "};
 
-static const char*  c_link[] = {
+static const char* const c_link[] = {
     "16 15 2 1",
     " 	c None",
     ".	c #000000",
@@ -138,13 +138,13 @@ struct _SpinPointListItem : public Gui::ListViewItem
     {
         Q_UNUSED(col)
         if( d_elem.isHidden() )
-            return Qt::lightGray;
+            return QColor( Qt::lightGray );
         else if( d_elem.isGhost() )
-            return Qt::gray;
+            return QColor( Qt::gray );
         else if( d_elem.isLink() )
-            return Qt::cyan;
+            return QColor( Qt::cyan );
         else
-            return Qt::black;
+            return QColor( Qt::black );
     }
     QVariant pixmap( int col ) const
     {

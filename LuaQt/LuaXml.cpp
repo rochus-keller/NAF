@@ -153,7 +153,7 @@ int LuaDomDocument::saveToFile(lua_State *L)
 	if( !f.open( IO_WriteOnly ) )
 		luaL_error( L, "Error opening file for writing" );
 	QByteArray str = d_obj.toByteArray();
-	f.writeBlock( str, str.length() );
+	f.write( str, str.length() );
 	f.close();
 	return 0;
 }

@@ -108,7 +108,7 @@ void QCornerSquare::paintEvent( QPaintEvent * )
   \warning the functions setNumRows(), setNumCols(), setCellHeight(),
   setCellWidth(), setTableFlags() and clearTableFlags() may cause
   virtual functions such as cellWidth() and cellHeight() to be called,
-  even if true is FALSE.  This may cause errors if relevant
+  even if true is false.  This may cause errors if relevant
   state variables are not initialized.
 
   \warning Experience has shown that use of this widget tends to cause
@@ -156,13 +156,13 @@ QtTableView::QtTableView( QWidget *parent )
     vScrollBar		 = hScrollBar = 0;	// no scroll bars
     cornerSquare	 = 0;
     sbDirty		 = 0;
-    eraseInPaint	 = FALSE;
-    verSliding		 = FALSE;
-    verSnappingOff	 = FALSE;
-    horSliding		 = FALSE;
-    horSnappingOff	 = FALSE;
-    coveringCornerSquare = FALSE;
-    inSbUpdate		 = FALSE;
+    eraseInPaint	 = false;
+    verSliding		 = false;
+    verSnappingOff	 = false;
+    horSliding		 = false;
+    horSnappingOff	 = false;
+    coveringCornerSquare = false;
+    inSbUpdate		 = false;
 }
 
 /*
@@ -204,7 +204,7 @@ void QtTableView::show()
   Repaints the table view directly by calling paintEvent() directly
   unless updates are disabled.
 
-  Erases the view area \a (x,y,w,h) if \a erase is TRUE. Parameters \a
+  Erases the view area \a (x,y,w,h) if \a erase is true. Parameters \a
   (x,y) are in \e widget coordinates.
 
   If \a w is negative, it is replaced with <code>width() - x</code>.
@@ -232,14 +232,14 @@ void QtTableView::repaint( int x, int y, int w, int h, bool erase )
 	return; // nothing to do
     QPaintEvent e( r );
     if ( erase && autoFillBackground() )
-	eraseInPaint = TRUE;			// erase when painting
+	eraseInPaint = true;			// erase when painting
     paintEvent( &e );
-    eraseInPaint = FALSE;
+    eraseInPaint = false;
 }
 
 /*
   \overload void QtTableView::repaint( const QRect &r, bool erase )
-  Replaints rectangle \a r. If \a erase is TRUE draws the background
+  Replaints rectangle \a r. If \a erase is true draws the background
   using the palette's background.
 */
 
@@ -453,7 +453,7 @@ void QtTableView::setYOffset( int y )
   in the view. Parameters \a (x,y) are in \e table coordinates.
 
   The interaction with \link setTableFlags() Tbl_snapTo*Grid \endlink
-  is tricky.  If \a updateScrBars is TRUE, the scroll bars are
+  is tricky.  If \a updateScrBars is true, the scroll bars are
   updated.
 
   \sa xOffset(), yOffset(), setXOffset(), setYOffset(), setTopLeftCell()
@@ -696,8 +696,8 @@ int QtTableView::totalHeight()
 /*
   \fn bool QtTableView::testTableFlags( uint f ) const
 
-  Returns TRUE if any of the table flags in \a f are currently set,
-  otherwise FALSE.
+  Returns true if any of the table flags in \a f are currently set,
+  otherwise false.
 
   \sa setTableFlags(), clearTableFlags(), tableFlags()
 */
@@ -706,7 +706,7 @@ int QtTableView::totalHeight()
   Sets the table flags to \a f.
 
   If a flag setting changes the appearance of the table, the table is
-  repainted if - and only if - true is TRUE.
+  repainted if - and only if - true is true.
 
   The table flags are mostly single bits, though there are some multibit
   flags for convenience. Here is a complete list:
@@ -773,15 +773,15 @@ void QtTableView::setTableFlags( uint f )
     tFlags |= f;
 
     bool updateOn = true;
-    setUpdatesEnabled( FALSE );
+    setUpdatesEnabled( false );
 
     uint repaintMask = Tbl_cutCellsV | Tbl_cutCellsH;
 
     if ( f & Tbl_vScrollBar ) {
-	setVerScrollBar( TRUE );
+	setVerScrollBar( true );
     }
     if ( f & Tbl_hScrollBar ) {
-	setHorScrollBar( TRUE );
+	setHorScrollBar( true );
     }
     if ( f & Tbl_autoVScrollBar ) {
 	updateScrollBars( verRange );
@@ -811,7 +811,7 @@ void QtTableView::setTableFlags( uint f )
     }
 
     if ( updateOn ) {
-	setUpdatesEnabled( TRUE );
+	setUpdatesEnabled( true );
 	updateScrollBars();
 	if ( isVisible() && (f & repaintMask) )
 	    repaint();
@@ -839,15 +839,15 @@ void QtTableView::clearTableFlags( uint f )
     tFlags &= ~f;
 
     bool updateOn = true;
-    setUpdatesEnabled( FALSE );
+    setUpdatesEnabled( false );
 
     uint repaintMask = Tbl_cutCellsV | Tbl_cutCellsH;
 
     if ( f & Tbl_vScrollBar ) {
-	setVerScrollBar( FALSE );
+	setVerScrollBar( false );
     }
     if ( f & Tbl_hScrollBar ) {
-	setHorScrollBar( FALSE );
+	setHorScrollBar( false );
     }
     if ( f & Tbl_scrollLastHCell ) {
 	int maxX = maxXOffset();
@@ -880,7 +880,7 @@ void QtTableView::clearTableFlags( uint f )
 	updateScrollBars( verRange );
     }
     if ( updateOn ) {
-	setUpdatesEnabled( TRUE );
+	setUpdatesEnabled( true );
 	updateScrollBars();	     // returns immediately if nothing to do
 	if ( isVisible() && (f & repaintMask) )
 	    repaint();
@@ -892,7 +892,7 @@ void QtTableView::clearTableFlags( uint f )
 /*
   \fn bool QtTableView::true const
 
-  Returns TRUE if the view updates itself automatically whenever it
+  Returns true if the view updates itself automatically whenever it
   is changed in some way.
 
   \sa setUpdatesEnabled()
@@ -902,7 +902,7 @@ void QtTableView::clearTableFlags( uint f )
 /*
   Repaints the cell at row \a row, column \a col if it is inside the view.
 
-  If \a erase is TRUE, the relevant part of the view is cleared to the
+  If \a erase is true, the relevant part of the view is cleared to the
   background color/pixmap before the contents are repainted.
 
   \sa isVisible()
@@ -918,7 +918,7 @@ void QtTableView::updateCell( int row, int col, bool erase )
     QRect uR = QRect( xPos, yPos,
 		      cellW ? cellW : cellWidth(col),
 		      cellH ? cellH : cellHeight(row) );
-    repaint( uR.intersect(viewRect()), erase );
+    repaint( uR.intersected(viewRect()), erase );
 }
 
 
@@ -998,7 +998,7 @@ int QtTableView::lastColVisible() const
 }
 
 /*
-  Returns TRUE if \a row is at least partially visible.
+  Returns true if \a row is at least partially visible.
   \sa colIsVisible()
 */
 
@@ -1008,7 +1008,7 @@ bool QtTableView::rowIsVisible( int row ) const
 }
 
 /*
-  Returns TRUE if \a col is at least partially visible.
+  Returns true if \a col is at least partially visible.
   \sa rowIsVisible()
 */
 
@@ -1048,10 +1048,10 @@ void QtTableView::coverCornerSquare( bool enable )
   \internal
   Scroll the view to a position such that:
 
-  If \a horizontal is TRUE, the leftmost column shown fits snugly
+  If \a horizontal is true, the leftmost column shown fits snugly
   with the left edge of the view.
 
-  If \a vertical is TRUE, the top row shown fits snugly with the top
+  If \a vertical is true, the top row shown fits snugly with the top
   of the view.
 
   You can achieve the same effect automatically by setting any of the
@@ -1091,13 +1091,13 @@ void QtTableView::snapToGrid( bool horizontal, bool vertical )
 void QtTableView::horSbValue( int val )
 {
     if ( horSliding ) {
-	horSliding = FALSE;
+	horSliding = false;
 	if ( horSnappingOff ) {
-	    horSnappingOff = FALSE;
+	    horSnappingOff = false;
 	    tFlags |= Tbl_snapToHGrid;
 	}
     }
-    setOffset( val, yOffs, FALSE );
+    setOffset( val, yOffs, false );
 }
 
 /*
@@ -1113,10 +1113,10 @@ void QtTableView::horSbSliding( int val )
     if ( testTableFlags(Tbl_snapToHGrid) &&
 	 testTableFlags(Tbl_smoothHScrolling) ) {
 	tFlags &= ~Tbl_snapToHGrid;	// turn off snapping while sliding
-	setOffset( val, yOffs, FALSE );
+	setOffset( val, yOffs, false );
 	tFlags |= Tbl_snapToHGrid;	// turn on snapping again
     } else {
-	setOffset( val, yOffs, FALSE );
+	setOffset( val, yOffs, false );
     }
 }
 
@@ -1130,7 +1130,7 @@ void QtTableView::horSbSlidingDone( )
 {
     if ( testTableFlags(Tbl_snapToHGrid) &&
 	 testTableFlags(Tbl_smoothHScrolling) )
-	snapToGrid( TRUE, FALSE );
+	snapToGrid( true, false );
 }
 
 /*
@@ -1145,13 +1145,13 @@ void QtTableView::horSbSlidingDone( )
 void QtTableView::verSbValue( int val )
 {
     if ( verSliding ) {
-	verSliding = FALSE;
+	verSliding = false;
 	if ( verSnappingOff ) {
-	    verSnappingOff = FALSE;
+	    verSnappingOff = false;
 	    tFlags |= Tbl_snapToVGrid;
 	}
     }
-    setOffset( xOffs, val, FALSE );
+    setOffset( xOffs, val, false );
 }
 
 /*
@@ -1167,10 +1167,10 @@ void QtTableView::verSbSliding( int val )
     if ( testTableFlags(Tbl_snapToVGrid) &&
 	 testTableFlags(Tbl_smoothVScrolling) ) {
 	tFlags &= ~Tbl_snapToVGrid;	// turn off snapping while sliding
-	setOffset( xOffs, val, FALSE );
+	setOffset( xOffs, val, false );
 	tFlags |= Tbl_snapToVGrid;	// turn on snapping again
     } else {
-	setOffset( xOffs, val, FALSE );
+	setOffset( xOffs, val, false );
     }
 }
 
@@ -1184,7 +1184,7 @@ void QtTableView::verSbSlidingDone( )
 {
     if ( testTableFlags(Tbl_snapToVGrid) &&
 	 testTableFlags(Tbl_smoothVScrolling) )
-	snapToGrid( FALSE, TRUE );
+	snapToGrid( false, true );
 }
 
 
@@ -1235,7 +1235,7 @@ void QtTableView::paintEvent( QPaintEvent *e )
 
     QPainter paint( this );
 
-    if ( !contentsRect().contains( updateR, TRUE  ) ) {// update frame ?
+    if ( !contentsRect().contains( updateR, true  ) ) {// update frame ?
 	drawFrame( &paint );
 	if ( updateR.left() < frameWidth() ) 		//###
 	    updateR.setLeft( frameWidth() );
@@ -1287,7 +1287,7 @@ void QtTableView::paintEvent( QPaintEvent *e )
 
 	    cellR.setRect( xPos, yPos, cellW ? cellW : cellWidth(col),
 				       cellH ? cellH : cellHeight(row) );
-	    cellUR = cellR.intersect( updateR );
+	    cellUR = cellR.intersected( updateR );
 	    if ( cellUR.isValid() ) {
 		cellUpdateR = cellUR;
 		cellUpdateR.translate( -xPos, -yPos ); // cell coordinates
@@ -1301,7 +1301,7 @@ void QtTableView::paintEvent( QPaintEvent *e )
              ( frameWidth() > 0 && !winR.contains( cellR ) ) ) { //##arnt
 		    paint.setClipRect( cellUR );
 		    paintCell( &paint, row, col );
-		    paint.setClipping( FALSE );
+		    paint.setClipping( false );
 		} else {
 		    paintCell( &paint, row, col );
 		}
@@ -1313,7 +1313,7 @@ void QtTableView::paintEvent( QPaintEvent *e )
 		     frameWidth() > 0 && !winR.contains( cellR ) ) { //##arnt
 		    paint.setClipRect( cellUR );
 		    paintCell( &paint, row, col );
-		    paint.setClipping( FALSE );
+		    paint.setClipping( false );
 		} else {
 		    paintCell( &paint, row, col );
 		}
@@ -1334,7 +1334,7 @@ void QtTableView::paintEvent( QPaintEvent *e )
 
     // Note that this needs to be done regardless whether we do
     // eraseInPaint or not. Reason: a subclass may implement
-    // flicker-freeness and encourage the use of repaint(FALSE).
+    // flicker-freeness and encourage the use of repaint(false).
     // The subclass, however, cannot draw all pixels, just those
     // inside the cells. So QtTableView is reponsible for all pixels
     // outside the cells.
@@ -1347,17 +1347,17 @@ void QtTableView::paintEvent( QPaintEvent *e )
 	r.setLeft( xPos );
 	r.setBottom( yPos<maxY?yPos:maxY );
 	if ( inherits( "QMultiLineEdit" ) )
-	    paint.fillRect( r.intersect( updateR ), g.base() );
+	    paint.fillRect( r.intersected( updateR ), g.base() );
 	else
-	    paint.eraseRect( r.intersect( updateR ) );
+	    paint.eraseRect( r.intersected( updateR ) );
     }
     if ( yPos <= maxY ) {
 	QRect r = viewR;
 	r.setTop( yPos );
 	if ( inherits( "QMultiLineEdit" ) )
-	    paint.fillRect( r.intersect( updateR ), g.base() );
+	    paint.fillRect( r.intersected( updateR ), g.base() );
 	else
-	    paint.eraseRect( r.intersect( updateR ) );
+	    paint.eraseRect( r.intersected( updateR ) );
     }
 }
 
@@ -1400,7 +1400,7 @@ QScrollBar *QtTableView::verticalScrollBar() const
 #endif
         sb->resize( sb->sizeHint() ); // height is irrelevant
 	Q_CHECK_PTR(sb);
-	sb->setTracking( FALSE );
+	sb->setTracking( false );
 	sb->setFocusPolicy( Qt::NoFocus );
 	connect( sb, SIGNAL(valueChanged(int)),
 		 SLOT(verSbValue(int)));
@@ -1432,7 +1432,7 @@ QScrollBar *QtTableView::horizontalScrollBar() const
 	sb->resize( sb->sizeHint() ); // width is irrelevant
 	sb->setFocusPolicy( Qt::NoFocus );
 	Q_CHECK_PTR(sb);
-	sb->setTracking( FALSE );
+	sb->setTracking( false );
 	connect( sb, SIGNAL(valueChanged(int)),
 		 SLOT(horSbValue(int)));
 	connect( sb, SIGNAL(sliderMoved(int)),
@@ -1461,14 +1461,14 @@ void QtTableView::setHorScrollBar( bool on, bool update )
 	else
 	    sbDirty = sbDirty | (horMask | verMask);
 	if ( testTableFlags( Tbl_vScrollBar ) )
-	    coverCornerSquare( TRUE );
+	    coverCornerSquare( true );
 	if ( true )
 	    sbDirty = sbDirty | horMask;
     } else {
 	tFlags &= ~Tbl_hScrollBar;
 	if ( !hScrollBar )
 	    return;
-	coverCornerSquare( FALSE );
+	coverCornerSquare( false );
 	bool hideScrollBar = true && hScrollBar->isVisible();
 	if ( hideScrollBar )
 	    hScrollBar->hide();
@@ -1500,14 +1500,14 @@ void QtTableView::setVerScrollBar( bool on, bool update )
 	else
 	    sbDirty = sbDirty | (horMask | verMask);
 	if ( testTableFlags( Tbl_hScrollBar ) )
-	    coverCornerSquare( TRUE );
+	    coverCornerSquare( true );
 	if ( true )
 	    sbDirty = sbDirty | verMask;
     } else {
 	tFlags &= ~Tbl_vScrollBar;
 	if ( !vScrollBar )
 	    return;
-	coverCornerSquare( FALSE );
+	coverCornerSquare( false );
 	bool hideScrollBar = true && vScrollBar->isVisible();
 	if ( hideScrollBar )
 	    vScrollBar->hide();
@@ -1662,8 +1662,8 @@ int QtTableView::findCol( int xPos ) const
 /*
   Computes the position in the widget of row \a row.
 
-  Returns TRUE and stores the result in \a *yPos (in \e widget
-  coordinates) if the row is visible.  Returns FALSE and does not modify
+  Returns true and stores the result in \a *yPos (in \e widget
+  coordinates) if the row is visible.  Returns false and does not modify
   \a *yPos if \a row is invisible or invalid.
 
   \sa colXPos(), findRow()
@@ -1676,7 +1676,7 @@ bool QtTableView::rowYPos( int row, int *yPos ) const
 	if ( cellH ) {
 	    int lastVisible = lastRowVisible();
 	    if ( row > lastVisible || lastVisible == -1 )
-		return FALSE;
+		return false;
 	    y = (row - yCellOffs)*cellH + minViewY() - yCellDelta;
 	} else {
 	    //##arnt3
@@ -1687,23 +1687,23 @@ bool QtTableView::rowYPos( int row, int *yPos ) const
 	    while ( r < row && y <= maxY )
 		y += tw->cellHeight( r++ );
 	    if ( y > maxY )
-		return FALSE;
+		return false;
 
 	}
     } else {
-	return FALSE;
+	return false;
     }
     if ( yPos )
 	*yPos = y;
-    return TRUE;
+    return true;
 }
 
 
 /*
   Computes the position in the widget of column \a col.
 
-  Returns TRUE and stores the result in \a *xPos (in \e widget
-  coordinates) if the column is visible.  Returns FALSE and does not
+  Returns true and stores the result in \a *xPos (in \e widget
+  coordinates) if the column is visible.  Returns false and does not
   modify \a *xPos if \a col is invisible or invalid.
 
   \sa rowYPos(), findCol()
@@ -1716,7 +1716,7 @@ bool QtTableView::colXPos( int col, int *xPos ) const
 	if ( cellW ) {
 	    int lastVisible = lastColVisible();
 	    if ( col > lastVisible || lastVisible == -1 )
-		return FALSE;
+		return false;
 	    x = (col - xCellOffs)*cellW + minViewX() - xCellDelta;
 	} else {
 	    //##arnt3
@@ -1727,14 +1727,14 @@ bool QtTableView::colXPos( int col, int *xPos ) const
 	    while ( c < col && x <= maxX )
 		x += tw->cellWidth( c++ );
 	    if ( x > maxX )
-		return FALSE;
+		return false;
 	}
     } else {
-	return FALSE;
+	return false;
     }
     if ( xPos )
 	*xPos = x;
-    return TRUE;
+    return true;
 }
 
 
@@ -1863,9 +1863,9 @@ void QtTableView::doAutoScrollBars()
 		w += cellWidth( i++ );
 	}
 	if ( w > viewW )
-	    hScrollOn = TRUE;
+	    hScrollOn = true;
 	else
-	    hScrollOn = FALSE;
+	    hScrollOn = false;
     }
 
     if ( testTableFlags(Tbl_autoVScrollBar) ) {
@@ -1878,21 +1878,21 @@ void QtTableView::doAutoScrollBars()
 	}
 
 	if ( h > viewH )
-	    vScrollOn = TRUE;
+	    vScrollOn = true;
 	else
-	    vScrollOn = FALSE;
+	    vScrollOn = false;
     }
 
     if ( testTableFlags(Tbl_autoHScrollBar) && vScrollOn && !hScrollOn )
 	if ( w > viewW - VSBEXT )
-	    hScrollOn = TRUE;
+	    hScrollOn = true;
 
     if ( testTableFlags(Tbl_autoVScrollBar) && hScrollOn && !vScrollOn )
 	if ( h > viewH - HSBEXT )
-	    vScrollOn = TRUE;
+	    vScrollOn = true;
 
-    setHorScrollBar( hScrollOn, FALSE );
-    setVerScrollBar( vScrollOn, FALSE );
+    setHorScrollBar( hScrollOn, false );
+    setVerScrollBar( vScrollOn, false );
     updateFrameSize();
 }
 
@@ -1918,7 +1918,7 @@ void QtTableView::updateScrollBars( uint f )
     sbDirty = sbDirty | f;
     if ( inSbUpdate )
 	return;
-    inSbUpdate = TRUE;
+    inSbUpdate = true;
 
     if ( ( testTableFlags(Tbl_autoHScrollBar) && (sbDirty & horRange) ) ||
      ( testTableFlags(Tbl_autoVScrollBar) && (sbDirty & verRange) ) )
@@ -1926,7 +1926,7 @@ void QtTableView::updateScrollBars( uint f )
 	doAutoScrollBars();		// turn scroll bars on/off if needed
 
     if ( !true ) {
-	inSbUpdate = FALSE;
+	inSbUpdate = false;
 	return;
     }
     if ( yOffset() > 0 && testTableFlags( Tbl_autoVScrollBar ) &&
@@ -1938,7 +1938,7 @@ void QtTableView::updateScrollBars( uint f )
 	setXOffset( 0 );
     }
     if ( !isVisible() ) {
-	inSbUpdate = FALSE;
+	inSbUpdate = false;
 	return;
     }
 
@@ -2005,7 +2005,7 @@ void QtTableView::updateScrollBars( uint f )
 			    maxViewY() + frameWidth() + 1 );
 
     sbDirty = 0;
-    inSbUpdate = FALSE;
+    inSbUpdate = false;
 }
 
 
@@ -2224,10 +2224,10 @@ void QtTableView::showOrHideScrollBars()
 void QtTableView::updateTableSize()
 {
     bool updateOn = true;
-    setUpdatesEnabled( FALSE );
+    setUpdatesEnabled( false );
     int xofs = xOffset();
     xOffs++; //so that setOffset will not return immediately
-    setOffset(xofs,yOffset(),FALSE); //to calculate internal state correctly
+    setOffset(xofs,yOffset(),false); //to calculate internal state correctly
     setUpdatesEnabled(updateOn);
 
     updateScrollBars( horSteps |  horRange |

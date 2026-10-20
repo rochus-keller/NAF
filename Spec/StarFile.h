@@ -90,6 +90,8 @@ namespace Spec
 		Root::Index getCount() const { return d_count; }
 		bool parse();
 		StarFile(const char*);
+		StarFile( const QString& p ):StarFile( p.toLatin1().constData() ) {}
+		StarFile( const QByteArray& p ):StarFile( p.constData() ) {}
 		~StarFile();
 	private:
 		QByteArray d_fileName;

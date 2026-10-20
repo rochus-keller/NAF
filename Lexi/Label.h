@@ -35,6 +35,11 @@ namespace Lexi
 	public:
 		Label(const char* = "", const QFont* = nil, QColor = Qt::black, 
 			Alignment hori = AlignLeft, Alignment verti = AlignTop );
+		Label( const QString& s, const QFont* f = nil, QColor c = Qt::black,
+			Alignment h = AlignLeft, Alignment v = AlignTop );
+		Label( const QByteArray& s, const QFont* f = nil, QColor c = Qt::black,
+			Alignment h = AlignLeft, Alignment v = AlignTop );
+		void setText( const QString& s ) { d_text = s.toLatin1().constData(); }
 		virtual ~Label();
 		void setText( const char* s ) { d_text = s; }
 		const char* getText() const { return d_text; }

@@ -78,7 +78,7 @@ MoleculeViewer::MoleculeViewer(QWidget* parent, ResidueType* rt, bool rw ):
         setAttribute(Qt::WA_DeleteOnClose);
     }else
         str.sprintf( "MoleculeViewer" );
-	setCaption( str );
+	setWindowTitle( str );
 
 	g_cellWidth = fontMetrics().width( "HHHHH" );
 
@@ -100,7 +100,6 @@ MoleculeViewer::MoleculeViewer(QWidget* parent, ResidueType* rt, bool rw ):
 	Gui::Menu::item( d_kontext, this, "Reset Selection", ClearSel, false );
 
 	setFocusPolicy( Qt::StrongFocus );
-	setKeyCompression( false ); // Wir wollen ein Event fr jeden Key incl. Autorepeat.
 	setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding, 
 		QSizePolicy::MinimumExpanding ) );
 	setFrameStyle( Q3Frame::Panel | Q3Frame::Sunken );
@@ -259,7 +258,7 @@ void MoleculeViewer::mousePressEvent(QMouseEvent * e)
 	if( e->button() == Qt::RightButton )
 	{
 		d_kontext->exec( e->globalPos() );
-	}else if( d_rw && e->state() && Qt::ControlButton )
+	}else if( d_rw && ( e->modifiers() & Qt::ControlModifier ) )
 	{
 		// Bond-Operation
 		handleBond();
@@ -419,8 +418,8 @@ void MoleculeViewer::handleNewAtom(Root::Action & a)
 {
 	ACTION_ENABLED_IF( a, d_rw && !isOccupied( d_current ) );
 
-	QDialog dlg( this, "", true );
-	dlg.setCaption( "New Atom" );
+	QDialog dlg( this ); dlg.setModal( true );
+	dlg.setWindowTitle( "New Atom" );
 
 	Q3VBoxLayout* top = new Q3VBoxLayout(&dlg, 10);
 	Q3HBoxLayout* buttons = new Q3HBoxLayout();
@@ -438,9 +437,9 @@ void MoleculeViewer::handleNewAtom(Root::Action & a)
 	contents->addWidget( new QLabel( "Type:", &dlg ), 3, 0 ); 
 	QComboBox* option = new QComboBox( &dlg );
 	for( int i = AtomType::H1; i < AtomType::MaxIsotope; i++ )
-		option->insertItem( AtomType::s_labels[ i ] );
+		option->addItem( AtomType::s_labels[ i ] );
 	contents->addWidget( option, 3, 1 );
-	option->setCurrentItem( 0 );
+	option->setCurrentIndex( 0 );
 
 	contents->addWidget( new QLabel( "Group:", &dlg ), 4, 0 ); 
 	QLineEdit* group = new QLineEdit( &dlg );
@@ -517,7 +516,7 @@ void MoleculeViewer::handleNewAtom(Root::Action & a)
 					g = d_rt->addGroup( group->text().toLatin1() );
 			}
 			Atom* at = d_rt->addAtom( sym->text().toLatin1(),
-				AtomType::Isotope( option->currentItem() + 1 ), num, g );
+				AtomType::Isotope( option->currentIndex() + 1 ), num, g );
 			if( at )
 			{
 				d_atoms[ d_current ] = at;
@@ -621,8 +620,8 @@ void MoleculeViewer::handleSelect(Root::Action & a)
 {
 	ACTION_ENABLED_IF( a, isOccupied( d_current ) );
 
-	QDialog dlg( this, "", true );
-	dlg.setCaption( "Select Spins" );
+	QDialog dlg( this ); dlg.setModal( true );
+	dlg.setWindowTitle( "Select Spins" );
 
 	Q3VBoxLayout* top = new Q3VBoxLayout(&dlg, 10);
 	Q3HBoxLayout* buttons = new Q3HBoxLayout();
@@ -640,9 +639,9 @@ void MoleculeViewer::handleSelect(Root::Action & a)
 	contents->addWidget( new QLabel( "To:", &dlg ), 3, 0 ); 
 	QComboBox* _to = new QComboBox( &dlg );
 	for( int i = AtomType::None; i <= AtomType::Lr; i++ )
-		_to->insertItem( AtomType::s_labels[ i ] );
+		_to->addItem( AtomType::s_labels[ i ] );
 	contents->addWidget( _to, 3, 1 );
-	_to->setCurrentItem( 0 );
+	_to->setCurrentIndex( 0 );
 
 	QPushButton* ok = new QPushButton( "&OK", &dlg );
 	QObject::connect( ok, SIGNAL( clicked() ), &dlg, SLOT( accept() ) );
@@ -664,7 +663,7 @@ void MoleculeViewer::handleSelect(Root::Action & a)
 	{
 		hops = _hops->text().toUShort( &doit );
 		rep = _rep->isChecked();
-		to = AtomType::Isotope( _to->currentItem() );
+		to = AtomType::Isotope( _to->currentIndex() );
 		if( !doit )
 		{
 			QMessageBox::critical( this, "Select Spin",
@@ -697,7 +696,7 @@ void MoleculeViewer::handleSetGroup(Root::Action & a)
 	ACTION_ENABLED_IF( a, d_rw && isOccupied( d_current ) );
 
 	Atom* atom = d_atoms[ d_current ];
-	bool ok	= FALSE;
+	bool ok	= false;
 	QString res = "-";
 	if( atom->getGroup() )
 		res = atom->getGroup()->getName().data();

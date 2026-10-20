@@ -51,7 +51,7 @@ static const luaL_reg _methods[] =
 	{"getBgColor",  LuaWidget2::getBgColor },
 	{"setBgColor",  LuaWidget2::setBgColor },
 	{"getTopLevelWidget",  LuaWidget2::getTopLevelWidget },
-	{"setCaption",  LuaWidget2::setCaption },
+	{"setCaption",  LuaWidget2::setWindowTitle },
 	{"setMaximumSize",  LuaWidget2::setMaximumSize },
 	{"setMinimumSize",  LuaWidget2::setMinimumSize },
 	{"getMaximumSize",  LuaWidget2::getMaximumSize },
@@ -192,7 +192,7 @@ int LuaWidget2::setMaximumSize(lua_State *L)
 	return 0;
 }
 
-int LuaWidget2::setCaption(lua_State *L) // unique
+int LuaWidget2::setWindowTitle(lua_State *L) // unique
 {
     QWidget* obj = QtObject<QWidget>::check( L, 1 );
 	obj->setWindowTitle( QString::fromLatin1( luaL_checkstring( L, 2 ) ) );

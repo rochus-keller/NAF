@@ -47,13 +47,25 @@ int HeaderView::hideSection(lua_State * L) // ( int logicalIndex )
 int HeaderView::isClickable(lua_State * L) // const : bool
 {
     QHeaderView* obj = QtObject<QHeaderView>::check( L, 1);
-	Util::push( L, obj->isClickable() );
+	Util::push( L, obj->sectionsClickable() );
 	return 1;
+}
+int HeaderView::setClickable(lua_State * L) // ( bool )
+{
+    QHeaderView* obj = QtObject<QHeaderView>::check( L, 1);
+	obj->setSectionsClickable( Util::toBool( L, 2 ) );
+	return 0;
+}
+int HeaderView::setMovable(lua_State * L) // ( bool )
+{
+    QHeaderView* obj = QtObject<QHeaderView>::check( L, 1);
+	obj->setSectionsMovable( Util::toBool( L, 2 ) );
+	return 0;
 }
 int HeaderView::isMovable(lua_State * L) // const : bool
 {
     QHeaderView* obj = QtObject<QHeaderView>::check( L, 1);
-	Util::push( L, obj->isMovable() );
+	Util::push( L, obj->sectionsMovable() );
 	return 1;
 }
 int HeaderView::isSectionHidden(lua_State * L) // ( int logicalIndex ) const : bool
@@ -108,7 +120,7 @@ int HeaderView::orientation(lua_State * L) // const : Qt::Orientation
 int HeaderView::resizeMode(lua_State * L) // ( int logicalIndex ) const : ResizeMode 
 {
     QHeaderView* obj = QtObject<QHeaderView>::check( L, 1);
-	Util::push( L, obj->resizeMode( Util::toInt( L, 2) ) );
+	Util::push( L, obj->sectionResizeMode( Util::toInt( L, 2) ) );
 	return 1;
 }
 int HeaderView::resizeSection(lua_State * L) // ( int logicalIndex, int size )
@@ -167,16 +179,16 @@ int HeaderView::sectionsMoved(lua_State * L) // const : bool
 	Util::push( L, obj->sectionsMoved() );
 	return 1;
 }
-int HeaderView::setClickable(lua_State * L) // ( bool clickable )
+int HeaderView::setSectionsClickable(lua_State * L) // ( bool clickable )
 {	
     QHeaderView* obj = QtObject<QHeaderView>::check( L, 1);
-	obj->setClickable( Util::toBool( L, 2 ) );
+	obj->setSectionsClickable( Util::toBool( L, 2 ) );
 	return 0;
 }
-int HeaderView::setMovable(lua_State * L) // ( bool movable )
+int HeaderView::setSectionsMovable(lua_State * L) // ( bool movable )
 {	
     QHeaderView* obj = QtObject<QHeaderView>::check( L, 1);
-	obj->setMovable( Util::toBool( L, 2 ) );
+	obj->setSectionsMovable( Util::toBool( L, 2 ) );
 	return 0;
 }
 int HeaderView::setResizeMode(lua_State * L) // ( ResizeMode mode )
@@ -189,7 +201,7 @@ int HeaderView::setResizeMode(lua_State * L) // ( ResizeMode mode )
 		if( fInt >=0 && fInt <= 3 )
 		{
 			f = (QHeaderView::ResizeMode) fInt;
-			obj->setResizeMode( Util::toInt( L, 2), f ) ;
+			obj->setSectionResizeMode( Util::toInt( L, 2), f ) ;
 		}
 		else
 			Lua::Util::error( L, "expecting a valid QHeaderView::ResizeMode" );
@@ -200,7 +212,7 @@ int HeaderView::setResizeMode(lua_State * L) // ( ResizeMode mode )
 		if( fInt >=0 && fInt <= 3 )
 		{
 			f = (QHeaderView::ResizeMode) fInt;
-			obj->setResizeMode( f ) ;
+			obj->setSectionResizeMode( f ) ;
 		}
 		else
 			Lua::Util::error( L, "expecting a valid QHeaderView::ResizeMode" );

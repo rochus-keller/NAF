@@ -40,11 +40,11 @@ ObjectListView::ObjectListView(QWidget* par, Spec::ObjectDef* od, const ObjectLi
 	assert( od );
 	setAlternatingRowColors( true );
 	setSelectionMode( QAbstractItemView::NoSelection );
-    horizontalHeader()->setMovable(true);
-    verticalHeader()->setMovable(true);
-	verticalHeader()->setResizeMode ( QHeaderView::Interactive );
+    horizontalHeader()->setSectionsMovable(true);
+    verticalHeader()->setSectionsMovable(true);
+	verticalHeader()->setSectionResizeMode( QHeaderView::Interactive );
 	setEditTriggers( QAbstractItemView::AllEditTriggers );
-	horizontalHeader()->setResizeMode ( QHeaderView::Interactive );
+	horizontalHeader()->setSectionResizeMode( QHeaderView::Interactive );
     horizontalHeader()->setStretchLastSection(true);
 
 	connect( horizontalHeader(), SIGNAL( sectionClicked ( int ) ),
@@ -61,10 +61,10 @@ ObjectListView::~ObjectListView()
 
 bool ObjectListView::edit(QWidget * parent, Spec::ObjectDef * def, const ObjectList& objs)
 {
-	QDialog dlg( parent, "", true );
+	QDialog dlg( parent ); dlg.setModal( true );
 	QString str;
 	str.sprintf( "Edit Attributes of %s Objects", def->getClass().data() );
-	dlg.setCaption( str );
+	dlg.setWindowTitle( str );
 
 
 	Q3VBoxLayout* top = new Q3VBoxLayout( &dlg, 5 );

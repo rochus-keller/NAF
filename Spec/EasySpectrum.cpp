@@ -75,10 +75,10 @@ static void throwEasy( int error, int line, const char* param, FILE* fp )
 		tmp.sprintf( ": \nContext: %s", param );
 	else if( line != 0 )
 		tmp.sprintf( ": \nLine: %d", line );
-	what += tmp.toAscii();
+	what += tmp.toLatin1();
 	if( fp )
 		::fclose( fp );
-	throw Root::Exception( what );
+	throw Root::Exception( what.toLatin1().constData() );
 }
 
 static Scale::Folding foldingToSymbol(const QByteArray  & folding)
@@ -96,7 +96,7 @@ EasySpectrum::EasySpectrum(const char* paramFilePath)
 	// Wandle Filenamen der Param-Datei in denjenigen der Spektrendatei.
 	// Die Param-Datei **muss** mit ".param" enden (case-insensitive).
 	QString path( paramFilePath );
-	int pos = path.findRev( "PARAM", -1, false );
+	int pos = path.lastIndexOf( "PARAM", -1, Qt::CaseInsensitive );
 	if( pos == -1 )
 		throw Root::Exception( "Path is no Param File." );
 
@@ -109,7 +109,7 @@ EasySpectrum::EasySpectrum(const char* paramFilePath)
 		path += "16";
 	else
 		path += "8";
-	d_specFile = path.toAscii();
+	d_specFile = path.toLatin1();
 
 	EasyNumber::init();
 	init();
@@ -565,8 +565,8 @@ void EasySpectrum::writeToFile(const char * path, Spectrum * source,
 			{
 				a = slice.getAt( i ) * factor;
 				EasyNumber::compress( a, mantissa, exponent );
-				out.putch( mantissa );
-				out.putch( exponent );
+				out.putChar( mantissa );
+				out.putChar( exponent );
 				// getRaw verwenden, aber Rotation berücksichtigen.
 			}
 		}while( increment( p, start, end, 1 ) );
@@ -603,8 +603,8 @@ void EasySpectrum::writeToFile(const char * path, Spectrum * source,
 				{
 					a = slice.getAt( i ) * factor;
 					EasyNumber::compress( a, mantissa, exponent );
-					out.putch( mantissa );
-					out.putch( exponent );
+					out.putChar( mantissa );
+					out.putChar( exponent );
 					// getRaw verwenden, aber Rotation berücksichtigen.
 				}
 			}while( increment( p, start, end, 1 ) );

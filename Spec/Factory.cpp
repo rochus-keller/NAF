@@ -82,9 +82,9 @@ Spectrum* Factory::createSpectrum(const char *path)
 {
 	QFileInfo info( path );
 
-	QRegExp bruker( "[0-9][ir]+", false );
+	QRegExp bruker( "[0-9][ir]+", Qt::CaseInsensitive );
 
-	const QString pat = info.extension(false).upper();
+	const QString pat = info.suffix().toUpper();
 	if( pat == "PARAM" )
 		return createEasySpectrum( path );
 	else if( pat == "NMR" )
@@ -135,37 +135,37 @@ Root::Ref<PointSet> Factory::createEasyPeakList(PeakList * pl, Spectrum* spec )
 // RISK: hier definiert, da keine Units.cpp
 static const Dimension s_max = 6;
 
-static const char* s_letterUc[] =
+static const char* const s_letterUc[] =
 {
 	"X", "Y", "Z", "W", "D5", "D6"
 };
 
-static const char* s_letterLc[] =
+static const char* const s_letterLc[] =
 {
 	"x", "y", "z", "w", "d5", "d6"
 };
 
-static const char* s_symUc[] =
+static const char* const s_symUc[] =
 {
 	"D1", "D2", "D3", "D4", "D5", "D6"
 };
 
-static const char* s_symLc[] =
+static const char* const s_symLc[] =
 {
 	"d1", "d2", "d3", "d4", "d5", "d6"
 };
 
-static const char* s_symLetUc[] =
+static const char* const s_symLetUc[] =
 {
 	"D1 (x)", "D2 (y)", "D3 (z)", "D4 (w)", "D5", "D6"
 };
 
-static const char* s_symLetLc[] =
+static const char* const s_symLetLc[] =
 {
 	"d1 (x)", "d2 (y)", "d3 (z)", "d4 (w)", "d5", "d6"
 };
 
-static const char* s_number[] =
+static const char* const s_number[] =
 {
 	"1", "2", "3", "4", "5", "6"
 };

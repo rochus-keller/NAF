@@ -22,6 +22,7 @@
 #include <Spec/Project.h>
 #include <qpainter.h>
 #include <qtooltip.h>
+#include <QHelpEvent>
 //Added by qt3to4:
 #include <QPaintEvent>
 using namespace Spec;
@@ -35,7 +36,7 @@ PeakBatchCurve::PeakBatchCurve(PeakList* l, Peak* p, Project* pro ):
 	setFixedSize( 600, 400 ); // RISK
 	QString str;
 	str.sprintf( "Peak %d in %s", p->getId(), l->getName().data() );
-	setCaption( str );
+	setWindowTitle( str );
 
 	const PeakList::SpecList& specs = l->getSpecs();
 	d_vals.assign( specs.size(), 0 );
@@ -69,7 +70,7 @@ PeakBatchCurve::PeakBatchCurve(PeakList* l, Peak* p, Project* pro ):
 			str.sprintf( "Vol. %.0f Spec. %d: %s", d_vals[ i ], specs[ i ], s->getName() );
 		else
 			str.sprintf( "Vol. %.0f Spec. %d", d_vals[ i ], specs[ i ] );
-		QToolTip::add( this, r, str );
+		d_tips.append( qMakePair( r, str ) );
 	}
 }
 
@@ -108,4 +109,25 @@ int PeakBatchCurve::toPos(Amplitude a) const
 {
 	Amplitude d = ( d_max - d_min ) / float( height() );
 	return ( d_max - a ) / d;
+}
+
+bool PeakBatchCurve::event( QEvent * e )
+{
+	if( e->type() == QEvent::ToolTip )
+	{
+		QHelpEvent *he = static_cast<QHelpEvent*>( e );
+		for( int i = 0; i < d_tips.size(); i++ )
+		{
+			if( d_tips[ i ].first.contains( he->pos() ) )
+			{
+				QToolTip::showText( he->globalPos(), d_tips[ i ].second, this,
+					d_tips[ i ].first );
+				return true;
+			}
+		}
+		QToolTip::hideText();
+		e->ignore();
+		return true;
+	}
+	return QWidget::event( e );
 }

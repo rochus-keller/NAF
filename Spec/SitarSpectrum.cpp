@@ -344,7 +344,7 @@ void SitarSpectrum::readParams()
 		throw Root::Exception( "Undefined gbpi attribute" );
 
 	QFileInfo lhsPath( lhs.data() );
-	tmp = mainPath.dirPath( true ) + QDir::separator() + lhsPath.fileName();
+	tmp = mainPath.absolutePath() + QDir::separator() + lhsPath.fileName();
 	//qDebug( "LHS: %s", tmp.latin1() );
 	d_lhs = Factory::createSpectrum( tmp.toLatin1() );
 	if( d_lhs == 0 )
@@ -353,7 +353,7 @@ void SitarSpectrum::readParams()
 		throw Root::Exception( "Only 2D lhp spectra supported" );
 
 	QFileInfo rhsPath( rhs.data() );
-	tmp = mainPath.dirPath( true ) + QDir::separator() + rhsPath.fileName();
+	tmp = mainPath.absolutePath() + QDir::separator() + rhsPath.fileName();
 	//qDebug( "RHS: %s", tmp.latin1() );
 	d_rhs = Factory::createSpectrum( tmp.toLatin1() );
 	if( d_rhs == 0 )

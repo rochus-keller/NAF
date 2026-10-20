@@ -33,7 +33,7 @@ int Image::height(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::he
 int Image::heightMM(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::heightMM ); }
 int Image::logicalDpiX(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::logicalDpiX ); }
 int Image::logicalDpiY(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::logicalDpiY ); }
-int Image::numColors(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::numColors ); }
+int Image::numColors(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::colorCount ); }
 int Image::paintingActive(lua_State * L){ return QtValue<QImage>::getBool( L, &QImage::paintingActive ); }
 int Image::width(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::width ); }
 int Image::widthMM(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::widthMM ); }
@@ -127,7 +127,7 @@ int Image::loadFromData(lua_State * L) // ( const uchar *, int, const char * ) :
 		Util::push( L, obj->loadFromData( Util::toStr( L, 2 ), Util::toStr( L, 3 ) ) );
 	return 1;
 }
-int Image::numBytes(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::numBytes ); }
+int Image::numBytes(lua_State * L){ return QtValue<QImage>::getInt( L, &QImage::byteCount ); }
 int Image::offset(lua_State * L) // () const : QPoint 
 {
     QImage* obj = QtValue<QImage>::check( L, 1 );
@@ -205,7 +205,12 @@ int Image::scaledToWidth(lua_State * L) // ( int ) const : QImage
 	*res = obj->scaledToWidth( Util::toInt( L, 2 ) );
 	return 1;
 }
-int Image::serialNumber(lua_State * L) { return QtValue<QImage>::getInt( L, &QImage::serialNumber ); }
+int Image::serialNumber(lua_State * L)
+{
+    QImage* obj = QtValue<QImage>::check( L, 1 );
+    Util::push( L, (int) obj->cacheKey() );
+    return 1;
+}
 int Image::setColor(lua_State * L) // ( int, QRgb ) 
 {
     QImage* obj = QtValue<QImage>::check( L, 1 );
@@ -215,7 +220,7 @@ int Image::setColor(lua_State * L) // ( int, QRgb )
 }
 int Image::setDotsPerMeterX(lua_State * L) { return QtValue<QImage>::setInt( L, &QImage::setDotsPerMeterX ); }
 int Image::setDotsPerMeterY(lua_State * L) { return QtValue<QImage>::setInt( L, &QImage::setDotsPerMeterY ); }
-int Image::setNumColors(lua_State * L) { return QtValue<QImage>::setInt( L, &QImage::setNumColors ); }
+int Image::setNumColors(lua_State * L) { return QtValue<QImage>::setInt( L, &QImage::setColorCount ); }
 int Image::setOffset(lua_State * L) // ( const QPoint & ) 
 {
     QImage* obj = QtValue<QImage>::check( L, 1 );

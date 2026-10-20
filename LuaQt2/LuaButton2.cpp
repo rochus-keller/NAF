@@ -78,7 +78,7 @@ int LuaButton2::isToggleButton(lua_State *L)
 int LuaButton2::isOn(lua_State *L)
 {
 	QAbstractButton* obj = ObjectHelper<QAbstractButton>::check( L, 1 );
-	lua_pushboolean( L, obj->isOn() );
+	lua_pushboolean( L, obj->isChecked() );
 	return 1;
 }
 
@@ -182,7 +182,7 @@ int LuaPushButton2::setOn(lua_State *L)
 	bool b = true;
 	if( lua_gettop(L) > 0 && lua_isboolean( L, 2 ) )
 		b = lua_toboolean( L, 2 );
-	obj->setOn( b );
+	obj->setChecked( b );
 	return 0;
 }
 

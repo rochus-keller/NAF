@@ -359,7 +359,7 @@ void CodeEditor::handleEditSelectAll()
 void CodeEditor::handleFind()
 {
 	ENABLED_IF( true );
-	bool ok	= FALSE;
+	bool ok	= false;
 	QString res = QInputDialog::getText( this, tr("Find Text"),
 		tr("Enter a string to look for:"), QLineEdit::Normal, "", &ok );
 	if( !ok )
@@ -384,7 +384,7 @@ void CodeEditor::handleGoto()
 	ENABLED_IF( true );
 	int line, col;
 	getCursorPosition( &line, &col );
-	bool ok	= FALSE;
+	bool ok	= false;
 	line = QInputDialog::getInteger( this, tr("Goto Line"),
 		tr("Please	enter a valid line number:"),
 		line + 1, 1, 999999, 1,	&ok );

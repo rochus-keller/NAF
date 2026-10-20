@@ -23,14 +23,14 @@
 using namespace Spec;
 using namespace Root;
 
-static const char* FoldingName[] =
+static const char* const FoldingName[] =
 {
 	"None",
 	"RSH",	// Aliased, d.h. transliert
 	"TPPI"	// Folded, d.h. spiegelsymmetrisch zu Spektrenkante
 };
 
-static const char* FoldingCode[] =
+static const char* const FoldingCode[] =
 {
 	"N",
 	"A",	// Aliased, d.h. transliert

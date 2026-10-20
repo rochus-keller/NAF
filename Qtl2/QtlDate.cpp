@@ -109,7 +109,7 @@ int Date::daysTo(lua_State * L) // ( const QDate & ) const : int
 {
     QDate* obj = QtValue<QDate>::check( L, 1);
     QDate* d = QtValue<QDate>::check( L, 2);
-	Util::push( L, obj->daysTo( *d ) );
+	Util::push( L, (int) obj->daysTo( *d ) );
 	return 1;
 }
 int Date::isNull(lua_State * L) { return QtValue<QDate>::getBool( L, &QDate::isNull ); }
@@ -118,10 +118,15 @@ int Date::month(lua_State * L) { return QtValue<QDate>::getInt( L, &QDate::month
 int Date::setYMD(lua_State * L) // ( int, int, int ) : bool 
 {
     QDate* obj = QtValue<QDate>::check( L, 1);
-	Util::push( L, obj->setYMD( Util::toInt( L, 2 ), Util::toInt( L, 3 ), Util::toInt( L, 4 ) ) );
+	Util::push( L, obj->setDate( Util::toInt( L, 2 ), Util::toInt( L, 3 ), Util::toInt( L, 4 ) ) );
 	return 1;
 }
-int Date::toJulianDay(lua_State * L) { return QtValue<QDate>::getInt( L, &QDate::toJulianDay ); }
+int Date::toJulianDay(lua_State * L)
+{
+    QDate* obj = QtValue<QDate>::check( L, 1 );
+    Util::push( L, (int) obj->toJulianDay() );
+    return 1;
+}
 // int toString(lua_State * L) // ( const QString & ) const : QString 
 int Date::toString(lua_State * L) // ( Qt::DateFormat ) const : QString 
 {

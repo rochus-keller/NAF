@@ -26,7 +26,7 @@
 #endif // _MSC_VER > 1000
 
 #include <Root/MenuAction.h>
-#include <QMenu>
+#include <q3popupmenu.h>
 
 class QShortcut;
 
@@ -71,7 +71,7 @@ namespace Gui
 		void handleTrigger( bool );
 	};
 
-	class Menu : public QMenu
+	class Menu : public Q3PopupMenu
 	{
 		Q_OBJECT
 	public:

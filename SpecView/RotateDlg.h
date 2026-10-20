@@ -19,6 +19,7 @@
  */
 
 #if !defined(AFX_ROTATEDLG_H__BDFAC2C1_B4F2_11D4_A4CC_00D00918E99C__INCLUDED_)
+#include <Root/SymbolString.h>
 #define AFX_ROTATEDLG_H__BDFAC2C1_B4F2_11D4_A4CC_00D00918E99C__INCLUDED_
 
 #if _MSC_VER >= 1000
@@ -44,6 +45,12 @@ namespace Spec
 	public:
 		static const char* stdLabel( Dimension d );
         void addDimension( const char* colLabel, const char* rowLabel, AtomType = AtomType() );
+        void addDimension( const QString& c, const QString& r, AtomType t = AtomType() )
+            { addDimension( c.toLatin1().constData(), r.toLatin1().constData(), t ); }
+        void addDimension( const QByteArray& c, const QByteArray& r, AtomType t = AtomType() )
+            { addDimension( c.constData(), r.constData(), t ); }
+        void addDimension( const Root::SymbolString& c, const Root::SymbolString& r, AtomType t = AtomType() )
+            { addDimension( c.data(), r.data(), t ); }
 		bool rotate( Rotation& map );
 		const ColorMap& getColors() const { return d_clr; }
         void setShowDimLetter(bool on) { d_dimLetter = on; }

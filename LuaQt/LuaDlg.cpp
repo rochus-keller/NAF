@@ -283,7 +283,7 @@ static int getSaveFileName(lua_State *L)
 	else
 	{
 		QFileInfo info( fileName );
-		Root::Application::setCurrentDir( info.dirPath( true ) );
+		Root::Application::setCurrentDir( info.absolutePath().toLatin1().constData() );
 		lua_pushstring( L, fileName );
 	}
 	return 1;
@@ -316,7 +316,7 @@ static int getOpenFileName(lua_State *L)
 	else
 	{
 		QFileInfo info( fileName );
-		Root::Application::setCurrentDir( info.dirPath( true ) );
+		Root::Application::setCurrentDir( info.absolutePath().toLatin1().constData() );
 		lua_pushstring( L, fileName );
 	}
 	return 1;
@@ -404,7 +404,7 @@ static int beginProgress(lua_State *L)
 		s_progress->setProgress( 0 );
 		s_use++;
 		if( lua_gettop(L) > 0 )
-			s_progress->setCaption( lua_tostring( L, 1 ) );
+			s_progress->setWindowTitle( lua_tostring( L, 1 ) );
 		if( lua_gettop(L) > 1 )
 			s_progress->setLabelText( lua_tostring( L, 2 ) );
 		if( lua_gettop(L) > 2 )

@@ -97,6 +97,9 @@ namespace Spec
 		Dimension getDimCount() const { return d_spec->getDimCount(); }
 		const Scale& getScale( Dimension d ) const { return d_spec->getScale( d_rot[ d ] ); }
 		void setName( const char* );
+		void setName( const QString& n ) { setName( n.toLatin1().constData() ); }
+		void setName( const QByteArray& n ) { setName( n.constData() ); }
+		void setName( const Root::SymbolString& n ) { setName( n.data() ); }
 		const char* getLabel( Dimension d ) const { return d_spec->getLabel( d_rot[ d ] ); }
 		SpectrumType* getType() const { return d_type; }
 		Root::Index getId() const { return d_id; }

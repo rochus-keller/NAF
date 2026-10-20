@@ -300,7 +300,7 @@ QString ViewAreaMdl3::formatPpmRect( const QRectF & r) const
 				c[ DimX ].second, c[ DimY ].second 
 			);
         return str;
-//		Lexi::ShowStatusMessage msg( str );
+//		Lexi::ShowStatusMessage msg( str.toLatin1().constData() );
 //		p->traverseUp( msg );
 	}else
 	{
@@ -317,7 +317,7 @@ QString ViewAreaMdl3::formatPpmRect( const QRectF & r) const
 			char( 'x' + dim ),
 			c[ DimX ].first, w, toHz( w, DimX ),
 			char( 'x' + dim ), c[ DimX ].second );
-//		Lexi::ShowStatusMessage msg( str );
+//		Lexi::ShowStatusMessage msg( str.toLatin1().constData() );
 //		p->traverseUp( msg );
         return str;
 	}

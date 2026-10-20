@@ -33,6 +33,16 @@ Label::Label(const char* str, const QFont* f, QColor c, Alignment hori, Alignmen
     d_color = c;
 }
 
+Label::Label( const QString& str, const QFont* f, QColor c, Alignment h, Alignment v ):
+	Label( str.toLatin1().constData(), f, c, h, v )
+{
+}
+
+Label::Label( const QByteArray& str, const QFont* f, QColor c, Alignment h, Alignment v ):
+	Label( str.constData(), f, c, h, v )
+{
+}
+
 Label::~Label()
 {
 }

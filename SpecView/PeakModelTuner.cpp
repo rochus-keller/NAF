@@ -36,9 +36,10 @@ static const PPM s_scale1 = 1000.0;
 static const PPM s_scale2 = 100.0;
 
 PeakModelTuner::PeakModelTuner( QWidget* p, PeakModel* s, const Rotation& r, float _max ):
-	QDialog( p, "", true ), d_model( s ), d_rot( r )
+	QDialog( p ), d_model( s ), d_rot( r )
 {
-	setCaption( "Set Peak Model Parameters" );
+	setModal( true );
+	setWindowTitle( "Set Peak Model Parameters" );
 
 	Q3VBoxLayout* top = new Q3VBoxLayout( this, 10);
 	Q3HBoxLayout* buttons = new Q3HBoxLayout();
@@ -58,8 +59,10 @@ PeakModelTuner::PeakModelTuner( QWidget* p, PeakModel* s, const Rotation& r, flo
 		lbl = new QLabel( str, this ); 
 		contents->addWidget( lbl, zeile, 0 ); 
 
-		sl = new QSlider( 0, s_scale1, 10, d_model->getBalance( d_rot[ d ] ) * s_scale1, 
-			Qt::Horizontal, this );
+		sl = new QSlider( Qt::Horizontal, this );
+		sl->setRange( 0, s_scale1 );
+		sl->setSingleStep( 10 );
+		sl->setValue( d_model->getBalance( d_rot[ d ] ) * s_scale1 );
 		sl->setTracking( true );
 		connect( sl, SIGNAL( valueChanged ( int ) ), 
 			this, SLOT( handleBalance( int ) ) );
@@ -79,8 +82,10 @@ PeakModelTuner::PeakModelTuner( QWidget* p, PeakModel* s, const Rotation& r, flo
 		lbl = new QLabel( str, this ); 
 		contents->addWidget( lbl, zeile, 0 ); 
 
-		sl = new QSlider( 0, s_scale1, 10, d_model->getGain( d_rot[ d ] ) * s_scale1, 
-			Qt::Horizontal, this );
+		sl = new QSlider( Qt::Horizontal, this );
+		sl->setRange( 0, s_scale1 );
+		sl->setSingleStep( 10 );
+		sl->setValue( d_model->getGain( d_rot[ d ] ) * s_scale1 );
 		sl->setTracking( true );
 		connect( sl, SIGNAL( valueChanged ( int ) ), 
 			this, SLOT( handleGain( int ) ) );
@@ -100,8 +105,10 @@ PeakModelTuner::PeakModelTuner( QWidget* p, PeakModel* s, const Rotation& r, flo
 		lbl = new QLabel( str, this ); 
 		contents->addWidget( lbl, zeile, 0 ); 
 
-		sl = new QSlider( 0, 2 * s_scale2, 1, d_model->getTol( d_rot[ d ] ) * s_scale2, 
-			Qt::Horizontal, this );
+		sl = new QSlider( Qt::Horizontal, this );
+		sl->setRange( 0, 2 * s_scale2 );
+		sl->setSingleStep( 1 );
+		sl->setValue( d_model->getTol( d_rot[ d ] ) * s_scale2 );
 		sl->setTracking( true );
 		connect( sl, SIGNAL( valueChanged ( int ) ), 
 			this, SLOT( handleTol( int ) ) );
@@ -127,9 +134,10 @@ PeakModelTuner::PeakModelTuner( QWidget* p, PeakModel* s, const Rotation& r, flo
 		lbl = new QLabel( str, this ); 
 		contents->addWidget( lbl, zeile, 0 ); 
 
-		sl = new QSlider( 0, _max * s_scale1, 10, 
-			d_model->getWidth( d_rot[ d ] ) * s_scale1, 
-			Qt::Horizontal, this );
+		sl = new QSlider( Qt::Horizontal, this );
+		sl->setRange( 0, _max * s_scale1 );
+		sl->setSingleStep( 10 );
+		sl->setValue( d_model->getWidth( d_rot[ d ] ) * s_scale1 );
 		sl->setTracking( true );
 		connect( sl, SIGNAL( valueChanged ( int ) ), 
 			this, SLOT( handleWidth( int ) ) );

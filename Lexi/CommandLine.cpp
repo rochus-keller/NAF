@@ -395,7 +395,7 @@ void CommandLine::writeLine(const char * lhs, const char * rhs)
 	par += rhs;
 
 	QString str;
-    str.sprintf( "Input> %s %s", lhs, par.toAscii().data() );
+    str.sprintf( "Input> %s %s", lhs, par.toLatin1().data() );
 	notify( str );
 }
 
@@ -451,9 +451,9 @@ bool CommandLine::interpretParam()
 		return false;
 	case Any::Boolean:
 		str = str.toUpper();
-		if( str == "TRUE" || str == "YES" || str == "1" || str == "ON" )
+		if( str == "true" || str == "YES" || str == "1" || str == "ON" )
 			val.setBoolean( true );
-		else if( str == "FALSE" || str == "NO" || str == "0" || str == "OFF" )
+		else if( str == "false" || str == "NO" || str == "0" || str == "OFF" )
 			val.setBoolean( false );
 		else
 		{

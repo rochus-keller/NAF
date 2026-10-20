@@ -176,7 +176,7 @@ void MenuItem::execute()
 }
 
 Menu::Menu(QWidget * parent, const QString& title, bool context ):
-	QMenu( title, parent )
+	Q3PopupMenu( title, parent )
 {
     connect( this, SIGNAL( aboutToShow() ), this, SLOT( handleShow() ) );
 	if( context )
@@ -184,7 +184,7 @@ Menu::Menu(QWidget * parent, const QString& title, bool context ):
 }
 
 Menu::Menu(QWidget * parent, const char* title, bool context ):
-	QMenu( title, parent )
+	Q3PopupMenu( title, parent )
 {
     connect( this, SIGNAL( aboutToShow() ), this, SLOT( handleShow() ) );
 	if( context )
@@ -192,7 +192,7 @@ Menu::Menu(QWidget * parent, const char* title, bool context ):
 }
 
 Menu::Menu(QWidget * parent, bool context ):
-	QMenu( parent )
+	Q3PopupMenu( parent )
 {
     connect( this, SIGNAL( aboutToShow() ), this, SLOT( handleShow() ) );
 	if( context )

@@ -38,7 +38,6 @@ namespace Lua
 		static int setAcceptFocus(lua_State *L);
 		LuaMyWidget2(QWidget* p):QWidget(p) 
 		{
-			setKeyCompression( false ); // Wir wollen ein Event für jeden Key incl. Autorepeat.
 		}
 		~LuaMyWidget2()
 		{
@@ -64,6 +63,8 @@ namespace Lua
 	class LuaPrinter2 : public QPrinter
 	{
 	public:
+		LuaPrinter2() : QPrinter() {}
+		LuaPrinter2( const LuaPrinter2& ) : QPrinter() {}
 		static const luaL_reg methods[];
 
 		static int setMinMax(lua_State *L);

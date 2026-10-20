@@ -36,7 +36,7 @@ BrukerSpectrum::BrukerSpectrum(const char* filePath):
 	d_specFile = filePath; 
 	QFileInfo info( filePath );
 	
-	QByteArray  ext = info.extension( false ).toLatin1();
+	QByteArray  ext = info.suffix().toLatin1();
 	Dimension dim = 0;
 	QByteArray  path = info.filePath().toLatin1();
 	bool ok = true;
@@ -66,7 +66,7 @@ BrukerSpectrum::BrukerSpectrum(const char* filePath):
 		// digit 1..9
 		// Zu jedem Spektrum-File existieren D Param-Files.
 
-		dim = info.extension( false ).left( 1 ).toUShort( &ok );
+		dim = info.suffix().left( 1 ).toUShort( &ok );
 		if( ok && ext.size() < dim + 1 )
 			ok = false;
 		for( int i = 1; i < ext.size(); i++ )

@@ -102,7 +102,7 @@ static inline void putF( QFile& out, Root::Byte* buf, Root::Float val )
 	::memcpy( buf, &val, sizeof(Root::Float) );
 	if( !s_big )
 		Root::Host::turnSex( buf, sizeof(Root::Float) );
-	out.writeBlock( (const char*)buf, sizeof(Root::Float) );
+	out.write( (const char*)buf, sizeof(Root::Float) );
 }
 
 static inline int getF( const Root::Byte* buf, Root::Float& val )
@@ -124,7 +124,7 @@ static inline void putU32( QFile& out, Root::Byte* buf, Root::UInt32 val )
 	::memcpy( buf, &val, sizeof(Root::UInt32) );
 	if( !s_big )
 		Root::Host::turnSex( buf, sizeof(Root::UInt32) );
-	out.writeBlock( (const char*)buf, sizeof(Root::UInt32) );
+	out.write( (const char*)buf, sizeof(Root::UInt32) );
 }
 
 static inline int getU32( const Root::Byte* buf, Root::UInt32& val )
@@ -146,7 +146,7 @@ static inline void putU16( QFile& out, Root::Byte* buf, Root::UInt16 val )
 	::memcpy( buf, &val, sizeof(Root::UInt16) );
 	if( !s_big )
 		Root::Host::turnSex( buf, sizeof(Root::UInt16) );
-	out.writeBlock( (const char*)buf, sizeof(Root::UInt16) );
+	out.write( (const char*)buf, sizeof(Root::UInt16) );
 }
 
 static inline int getU16( const Root::Byte* buf, Root::UInt16& val )
@@ -159,7 +159,7 @@ static inline int getU16( const Root::Byte* buf, Root::UInt16& val )
 
 static inline void putU8( QFile& out, Root::Byte*, Root::UInt8 val )
 {
-	out.putch( val );
+	out.putChar( val );
 }
 
 static inline int getU8( const Root::Byte* buf, Root::UInt8& val )
@@ -170,7 +170,7 @@ static inline int getU8( const Root::Byte* buf, Root::UInt8& val )
 
 static inline void putStr( QFile& out, Root::Byte*, const char* val )
 {
-	out.writeBlock( val, ::strlen( val ) + 1 );	// inkl. 0
+	out.write( val, ::strlen( val ) + 1 );	// inkl. 0
 }
 
 static inline int getStr( const Root::Byte* buf, QByteArray & val )
@@ -441,7 +441,7 @@ void CaraSpectrum::writeToFile(const char * path, Spectrum * source,
 	const Root::Int64 off2 = Root::Int64(off1) + e.getCellCount() * Root::Int64(s_len[ kind ]);
 	Root::DateTime now = Root::DateTime::now();
 
-	out.writeBlock( s_magic, s_msize );	// 8
+	out.write( s_magic, s_msize );	// 8
 	putU32( out, buf, s_version );		// 4
 	putU32( out, buf, off1 );		// 4 Start of SpectrumBlock in Bytes ab 0
     if( off2 > 0xffffffff )

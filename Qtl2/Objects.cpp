@@ -44,7 +44,7 @@
 #include <QSpinBox>
 #include <QToolButton>
 #include <QPluginLoader>
-#include <QInputContext>
+// #include <QInputContext> removed in Qt5
 #include <QAbstractEventDispatcher>
 #include <QApplication>
 #include <QCoreApplication>
@@ -105,7 +105,7 @@
 #include <QHeaderView>
 #include <QItemDelegate>
 #include <QDirModel>
-#include <QProxyModel>
+#include <QIdentityProxyModel>
 #include <QStandardItemModel>
 #include <QAbstractListModel>
 #include <QAbstractTableModel>
@@ -252,12 +252,12 @@ int Objects::install(lua_State * L)
     QtObject<QItemDelegate,QAbstractItemDelegate>::install( L, "QItemDelegate" );
     QtObject<QAbstractItemModel,QObject,NotCreatable>::install( L, "QAbstractItemModel" );
     QtObject<QDirModel,QAbstractItemModel>::install( L, "QDirModel" );
-    QtObject<QProxyModel,QAbstractItemModel>::install( L, "QProxyModel" );
+    QtObject<QIdentityProxyModel,QAbstractItemModel>::install( L, "QIdentityProxyModel" );
     QtObject<QStandardItemModel,QAbstractItemModel>::install( L, "QStandardItemModel" );
     QtObject<QAbstractListModel, QAbstractItemModel,NotCreatable>::install( L, "QAbstractListModel" );
     QtObject<QAbstractTableModel, QAbstractItemModel,NotCreatable>::install( L, "QAbstractTableModel" );
 	TextEdit::install( L );
-    QtObject<QInputContext,QObject,HasCustomInit>::install( L, "QInputContext" );
+    // QtObject<QInputContext,QObject,HasCustomInit>::install( L, "QInputContext" ); removed in Qt5
     QtObject<QStyle,QObject,HasCustomInit>::install( L, "QStyle" );
     QtObject<QTextDocument,QObject>::install(L,"QTextDocument");
     QtObject<QCompleter,QObject>::install( L, "QCompleter" );

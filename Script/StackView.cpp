@@ -57,7 +57,7 @@ QVariant StackMdl::data(const QModelIndex &index, int role) const
         break;
     case Qt::BackgroundRole:
         if( d_lua->getActiveLevel() == index.row() )
-            return Qt::yellow;
+            return QColor( Qt::yellow );
         break;
     case Qt::ToolTipRole:
         break;
@@ -109,7 +109,8 @@ void StackMdl::createStackTrace()
         d_levels.append( l );
         level++;
     }
-    reset();
+    beginResetModel();
+    endResetModel();
 	getView()->getTree()->resizeColumnToContents(0);
 	getView()->getTree()->resizeColumnToContents(1);
 	getView()->getTree()->resizeColumnToContents(2);
@@ -156,7 +157,8 @@ void StackMdl::onNotify(int messageType, QByteArray val1, int val2)
 	case Engine2::Finished:
 	case Engine2::Aborted:
 		d_levels.clear();
-        reset();
+        beginResetModel();
+        endResetModel();
         break;
     default:
         break;

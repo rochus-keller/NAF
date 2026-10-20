@@ -197,10 +197,10 @@ static int row(lua_State * L)
 	lua_pushnumber( L, lhs-> row() );
 	return 1;
 }
-static int toAscii (lua_State * L)
+static int latin1(lua_State * L)
 {
 	QChar* lhs = QtValue<QChar>::check( L, 1 );
-	lua_pushstring( L, QByteArray( 1, lhs-> toAscii ()) );
+	lua_pushstring( L, QByteArray( 1, lhs-> toLatin1 ()) );
 	return 1;
 }
 static int   toCaseFolded(lua_State * L)
@@ -274,7 +274,7 @@ static const luaL_reg _charlib[] =
 	{ "joining", joining },
 	{ "mirroredChar", mirroredChar },
 	{ "row", row },
-	{ "toAscii ", toAscii  },
+	{ "latin1", latin1 },
 	{ " toCaseFolded",  toCaseFolded },
 	{ "toLatin1", toLatin1 },
 	{ "toLower", toLower },

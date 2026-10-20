@@ -259,7 +259,7 @@ void _GlyphWidgetImp::scrollDamage(const Allocation & a, Twips dx, Twips dy)
 			toPoint( move.getWidth() ), toPoint( move.getHeight() ) );
 		QPoint point( toPoint( x ), toPoint( y ) );
 		// Verschiebe den unvernderten Bildschirmausschnitt.
-		bitBlt( d_that, point, d_that, rect );
+		d_that->scroll( point.x() - rect.x(), point.y() - rect.y(), rect );
 	}
 	{
 		const Twips tolerance = 20;
@@ -334,23 +334,28 @@ static MouseEvent::ButtonSet getButtonSet( QMouseEvent* e )
 		bs.set( MouseEvent::Right );
 	if( e->button() & Qt::MidButton )
 		bs.set( MouseEvent::Mid );
-	if( e->state() & Qt::ShiftModifier )
+	if( e->modifiers() & Qt::ShiftModifier )
 		bs.set( MouseEvent::Shift );
-	if( e->state() & Qt::ControlModifier )
+	if( e->modifiers() & Qt::ControlModifier )
 		bs.set( MouseEvent::Ctrl );
-	if( e->state() & Qt::AltModifier )
+	if( e->modifiers() & Qt::AltModifier )
 		bs.set( MouseEvent::Alt );
 	return bs;
+}
+
+static inline int qt3Ascii( const QKeyEvent* e )
+{
+	return e->text().isEmpty() ? 0 : e->text().at(0).toLatin1();
 }
 
 static KeyEvent::ButtonSet getButtonSet( QKeyEvent* e )
 {
 	KeyEvent::ButtonSet bs;
-	if( e->state() & Qt::ShiftModifier )
+	if( e->modifiers() & Qt::ShiftModifier )
 		bs.set( KeyEvent::Shift );
-	if( e->state() & Qt::ControlModifier )
+	if( e->modifiers() & Qt::ControlModifier )
 		bs.set( KeyEvent::Ctrl );
-	if( e->state() & Qt::AltModifier )
+	if( e->modifiers() & Qt::AltModifier )
 		bs.set( KeyEvent::Alt );
 	return bs;
 }
@@ -363,13 +368,14 @@ GlyphWidget::GlyphWidget(QWidget * parent1, Lexi::Glyph* body,
 {
 	// Wer hat den Default-Focus?
 	setFocusPolicy( Qt::StrongFocus );
-	setKeyCompression( false ); // Wir wollen ein Event fr jeden Key incl. Autorepeat.
 	if( transparent )
-		setBackgroundMode( Qt::NoBackground );
+		setAttribute( Qt::WA_NoBackground );
     else
     {
         setAutoFillBackground( true );
-        setEraseColor( Qt::black );
+        QPalette pal = palette();
+        pal.setColor( QPalette::Window, Qt::black );
+        setPalette( pal );
     }
 
 
@@ -457,7 +463,7 @@ void GlyphWidget::keyPressEvent(QKeyEvent * e)
 {
 	if( d_this->d_focus )
 	{
-		KeyEvent msg( e->key(), e->ascii(), getButtonSet( e ), KeyEvent::Press );
+		KeyEvent msg( e->key(), qt3Ascii( e ), getButtonSet( e ), KeyEvent::Press );
 		if( d_this->sendTo( d_this->d_focus, msg, false ) )  
 			e->accept();
 		// TODO: Fokus-Wechsel bei TAB
@@ -468,7 +474,7 @@ void GlyphWidget::keyReleaseEvent(QKeyEvent * e)
 {
 	if( d_this->d_focus )
 	{
-		KeyEvent msg( e->key(), e->ascii(), getButtonSet( e ), KeyEvent::Release );
+		KeyEvent msg( e->key(), qt3Ascii( e ), getButtonSet( e ), KeyEvent::Release );
 		if( d_this->sendTo( d_this->d_focus, msg, false ) )
 			e->accept();
 	}
@@ -704,15 +710,15 @@ bool GlyphWidget::event(QEvent * e)
 
 			QKeyEvent *k = (QKeyEvent *)e;
             if( ( d_this->d_focus && k->key() == Qt::Key_Backtab ) ||
-				( k->key() == Qt::Key_Tab && (k->state() & Qt::ShiftModifier) ) )
+				( k->key() == Qt::Key_Tab && (k->modifiers() & Qt::ShiftModifier) ) )
 			{
 				// Tab to prev.
-				KeyEvent msg( k->key(), k->ascii(), getButtonSet( k ), KeyEvent::Press );
+				KeyEvent msg( k->key(), qt3Ascii( k ), getButtonSet( k ), KeyEvent::Press );
 				done = d_this->sendTo( d_this->d_focus, msg, false );
 			}else if( d_this->d_focus && k->key() == Qt::Key_Tab ) 
 			{
 				// Tab to next.
-				KeyEvent msg( k->key(), k->ascii(), getButtonSet( k ), KeyEvent::Press );
+				KeyEvent msg( k->key(), qt3Ascii( k ), getButtonSet( k ), KeyEvent::Press );
 				done = d_this->sendTo( d_this->d_focus, msg, false );
 			}
 		}

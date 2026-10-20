@@ -1,0 +1,4 @@
+#ifndef QT3COMPAT_FWD_Q3PROGRESSDIALOG
+#define QT3COMPAT_FWD_Q3PROGRESSDIALOG
+#include "Qt3Compat.h"
+#endif

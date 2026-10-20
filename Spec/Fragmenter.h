@@ -43,6 +43,12 @@ namespace Spec
 
 		bool writeMapperFile( const char* path, Spectrum* = 0,
 			Root::SymbolString CA = "CA", Root::SymbolString CB = "CB" ) const;
+		bool writeMapperFile( const QString& path, Spectrum* s = 0,
+			Root::SymbolString CA = "CA", Root::SymbolString CB = "CB" ) const
+			{ return writeMapperFile( path.toLatin1().constData(), s, CA, CB ); }
+		bool writeMapperFile( const QByteArray& path, Spectrum* s = 0,
+			Root::SymbolString CA = "CA", Root::SymbolString CB = "CB" ) const
+			{ return writeMapperFile( path.constData(), s, CA, CB ); }
 		void fillFragment( Fragment&, SpinSystem* );
 		void rebuildAll();
 		const FragmentMap& getFragments() const { return d_frags; }

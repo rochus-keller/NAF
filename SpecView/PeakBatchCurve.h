@@ -28,6 +28,10 @@
 #include <qwidget.h>
 //Added by qt3to4:
 #include <QPaintEvent>
+#include <QList>
+#include <QPair>
+#include <QRect>
+#include <QString>
 #include <Spec/PeakList.h>
 
 namespace Spec
@@ -45,9 +49,11 @@ namespace Spec
 		Root::Vector<Amplitude> d_vals;
 		Amplitude d_max;
 		Amplitude d_min;
+		QList< QPair<QRect,QString> > d_tips;
 	protected:
 		int toPos( Amplitude ) const;
 		void paintEvent(QPaintEvent * e);
+		bool event( QEvent * );
 	};
 }
 

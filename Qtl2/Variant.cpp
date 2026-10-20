@@ -121,137 +121,137 @@ void Variant::push(lua_State *L, const QVariant &v)
     case QVariant::Font:
         {
             QFont* f = QtValue<QFont>::create( L );
-            *f = qVariantValue<QFont>( v );
+            *f = v.value<QFont>();
             break;
         }
     case QVariant::Color:
 		{
             QColor* c = QtValue<QColor>::create( L );
-			*c = qVariantValue<QColor>( v );
+			*c = v.value<QColor>();
 			break;
 		}
     case QVariant::DateTime:
         {
             QDateTime* f = QtValue<QDateTime>::create( L );
-            *f = qVariantValue<QDateTime>( v );
+            *f = v.value<QDateTime>();
             break;
         }
     case QVariant::Time:
         {
             QTime* f = QtValue<QTime>::create( L );
-            *f = qVariantValue<QTime>( v );
+            *f = v.value<QTime>();
             break;
         }
     case QVariant::Date:
 		{
             QDate* f = QtValue<QDate>::create( L );
-			*f = qVariantValue<QDate>( v );
+			*f = v.value<QDate>();
 			break;
 		}
     case QVariant::Pen:
         {
             QPen* f = QtValue<QPen>::create( L );
-            *f = qVariantValue<QPen>( v );
+            *f = v.value<QPen>();
             break;
         }
     case QVariant::Brush:
         {
             QBrush* f = QtValue<QBrush>::create( L );
-            *f = qVariantValue<QBrush>( v );
+            *f = v.value<QBrush>();
             break;
         }
     case QVariant::BitArray:
         {
             QBitArray* f = QtValue<QBitArray>::create( L );
-            *f = qVariantValue<QBitArray>( v );
+            *f = v.value<QBitArray>();
             break;
         }
 	case QVariant::Point:
 	case QVariant::PointF:
 		{
             QPointF* f = QtValue<QPointF>::create( L );
-			*f = qVariantValue<QPointF>( v );
+			*f = v.value<QPointF>();
 			break;
 		}
     case QVariant::Size:
 	case QVariant::SizeF:
         {
             QSizeF* f = QtValue<QSizeF>::create( L );
-			*f = qVariantValue<QSizeF>( v );
+			*f = v.value<QSizeF>();
             break;
         }
     case QVariant::Rect:
 	case QVariant::RectF:
 		{
             QRectF* f = QtValue<QRectF>::create( L );
-			*f = qVariantValue<QRectF>( v );
+			*f = v.value<QRectF>();
 			break;
 		}
     case QVariant::LineF:
     case QVariant::Line:
         {
             QLineF* f = QtValue<QLineF>::create( L );
-            *f = qVariantValue<QLineF>( v );
+            *f = v.value<QLineF>();
             break;
         }
     case QVariant::Polygon:
         {
             QPolygonF* f = QtValue<QPolygonF>::create( L );
-            *f = qVariantValue<QPolygon>( v );
+            *f = v.value<QPolygon>();
             break;
         }
     case QVariant::Region:
         {
             QRegion* f = QtValue<QRegion>::create( L );
-            *f = qVariantValue<QRegion>( v );
+            *f = v.value<QRegion>();
             break;
         }
     case QVariant::SizePolicy:
         {
             QSizePolicy* f = QtValue<QSizePolicy>::create( L );
-            *f = qVariantValue<QSizePolicy>( v );
+            *f = v.value<QSizePolicy>();
             break;
         }
     case QVariant::Pixmap:
         {
             QPixmap* f = QtValue<QPixmap>::create( L );
-            *f = qVariantValue<QPixmap>( v );
+            *f = v.value<QPixmap>();
             break;
         }
     case QVariant::Bitmap:
 		{
             QBitmap* f = QtValue<QBitmap>::create( L );
-			*f = qVariantValue<QBitmap>( v );
+			*f = v.value<QBitmap>();
 			break;
 		}
 	case QVariant::Icon:
 		{
             QIcon* f = QtValue<QIcon>::create( L );
-			*f = qVariantValue<QIcon>( v );
+			*f = v.value<QIcon>();
 			break;
 		}
 	case QVariant::Image:
 		{
             QImage* f = QtValue<QImage>::create( L );
-			*f = qVariantValue<QImage>( v );
+			*f = v.value<QImage>();
 			break;
 		}
 	case QVariant::Palette:
 		{
             QPalette* f = QtValue<QPalette>::create( L );
-			*f = qVariantValue<QPalette>( v );
+			*f = v.value<QPalette>();
 			break;
 		}
     case QVariant::KeySequence:
         {
             QKeySequence* f = QtValue<QKeySequence>::create( L );
-            *f = qVariantValue<QKeySequence>( v );
+            *f = v.value<QKeySequence>();
             break;
         }
     case QVariant::Url:
         {
             QUrl* f = QtValue<QUrl>::create( L );
-            *f = qVariantValue<QUrl>( v );
+            *f = v.value<QUrl>();
             break;
         }
     case QVariant::String:
@@ -269,7 +269,7 @@ void Variant::push(lua_State *L, const QVariant &v)
 	case QVariant::Matrix:
 		{
 			QMatrix* m = QtValue<QMatrix>::create( L );
-			*m = qVariantValue<QMatrix>( v );
+			*m = v.value<QMatrix>();
 			break;
 		}
 		// Not supported:

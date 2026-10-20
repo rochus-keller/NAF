@@ -64,7 +64,7 @@ const luaL_reg LuaScrollView2::methods[] =
 
 void LuaScrollView2::install( lua_State *L )
 {
-	QtObject<Q3ScrollView,Q3Frame,NotCreatable>::install( L, "ScrollView", methods );
+	QtObject<Q3ScrollView,QAbstractScrollArea,NotCreatable>::install( L, "ScrollView", methods );
 }
 
 int LuaScrollView2::addChild(lua_State *L)
@@ -154,7 +154,7 @@ const luaL_reg LuaTextView2::methods[] =
 
 void LuaTextView2::install( lua_State *L )
 {
-	QtObject<Q3TextBrowser,Q3ScrollView,NotCreatable>::install( L, "TextView", methods );
+	QtObject<Q3TextBrowser,QAbstractScrollArea,NotCreatable>::install( L, "TextView", methods );
 }
 
 int LuaTextView2::setText(lua_State *L)
@@ -189,14 +189,15 @@ void LuaSplitter2::install( lua_State *L )
 int LuaSplitter2::setMargin(lua_State *L)
 {
 	QSplitter* obj = QtObject<QSplitter>::check( L, 1 );
-	obj->setMargin( luaL_checknumber( L, 2 ) );
+	int m = luaL_checknumber( L, 2 );
+	obj->setContentsMargins( m, m, m, m );
 	return 0;
 }
 
 int LuaSplitter2::getMargin(lua_State *L)
 {
 	QSplitter* obj = QtObject<QSplitter>::check( L, 1 );
-	lua_pushnumber( L, obj->margin() );
+	lua_pushnumber( L, obj->contentsMargins().left() );
 	return 1;
 }
 
@@ -219,7 +220,7 @@ const luaL_reg LuaWidgetStack2::methods[] =
 
 void LuaWidgetStack2::install( lua_State *L )
 {
-	QtObject<Q3WidgetStack,Q3Frame,NotCreatable>::install( L, "WidgetStack", methods );
+	QtObject<Q3WidgetStack,QFrame,NotCreatable>::install( L, "WidgetStack", methods );
 }
 
 int LuaWidgetStack2::addWidget(lua_State *L)
@@ -263,7 +264,7 @@ const luaL_reg LuaMultiLineEdit2::methods[] =
 
 void LuaMultiLineEdit2::install( lua_State *L )
 {
-	QtObject<Q3MultiLineEdit,Q3Frame,NotCreatable>::install( L, "MultiLineEdit", methods );
+	QtObject<Q3MultiLineEdit,QAbstractScrollArea,NotCreatable>::install( L, "MultiLineEdit", methods );
 }
 
 int LuaMultiLineEdit2::getLineCount(lua_State *L)
@@ -293,9 +294,7 @@ int LuaMultiLineEdit2::insertLine(lua_State *L)
 int LuaMultiLineEdit2::setAlignment(lua_State *L)
 {
 	Q3MultiLineEdit* obj = QtObject<Q3MultiLineEdit>::check( L, 1 );
-	Qt::Alignment f;
-	f &= (Qt::Alignment)luaL_checkinteger( L, 2 );
-	obj->setAlignment( f );
+	obj->setAlignment( Qt::AlignmentFlag( luaL_checkinteger( L, 2 ) ) );
 	return 0;
 }
 

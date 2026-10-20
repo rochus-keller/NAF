@@ -66,7 +66,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) :
     {
         rule.pattern = QRegExp(pattern);
         rule.format = keywordFormat;
-        rule.name = "Keyword " + pattern.toAscii();
+        rule.name = "Keyword " + pattern.toLatin1();
         d_rules.append(rule);
     }
 
@@ -107,7 +107,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) :
     {
         rule.pattern = QRegExp(pattern);
         rule.format = keywordFormat;
-        rule.name = "Token " + pattern.toAscii();
+        rule.name = "Token " + pattern.toLatin1();
         d_rules.append(rule);
     }
 }

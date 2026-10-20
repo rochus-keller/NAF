@@ -99,22 +99,22 @@ void Resource::flushDeferreds()
 
 void Resource::toVariant(QVariant &v) const
 {
-	qVariantSetValue<Ref<Resource> >( v, (Resource*)this );
+	v = QVariant::fromValue<Ref<Resource> >( (Resource*)this );
 }
 
 Resource* Resource::fromVariant(QVariant & v)
 {
-	return qVariantValue<Ref<Resource> >( v ); 
+	return v.value<Ref<Resource> >(); 
 }
 
 QVariant Resource::pack() const
 {
-	return qVariantFromValue<Ref<Resource> >( (Resource*) this ); 
+	return QVariant::fromValue<Ref<Resource> >( (Resource*) this ); 
 }
 
 QVariant Resource::pack( Resource* r )
 {
-	return qVariantFromValue<Ref<Resource> >( r ); 
+	return QVariant::fromValue<Ref<Resource> >( r ); 
 }
 
 bool Resource::write( ValueWriter&, AtomManager* ) const 
@@ -191,7 +191,7 @@ void Resource::printLeftOvers(bool summary, bool newOnly)
 		{
 			qDebug( "    %4d %s ", (*j).second.size(), (*j).first.data() );
 			for( int k = 0; k < (*j).second.size(); k++ )
-                qDebug( "          %08x %d ", (unsigned int)(*j).second[k], (*j).second[k]->getRefCount() );
+               ; // TODO qDebug( "          %08x %d ", (unsigned int)(*j).second[k], (*j).second[k]->getRefCount() );
 		}
 		qDebug( "********************************************************/" );
 	}

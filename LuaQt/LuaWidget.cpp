@@ -377,7 +377,7 @@ int LuaWidget::setFixedSize(lua_State *L)
 	return 0;
 }
 
-int LuaWidget::setCaption(lua_State *L)
+int LuaWidget::setWindowTitle(lua_State *L)
 {
 	checkAlive( L );
 	obj()->setWindowTitle( luaL_checkstring( L, 1 ) );
@@ -679,7 +679,7 @@ int LuaWidget::raise(lua_State *L)
 int LuaWidget::lower(lua_State *L)
 {
 	checkAlive( L );
-	obj()->lower();
+	obj()->toLower();
 	return 0;
 }
 

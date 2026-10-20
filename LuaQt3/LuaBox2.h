@@ -29,6 +29,8 @@
 #include <Q3ButtonGroup>
 #include <QLabel>
 #include <QMenuBar>
+#include <Q3MenuBar>
+#include <Q3PopupMenu>
 #include <QMenu>
 
 namespace Lua
@@ -109,14 +111,14 @@ namespace Lua
 		static int setText(lua_State *L);
 	};
 
-	class LuaMenuBar2 : public QMenuBar // public LuaWidget 
+	class LuaMenuBar2 : public Q3MenuBar // public LuaWidget 
 	{
 		Q_OBJECT
 	public:	
 		static int isEnabled(lua_State *L);
 		static int setEnabled(lua_State *L);
 		static int removeMenu(lua_State *L);
-		LuaMenuBar2(QWidget* p):QMenuBar(p)
+		LuaMenuBar2(QWidget* p):Q3MenuBar(p)
 		{
 			connect( this, SIGNAL( activated ( int ) ),
 				this, SLOT( _activated ( int ) ) );
@@ -126,7 +128,7 @@ namespace Lua
 
 	};
 
-	class LuaPopupMenu2 : public QMenu // LuaWidget 
+	class LuaPopupMenu2 : public Q3PopupMenu // LuaWidget 
 	{
 		Q_OBJECT
 	public:
@@ -142,7 +144,7 @@ namespace Lua
 		static int setText(lua_State *L);
 		static int removeItem(lua_State *L);
 		static int insertItem(lua_State *L);
-		LuaPopupMenu2(QWidget* p):QMenu( p )
+		LuaPopupMenu2(QWidget* p):Q3PopupMenu( p )
 		{
             connect( this, SIGNAL( activated ( int ) ), this, SLOT( _activated ( int ) ) );
             connect( this, SIGNAL( aboutToShow () ), this, SLOT( _aboutToShow () ) );

@@ -31,7 +31,7 @@
 #include <QStyle>
 #include <QPaintEngine>
 #include <QString>
-#include <QInputContext>
+
 #include <QBitmap>
 #include <Script2/QtObject.h>
 #include <Script2/QtValue.h>
@@ -229,12 +229,6 @@ int Widget::heightForWidth(lua_State * L) // ( int w ) const : int
 {
     QWidget* obj = QtObject<QWidget>::check( L, 1);
 	Lua::Util::push( L, obj->heightForWidth(Util::toInt( L, 2 )) );
-	return 1;
-}
-int Widget::inputContext(lua_State * L) // QInputContext
-{
-    QWidget* obj = QtObject<QWidget>::check( L, 1);
-    QtObject<QInputContext>::create( L, obj->inputContext());
 	return 1;
 }
 int Widget::inputMethodQuery(lua_State * L) // ( Qt::InputMethodQuery query ) const : QVariant
@@ -613,13 +607,6 @@ int Widget::setForegroundRole(lua_State * L) // ( QPalette::ColorRole role )
 		Lua::Util::error( L, "expecting a valid QPalette::ColorRole" );
 	return 0;	
 }
-int Widget::setInputContext(lua_State * L) // ( QInputContext * context )
-{
-    QWidget* obj = QtObject<QWidget>::check( L, 1);
-    QInputContext* rhs = QtObject<QInputContext>::check( L, 2);
-    obj->setInputContext( rhs );
-	return 0;
-}
 int Widget::setLayout(lua_State * L) // ( QLayout * layout )
 {
     QWidget* obj = QtObject<QWidget>::check( L, 1);
@@ -842,7 +829,7 @@ static const luaL_reg _Widget[] =
 	{ "grabMouse", Widget::grabMouse }, //( const QCursor & cursor ) to be tested
 	{ "grabShortcut", Widget::grabShortcut },  //to be tested
 	{ "heightForWidth", Widget::heightForWidth },
-	{ "inputContext", Widget::inputContext }, //to be tested
+	
 	{ "inputMethodQuery", Widget::inputMethodQuery },
 	{ "insertAction", Widget::insertAction },
 	{ "insertActions", Widget::insertActions }, // QT_DEVIATION
@@ -880,7 +867,6 @@ static const luaL_reg _Widget[] =
 	{ "setFocus", Widget::setFocus },
 	{ "setFocusProxy", Widget::setFocusProxy },
 	{ "setForegroundRole", Widget::setForegroundRole },
-	{ "setInputContext", Widget::setInputContext }, //to be tested
 	{ "setLayout", Widget::setLayout },
 	{ "setMask", Widget::setMask },
 	{ "setParent", Widget::setParent },

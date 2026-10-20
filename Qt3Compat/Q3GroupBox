@@ -1,0 +1,4 @@
+#ifndef QT3COMPAT_FWD_Q3GROUPBOX
+#define QT3COMPAT_FWD_Q3GROUPBOX
+#include "Qt3Compat.h"
+#endif

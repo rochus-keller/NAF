@@ -21,6 +21,7 @@
 #include "LuaMyWidget2.h"
 #include <LuaQt3/LuaPainter2.h>
 #include <QMouseEvent>
+#include <QPrintDialog>
 using namespace Lua;
 
 
@@ -50,9 +51,9 @@ void LuaMyWidget2::mousePressEvent ( QMouseEvent * e )
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::LeftButton );
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::MidButton );
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::RightButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidgetCallbacks::call( 9, 0 );
 	}
 }
@@ -68,9 +69,9 @@ void LuaMyWidget2::mouseReleaseEvent ( QMouseEvent * e )
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::LeftButton );
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::MidButton );
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::RightButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidgetCallbacks::call( 9, 0 );
 	}
 }
@@ -86,9 +87,9 @@ void LuaMyWidget2::mouseDoubleClickEvent ( QMouseEvent * e )
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::LeftButton );
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::MidButton );
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::RightButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidgetCallbacks::call( 9, 0 );
 	}
 }
@@ -104,9 +105,9 @@ void LuaMyWidget2::mouseMoveEvent ( QMouseEvent * e )
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::LeftButton );
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::MidButton );
 		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->button() & Qt::RightButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidgetCallbacks::call( 9, 0 );
 	}
 }
@@ -117,13 +118,13 @@ void LuaMyWidget2::keyPressEvent ( QKeyEvent * e )
     if( LuaWidgetCallbacks::pushCallbackAndMe( this, LuaWidget2::KeyPressed ) )
 	{
 		lua_pushnumber( LuaWidgetCallbacks::getLua(), e->key() );
-		if( e->ascii() )
-			lua_pushstring( LuaWidgetCallbacks::getLua(), e->text() );
+		if( !e->text().isEmpty() )
+			lua_pushstring( LuaWidgetCallbacks::getLua(), e->text().toLatin1().constData() );
 		else
 			lua_pushnil( LuaWidgetCallbacks::getLua() );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidgetCallbacks::call( 6, 1 );
 		if( lua_toboolean( LuaWidgetCallbacks::getLua(), 1 ) )
 			e->accept();
@@ -139,13 +140,13 @@ void LuaMyWidget2::keyReleaseEvent ( QKeyEvent * e )
     if( LuaWidgetCallbacks::pushCallbackAndMe( this, LuaWidget2::KeyReleased ) )
 	{
 		lua_pushnumber( LuaWidgetCallbacks::getLua(), e->key() );
-		if( e->ascii() )
-			lua_pushstring( LuaWidgetCallbacks::getLua(), e->text() );
+		if( !e->text().isEmpty() )
+			lua_pushstring( LuaWidgetCallbacks::getLua(), e->text().toLatin1().constData() );
 		else
 			lua_pushnil( LuaWidgetCallbacks::getLua() );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( LuaWidgetCallbacks::getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidgetCallbacks::call( 6, 1 );
 		if( lua_toboolean( LuaWidgetCallbacks::getLua(), 1 ) )
 			e->accept();
@@ -292,7 +293,8 @@ int LuaPrinter2::setup(lua_State *L)
 
 	if( !lua_isfunction( L, 2 ) )
 		luaL_error(L, "Expecting function(Printer,Painter) as argument");
-	if( obj->setup() )
+	QPrintDialog pd( obj );
+	if( pd.exec() == QDialog::Accepted )
 	{
 		lua_pushvalue( L, 2 );
 		lua_pushvalue( L, 1 );
@@ -393,7 +395,7 @@ int LuaPrinter2::getNumCopies(lua_State *L)
 int LuaPrinter2::setMinMax(lua_State *L)
 {	
 	QPrinter* obj = ValueBinding<LuaPrinter2>::check( L, 1 );
-	obj->setMinMax( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
+	obj->setFromTo( luaL_checknumber( L, 2 ), luaL_checknumber( L, 3 ) );
 	return 0;
 }
 

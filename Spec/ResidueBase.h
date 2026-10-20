@@ -19,6 +19,7 @@
  */
 
 #if !defined(AFX_RESIDUEBASE_H__44CC63B6_D375_4F3A_A5DC_CFBAF9A4FF73__INCLUDED_)
+#include <Root/SymbolString.h>
 #define AFX_RESIDUEBASE_H__44CC63B6_D375_4F3A_A5DC_CFBAF9A4FF73__INCLUDED_
 
 #if _MSC_VER > 1000
@@ -39,10 +40,28 @@ namespace Spec
 	public:
 		bool write( const char* path, TypeBase* );
 		bool write( const char*, Sequence* );
+		bool write( const QString& p, TypeBase* t ) { return write( p.toLatin1().constData(), t ); }
+		bool write( const QString& p, Sequence* s ) { return write( p.toLatin1().constData(), s ); }
+		bool write( const QByteArray& p, TypeBase* t ) { return write( p.constData(), t ); }
+		bool write( const QByteArray& p, Sequence* s ) { return write( p.constData(), s ); }
+		bool write( const Root::SymbolString& p, TypeBase* t ) { return write( p.data(), t ); }
+		bool write( const Root::SymbolString& p, Sequence* s ) { return write( p.data(), s ); }
 		bool read( const char* path, Repository*, Sequence* );
 		bool read( const char* path, Repository* );
+		bool read( const QString& p, Repository* r, Sequence* s ) { return read( p.toLatin1().constData(), r, s ); }
+		bool read( const QString& p, Repository* r ) { return read( p.toLatin1().constData(), r ); }
+		bool read( const QByteArray& p, Repository* r, Sequence* s ) { return read( p.constData(), r, s ); }
+		bool read( const QByteArray& p, Repository* r ) { return read( p.constData(), r ); }
+		bool read( const Root::SymbolString& p, Repository* r, Sequence* s ) { return read( p.data(), r, s ); }
+		bool read( const Root::SymbolString& p, Repository* r ) { return read( p.data(), r ); }
 		bool readStats( const char* path, Repository* );
 		bool readStats( const char* path, Repository*, Sequence* );
+		bool readStats( const QString& p, Repository* r ) { return readStats( p.toLatin1().constData(), r ); }
+		bool readStats( const QString& p, Repository* r, Sequence* s ) { return readStats( p.toLatin1().constData(), r, s ); }
+		bool readStats( const QByteArray& p, Repository* r ) { return readStats( p.constData(), r ); }
+		bool readStats( const QByteArray& p, Repository* r, Sequence* s ) { return readStats( p.constData(), r, s ); }
+		bool readStats( const Root::SymbolString& p, Repository* r ) { return readStats( p.data(), r ); }
+		bool readStats( const Root::SymbolString& p, Repository* r, Sequence* s ) { return readStats( p.data(), r, s ); }
 		QByteArray  d_result;
 	};
 }

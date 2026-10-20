@@ -469,7 +469,7 @@ bool StarLexer::matchTuple(int cur, int sym, int count) const
 
 const char *StarLexer::Token::typeName() const
 {
-	static const char* names[] = { "Null",
+	static const char* const names[] = { "Null",
 								   "Comment",
 								   "Global", "Data", "Save", // Cells
 								   "Loop",  "Stop",  // Loops

@@ -49,6 +49,8 @@ namespace Lexi
 		void drawFocusRect( Twips x, Twips y, Twips w, Twips h, QColor c = Qt::gray );
 		void drawPoint( Twips x, Twips y, QColor, Twips = 20 );
 		void drawText( Twips x, Twips y, const char* str, const QFont* f, QColor c );
+		void drawText( Twips x, Twips y, const QString& str, const QFont* f, QColor c )
+			{ drawText( x, y, str.toLatin1().constData(), f, c ); }
 		//. Zeichne str, wobei y der Basislinie und x dem logischen Ursprung entspricht.
 		void drawIcon( Twips x, Twips y, Icon* );
 		void drawEllipse( Twips x, Twips y, Twips w, Twips h, QColor, Twips = 20 );

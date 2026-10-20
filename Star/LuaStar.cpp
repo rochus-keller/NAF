@@ -32,7 +32,7 @@ static int openDocument( lua_State* L )
 	QFile in( QtValueBase::toString( L, 1, true ) );
 	QByteArray coding = "UTF-8";
 	if( lua_gettop(L) > 1 )
-		coding = QtValueBase::toString( L, 2, true ).toAscii();
+		coding = QtValueBase::toString( L, 2, true ).toLatin1();
 	bool newSyntax = false;
 	if( lua_gettop(L) > 2 )
 		newSyntax = lua_toboolean( L, 3 );

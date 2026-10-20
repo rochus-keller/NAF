@@ -77,7 +77,13 @@ namespace Spec
 		void format( char* buffer, int size ) const;
         QByteArray format() const;
         static bool parse( const char*, SpinLabel& );
+        static bool parse( const QString& s, SpinLabel& l ) { return parse( s.toLatin1().constData(), l ); }
+        static bool parse( const QByteArray& s, SpinLabel& l ) { return parse( s.constData(), l ); }
+        static bool parse( const Root::SymbolString& s, SpinLabel& l ) { return parse( s.data(), l ); }
 		static SpinLabel parse( const char* );
+		static SpinLabel parse( const QString& s ) { return parse( s.toLatin1().constData() ); }
+		static SpinLabel parse( const QByteArray& s ) { return parse( s.constData() ); }
+		static SpinLabel parse( const Root::SymbolString& s ) { return parse( s.data() ); }
 		const char* data() const;
 		static const char* s_syntax;
 

@@ -427,7 +427,7 @@ void ContourView3::drawContour(
         {
             QString str;
             str.sprintf( "WARNING: contour plot timed out after %d seconds, switching to auto contour", s_timeout );
-            // Lexi::ShowStatusMessage msg( str );
+            // Lexi::ShowStatusMessage msg( str.toLatin1().constData() );
             // TODO painter.getViewport()->traverseUp( msg );
             // painter.drawText( p[0].x(), p[0].y(), str );
             qWarning() << str;

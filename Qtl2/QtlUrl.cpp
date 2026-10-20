@@ -20,6 +20,7 @@
 
 #include "QtlUrl.h"
 #include <QUrl>
+#include <QUrlQuery>
 #include <QPaintEngine>
 #include <QString>
 #include <Script2/QtValue.h>
@@ -63,7 +64,7 @@ int Url::addQueryItem ( lua_State * L )// ( const QString & key, const QString &
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
 	//QString* key = QtValue<QString>::check( L, 2 );
 	//QString* value = QtValue<QString>::check( L, 3 );
-    lhs->addQueryItem( QtValueBase::toString( L, 2 ), QtValueBase::toString( L, 3 ) );
+    { QUrlQuery q( *lhs ); q.addQueryItem( QtValueBase::toString( L, 2 ), QtValueBase::toString( L, 3 ) ); lhs->setQuery( q ); }
 	return 0;
 }
 int Url::allQueryItemValues ( lua_State * L )// ( const QString & key ) const : QStringList
@@ -71,7 +72,7 @@ int Url::allQueryItemValues ( lua_State * L )// ( const QString & key ) const : 
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
 	//QString* key = QtValue<QString>::check( L, 2 );
 	QStringList* res = QtValue<QStringList>::create( L );
-    *res = lhs->allQueryItemValues( QtValueBase::toString( L, 2 ) );
+    *res = QUrlQuery( *lhs ).allQueryItemValues( QtValueBase::toString( L, 2 ) );
 	return 1;
 }
 int Url::authority ( lua_State * L )// const : QString
@@ -90,7 +91,7 @@ int Url::encodedQuery ( lua_State * L )// const : QByteArray
 {
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
 	//QByteArray* res = QtValue<QByteArray>::create( L );
-	Util::push( L, lhs->encodedQuery().data() );
+	Util::push( L, lhs->query( QUrl::FullyEncoded ).toLatin1().data() );
 	return 1;
 }
 int Url::errorString ( lua_State * L )// const : QString
@@ -121,7 +122,7 @@ int Url::hasQueryItem ( lua_State * L )// ( const QString & key ) const : bool
 {
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
 	//QString* key = QtValue<QString>::check( L, 2 );
-    Util::push( L, lhs->hasQueryItem( QtValueBase::toString( L, 2 ) ) );
+    Util::push( L, QUrlQuery( *lhs ).hasQueryItem( QtValueBase::toString( L, 2 ) ) );
 	return 1;
 }
 int Url::host ( lua_State * L )// const : QString
@@ -184,33 +185,33 @@ int Url::queryItemValue ( lua_State * L )// ( const QString & key ) const : QStr
 {
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
 	//QString* key = QtValue<QString>::check( L, 2 );
-    *QtValue<QString>::create( L ) = lhs->queryItemValue( QtValueBase::toString( L, 2 ) );
+    *QtValue<QString>::create( L ) = QUrlQuery( *lhs ).queryItemValue( QtValueBase::toString( L, 2 ) );
 	return 1;
 }
 int Url::queryPairDelimiter ( lua_State * L )// const : char
 {
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
-	Util::push( L, lhs->queryPairDelimiter() );
+	Util::push( L, (int) '&' );
 	return 1;
 }
 int Url::queryValueDelimiter ( lua_State * L )// const : char
 {
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
-	Util::push( L, lhs->queryValueDelimiter() );
+	Util::push( L, (int) '=' );
 	return 1;
 } 
 int Url::removeAllQueryItems ( lua_State * L )// ( const QString & key ) 
 {
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
 	//QString* key = QtValue<QString>::check( L, 2 );
-    lhs->removeAllQueryItems( QtValueBase::toString( L, 2 ) );
+    { QUrlQuery q( *lhs ); q.removeAllQueryItems( QtValueBase::toString( L, 2 ) ); lhs->setQuery( q ); }
 	return 0;
 }
 int Url::removeQueryItem ( lua_State * L )// ( const QString & key ) 
 {
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
 	//QString* key = QtValue<QString>::check( L, 2 );
-    lhs->removeQueryItem( QtValueBase::toString( L, 2 ) );
+    { QUrlQuery q( *lhs ); q.removeQueryItem( QtValueBase::toString( L, 2 ) ); lhs->setQuery( q ); }
 	return 0;
 }
 int Url::resolved ( lua_State * L )// ( const QUrl & relative ) const : QUrl
@@ -238,7 +239,7 @@ int Url::setEncodedQuery ( lua_State * L )// ( const QByteArray & query )
 {
 	QUrl* lhs = QtValue<QUrl>::check( L, 1 );
 	//QByteArray* query = QtValue<QByteArray>::check( L, 2 );
-	lhs->setEncodedQuery( Util::toStr( L, 2 ) );
+	lhs->setQuery( QString::fromLatin1( Util::toStr( L, 2 ) ), QUrl::StrictMode );
 	return 0;
 }
 int Url::setEncodedUrl ( lua_State * L )// ( const QByteArray & encodedUrl )
@@ -247,7 +248,7 @@ int Url::setEncodedUrl ( lua_State * L )// ( const QByteArray & encodedUrl )
 	//QByteArray* encodedUrl = QtValue<QByteArray>::check( L, 2 );
 	if( Util::isNil( L, 3 ))
 	{
-		lhs->setEncodedUrl( Util::toStr( L, 2 ) );
+		lhs->setUrl( QString::fromLatin1( Util::toStr( L, 2 ) ), QUrl::StrictMode );
 	}
 	else
 	{

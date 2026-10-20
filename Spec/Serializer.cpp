@@ -1573,7 +1573,7 @@ namespace Spec
                 // Datei existiert, versuche sie zu öffnen
                 try
                 {
-                    spec = Spec::Factory::createSpectrum( fileCheck.absFilePath() );
+                    spec = Spec::Factory::createSpectrum( fileCheck.absoluteFilePath().toLatin1().constData() );
                     if( spec.isNull() )
                         throw Root::Exception( "Unknown spectrum format" );
                     if( spec->getDimCount() != specType->getDimCount() )
@@ -1610,7 +1610,7 @@ namespace Spec
                 foreach( QString path, d_filePaths )
                 {
                     QDir dir( path );
-                    fileCheck.setFile( dir.absFilePath( fileCheck.fileName() ) );
+                    fileCheck.setFile( dir.absoluteFilePath( fileCheck.fileName() ) );
                     if( fileCheck.exists() )
                     {
                         filePath = fileCheck.filePath();
@@ -1634,13 +1634,13 @@ namespace Spec
 						{
                             QDir dir( AppAgent::getCurrentDir() );
 							QString path = QFileDialog::getOpenFileName( 0, "Select Spectrum",
-                                                               dir.absFilePath( fileCheck.fileName() ),
+                                                               dir.absoluteFilePath( fileCheck.fileName() ),
                                                                "Spectrum (* *.*)" );
 							if( !path.isNull() )
                             {
                                 fileCheck.setFile( path );
                                 filePath = path;
-                                AppAgent::setCurrentDir( fileCheck.dirPath( true ) );
+                                AppAgent::setCurrentDir( fileCheck.absolutePath().toLatin1().constData() );
                                 d_filePaths.insert( AppAgent::getCurrentDir() );
                             }
 						}
@@ -1688,7 +1688,7 @@ namespace Spec
             d_pathChanged = true;
         }
 
-		d_specPeer = new SpectrumPeer( spec, filePath, id );
+		d_specPeer = new SpectrumPeer( spec.deref(), filePath.toLatin1().constData(), id );
 		d_specPeer->d_owner = d_pro;
 		d_specPeer->setType( specType ); // Hier Farben nicht prüfen. Dim bereits ok.
 		if( sample != 0 )
@@ -2539,7 +2539,7 @@ namespace Spec
 	bool _XmlParser::readResidueType( const XmlHandler::Atts & atts )
 	{
 		Root::SymbolString id = atts.value( "short" ).data();
-		if( id.empty() || atts.value( "short" ).find( ' ' ) != -1 )
+		if( id.empty() || atts.value( "short" ).indexOf( ' ' ) != -1 )
 		{
 			// NOTE: keine Spaces im Namen erlaubt.
 			d_error = "Invalid residue short name!";
@@ -2980,7 +2980,7 @@ void Serializer::deserialize(const char *path, bool asTemplate )
 	if( !info.exists() )
 		throw Root::Exception( "Cannot find repository file ", path );
 
-	QDir::setCurrent( info.dirPath( true ) );
+	QDir::setCurrent( info.absolutePath() );
 	_XmlParser handler( d_rep, asTemplate );
     bool ok = handler.parse( path );
     if( !ok ) 
@@ -3447,8 +3447,8 @@ void Serializer::writeSpectrum(QTextStream & out, SpectrumPeer * spec)
 	// SpecType, Unique name und FilePath (relativ)
 	assert( spec->getType() );
 
-    const QByteArray absPath = QFileInfo( spec->getFilePath() ).absoluteFilePath().toAscii();
-    const QByteArray relPath = QDir( QFileInfo(d_rep->getFilePath()).path() ).relativeFilePath( absPath ).toAscii();
+    const QByteArray absPath = QFileInfo( spec->getFilePath() ).absoluteFilePath().toLatin1();
+    const QByteArray relPath = QDir( QFileInfo(d_rep->getFilePath()).path() ).relativeFilePath( absPath ).toLatin1();
 
     Root::Index sampId = ( spec->getSample() )?spec->getSample()->getId():0;
 	s_tmp.sprintf( "<%s type='%s' id='%d' name='%s' path='%s' sample='%d' relPath='%s'>", SPECTRUM,
@@ -3476,14 +3476,14 @@ void Serializer::writeSpectrum(QTextStream & out, SpectrumPeer * spec)
                 spec->getSpectrum()->getScale( d ).getColor().getIsoLabel(),
                 spec->getSpectrum()->getScale( d ).getRange().first,
                 spec->getSpectrum()->getScale( d ).getRange().second );
-			out << s_tmp.toAscii().data() << endl;
+			out << s_tmp.toLatin1().data() << endl;
 		}
 		if( spec->getRotation( d ) != d )
 		{
 			// TODO: nur speichern, wenn spec tatsächlich vorhanden
 			s_tmp.sprintf( "<%s view='%d' spec='%d'/>", ROTATE, d, 
 				spec->getRotation( d ) );
-			out << s_tmp.toAscii().data() << endl;
+			out << s_tmp.toLatin1().data() << endl;
 		}
 	}
 	writeObject( out, spec );

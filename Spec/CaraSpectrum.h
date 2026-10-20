@@ -19,6 +19,7 @@
  */
 
 #if !defined(AFX_CARASPECTRUM_H__252DD8F1_128B_44E4_8D17_86FEFFF73CF9__INCLUDED_)
+#include <Root/SymbolString.h>
 #define AFX_CARASPECTRUM_H__252DD8F1_128B_44E4_8D17_86FEFFF73CF9__INCLUDED_
 
 #if _MSC_VER > 1000
@@ -39,6 +40,15 @@ namespace Spec
 
 		static void writeToFile( const char*, Spectrum*, Levels&,
 			Amplitude porig, Amplitude norig, Kind, const ColorMap& = ColorMap() );
+		static void writeToFile( const QString& p, Spectrum* s, Levels& l,
+			Amplitude porig, Amplitude norig, Kind k, const ColorMap& c = ColorMap() )
+			{ writeToFile( p.toLatin1().constData(), s, l, porig, norig, k, c ); }
+		static void writeToFile( const QByteArray& p, Spectrum* s, Levels& l,
+			Amplitude porig, Amplitude norig, Kind k, const ColorMap& c = ColorMap() )
+			{ writeToFile( p.constData(), s, l, porig, norig, k, c ); }
+		static void writeToFile( const Root::SymbolString& p, Spectrum* s, Levels& l,
+			Amplitude porig, Amplitude norig, Kind k, const ColorMap& c = ColorMap() )
+			{ writeToFile( p.data(), s, l, porig, norig, k, c ); }
 
 		//* Overrides
 		const char* getLabel( Dimension d ) const;

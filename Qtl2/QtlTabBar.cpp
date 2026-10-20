@@ -22,7 +22,7 @@
 #include <QTabBar>
 #include <QIcon>
 #include <QString>
-#include <QInputContext>
+
 #include <Script2/QtObject.h>
 #include <Script2/QtValue.h>
 #include <Script/Util.h>

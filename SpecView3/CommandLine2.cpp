@@ -285,22 +285,22 @@ void CommandLine2::handleReadParam(char ch)
 			d_currentParam--;
             if( d_currentParam >= 0 && d_currentParam < d_cur->d_params.size() )
 			{
-                d_line = d_cur->d_cmd->property( QString::number(d_currentParam) ).toByteArray();
-                writeLine( d_cur->d_cmd->text(), d_line );
+                d_line = d_cur->d_cmd->property( QString::number(d_currentParam).toLatin1().constData() ).toByteArray();
+                writeLine( d_cur->d_cmd->text().toLatin1().constData(), d_line );
 			}else
 			{
 				notify( "Idle" );
 				reset();
 			}
 		}else
-            writeLine( d_cur->d_cmd->text(), d_line );
+            writeLine( d_cur->d_cmd->text().toLatin1().constData(), d_line );
 		break;
 	case SP:
         if( d_currentParam < d_cur->d_params.size() &&
                 d_cur->d_params[ d_currentParam ].d_type == Any::CStr )
 		{
 			d_line += ch;
-            writeLine( d_cur->d_cmd->text(), d_line );
+            writeLine( d_cur->d_cmd->text().toLatin1().constData(), d_line );
         }else if( d_currentParam >= d_cur->d_params.size() - 1 )
 		{	
 			notify( QString( "%1: Command accepts only %2 Parameter(s)!" ).
@@ -315,7 +315,7 @@ void CommandLine2::handleReadParam(char ch)
 	default:
 		// Check if line equals a Symbol
 		d_line += ch;
-        writeLine( d_cur->d_cmd->text(), d_line );
+        writeLine( d_cur->d_cmd->text().toLatin1().constData(), d_line );
 		break;
 	}
 }
@@ -325,7 +325,7 @@ void CommandLine2::writeLine(const char * lhs, const char * rhs)
 	QByteArray par;
     for( int i = 0; d_cur && i < d_currentParam; i++ )
 	{
-        par += d_cur->d_cmd->property( QString::number(i) ).toByteArray();
+        par += d_cur->d_cmd->property( QString::number(i).toLatin1().constData() ).toByteArray();
 		par += " ";
 	}
 	par += rhs;
@@ -372,9 +372,9 @@ bool CommandLine2::interpretParam()
 		return false;
 	case Any::Boolean:
 		str = str.toUpper();
-		if( str == "TRUE" || str == "YES" || str == "1" || str == "ON" )
+		if( str == "true" || str == "YES" || str == "1" || str == "ON" )
             val = true;
-		else if( str == "FALSE" || str == "NO" || str == "0" || str == "OFF" )
+		else if( str == "false" || str == "NO" || str == "0" || str == "OFF" )
             val = false;
 		else
 		{
@@ -501,7 +501,7 @@ bool CommandLine2::eventFilter(QObject *watched, QEvent *event)
 			return false;
 
 		const QChar ch = txt[0];
-		const char c = ch.toAscii();
+		const char c = ch.toLatin1();
 		if( !ch.isPrint() && c != CR && c != BK )
 			return false;
 
@@ -530,7 +530,7 @@ void CommandLine2::handleHelp()
         else
             printToLog();
     }
-    notify( QString( "%1: executed" ).arg( a->name() ) );
+    notify( QString( "%1: executed" ).arg( a->objectName() ) );
     reset();
 }
 

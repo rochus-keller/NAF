@@ -19,6 +19,7 @@
  */
 
 #if !defined(AFX_MAINWINDOW_H__35574D60_594F_11D5_8DB0_00D00918E99C__INCLUDED_)
+#include <Root/SymbolString.h>
 #define AFX_MAINWINDOW_H__35574D60_594F_11D5_8DB0_00D00918E99C__INCLUDED_
 
 #if _MSC_VER >= 1000
@@ -26,6 +27,7 @@
 #endif // _MSC_VER >= 1000
 
 #include <QMainWindow>
+#include <q3menubar.h>
 #include <QCloseEvent>
 #include <QPointer>
 #include <Root/Agent.h>
@@ -55,6 +57,8 @@ namespace Lexi
 	public:
 		const char* getMessage() const { return d_message.data(); }
 		ShowStatusMessage( const char* str ):d_message( str ) {}
+		ShowStatusMessage( const QString& str ):d_message( str.toLatin1().constData() ) {}
+		ShowStatusMessage( const QByteArray& str ):d_message( str ) {}
 	private:
 		QByteArray  d_message;
 	};
@@ -96,8 +100,11 @@ namespace Lexi
 		void showStatusBar( bool on );
 		//. Stellt die Anzeige des Statusbars ein oder aus.
 		void setStatusMessage( const char* );
+		void setStatusMessage( const QString& s ) { setStatusMessage( s.toLatin1().constData() ); }
+		void setStatusMessage( const QByteArray& s ) { setStatusMessage( s.constData() ); }
+		void setStatusMessage( const Root::SymbolString& s ) { setStatusMessage( s.data() ); }
 		//. Schreibt die Nachricht auf den StatusBar, falls vorhanden.
-		void setCaption( const char* );
+		void setWindowTitle( const char* );
 		void handle( Message& );
 		QMainWindow* getQt() const { return d_this; }
 
@@ -105,7 +112,7 @@ namespace Lexi
 			bool topLevel = true, bool deleteOnClose = false );
 	protected:
 		virtual ~MainWindow();
-		QMenuBar* menuBar() const { return d_this->menuBar(); }
+		Q3MenuBar* menuBar() const { return static_cast<Q3MenuBar*>( d_this->menuBar() ); }
 		//* To Override
 		virtual bool askToCloseWindow() const;
 	private:

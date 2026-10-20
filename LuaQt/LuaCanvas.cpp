@@ -57,7 +57,7 @@ LuaCanvas::LuaCanvas():
 	d_peer( 0 )
 {
 	setAttribute(Qt::WA_DeleteOnClose);
-	setCaption( "CARA - Lua Canvas" );
+	setWindowTitle( "CARA - Lua Canvas" );
 
 	d_view = new _LuaCanvasView( this );
 	setCentralWidget( d_view );
@@ -94,7 +94,7 @@ void LuaCanvas::handleSave()
 		return;
 	QFileInfo info( fileName );
 
-	if( info.extension( false ).upper() != "PIC" )
+	if( info.suffix().toUpper() != "PIC" )
 		fileName += ".pic";
 	info.setFile( fileName );
 	if( info.exists() )
@@ -401,10 +401,10 @@ int LuaCanvasPeer::setBrush(lua_State *L)
 	return 0;
 }
 
-int LuaCanvasPeer::setCaption(lua_State *L)
+int LuaCanvasPeer::setWindowTitle(lua_State *L)
 {
 	CHECK_OPEN();
-	d_cv->setCaption( luaL_checkstring( L, 1 ) );
+	d_cv->setWindowTitle( luaL_checkstring( L, 1 ) );
 	return 0;
 }
 

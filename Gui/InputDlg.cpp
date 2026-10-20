@@ -69,9 +69,9 @@ void InputDlg::add( QLayout* w, int row, int col, int rowSpan, int colSpan )
 	d_grid->addLayout( w, row, col, rowSpan, colSpan );
 }
 
-bool InputDlg::exec()
+int InputDlg::exec()
 {
-	return QDialog::exec() == QDialog::Accepted;
+	return QDialog::exec();
 }
 
 void InputDlg::addLabel( const QString& txt, int row, int col, int rowSpan, int colSpan )

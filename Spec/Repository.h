@@ -105,12 +105,18 @@ namespace Spec
 		bool inUse( SystemType* ) const;
 		bool remove( SystemType* );
 		bool rename( SystemType*, const char* );
+		bool rename( SystemType* x, const QString& n ) { return rename( x, n.toLatin1().constData() ); }
+		bool rename( SystemType* x, const QByteArray& n ) { return rename( x, n.constData() ); }
+		bool rename( SystemType* x, const Root::SymbolString& n ) { return rename( x, n.data() ); }
 
 		const SpectrumTypeMap& getSpecTypes() const { return d_types->getSpecTypes(); }
 		bool addSpectrumType( SpectrumType* );
 		bool inUse( SpectrumType* ) const;
 		bool remove( SpectrumType* );
 		bool rename( SpectrumType*, const char* );
+		bool rename( SpectrumType* x, const QString& n ) { return rename( x, n.toLatin1().constData() ); }
+		bool rename( SpectrumType* x, const QByteArray& n ) { return rename( x, n.constData() ); }
+		bool rename( SpectrumType* x, const Root::SymbolString& n ) { return rename( x, n.data() ); }
 
 		const ResidueTypeMap& getResidueTypes() const { return d_types->getResidueTypes(); }
 		ResidueType* findResidueType( const char*, bool caseInsens = true ) const;
@@ -119,14 +125,26 @@ namespace Spec
 		bool inUse( ResidueType* ) const;
 		bool remove( ResidueType* );
 		bool rename( ResidueType*, const char* );
+		bool rename( ResidueType* x, const QString& n ) { return rename( x, n.toLatin1().constData() ); }
+		bool rename( ResidueType* x, const QByteArray& n ) { return rename( x, n.constData() ); }
+		bool rename( ResidueType* x, const Root::SymbolString& n ) { return rename( x, n.data() ); }
 
 		const ProjectMap& getProjects() const { return d_projects; }
 		Project* findProject( const char* ) const;
 		void addProject( Project* );	// throws "not unique"
 		bool removeProject( Project* );
 		bool rename( Project*, const char* name );
+		bool rename( Project* p, const QString& name ) { return rename( p, name.toLatin1().constData() ); }
+		bool rename( Project* p, const QByteArray& name ) { return rename( p, name.constData() ); }
+		bool rename( Project* p, const Root::SymbolString& name ) { return rename( p, name.data() ); }
 
 		void saveToFile( const char* path = "", const char* creator = "" );
+		void saveToFile( const QString& path, const QString& creator = QString() )
+			{ saveToFile( path.toLatin1().constData(), creator.toLatin1().constData() ); }
+		void saveToFile( const QByteArray& path, const QByteArray& creator = QByteArray() )
+			{ saveToFile( path.constData(), creator.constData() ); }
+		void saveToFile( const Root::SymbolString& path, const Root::SymbolString& creator = Root::SymbolString() )
+			{ saveToFile( path.data(), creator.data() ); }
 		//. Implementiert SaveAs (path!="") oder Save (path=="").
 		const char* getFilePath() const { return d_path.data(); }
 		//. Gibt "" zurück, wenn noch nicht mit einer Datei verknüpft ist.
@@ -138,7 +156,13 @@ namespace Spec
 		Repository();
 		void copyFrom( const Repository& );
 		void load( const char* path, bool asTemplate = false );
+		void load( const QString& path, bool asTemplate = false ) { load( path.toLatin1().constData(), asTemplate ); }
+		void load( const QByteArray& path, bool asTemplate = false ) { load( path.constData(), asTemplate ); }
+		void load( const Root::SymbolString& path, bool asTemplate = false ) { load( path.data(), asTemplate ); }
 		void reload( const char* path, bool asTemplate = false );
+		void reload( const QString& path, bool asTemplate = false ) { reload( path.toLatin1().constData(), asTemplate ); }
+		void reload( const QByteArray& path, bool asTemplate = false ) { reload( path.constData(), asTemplate ); }
+		void reload( const Root::SymbolString& path, bool asTemplate = false ) { reload( path.data(), asTemplate ); }
 		void reloadEmpty();// Mache daraus ein neues leeres Rep
 		void reloadSpecs();
 
@@ -154,6 +178,9 @@ namespace Spec
         Script* getScript( const char* name ) const;
 		Script* addScript( Root::SymbolString, Script::Lang = Script::Lua );
 		bool rename( Script*, const char* );
+		bool rename( Script* x, const QString& n ) { return rename( x, n.toLatin1().constData() ); }
+		bool rename( Script* x, const QByteArray& n ) { return rename( x, n.constData() ); }
+		bool rename( Script* x, const Root::SymbolString& n ) { return rename( x, n.data() ); }
 		void remove( Script* );
 
 		TypeBase* getTypes() const { return d_types; }

@@ -54,8 +54,8 @@ namespace Qtl
 		static int sectionViewportPosition(lua_State * L); // ( int logicalIndex ) const : int
 		static int sectionsHidden(lua_State * L); // const : bool 
 		static int sectionsMoved(lua_State * L); // const : bool
-		static int setClickable(lua_State * L); // ( bool clickable )
-		static int setMovable(lua_State * L); // ( bool movable )
+		static int setSectionsClickable(lua_State * L); // ( bool clickable )
+		static int setSectionsMovable(lua_State * L); // ( bool movable )
 		static int setResizeMode(lua_State * L); // ( ResizeMode mode )
 		static int setSectionHidden(lua_State * L); // ( int logicalIndex, bool hide )
 		static int setSortIndicator(lua_State * L); // ( int logicalIndex, Qt::SortOrder order )

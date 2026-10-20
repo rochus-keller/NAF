@@ -102,7 +102,12 @@ int Icon::pixmap(lua_State * L) // ( int, Mode, State ) const : QPixmap
 	return 1;
 }
 
-int Icon::serialNumber(lua_State * L) { return QtValue<QIcon>::getInt( L, &QIcon::serialNumber ); }
+int Icon::serialNumber(lua_State * L)
+{
+    QIcon* obj = QtValue<QIcon>::check( L, 1 );
+    Util::push( L, (int) obj->pixmap( 16 ).cacheKey() );
+    return 1;
+}
 int Icon::init(lua_State * L) 
 {
     QIcon* obj = QtValue<QIcon>::check( L, 1 );

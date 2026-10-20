@@ -46,7 +46,7 @@ namespace Spec
 		void setTitle( SpinSystem* );
 		CandidateDlg(QWidget * parent, Repository* );
 		virtual ~CandidateDlg();
-		bool exec();
+		int exec();
 		SpinSystem::Candidates d_cands; // RISK GC
 	private slots:
 		void handleAll(bool);

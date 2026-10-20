@@ -288,7 +288,7 @@ int LuaWidget2::setFixedSize(lua_State *L)
 	return 0;
 }
 
-int LuaWidget2::setCaption(lua_State *L)
+int LuaWidget2::setWindowTitle(lua_State *L)
 {
 	QWidget* obj = ObjectHelper<QWidget>::check( L, 1 );
 	obj->setWindowTitle( luaL_checkstring( L, 2 ) );
@@ -593,7 +593,7 @@ int LuaWidget2::raise(lua_State *L)
 int LuaWidget2::lower(lua_State *L)
 {
 	QWidget* obj = ObjectHelper<QWidget>::check( L, 1 );
-	obj->lower();
+	obj->toLower();
 	return 0;
 }
 

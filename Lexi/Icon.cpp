@@ -23,7 +23,7 @@
 #include <QPixmap>
 using namespace Lexi;
 
-static const char*  empty[] = {
+static const char* const  empty[] = {
 "22 22 2 1",
 " 	c None",
 ".	c #000000",
@@ -49,7 +49,7 @@ static const char*  empty[] = {
 "                      ",
 "                      ",
 "                      "};
-static const char*  pointer[] = {
+static const char* const  pointer[] = {
 "22 22 2 1",
 " 	c None",
 ".	c #000000",
@@ -75,7 +75,7 @@ static const char*  pointer[] = {
 "                      ",
 "                      ",
 "                      "};
-static const char*  magnify[] = {
+static const char* const  magnify[] = {
 "22 22 2 1",
 " 	c None",
 ".	c #000000",
@@ -101,7 +101,7 @@ static const char*  magnify[] = {
 "          ..          ",
 "                      ",
 "                      "};
-static const char* home[] = {
+static const char* const home[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 132 2",
 "   c Gray0",
@@ -260,7 +260,7 @@ static const char* home[] = {
 "s.s.s.#.7 9 q C C 8 9 9 9 5 8 q C q O.s.s.s.",
 "s.s.s.Q W W W E E U U L I L P P P Z :.s.s.s."
 };
-static const char* help[] = {
+static const char* const help[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 102 2",
 "   c #4a4a00004242",
@@ -389,7 +389,7 @@ static const char* help[] = {
 "%.%.%.%.%.%.%.%.%.c l H u . ) %.%.%.%.%.%.%.",
 "%.%.%.%.%.%.%.%.%._ 0 ; $ R %.%.%.%.%.%.%.%."
 };
-static const char* editredo[] = {
+static const char* const editredo[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 8 1",
 "  c Gray100",
@@ -424,7 +424,7 @@ static const char* editredo[] = {
 "OOOOOOOOOOOOOOOOOOOOOO",
 "OOOOOOOOOOOOOOOOOOOOOO"
 };
-static const char* editundo[] = {
+static const char* const editundo[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 8 1",
 "  c Gray100",
@@ -459,7 +459,7 @@ static const char* editundo[] = {
 "OOOOOOOOOOOOOOOOOOOOOO",
 "OOOOOOOOOOOOOOOOOOOOOO"
 };
-static const char* editpaste[] = {
+static const char* const editpaste[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 8 1",
 "  c Gray100",
@@ -494,7 +494,7 @@ static const char* editpaste[] = {
 "########++++++++++++++",
 "######################"
 };
-static const char* editcut[] = {
+static const char* const editcut[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 4 1",
 "  c Gray100",
@@ -525,7 +525,7 @@ static const char* editcut[] = {
 "ooooo...oooooooooooooo",
 "oooooooooooooooooooooo"
 };
-static const char* editcopy[] = {
+static const char* const editcopy[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 8 1",
 "  c Gray100",
@@ -560,7 +560,7 @@ static const char* editcopy[] = {
 "++++++++ooooooooooooo+",
 "++++++++++++++++++++++"
 };
-static const char* filenew[] = {
+static const char* const filenew[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 8 1",
 "  c Gray100",
@@ -595,7 +595,7 @@ static const char* filenew[] = {
 "@@@@@@@@@@@@@@@@@@@@@@",
 "@@@@@@@@@@@@@@@@@@@@@@"
 };
-static const char* filesave[] = {
+static const char* const filesave[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 8 1",
 "  c Gray100",
@@ -630,7 +630,7 @@ static const char* filesave[] = {
 "++OOOOOOOOOOOOOOOOOO++",
 "++++++++++++++++++++++"
 };
-static const char* fileopen[] = {
+static const char* const fileopen[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 8 1",
 "  c Gray100",
@@ -665,7 +665,7 @@ static const char* fileopen[] = {
 "oooooooooooooooOOOOOOO",
 "OOOOOOOOOOOOOOOOOOOOOO"
 };
-static const char *left_arrow[] = {
+static const char * const left_arrow[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 113 2",
 "   c #08082929efef",
@@ -806,7 +806,7 @@ static const char *left_arrow[] = {
 "2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2."
 };
 
-static const char *right_arrow[] = {
+static const char * const right_arrow[] = {
 /* columns rows colors chars-per-pixel */
 "22 22 113 2",
 "   c #00001818f7f7",
@@ -952,39 +952,39 @@ static QPixmap toXpm( Icon::Symbol s )
 	switch( s )
 	{
 	case Icon::FileOpen:
-		return fileopen;
+		return QPixmap( fileopen );
 	case Icon::FileSave:
-		return filesave;
+		return QPixmap( filesave );
 	case Icon::FileNew:
-		return filenew;
+		return QPixmap( filenew );
 	case Icon::EditCopy:
-		return editcopy;
+		return QPixmap( editcopy );
 	case Icon::EditCut:
-		return editcut;
+		return QPixmap( editcut );
 	case Icon::EditPaste:
-		return editpaste;
+		return QPixmap( editpaste );
 	case Icon::EditUndo:
-		return editundo;
+		return QPixmap( editundo );
 	case Icon::EditRedo:
-		return editredo;
+		return QPixmap( editredo );
 	case Icon::Help:
-		return help;
+		return QPixmap( help );
 	case Icon::Home:
-		return home;
+		return QPixmap( home );
 	case Icon::Pointer:
-		return pointer;
+		return QPixmap( pointer );
 	case Icon::Left:
-		return left_arrow;
+		return QPixmap( left_arrow );
 	case Icon::Right:
-		return right_arrow;
+		return QPixmap( right_arrow );
 	case Icon::Magnify:
-		return magnify;
+		return QPixmap( magnify );
 	default:
-		return empty;
+		return QPixmap( empty );
 	}
 }
 
-Icon::Icon(const char* xpm[]):
+Icon::Icon(const char* const xpm[]):
 	d_pixmap( xpm )
 {
 

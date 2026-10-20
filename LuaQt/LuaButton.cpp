@@ -107,7 +107,7 @@ int LuaButton::isToggleButton(lua_State *L)
 int LuaButton::isOn(lua_State *L)
 {
 	checkAlive( L );
-	lua_pushboolean( L, obj()->isOn() );
+	lua_pushboolean( L, obj()->isChecked() );
 	return 1;
 }
 
@@ -178,7 +178,7 @@ int LuaPushButton::setOn(lua_State *L)
 	bool b = true;
 	if( lua_gettop(L) > 0 && lua_isboolean( L, 1 ) )
 		b = lua_toboolean( L, 1 );
-	obj()->setOn( b );
+	obj()->setChecked( b );
 	return 0;
 }
 

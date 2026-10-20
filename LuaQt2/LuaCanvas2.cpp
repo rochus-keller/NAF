@@ -38,7 +38,7 @@ LuaCanvas2::LuaCanvas2(QWidget*):
 	QMainWindow( 0 ), d_view(0)
 {
 	setAttribute(Qt::WA_DeleteOnClose);
-	setCaption( "CARA - Lua Canvas" );
+	setWindowTitle( "CARA - Lua Canvas" );
 
 	d_view = new View( this );
 	d_view->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ); 
@@ -74,7 +74,7 @@ void LuaCanvas2::handleSave()
 		return;
 	QFileInfo info( fileName );
 
-	if( info.extension( false ).upper() != "PIC" )
+	if( info.suffix().toUpper() != "PIC" )
 		fileName += ".pic";
 	info.setFile( fileName );
 	if( info.exists() )
@@ -366,10 +366,10 @@ int LuaCanvas2::_setBrush(lua_State *L)
 	return 0;
 }
 
-int LuaCanvas2::_setCaption(lua_State *L)
+int LuaCanvas2::_setWindowTitle(lua_State *L)
 {
 	LuaCanvas2* obj = ObjectHelper<LuaCanvas2>::check( L, 1 );
-	obj->setCaption( luaL_checkstring( L, 2 ) );
+	obj->setWindowTitle( luaL_checkstring( L, 2 ) );
 	return 0;
 }
 

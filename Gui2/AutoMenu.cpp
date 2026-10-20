@@ -59,7 +59,7 @@ public:
 };
 
 AutoMenu::AutoMenu(QWidget *parent, bool context)
-    : QMenu(parent), d_noPopup(false)
+    : Q3PopupMenu(parent), d_noPopup(false)
 {
     connect( this, SIGNAL( aboutToShow() ), this, SLOT( onShow() ) );
     if( AutoMenu* p = dynamic_cast<AutoMenu*>( parent ) )
@@ -72,7 +72,7 @@ AutoMenu::AutoMenu(QWidget *parent, bool context)
 }
 
 AutoMenu::AutoMenu(const QString& title, QWidget *parent, bool addMenuBar)
-    : QMenu(title, parent), d_noPopup(false)
+    : Q3PopupMenu(title, parent), d_noPopup(false)
 {
     connect( this, SIGNAL( aboutToShow() ), this, SLOT( onShow() ) );
     if( AutoMenu* p = dynamic_cast<AutoMenu*>( parent ) )

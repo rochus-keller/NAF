@@ -25,7 +25,7 @@
 using namespace Spec;
 
 static char s_buf[ 64 ];
-static const char* s_code[] =
+static const char* const s_code[] =
 {
 	"?", // Draft
 	"",  // Assigned

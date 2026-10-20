@@ -22,6 +22,7 @@
 #define GENERICSCOPE_H
 
 #include <QMainWindow>
+#include <Qt3Compat/Qt3Compat.h>
 #include <QPointer>
 #include <Root/Messenger.h>
 #include <Root/Agent.h>
@@ -35,6 +36,7 @@ namespace Spec
         explicit GenericScope(Root::Agent* supervisor = 0);
         ~GenericScope();
         void setStatusMessage( const QString& );
+        Q3MenuBar* menuBar() const { return static_cast<Q3MenuBar*>( QMainWindow::menuBar() ); }
         Root::Agent* getAgent() const { return d_agent; }
     public slots:
         void handleSave();

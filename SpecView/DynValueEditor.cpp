@@ -57,7 +57,7 @@ public:
 		if( d.toInt() == Any::Memo )
 		{
 			Q3MultiLineEdit* ed = new Q3MultiLineEdit( parent );
-			ed->setFrameShape( Q3Frame::NoFrame );
+			ed->setFrameShape( QFrame::NoFrame );
 			ed->setWordWrap( Q3MultiLineEdit::WidgetWidth );
 			if( index.data( DynValueCell::ReadOnlyRole ).toBool() )
 				ed->setReadOnly( true );
@@ -222,10 +222,10 @@ DynValueEditor::DynValueEditor(QWidget* p, Spec::ObjectDef* def, Root::Object* o
 	setColumnCount( 1 );
 	setAlternatingRowColors( true );
 	setSelectionMode( QAbstractItemView::NoSelection );
-    horizontalHeader()->setMovable(false);
+    horizontalHeader()->setSectionsMovable(false);
     horizontalHeader()->setStretchLastSection(true);
-    verticalHeader()->setMovable(false);
-	verticalHeader()->setResizeMode ( QHeaderView::Interactive );
+    verticalHeader()->setSectionsMovable(false);
+	verticalHeader()->setSectionResizeMode( QHeaderView::Interactive );
 	setEditTriggers( QAbstractItemView::AllEditTriggers );
 	/*
 	setTopMargin( 0 );
@@ -270,7 +270,7 @@ DynValueEditor::DynValueEditor(QWidget* p, Spec::ObjectDef* def, Root::Object* o
 	}
 	setVerticalHeaderLabels( labels );
 
-	// verticalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+	// verticalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
 	// setLeftMargin( w + w * 0.3 );
 	setItemDelegate( new DynValueCellDelegate( this ) );
 }
@@ -285,7 +285,7 @@ bool DynValueEditor::edit(QWidget * parent, Spec::ObjectDef * def, Root::Object 
 {
 	if( obj == 0 )
 		return false;
-	QDialog dlg( parent, "", true );
+	QDialog dlg( parent ); dlg.setModal( true );
 	QString str;
 	if( def )
 		str.sprintf( "Edit Attributes of %s '%s'", def->getClass().data(),
@@ -293,7 +293,7 @@ bool DynValueEditor::edit(QWidget * parent, Spec::ObjectDef * def, Root::Object 
 	else
 		str.sprintf( "Edit Attributes of %s '%s'", obj->getClassName(),
 			obj->getInstanceName().data() );
-	dlg.setCaption( str );
+	dlg.setWindowTitle( str );
 
 
 	Q3VBoxLayout* top = new Q3VBoxLayout( &dlg, 5 );

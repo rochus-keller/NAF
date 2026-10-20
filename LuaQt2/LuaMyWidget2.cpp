@@ -57,9 +57,9 @@ void LuaMyWidget2::mousePressEvent ( QMouseEvent * e )
 		lua_pushboolean( peer->getLua(), e->button() & Qt::LeftButton );
 		lua_pushboolean( peer->getLua(), e->button() & Qt::MidButton );
 		lua_pushboolean( peer->getLua(), e->button() & Qt::RightButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidget2::call( peer->getLua(), 9, 0 );
 	}
 }
@@ -77,9 +77,9 @@ void LuaMyWidget2::mouseReleaseEvent ( QMouseEvent * e )
 		lua_pushboolean( peer->getLua(), e->button() & Qt::LeftButton );
 		lua_pushboolean( peer->getLua(), e->button() & Qt::MidButton );
 		lua_pushboolean( peer->getLua(), e->button() & Qt::RightButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidget2::call( peer->getLua(), 9, 0 );
 	}
 }
@@ -97,9 +97,9 @@ void LuaMyWidget2::mouseDoubleClickEvent ( QMouseEvent * e )
 		lua_pushboolean( peer->getLua(), e->button() & Qt::LeftButton );
 		lua_pushboolean( peer->getLua(), e->button() & Qt::MidButton );
 		lua_pushboolean( peer->getLua(), e->button() & Qt::RightButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidget2::call( peer->getLua(), 9, 0 );
 	}
 }
@@ -117,9 +117,9 @@ void LuaMyWidget2::mouseMoveEvent ( QMouseEvent * e )
 		lua_pushboolean( peer->getLua(), e->button() & Qt::LeftButton );
 		lua_pushboolean( peer->getLua(), e->button() & Qt::MidButton );
 		lua_pushboolean( peer->getLua(), e->button() & Qt::RightButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidget2::call( peer->getLua(), 9, 0 );
 	}
 }
@@ -132,13 +132,13 @@ void LuaMyWidget2::keyPressEvent ( QKeyEvent * e )
 	{
 		peer->pushMe();
 		lua_pushnumber( peer->getLua(), e->key() );
-		if( e->ascii() )
+		if( !e->text().isEmpty() )
 			lua_pushstring( peer->getLua(), e->text() );
 		else
 			lua_pushnil( peer->getLua() );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidget2::call( peer->getLua(), 6, 1 );
 		if( lua_toboolean( peer->getLua(), 1 ) )
 			e->accept();
@@ -155,13 +155,13 @@ void LuaMyWidget2::keyReleaseEvent ( QKeyEvent * e )
 	{
 		peer->pushMe();
 		lua_pushnumber( peer->getLua(), e->key() );
-		if( e->ascii() )
+		if( !e->text().isEmpty() )
 			lua_pushstring( peer->getLua(), e->text() );
 		else
 			lua_pushnil( peer->getLua() );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ShiftButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::ControlButton );
-		lua_pushboolean( peer->getLua(), e->state() & Qt::AltButton );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ShiftModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::ControlModifier );
+		lua_pushboolean( peer->getLua(), e->modifiers() & Qt::AltModifier );
 		LuaWidget2::call( peer->getLua(), 6, 1 );
 		if( lua_toboolean( peer->getLua(), 1 ) )
 			e->accept();

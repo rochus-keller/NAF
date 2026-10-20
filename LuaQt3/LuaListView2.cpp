@@ -222,7 +222,7 @@ int LuaListView2::_setSorting(lua_State *L)
 int LuaListView2::_sort(lua_State *L)
 {
 	QTreeWidget* obj = QtObject<QTreeWidget>::check( L, 1 );
-	obj->sortItems( obj->sortColumn(), Qt::Ascending );
+	obj->sortItems( obj->sortColumn(), Qt::AscendingOrder );
 	return 0;
 }
 

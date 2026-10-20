@@ -31,7 +31,7 @@ static char g_buffer[ 64 ];	// RISK: not thread safe
 
 const Any Any::null;
 
-static const char* g_names[] =
+static const char* const g_names[] =
 {
 	"Null", 
 	"Boolean", 

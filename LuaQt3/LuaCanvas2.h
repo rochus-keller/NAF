@@ -39,9 +39,12 @@ namespace Lua
 		class View : public QWidget
 		{
 		public:
-			View( QWidget* p ):QWidget(p) 
+			View( QWidget* p ):QWidget(p)
 			{
-				setBackgroundColor( Qt::white );
+				QPalette pal = palette();
+				pal.setColor( QPalette::Window, Qt::white );
+				setPalette( pal );
+				setAutoFillBackground( true );
 			}
 			QPicture d_pic;
 			QPainter d_p;	// use isActive, begin( &d_pic ), end
@@ -69,7 +72,7 @@ namespace Lua
 		static int _drawIcon(lua_State *L);
 		static int _drawContour(lua_State *L);
 		static int _drawImage(lua_State *L);
-		static int _setCaption(lua_State *L);
+		static int _setWindowTitle(lua_State *L);
 		static int _setBrush(lua_State *L);
 		static int _setPen(lua_State *L);
 		static int _getBounding(lua_State *L);

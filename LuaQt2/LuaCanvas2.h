@@ -69,7 +69,7 @@ namespace Lua
 		static int _drawIcon(lua_State *L);
 		static int _drawContour(lua_State *L);
 		static int _drawImage(lua_State *L);
-		static int _setCaption(lua_State *L);
+		static int _setWindowTitle(lua_State *L);
 		static int _setBrush(lua_State *L);
 		static int _setPen(lua_State *L);
 		static int _getBounding(lua_State *L);

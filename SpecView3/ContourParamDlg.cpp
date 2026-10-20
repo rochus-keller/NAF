@@ -30,6 +30,15 @@
 #include <QCheckBox>
 using namespace Spec;
 
+static inline void setBtnColor( QAbstractButton* b, const QColor& c )
+{
+	QPalette pal = b->palette();
+	pal.setColor( QPalette::Button, c );
+	b->setPalette( pal );
+	b->setAutoFillBackground( true );
+	b->update();
+}
+
 ContourParamDlg::ContourParamDlg(QWidget *parent) :
     QDialog(parent)
 {
@@ -92,8 +101,8 @@ bool ContourParamDlg::setParams(QWidget *parent, ContourView3::Params &params)
     dlg.option->setCurrentIndex( params.d_option );
     dlg.gain->setText( QString::number( params.d_gain ) );
     dlg.width->setText( QString::number( params.d_width ) );
-    dlg.pos->setBackgroundColor( params.d_pos );
-    dlg.neg->setBackgroundColor( params.d_neg );
+    setBtnColor( dlg.pos, params.d_pos );
+    setBtnColor( dlg.neg, params.d_neg );
     dlg.isAuto->setChecked( params.d_auto );
     while( dlg.exec() == QDialog::Accepted )
     {
@@ -102,8 +111,8 @@ bool ContourParamDlg::setParams(QWidget *parent, ContourView3::Params &params)
         params.d_option = ContourView3::Option( dlg.option->currentIndex() );
         params.d_gain = dlg.gain->text().toFloat();
         params.d_width = dlg.width->text().toFloat();
-        params.d_pos = dlg.pos->backgroundColor();
-        params.d_neg = dlg.neg->backgroundColor();
+        params.d_pos = dlg.pos->palette().color( QPalette::Button );
+        params.d_neg = dlg.neg->palette().color( QPalette::Button );
         params.d_auto = dlg.isAuto->isChecked();
 		if( params.d_threshold != old.d_threshold )
 			params.d_auto = false;
@@ -116,16 +125,16 @@ bool ContourParamDlg::setParams(QWidget *parent, ContourView3::Params &params)
 
 void ContourParamDlg::onPos()
 {
-    QColor c = QColorDialog::getColor( pos->backgroundColor(), this );
+    QColor c = QColorDialog::getColor( pos->palette().color( QPalette::Button ), this );
     if( c.isValid() )
-        pos->setBackgroundColor( c );
+        setBtnColor( pos, c );
 }
 
 void ContourParamDlg::onNeg()
 {
-    QColor c = QColorDialog::getColor( neg->backgroundColor(), this );
+    QColor c = QColorDialog::getColor( neg->palette().color( QPalette::Button ), this );
     if( c.isValid() )
-        neg->setBackgroundColor( c );
+        setBtnColor( neg, c );
 }
 
 ContourColorDlg::ContourColorDlg(QWidget *parent) :
@@ -160,12 +169,12 @@ bool ContourColorDlg::setColors(QWidget *parent, QColor &pos, QColor &neg)
 {
     ContourColorDlg dlg(parent);
 
-    dlg.pos->setBackgroundColor( pos );
-    dlg.neg->setBackgroundColor( neg );
+    setBtnColor( dlg.pos, pos );
+    setBtnColor( dlg.neg, neg );
     while( dlg.exec() == QDialog::Accepted )
     {
-        pos = dlg.pos->backgroundColor();
-        neg = dlg.neg->backgroundColor();
+        pos = dlg.pos->palette().color( QPalette::Button );
+        neg = dlg.neg->palette().color( QPalette::Button );
         return true;
     }
     return false;
@@ -173,14 +182,14 @@ bool ContourColorDlg::setColors(QWidget *parent, QColor &pos, QColor &neg)
 
 void ContourColorDlg::onPos()
 {
-    QColor c = QColorDialog::getColor( pos->backgroundColor(), this );
+    QColor c = QColorDialog::getColor( pos->palette().color( QPalette::Button ), this );
     if( c.isValid() )
-        pos->setBackgroundColor( c );
+        setBtnColor( pos, c );
 }
 
 void ContourColorDlg::onNeg()
 {
-    QColor c = QColorDialog::getColor( neg->backgroundColor(), this );
+    QColor c = QColorDialog::getColor( neg->palette().color( QPalette::Button ), this );
     if( c.isValid() )
-        neg->setBackgroundColor( c );
+        setBtnColor( neg, c );
 }

@@ -1,0 +1,4 @@
+#ifndef QT3COMPAT_FWD_Q3FILEDIALOG
+#define QT3COMPAT_FWD_Q3FILEDIALOG
+#include "Qt3Compat.h"
+#endif

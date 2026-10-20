@@ -159,7 +159,8 @@ void IntensityView::fillMatrix()
 	// Root::Profiler test( "image" );
 	const Buffer& buffer = d_model->getBuffer();
 	Root::Extension size = buffer.getExtension();
-	QImage image( size[ 0 ], size[ 1 ], 8, ColorMax + 1 );
+	QImage image( size[ 0 ], size[ 1 ], QImage::Format_Indexed8 );
+	image.setColorCount( ColorMax + 1 );
 	if( image.isNull() )		
 		throw Root::Exception( "Could not create image" );	// RISK
 

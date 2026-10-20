@@ -193,10 +193,10 @@ int LuaLabel2::setAlignment(lua_State *L)
 		verti = Qt::AlignVCenter;
 	int rest = 0;
 	if( lua_gettop(L) > 3 && lua_isboolean( L, 4 ) && lua_toboolean( L, 4 ) )
-		rest |= Qt::ExpandTabs;
+		rest |= Qt::TextExpandTabs;
 	if( lua_gettop(L) > 4 && lua_isboolean( L, 5 ) && lua_toboolean( L, 5 ) )
-		rest |= Qt::WordBreak;
-	obj->setAlignment( hori | verti | rest );
+		rest |= Qt::TextWordWrap;
+	obj->setAlignment( Qt::Alignment( hori | verti | rest ) );
 	return 0;
 }
 
@@ -225,7 +225,7 @@ static const luaL_reg LuaMenuBar2_methods[] =
 
 int LuaMenuBar2::removeMenu(lua_State *L)
 {
-	QMenuBar* obj = QtObject<QMenuBar>::check( L, 1 );
+	Q3MenuBar* obj = static_cast<Q3MenuBar*>( QtObject<QMenuBar>::check( L, 1 ) );
 	// id
 	obj->removeItem( luaL_checknumber( L, 2 ) );
 	return 0;
@@ -234,7 +234,7 @@ int LuaMenuBar2::removeMenu(lua_State *L)
 int LuaMenuBar2::setEnabled(lua_State *L)
 {
 	// id, bool
-	QMenuBar* obj = QtObject<QMenuBar>::check( L, 1 );
+	Q3MenuBar* obj = static_cast<Q3MenuBar*>( QtObject<QMenuBar>::check( L, 1 ) );
 	bool en = true;
 	if( lua_gettop(L) > 2 && lua_isboolean( L, 3 ) )
 		en = lua_toboolean( L, 3 );
@@ -245,7 +245,7 @@ int LuaMenuBar2::setEnabled(lua_State *L)
 int LuaMenuBar2::isEnabled(lua_State *L)
 {
 	// id
-	QMenuBar* obj = QtObject<QMenuBar>::check( L, 1 );
+	Q3MenuBar* obj = static_cast<Q3MenuBar*>( QtObject<QMenuBar>::check( L, 1 ) );
 	lua_pushboolean( L, obj->isItemEnabled( luaL_checknumber( L, 2 ) ) );
 	return 1;
 }
@@ -269,7 +269,7 @@ static const luaL_reg LuaPopupMenu2_methods[] =
 
 int LuaPopupMenu2::insertItem(lua_State *L)
 {
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	const char* str = luaL_checkstring( L, 2 );
 	int id = -1;
 	if( lua_gettop(L) > 2 )
@@ -283,7 +283,7 @@ int LuaPopupMenu2::insertItem(lua_State *L)
 
 int LuaPopupMenu2::removeItem(lua_State *L)
 {
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	// id
 	obj->removeItem( luaL_checknumber( L, 2 ) );
 	return 0;
@@ -292,7 +292,7 @@ int LuaPopupMenu2::removeItem(lua_State *L)
 int LuaPopupMenu2::setText(lua_State *L)
 {
 	// id, text
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	obj->changeItem( luaL_checknumber( L, 2 ),
 		luaL_checkstring( L, 3 ) );
 	return 0;
@@ -301,7 +301,7 @@ int LuaPopupMenu2::setText(lua_State *L)
 int LuaPopupMenu2::setWhatsThis(lua_State *L)
 {
 	// id, text
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	obj->setWhatsThis( luaL_checknumber( L, 2 ),
 		luaL_checkstring( L, 3 ) );
 	return 0;
@@ -310,7 +310,7 @@ int LuaPopupMenu2::setWhatsThis(lua_State *L)
 int LuaPopupMenu2::setEnabled(lua_State *L)
 {
 	// id, bool
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	bool en = true;
 	if( lua_gettop(L) > 2 && lua_isboolean( L, 3 ) )
 		en = lua_toboolean( L, 3 );
@@ -321,7 +321,7 @@ int LuaPopupMenu2::setEnabled(lua_State *L)
 int LuaPopupMenu2::isEnabled(lua_State *L)
 {
 	// id
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	lua_pushboolean( L, obj->isItemEnabled( luaL_checknumber( L, 2 ) ) );
 	return 1;
 }	
@@ -329,7 +329,7 @@ int LuaPopupMenu2::isEnabled(lua_State *L)
 int LuaPopupMenu2::setChecked(lua_State *L)
 {
 	// id, bool
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	bool en = true;
 	if( lua_gettop(L) > 2 && lua_isboolean( L, 3 ) )
 		en = lua_toboolean( L, 3 );
@@ -340,7 +340,7 @@ int LuaPopupMenu2::setChecked(lua_State *L)
 int LuaPopupMenu2::isChecked(lua_State *L)
 {
 	// id
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	lua_pushboolean( L, obj->isItemChecked( luaL_checknumber( L, 2 ) ) );
 	return 1;
 }
@@ -348,7 +348,7 @@ int LuaPopupMenu2::isChecked(lua_State *L)
 int LuaPopupMenu2::setAccel(lua_State *L)
 {
 	// id, key-string
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	obj->setAccel( luaL_checknumber( L, 2 ),
 		Q3Accel::stringToKey( luaL_checkstring( L, 3 ) ) );
 	return 0;
@@ -356,8 +356,8 @@ int LuaPopupMenu2::setAccel(lua_State *L)
 
 int LuaPopupMenu2::insertSubmenu(lua_State *L)
 {
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
-    QMenu* p = QtObject<QMenu>::check( L, 2 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
+    Q3PopupMenu* p = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 2 ) );
 	const char* str = luaL_checkstring( L, 3 );
 	int id = -1;
 	if( lua_gettop(L) > 3 )
@@ -372,8 +372,8 @@ int LuaPopupMenu2::insertSubmenu(lua_State *L)
 int LuaPopupMenu2::getText(lua_State *L)
 {
 	// id
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
-	lua_pushstring( L, obj->text( luaL_checknumber( L, 2 ) ) );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
+	lua_pushstring( L, obj->text( luaL_checknumber( L, 2 ) ).toLatin1().constData() );
 	return 1;
 }
 
@@ -405,7 +405,7 @@ void LuaPopupMenu2::_aboutToShow()
 
 int LuaPopupMenu2::setIcon(lua_State *L)
 {
-    QMenu* obj = QtObject<QMenu>::check( L, 1 );
+    Q3PopupMenu* obj = static_cast<Q3PopupMenu*>( QtObject<QMenu>::check( L, 1 ) );
 	QPixmap* img = QtValue<QPixmap>::check( L, 3 );
 	obj->changeItem( luaL_checknumber( L, 2 ), *img );
 	return 0;

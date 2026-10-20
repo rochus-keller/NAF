@@ -83,7 +83,7 @@ int DateTime::daysTo(lua_State * L) // ( const QDateTime & ) const : int
 {
     QDateTime* obj = QtValue<QDateTime>::check( L, 1);
     QDateTime* d = QtValue<QDateTime>::check( L, 2);
-	Util::push( L, obj->daysTo( *d ) );
+	Util::push( L, (int) obj->daysTo( *d ) );
 	return 1;
 }
 int DateTime::isNull(lua_State * L) { return QtValue<QTime>::getBool( L, &QTime::isNull ); }
@@ -92,7 +92,7 @@ int DateTime::secsTo(lua_State * L) // ( const QDateTime & ) const : int
 {
     QDateTime* obj = QtValue<QDateTime>::check( L, 1);
     QDateTime* d = QtValue<QDateTime>::check( L, 2);
-	Util::push( L, obj->secsTo( *d ) );
+	Util::push( L, (int) obj->secsTo( *d ) );
 	return 1;
 }
 int DateTime::setDate(lua_State * L) // ( const QDate & )  

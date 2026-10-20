@@ -166,16 +166,16 @@ int HeaderView::sectionsMoved(lua_State * L) // const : bool
 	Util::push( L, obj->sectionsMoved() );
 	return 1;
 }
-int HeaderView::setClickable(lua_State * L) // ( bool clickable )
+int HeaderView::setSectionsClickable(lua_State * L) // ( bool clickable )
 {	
 	QHeaderView* obj = ObjectHelper<QHeaderView>::check( L, 1);
-	obj->setClickable( Util::toBool( L, 2 ) );
+	obj->setSectionsClickable( Util::toBool( L, 2 ) );
 	return 0;
 }
-int HeaderView::setMovable(lua_State * L) // ( bool movable )
+int HeaderView::setSectionsMovable(lua_State * L) // ( bool movable )
 {	
 	QHeaderView* obj = ObjectHelper<QHeaderView>::check( L, 1);
-	obj->setMovable( Util::toBool( L, 2 ) );
+	obj->setSectionsMovable( Util::toBool( L, 2 ) );
 	return 0;
 }
 int HeaderView::setResizeMode(lua_State * L) // ( ResizeMode mode )

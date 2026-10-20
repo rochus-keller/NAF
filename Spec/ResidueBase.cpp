@@ -284,12 +284,12 @@ static _StatsLine* readFile( const char* path, QByteArray & err )
 		{
 			// Es handelt sich um eine reguläre Zeile.
 			str = QByteArray ( buf, 7 ).data();
-			tmp.d_rt = str.stripWhiteSpace().toLatin1();
+			tmp.d_rt = str.trimmed().toLatin1();
 			str = QByteArray ( buf + 8, 8 ).data();
-			tmp.d_label = str.stripWhiteSpace().toLatin1();
+			tmp.d_label = str.trimmed().toLatin1();
 			str = QByteArray ( buf + 55, 11 ).data();
             //test = str.toLatin1();
-			tmp.d_mean = str.stripWhiteSpace().toFloat( &ok );
+			tmp.d_mean = str.trimmed().toFloat( &ok );
 			if( !ok )
 			{
 				err = "Invalid mean PPM shift on line ";
@@ -298,7 +298,7 @@ static _StatsLine* readFile( const char* path, QByteArray & err )
 			}
 			str = QByteArray ( buf + 66, 11 ).data();
             //test = str.toLatin1();
-			tmp.d_dev = str.stripWhiteSpace().toFloat( &ok );
+			tmp.d_dev = str.trimmed().toFloat( &ok );
 			if( !ok || tmp.d_dev < 0.0 )
 			{
 				err = "Invalid deviation value on line ";

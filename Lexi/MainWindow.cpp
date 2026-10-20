@@ -52,7 +52,7 @@ void MainWindow::setStatusMessage(const char * str)
 		Q_ARG(QString, str ) );
 }
 
-void MainWindow::setCaption(const char * str)
+void MainWindow::setWindowTitle(const char * str)
 {
 	d_this->setWindowTitle( str );
 }
@@ -104,7 +104,7 @@ void MainWindow::handle(Message& msg )
 	{
 		if( d_this )
 		{
-			d_this->setCaption( e->getMessage() );
+			d_this->setWindowTitle( e->getMessage() );
 			e->consume();
 		}
 	}else if( CommandLineMessage* e = dynamic_cast<CommandLineMessage*>( &msg ) )
@@ -123,7 +123,7 @@ void MainWindow::handle(Message& msg )
 	{
 		QString title( e->getTitle() );
 		if( d_this && title.isEmpty() )
-			title = d_this->caption();
+			title = d_this->windowTitle();
 		switch( e->getType() )
 		{
 		case ReportToUser::Warning:
@@ -166,6 +166,7 @@ bool MainWindow::closeIfPossible()
 MainWindow::Imp::Imp( MainWindow* parent, bool showStatus, bool autoexit )
 {
 	d_that = parent;
+	setMenuBar( new Q3MenuBar( this ) );
 
 	if( showStatus )
 		statusBar()->showMessage( "" );

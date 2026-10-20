@@ -60,7 +60,7 @@ static int getText(lua_State *L)
 	bool ok = false;
 	val = QInputDialog::getText( title, msg, QLineEdit::Normal, val, &ok );
 	if( ok && !val.isEmpty() )
-		lua_pushstring( L, val ); 
+		lua_pushstring( L, val.toLatin1().constData() ); 
 	else
 		lua_pushnil( L );
 	return 1;
@@ -161,7 +161,7 @@ static int getSymbol( lua_State *L )
 	bool ok = false;
 	QString res = QInputDialog::getItem( title, msg, lst, 0, false, &ok );
 	if( ok )
-		lua_pushstring( L, res ); 
+		lua_pushstring( L, res.toLatin1().constData() ); 
 	else
 		lua_pushnil( L );
 	return 1;
@@ -280,8 +280,8 @@ static int getSaveFileName(lua_State *L)
 	else
 	{
 		QFileInfo info( fileName );
-		Root::AppAgent::setCurrentDir( info.dirPath( true ) );
-		lua_pushstring( L, fileName );
+		Root::AppAgent::setCurrentDir( info.absolutePath().toLatin1().constData() );
+		lua_pushstring( L, fileName.toLatin1().constData() );
 	}
 	return 1;
 }
@@ -313,8 +313,8 @@ static int getOpenFileName(lua_State *L)
 	else
 	{
 		QFileInfo info( fileName );
-		Root::AppAgent::setCurrentDir( info.dirPath( true ) );
-		lua_pushstring( L, fileName );
+		Root::AppAgent::setCurrentDir( info.absolutePath().toLatin1().constData() );
+		lua_pushstring( L, fileName.toLatin1().constData() );
 	}
 	return 1;
 }
@@ -402,7 +402,7 @@ static int beginProgress(lua_State *L)
 		s_progress->setProgress( 0 );
 		s_use++;
 		if( lua_gettop(L) > 0 )
-			s_progress->setCaption( lua_tostring( L, 1 ) );
+			s_progress->setWindowTitle( lua_tostring( L, 1 ) );
 		if( lua_gettop(L) > 1 )
 			s_progress->setLabelText( lua_tostring( L, 2 ) );
 		if( lua_gettop(L) > 2 )
@@ -541,7 +541,7 @@ static int selectColor( lua_State* L )
 		clr.setNamedColor( luaL_checkstring( L, 1 ) );
 	clr = QColorDialog::getColor( clr );
 	if( clr.isValid() )
-		lua_pushstring( L, clr.name() ); 
+		lua_pushstring( L, clr.name().toLatin1().constData() ); 
 	else
 		lua_pushnil( L );
 	return 1;
@@ -567,7 +567,7 @@ static int selectFont( lua_State* L )
 		lua_pushnil( L );
 	}else
 	{
-		lua_pushstring( L, f.family() );
+		lua_pushstring( L, f.family().toLatin1().constData() );
 		lua_pushnumber( L, f.pointSize() );
 		lua_pushboolean( L, f.bold() );
 		lua_pushboolean( L, f.italic() );

@@ -31,6 +31,9 @@
 #include <Root/Application.h>
 #include <LuaQt3/LuaPlot2.h>
 #include <QScrollArea>
+#include <Q3PopupMenu>
+#include <Q3MenuBar>
+#include <QPrintDialog>
 using namespace Lua;
 using namespace Lexi;
 
@@ -38,7 +41,7 @@ LuaCanvas2::LuaCanvas2(QWidget*):
 	QMainWindow( 0 ), d_view(0)
 {
 	setAttribute(Qt::WA_DeleteOnClose);
-	setCaption( "CARA - Lua Canvas" );
+	setWindowTitle( "CARA - Lua Canvas" );
 
 	d_view = new View( this );
 	d_view->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ); 
@@ -47,14 +50,15 @@ LuaCanvas2::LuaCanvas2(QWidget*):
 	sa->setWidgetResizable( true );
 	setCentralWidget( sa );
 
-	QMenu* menu = new QMenu( this );
+	setMenuBar( new Q3MenuBar( this ) );
+	Q3PopupMenu* menu = new Q3PopupMenu( this );
 	menu->insertItem( "&Open...", this, SLOT( handleLoad() ), tr("CTRL + O") );
 	menu->insertItem( "&Save As...", this, SLOT( handleSave() ), tr("CTRL + S") );
 	menu->insertSeparator();
 	menu->insertItem( "&Print...", this, SLOT( handlePrint() ), tr("CTRL + P") );
 	menu->insertSeparator();
 	menu->insertItem( "Close Window", this, SLOT( handleClose() ), tr("CTRL + W") );
-	menuBar()->insertItem( "&File", menu );
+	static_cast<Q3MenuBar*>( menuBar() )->insertItem( "&File", menu );
 
 	/*
 	menu = new QPopupMenu( this );
@@ -74,7 +78,7 @@ void LuaCanvas2::handleSave()
 		return;
 	QFileInfo info( fileName );
 
-	if( info.extension( false ).upper() != "PIC" )
+	if( info.suffix().toUpper() != "PIC" )
 		fileName += ".pic";
 	info.setFile( fileName );
 	if( info.exists() )
@@ -123,7 +127,8 @@ void LuaCanvas2::handlePageSize()
 void LuaCanvas2::handlePrint()
 {
 	QPrinter printer;
-	if( printer.setup( this ) )
+	QPrintDialog pd( &printer, this );
+	if( pd.exec() == QDialog::Accepted )
 	{
         QPainter paint( &printer );
 		if( d_view->d_p.isActive() )
@@ -143,7 +148,7 @@ const luaL_reg LuaCanvas2::methods[] =
 	{"drawIcon",  LuaCanvas2::_drawIcon },
 	{"drawContour",  LuaCanvas2::_drawContour },
 	{"drawImage",  LuaCanvas2::_drawImage },
-	{"setCaption",  LuaCanvas2::_setCaption },
+	{"setCaption",  LuaCanvas2::_setWindowTitle },
 	{"setBrush",  LuaCanvas2::_setBrush },
 	{"setPen",  LuaCanvas2::_setPen },
 	{"getBounding",  LuaCanvas2::_getBounding },
@@ -214,7 +219,9 @@ int LuaCanvas2::_setSize(lua_State *L)
 int LuaCanvas2::_setBgColor(lua_State *L)
 {
 	LuaCanvas2* obj = QtObject<LuaCanvas2>::check( L, 1 );
-	obj->d_view->setBackgroundColor( QColor( luaL_checkstring( L, 2 ) ) );
+	{ QColor c( luaL_checkstring( L, 2 ) );
+	QPalette pal = obj->d_view->palette(); pal.setColor( QPalette::Window, c );
+	obj->d_view->setPalette( pal ); obj->d_view->setAutoFillBackground( true ); }
 	return 0;
 }
 
@@ -349,7 +356,7 @@ int LuaCanvas2::_drawImage(lua_State *L)
 			luaL_checknumber( L, 4 ), *img );
 	else
 		obj->d_view->d_p.drawImage( luaL_checknumber( L, 3 ),
-			luaL_checknumber( L, 4 ), img->smoothScale( w, h ) );
+			luaL_checknumber( L, 4 ), img->scaled( w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
 	return 0;
 }
 
@@ -366,10 +373,10 @@ int LuaCanvas2::_setBrush(lua_State *L)
 	return 0;
 }
 
-int LuaCanvas2::_setCaption(lua_State *L)
+int LuaCanvas2::_setWindowTitle(lua_State *L)
 {
 	LuaCanvas2* obj = QtObject<LuaCanvas2>::check( L, 1 );
-	obj->setCaption( luaL_checkstring( L, 2 ) );
+	obj->setWindowTitle( luaL_checkstring( L, 2 ) );
 	return 0;
 }
 

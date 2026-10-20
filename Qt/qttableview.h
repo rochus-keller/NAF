@@ -30,9 +30,9 @@ public:
     virtual void setPalette( const QPalette & );
     void	show();
 
-    void	repaint( bool erase=TRUE );
-    void	repaint( int x, int y, int w, int h, bool erase=TRUE );
-    void	repaint( const QRect &, bool erase=TRUE );
+    void	repaint( bool erase=true );
+    void	repaint( int x, int y, int w, int h, bool erase=true );
+    void	repaint( const QRect &, bool erase=true );
 
 protected:
     QtTableView( QWidget *parent=0 );
@@ -53,7 +53,7 @@ protected:
     virtual void setXOffset( int );
     int		yOffset()	const;
     virtual void setYOffset( int );
-    virtual void setOffset( int x, int y, bool updateScrBars = TRUE );
+    virtual void setOffset( int x, int y, bool updateScrBars = true );
 
     virtual int cellWidth( int col );
     virtual int cellHeight( int row );
@@ -70,7 +70,7 @@ protected:
     virtual void setTableFlags( uint f );
     void	clearTableFlags( uint f = ~0 );
 
-    void	updateCell( int row, int column, bool erase=TRUE );
+    void	updateCell( int row, int column, bool erase=true );
 
     QRect	cellUpdateRect() const;
     QRect	viewRect()	 const;
@@ -124,13 +124,13 @@ protected:
 private:
     void	coverCornerSquare( bool );
     void	snapToGrid( bool horizontal, bool vertical );
-    virtual void	setHorScrollBar( bool on, bool update = TRUE );
-    virtual void	setVerScrollBar( bool on, bool update = TRUE );
+    virtual void	setHorScrollBar( bool on, bool update = true );
+    virtual void	setVerScrollBar( bool on, bool update = true );
     void	updateView();
     int		findRawRow( int yPos, int *cellMaxY, int *cellMinY = 0,
-			    bool goOutsideView = FALSE ) const;
+			    bool goOutsideView = false ) const;
     int		findRawCol( int xPos, int *cellMaxX, int *cellMinX = 0,
-			    bool goOutsideView = FALSE ) const;
+			    bool goOutsideView = false ) const;
     int		maxColsVisible() const;
 
     void	updateScrollBars( uint );

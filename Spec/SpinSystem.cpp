@@ -1855,18 +1855,18 @@ SpinSystem* SpinBase::findSystem(const char * str) const
 	if( str == 0 )
 		return 0;
 	QString id( str );
-	id = id.stripWhiteSpace();
+	id = id.trimmed();
 	if( id.isEmpty() )
 		return 0;
 
 	int i = 0;
 	bool ok = true;
-	const int colon = id.find( ':' );
+	const int colon = id.indexOf( ':' );
 	if( colon != -1 )
 	{
 		Root::SymbolString chain = id.left( colon ).toLatin1();
 		i = colon + 1;
-		while( i < id.length() && !isdigit( id[ i ].latin1() ) )
+		while( i < id.length() && !isdigit( id[ i ].toLatin1() ) )
 			i++;
 		i = id.mid( i ).toInt();	// Ignoriere Garbage
 		Residue* r = getSeq()->findResidue( chain, i );
@@ -1874,7 +1874,7 @@ SpinSystem* SpinBase::findSystem(const char * str) const
 			return 0;
 		else
 			return r->getSystem();
-	}else if( isalpha( id[ 0 ].latin1() ) )
+	}else if( isalpha( id[ 0 ].toLatin1() ) )
 	{
 		i = id.mid( 1 ).toInt( &ok );
 		if( !ok )

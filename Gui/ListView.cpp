@@ -52,7 +52,8 @@ namespace Gui
             foreach( ListViewItem* i, d_deletes )
                 delete i;
             d_deletes.clear();
-            reset();
+            beginResetModel();
+            endResetModel();
         }
 
         ListView* getListView() const { return static_cast<ListView*>( QAbstractItemModel::parent() ); }
@@ -211,7 +212,8 @@ namespace Gui
             if( recursive )
                 for( int i = 0; i < d_items.size(); i++ )
                     d_items[i]->sort(recursive);
-            reset();
+            beginResetModel();
+            endResetModel();
             // BUGFIX: wenn man hier nicht reset() aufruft, zeigen die ModelIndex auf die falschen Items.
             //getListView()->viewport()->update();
         }

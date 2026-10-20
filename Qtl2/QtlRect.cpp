@@ -289,7 +289,7 @@ int Rect::unite(lua_State * L) // ( const QRectF & ) const : QRectF
     QRectF* lhs = QtValue<QRectF>::check( L, 1 );
     QRectF* r = QtValue<QRectF>::check( L, 2 );
     QRectF* res = QtValue<QRectF>::create( L );
-	*res = lhs->unite( *r );
+	*res = lhs->united( *r );
 	return 1;
 }
 int Rect::width(lua_State * L) { return QtValue<QRectF>::getDouble( L, &QRectF::width ); }
@@ -306,7 +306,7 @@ int Rect::unitedAssign(lua_State * L) // ( const QRectF & ) const : QRectF
 {
     QRectF* lhs = QtValue<QRectF>::check( L, 1 );
     QRectF* r = QtValue<QRectF>::check( L, 2 );
-	*lhs = lhs->unite( *r );
+	*lhs = lhs->united( *r );
 	return 1;
 }
 int Rect::init(lua_State * L)

@@ -93,6 +93,8 @@ namespace Spec
 		Repository* getRepository() const { return d_owner; }
 		Repository* getOwner() const { return d_owner; }
 		void saveIntegTable( PeakList*, const char* ) const;
+		void saveIntegTable( PeakList* l, const QString& p ) const { saveIntegTable( l, p.toLatin1().constData() ); }
+		void saveIntegTable( PeakList* l, const QByteArray& p ) const { saveIntegTable( l, p.constData() ); }
 		Root::Index getNextSpecId() const { return d_nextSpecId; }
 		ResidueType* inferResiType( SpinSystem* ) const;
 

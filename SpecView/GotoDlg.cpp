@@ -36,9 +36,10 @@
 using namespace Spec;
 
 GotoDlg::GotoDlg(QWidget * parent):
-	QDialog( parent, "", true ), d_delta( 0 )
+	QDialog( parent ), d_delta( 0 )
 {
-	setCaption( "Goto point" );
+	setModal( true );
+	setWindowTitle( "Goto point" );
 }
 
 GotoDlg::~GotoDlg()
@@ -66,7 +67,7 @@ bool GotoDlg::exec( bool delta )
 		l = new QLabel( str, this );
 		l->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
 		l->setFrameStyle( Q3Frame::Panel );
-		l->setFrameShadow( Q3Frame::Sunken );
+		l->setFrameShadow( QFrame::Sunken );
 		contents->addWidget( l, row, 0 ); 
 		d_edits[ row ] = new QLineEdit( this );
 		contents->addWidget( d_edits[ row ], row, 1 );
@@ -79,7 +80,7 @@ bool GotoDlg::exec( bool delta )
 			l = new QLabel( str, this );
 			l->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
 			l->setFrameStyle( Q3Frame::Panel );
-			l->setFrameShadow( Q3Frame::Sunken );
+			l->setFrameShadow( QFrame::Sunken );
 			contents->addWidget( l, row, 2 ); 
 		}
 	}
@@ -93,7 +94,7 @@ bool GotoDlg::exec( bool delta )
 		l = new QLabel( "Delta:", this );
 		l->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
 		l->setFrameStyle( Q3Frame::Panel );
-		l->setFrameShadow( Q3Frame::Sunken );
+		l->setFrameShadow( QFrame::Sunken );
 		contents->addWidget( l, dim, 0 ); 
 		contents->addWidget( de, dim, 1 );
 	}

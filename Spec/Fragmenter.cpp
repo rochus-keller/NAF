@@ -508,7 +508,7 @@ bool Fragmenter::writeMapperFile(const char *path, Spectrum* spec,
 				if( ass != 0 )
 				{
 					str = ass->getType()->getShort().data();
-					os << str.upper() << " " << ass->getId() << "\n";
+					os << str.toUpper() << " " << ass->getId() << "\n";
 				}else
 				{
 					const SpinSystem::Candidates& ex = f[ j ]->getCands();
@@ -519,7 +519,7 @@ bool Fragmenter::writeMapperFile(const char *path, Spectrum* spec,
 						for( pos = ex.begin(); pos != ex.end(); ++pos )
 						{
 							str = (*pos)->getShort().data();
-							os << str.upper() << " ";
+							os << str.toUpper() << " ";
 						}
 					}
 					if( j == f.size() - 1 )

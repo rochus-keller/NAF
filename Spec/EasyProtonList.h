@@ -50,6 +50,8 @@ namespace Spec
 		void setAtom( Root::Index i, const Atom& a ) { d_atoms[ i ] = a; }
 		void addAtom( const Atom& a ) { d_atoms.push_back( a ); }
 		void writeToFile( const char* path );
+		void writeToFile( const QString& p ) { writeToFile( p.toLatin1().constData() ); }
+		void writeToFile( const QByteArray& p ) { writeToFile( p.constData() ); }
 
 		EasyProtonList(const char* filePath);
 		EasyProtonList( Root::Index count );

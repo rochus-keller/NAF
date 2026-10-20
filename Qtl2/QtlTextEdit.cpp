@@ -27,7 +27,7 @@
 #include <QUrl>
 #include <QTextCursor>
 #include <QTextCharFormat>
-#include <QInputContext>
+
 #include <Script2/QtObject.h>
 #include <Script2/QtValue.h>
 #include <Script/Util.h>

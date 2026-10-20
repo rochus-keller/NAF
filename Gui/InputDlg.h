@@ -36,7 +36,7 @@ namespace Gui
 		void add( QLayout*, int row, int col );
 		void add( QLayout*, int row, int col, int rowSpan, int colSpan = 1 );
 		void addLabel( const QString&,int row, int col, int rowSpan = 1, int colSpan = 1 );
-		bool exec();
+		int exec();
 	private:
 		QGridLayout* d_grid;
 	};

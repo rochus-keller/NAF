@@ -32,7 +32,7 @@ using namespace Qtl;
 using namespace Lua;
 
 
-int Matrix::det(lua_State * L) { return QtValue<QMatrix>::getDouble( L, &QMatrix::det ); }
+int Matrix::det(lua_State * L) { return QtValue<QMatrix>::getDouble( L, &QMatrix::determinant ); }
 int Matrix::dx(lua_State * L) { return QtValue<QMatrix>::getDouble( L, &QMatrix::dx ); }
 int Matrix::dy(lua_State * L) { return QtValue<QMatrix>::getDouble( L, &QMatrix::dy ); }
 int Matrix::inverted(lua_State * L) // ( bool * ) const : QMatrix 

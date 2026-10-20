@@ -51,7 +51,7 @@ int MyRegion::eor(lua_State * L) // ( const QRegion & ) const : QRegion
     QRegion* lhs = QtValue<QRegion>::check( L, 1 );
     QRegion* r = QtValue<QRegion>::check( L, 2 );
     QRegion* res = QtValue<QRegion>::create( L );
-	*res = lhs->eor( *r );
+	*res = lhs->xored( *r );
 	return 1;
 }
 int MyRegion::intersected(lua_State * L) // ( const QRegion & ) const : QRegion 

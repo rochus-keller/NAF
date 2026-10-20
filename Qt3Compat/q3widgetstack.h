@@ -1,0 +1,4 @@
+#ifndef QT3COMPAT_FWD_Q3WIDGETSTACK_H
+#define QT3COMPAT_FWD_Q3WIDGETSTACK_H
+#include "Qt3Compat.h"
+#endif

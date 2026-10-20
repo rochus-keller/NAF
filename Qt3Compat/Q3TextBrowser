@@ -1,0 +1,4 @@
+#ifndef QT3COMPAT_FWD_Q3TEXTBROWSER
+#define QT3COMPAT_FWD_Q3TEXTBROWSER
+#include "Qt3Compat.h"
+#endif

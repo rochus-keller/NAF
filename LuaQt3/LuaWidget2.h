@@ -101,7 +101,7 @@ namespace Lua
 		// static int mapToParent(lua_State *L); -> QWidget
 		// static int mapFromGlobal(lua_State *L); -> QWidget
 		// static int mapToGlobal(lua_State *L); -> QWidget
-		static int setCaption(lua_State *L);
+		static int setWindowTitle(lua_State *L);
 		// static int setFixedSize(lua_State *L); -> QWidget
 		static int setMaximumSize(lua_State *L);
 		static int setMinimumSize(lua_State *L);

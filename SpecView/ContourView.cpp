@@ -457,9 +457,9 @@ void ContourView::drawContour(
 		{
 			QString str;
 			str.sprintf( "WARNING: contour plot timed out after %d seconds, switching to auto contour", s_timeout );
-			Lexi::ShowStatusMessage msg( str );
+			Lexi::ShowStatusMessage msg( str.toLatin1().constData() );
 			canvas.getViewport()->traverseUp( msg );
-			// canvas.drawText( p[0].x(), p[0].y(), str.toAscii(), 0, clr );
+			// canvas.drawText( p[0].x(), p[0].y(), str.toLatin1(), 0, clr );
 			createLevelsAuto();
 			return;
 			/*

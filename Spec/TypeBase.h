@@ -86,8 +86,17 @@ namespace Spec
 		void setClass( SystemType*, Root::SymbolString );
 
 		LabelingScheme* addLabelingScheme( Root::Index, const char* name = "" );
+		LabelingScheme* addLabelingScheme( Root::Index i, const QString& name )
+			{ return addLabelingScheme( i, name.toLatin1().constData() ); }
+		LabelingScheme* addLabelingScheme( Root::Index i, const QByteArray& name )
+			{ return addLabelingScheme( i, name.constData() ); }
+		LabelingScheme* addLabelingScheme( Root::Index i, const Root::SymbolString& name )
+			{ return addLabelingScheme( i, name.data() ); }
 		bool remove( LabelingScheme* );
 		bool rename( LabelingScheme*, const char* );
+		bool rename( LabelingScheme* l, const QString& n ) { return rename( l, n.toLatin1().constData() ); }
+		bool rename( LabelingScheme* l, const QByteArray& n ) { return rename( l, n.constData() ); }
+		bool rename( LabelingScheme* l, const Root::SymbolString& n ) { return rename( l, n.data() ); }
 		const LabelingSchemeMap& getLabelingSchemes() const { return d_labelingSchemes; }
 		LabelingScheme* getLabelingScheme( Root::Index ) const;
 

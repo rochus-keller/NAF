@@ -49,7 +49,7 @@ int LuaButton2::setText(lua_State *L)
 int LuaButton2::getText(lua_State *L)
 {
 	QAbstractButton* obj = QtObject<QAbstractButton>::check( L, 1 );
-	lua_pushstring( L, obj->text() );
+	lua_pushstring( L, obj->text().toLatin1().constData() );
 	return 1;
 }
 
@@ -57,28 +57,28 @@ int LuaButton2::setIcon(lua_State *L)
 {
 	QAbstractButton* obj = QtObject<QAbstractButton>::check( L, 1 );
 	QPixmap* img = QtValue<QPixmap>::check( L, 2 );
-	obj->setPixmap( *img );
+	obj->setIcon( QIcon( *img ) );
 	return 0;
 }
 
 int LuaButton2::setAccel(lua_State *L)
 {
 	QAbstractButton* obj = QtObject<QAbstractButton>::check( L, 1 );
-	obj->setAccel( Q3Accel::stringToKey( luaL_checkstring( L, 2 ) ) );
+	obj->setShortcut( QKeySequence( Q3Accel::stringToKey( luaL_checkstring( L, 2 ) ) ) );
 	return 0;
 }
 
 int LuaButton2::isToggleButton(lua_State *L)
 {
 	QAbstractButton* obj = QtObject<QAbstractButton>::check( L, 1 );
-	lua_pushboolean( L, obj->isToggleButton() );
+	lua_pushboolean( L, obj->isCheckable() );
 	return 1;
 }
 
 int LuaButton2::isOn(lua_State *L)
 {
 	QAbstractButton* obj = QtObject<QAbstractButton>::check( L, 1 );
-	lua_pushboolean( L, obj->isOn() );
+	lua_pushboolean( L, obj->isChecked() );
 	return 1;
 }
 
@@ -140,7 +140,7 @@ int LuaPushButton2::setToggleButton(lua_State *L)
 	bool b = true;
 	if( lua_gettop(L) > 0 && lua_isboolean( L, 2 ) )
 		b = lua_toboolean( L, 2 );
-	obj->setToggleButton( b );
+	obj->setCheckable( b );
 	return 0;
 }
 
@@ -158,7 +158,7 @@ int LuaPushButton2::setPopup(lua_State *L)
 {
 	QPushButton* obj = QtObject<QPushButton>::check( L, 1 );
 	QMenu* menu = QtObject<QMenu>::check( L, 2 );
-	obj->setPopup( menu );
+	obj->setMenu( menu );
 	return 0;
 }
 
@@ -178,7 +178,7 @@ int LuaPushButton2::setOn(lua_State *L)
 	bool b = true;
 	if( lua_gettop(L) > 0 && lua_isboolean( L, 2 ) )
 		b = lua_toboolean( L, 2 );
-	obj->setOn( b );
+	obj->setChecked( b );
 	return 0;
 }
 

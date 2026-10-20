@@ -36,6 +36,9 @@ namespace Spec
 	{
 	public:
 		static Spectrum* createSpectrum( const char* path );
+		static Spectrum* createSpectrum( const QString& path ) { return createSpectrum( path.toLatin1().constData() ); }
+		static Spectrum* createSpectrum( const QByteArray& path ) { return createSpectrum( path.constData() ); }
+		static Spectrum* createSpectrum( const Root::SymbolString& path ) { return createSpectrum( path.data() ); }
 		//. Findet anhand path selbständig das Format heraus und öffnet
 		//. entsprechendes Spektrum oder gibt 0 zurück.
 		static Spectrum* createBrukerSpectrum( const char* path );
@@ -47,6 +50,9 @@ namespace Spec
 		static PointSet* createEasyPeakList( const ColorMap& );
 		//. Erzeuge eine leere Peak-Liste mit den Colors.
 		static PointSet* createEasyPeakList( const char* path );
+		static PointSet* createEasyPeakList( const QString& p ) { return createEasyPeakList( p.toLatin1().constData() ); }
+		static PointSet* createEasyPeakList( const QByteArray& p ) { return createEasyPeakList( p.constData() ); }
+		static PointSet* createEasyPeakList( const Root::SymbolString& p ) { return createEasyPeakList( p.data() ); }
 		//. Lade eine Peak-Liste aus der Datei.
 		static Spectrum* createEasySpectrum( const char* path, bool mapped = true );
 		//. Lade ein Spektrum aus der Datei.

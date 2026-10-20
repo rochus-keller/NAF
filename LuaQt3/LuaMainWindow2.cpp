@@ -43,9 +43,9 @@ int LuaMainWindow2::showStatusText(lua_State *L)
     QMainWindow* obj = QtObject<QMainWindow>::check( L, 1 );
 	QStatusBar* b = obj->statusBar();
 	if( lua_gettop(L) > 2 )
-		b->message( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) );
+		b->showMessage( luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ) );
 	else
-		b->message( luaL_checkstring( L, 2 ) );
+		b->showMessage( luaL_checkstring( L, 2 ) );
 	return 0;
 }
 
@@ -94,7 +94,7 @@ int LuaDialog2::_reject(lua_State *L)
 int LuaLineEdit2::getText(lua_State *L)
 {
     QLineEdit* obj = QtObject<QLineEdit>::check( L, 1 );
-	lua_pushstring( L, obj->text() );
+	lua_pushstring( L, obj->text().toLatin1().constData() );
 	return 1;
 }
 
@@ -117,14 +117,14 @@ int LuaLineEdit2::setEdited(lua_State *L)
 {
     QLineEdit* obj = QtObject<QLineEdit>::check( L, 1 );
 	if( lua_gettop(L) > 1 && lua_isboolean( L, 2 ) )
-		obj->setEdited( lua_toboolean( L, 2 ) );
+		obj->setModified( lua_toboolean( L, 2 ) );
 	return 0;
 }
 
 int LuaLineEdit2::isEdited(lua_State *L)
 {
     QLineEdit* obj = QtObject<QLineEdit>::check( L, 1 );
-	lua_pushboolean( L, obj->edited() );
+	lua_pushboolean( L, obj->isModified() );
 	return 1;
 }
 
@@ -132,7 +132,7 @@ void LuaLineEdit2::_textChanged(const QString & s)
 {
     if( LuaWidgetCallbacks::pushCallbackAndMe( this, LuaWidget2::Changed ) )
 	{
-		lua_pushstring( LuaWidgetCallbacks::getLua(), s );
+		lua_pushstring( LuaWidgetCallbacks::getLua(), s.toLatin1().constData() );
 		LuaWidgetCallbacks::call( 2, 0 );
 	}
 }
@@ -151,9 +151,9 @@ int LuaComboBox2::addItem(lua_State *L)
 	if( lua_gettop(L) > 2 )
 	{
 		QPixmap* img = QtValue<QPixmap>::check( L, 3 );
-		obj->insertItem( *img, luaL_checkstring( L, 2 ) );
+		obj->addItem( QIcon( *img ), luaL_checkstring( L, 2 ) );
 	}else
-		obj->insertItem( luaL_checkstring( L, 2 ) );
+		obj->addItem( luaL_checkstring( L, 2 ) );
 	lua_pushnumber( L, obj->count() );
 	// Wir beginnen mit 1 zu zhlen
 	return 1;
@@ -169,21 +169,21 @@ int LuaComboBox2::clear(lua_State *L)
 int LuaComboBox2::getCurrentText(lua_State *L)
 {
     QComboBox* obj = QtObject<QComboBox>::check( L, 1 );
-	lua_pushstring( L, obj->currentText() );
+	lua_pushstring( L, obj->currentText().toLatin1().constData() );
 	return 1;
 }
 
 int LuaComboBox2::setCurrentItem(lua_State *L)
 {
     QComboBox* obj = QtObject<QComboBox>::check( L, 1 );
-	obj->setCurrentItem( luaL_checknumber( L, 2 ) - 1 );
+	obj->setCurrentIndex( luaL_checknumber( L, 2 ) - 1 );
 	return 0;
 }
 
 int LuaComboBox2::getCurrentItem(lua_State *L)
 {
     QComboBox* obj = QtObject<QComboBox>::check( L, 1 );
-	lua_pushnumber( L, obj->currentItem() + 1 );
+	lua_pushnumber( L, obj->currentIndex() + 1 );
 	// Zhle von 1..n, mit 0..nicht selektiert
 	return 1;
 }
@@ -209,7 +209,7 @@ void LuaComboBox2::_textChanged(const QString & s)
 {
     if( LuaWidgetCallbacks::pushCallbackAndMe( this, LuaWidget2::Changed ) )
 	{
-		lua_pushstring( LuaWidgetCallbacks::getLua(), s );
+		lua_pushstring( LuaWidgetCallbacks::getLua(), s.toLatin1().constData() );
 		LuaWidgetCallbacks::call( 2, 0 );
 	}
 }
@@ -227,7 +227,7 @@ int LuaTabWidget2::setTitle(lua_State *L)
 {
     QTabWidget* obj = QtObject<QTabWidget>::check( L, 1 );
     QWidget* w = QtObject<QWidget>::check( L, 2 );
-	obj->changeTab( w, luaL_checkstring( L, 3 ) );
+	obj->setTabText( obj->indexOf( w ), luaL_checkstring( L, 3 ) );
 	return 0;
 }
 
@@ -235,21 +235,21 @@ int LuaTabWidget2::showPage(lua_State *L)
 {
     QTabWidget* obj = QtObject<QTabWidget>::check( L, 1 );
     QWidget* w = QtObject<QWidget>::check( L, 2 );
-	obj->showPage( w );
+	obj->setCurrentWidget( w );
 	return 0;
 }
 
 int LuaTabWidget2::getCurrentPage(lua_State *L)
 {
     QTabWidget* obj = QtObject<QTabWidget>::check( L, 1 );
-    QtObject<QWidget>::create( L, obj->currentPage() );
+    QtObject<QWidget>::create( L, obj->currentWidget() );
 	return 0;
 }
 
 int LuaTabWidget2::setMargin(lua_State *L)
 {
     QTabWidget* obj = QtObject<QTabWidget>::check( L, 1 );
-	obj->setMargin( luaL_checknumber( L, 2 ) );
+	{ int m = luaL_checknumber( L, 2 ); obj->setContentsMargins( m, m, m, m ); }
 	return 0;
 }
 

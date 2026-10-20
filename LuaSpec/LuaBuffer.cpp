@@ -88,7 +88,7 @@ int LuaBuffer::getDimCount(lua_State *L)
 	return 1;
 }
 
-static const char* s_kinds[] =
+static const char* const s_kinds[] =
 {
 	"Comp8",	// CompU8
 	"Uncomp8", // UncompU8
@@ -149,7 +149,7 @@ int LuaBuffer::saveToFile(lua_State *L)
 		if( !fileName.endsWith( ".param" ) )
 			fileName += ".param";
 		EasySpectrum::writeParamFile( fileName, spec, ext );
-		fileName = fileName.left( fileName.findRev( "PARAM", -1, false ) );
+		fileName = fileName.left( fileName.lastIndexOf( "PARAM", -1, Qt::CaseInsensitive ) );
 		fileName += "16";
 		EasySpectrum::writeToFile( fileName, spec, factor, ext );
 	}else

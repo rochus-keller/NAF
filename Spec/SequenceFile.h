@@ -46,12 +46,21 @@ namespace Spec
 
 		void loadFromFile( Repository*,	const char* path, 
 			Root::Index start = 0 ); // throws Exception
+		void loadFromFile( Repository* r, const QString& path, Root::Index start = 0 )
+			{ loadFromFile( r, path.toLatin1().constData(), start ); }
+		void loadFromFile( Repository* r, const QByteArray& path, Root::Index start = 0 )
+			{ loadFromFile( r, path.constData(), start ); }
+		void loadFromFile( Repository* r, const Root::SymbolString& path, Root::Index start = 0 )
+			{ loadFromFile( r, path.data(), start ); }
 			// start == 0 heisst, dass nur automatische ID generiert wird, wenn keine Nr. angegeben.
 		bool checkSystems() const;
 		//. Prüfe ob alle d_sys unique 
 		bool addResidue( Residue*, Root::Index = 0 );
 		void addResidue( Repository*, Root::Index, Root::SymbolString ); // throws Exception
 		void writeToFile( const char*, bool useNr = false );
+		void writeToFile( const QString& p, bool useNr = false ) { writeToFile( p.toLatin1().constData(), useNr ); }
+		void writeToFile( const QByteArray& p, bool useNr = false ) { writeToFile( p.constData(), useNr ); }
+		void writeToFile( const Root::SymbolString& p, bool useNr = false ) { writeToFile( p.data(), useNr ); }
 		void renumber();
 		void removeResidue( Root::Index );
 

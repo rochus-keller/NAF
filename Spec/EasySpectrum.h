@@ -19,6 +19,7 @@
  */
 
 #if !defined(AFX_EASYSPECTRUM2_H__A7C0B464_478A_4B27_9AC8_61980EE2C285__INCLUDED_)
+#include <Root/SymbolString.h>
 #define AFX_EASYSPECTRUM2_H__A7C0B464_478A_4B27_9AC8_61980EE2C285__INCLUDED_
 
 #if _MSC_VER > 1000
@@ -52,8 +53,20 @@ namespace Spec
 		// Extension sind Anz. Submatrizen oder empty
 		static void writeParamFile(const char*, Spectrum*, 
 			const Extension& = Extension() );
+		static void writeParamFile( const QString& p, Spectrum* s,
+			const Extension& e = Extension() ) { writeParamFile( p.toLatin1().constData(), s, e ); }
+		static void writeParamFile( const QByteArray& p, Spectrum* s,
+			const Extension& e = Extension() ) { writeParamFile( p.constData(), s, e ); }
+		static void writeParamFile( const Root::SymbolString& p, Spectrum* s,
+			const Extension& e = Extension() ) { writeParamFile( p.data(), s, e ); }
 		static void writeToFile( const char*, Spectrum*, 
 			double factor, const Extension& = Extension() );
+		static void writeToFile( const QString& p, Spectrum* s,
+			double factor, const Extension& e = Extension() ) { writeToFile( p.toLatin1().constData(), s, factor, e ); }
+		static void writeToFile( const QByteArray& p, Spectrum* s,
+			double factor, const Extension& e = Extension() ) { writeToFile( p.constData(), s, factor, e ); }
+		static void writeToFile( const Root::SymbolString& p, Spectrum* s,
+			double factor, const Extension& e = Extension() ) { writeToFile( p.data(), s, factor, e ); }
 		EasySpectrum( const char* paramFilePath );
 	protected:
 		void reducePseudoDims();

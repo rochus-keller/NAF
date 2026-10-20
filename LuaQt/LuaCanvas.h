@@ -74,7 +74,7 @@ namespace Spec
 		int drawIcon(lua_State *L);
 		int drawContour(lua_State *L);
 		int drawImage(lua_State *L);
-		int setCaption(lua_State *L);
+		int setWindowTitle(lua_State *L);
 		int setBrush(lua_State *L);
 		int setPen(lua_State *L);
 		int getBounding(lua_State *L);

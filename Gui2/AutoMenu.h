@@ -21,12 +21,12 @@
 #ifndef AUTOMENU_H
 #define AUTOMENU_H
 
-#include <QMenu>
+#include <q3popupmenu.h>
 #include <Gui2/UiFunction.h>
 
 namespace Gui2
 {
-	class AutoMenu : public QMenu
+	class AutoMenu : public Q3PopupMenu
 	{
 		Q_OBJECT
 	public:

@@ -21,6 +21,7 @@
 #if !defined(LUA_ENGINE2__H)
 #define LUA_ENGINE2__H
 
+#include <QObject>
 #include <QSet>
 #include <QMap>
 

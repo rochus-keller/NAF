@@ -166,14 +166,18 @@ int Pixmap::alphaChannel(lua_State * L) // () const : QPixmap
 {
     QPixmap* obj = QtValue<QPixmap>::check( L, 1 );
     QPixmap* res = QtValue<QPixmap>::create( L );
-	*res = obj->alphaChannel();
+	*res = QPixmap::fromImage( obj->toImage().alphaChannel() );
 	return 1;
 }
 int Pixmap::setAlphaChannel(lua_State * L) // ( const QPixmap & alpha )
 {
     QPixmap* obj = QtValue<QPixmap>::check( L, 1 );
     QPixmap* p = QtValue<QPixmap>::check( L, 2 );
-	obj->setAlphaChannel( *p );
+	{
+		QImage img = obj->toImage().convertToFormat( QImage::Format_ARGB32 );
+		img.setAlphaChannel( p->toImage() );
+		*obj = QPixmap::fromImage( img );
+	}
 	return 0;
 }
 int Pixmap::copy(lua_State * L) // ( const QRect & rect = QRect() ) const : QPixmap
@@ -186,7 +190,12 @@ int Pixmap::copy(lua_State * L) // ( const QRect & rect = QRect() ) const : QPix
 	*res = obj->copy( rect );
 	return 1;
 }
-int Pixmap::serialNumber(lua_State * L) { return QtValue<QPixmap>::getInt( L, &QPixmap::serialNumber ); }
+int Pixmap::serialNumber(lua_State * L)
+{
+    QPixmap* obj = QtValue<QPixmap>::check( L, 1 );
+    Util::push( L, (int) obj->cacheKey() );
+    return 1;
+}
 // int Pixmap::setDefaultOptimization(lua_State * L) { return QtValue<QPixmap>::setEnum( L, &QPixmap::setDefaultOptimization ); }
 int Pixmap::setMask(lua_State * L) // ( const QBitmap & ) 
 {

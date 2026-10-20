@@ -341,6 +341,9 @@ namespace Spec
 		SpinSystem* getSystem( Root::Index ) const;
 		void classifySystem( SpinSystem*, SystemType* );
 		SpinSystem* findSystem( const char* ) const;
+		SpinSystem* findSystem( const QString& s ) const { return findSystem( s.toLatin1().constData() ); }
+		SpinSystem* findSystem( const QByteArray& s ) const { return findSystem( s.constData() ); }
+		SpinSystem* findSystem( const Root::SymbolString& s ) const { return findSystem( s.data() ); }
 
 		const SpinMap& getSpins() const { return d_spins; }
 		Spin* getSpin( Root::Index ) const;

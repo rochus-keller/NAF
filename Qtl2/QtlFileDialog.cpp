@@ -45,7 +45,7 @@ int FileDialog::filters(lua_State * L) // const : QStringList
 {
 	QFileDialog* obj = QtObject<QFileDialog>::check( L, 1);
 	QStringList* res = QtValue<QStringList>::create( L );
-	*res = 	obj->filters();
+	*res = 	obj->nameFilters();
 	return 1;
 }
 int FileDialog::history(lua_State * L) // const : QStringList
@@ -97,7 +97,7 @@ int FileDialog::selectFilter(lua_State * L) // const QString & filter
 {
 	QFileDialog* obj = QtObject<QFileDialog>::check( L, 1);
 	//QString* filter = QtValue<QString>::check( L, 2);
-    obj->selectFilter( QtValueBase::toString( L, 2 ) );
+    obj->selectNameFilter( QtValueBase::toString( L, 2 ) );
 	return 0; 
 }
 int FileDialog::selectedFiles(lua_State * L) // const : QStringList
@@ -110,7 +110,7 @@ int FileDialog::selectedFiles(lua_State * L) // const : QStringList
 int FileDialog::selectedFilter(lua_State * L) // const : QString
 {
 	QFileDialog* obj = QtObject<QFileDialog>::check( L, 1);
-    *QtValue<QString>::create( L ) = obj->selectedFilter();
+    *QtValue<QString>::create( L ) = obj->selectedNameFilter();
 	return 1; 
 }
 
@@ -131,14 +131,14 @@ int FileDialog::setFilter(lua_State * L) // const QString & filter
 {
 	QFileDialog* obj = QtObject<QFileDialog>::check( L, 1);
 	//QString* filter = QtValue<QString>::check( L, 2);
-    obj->setFilter( QtValueBase::toString( L, 2 ) );
+    obj->setNameFilter( QtValueBase::toString( L, 2 ) );
 	return 0; 
 }
 int FileDialog::setFilters(lua_State * L) // const QStringList & filters
 {
 	QFileDialog* obj = QtObject<QFileDialog>::check( L, 1);
 	QStringList* filters = QtValue<QStringList>::check( L, 2);
-	obj->setFilters( *filters );
+	obj->setNameFilters( *filters );
 	return 0; 
 }
 int FileDialog::setHistory(lua_State * L) // const QStringList & paths

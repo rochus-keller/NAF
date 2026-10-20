@@ -168,7 +168,7 @@ int QtObjectBase::index2(lua_State *L)
     {
         // Leider erwartet mo->indexOf eine vollstädige Signatur. Es gibt also
         // nie einen Match.
-        QByteArray sig = mo->method( i ).signature();
+        QByteArray sig = mo->method( i ).methodSignature();
         if( sig.startsWith( name ) )
         {
             lua_pushstring( L, name.constData() );
@@ -504,7 +504,7 @@ void QtObjectPeerPrivate::executeCall(int sigIndex, void ** a)
 					 ( typeCode >= QMetaType::Long && typeCode <= QMetaType::Float ) )
 				params << QVariant( typeCode, a[i+1]); // Standard QVariant
 			else if( typeCode == QMetaType::VoidStar ||
-					 typeCode == QMetaType::QObjectStar || typeCode == QMetaType::QWidgetStar )
+					 typeCode == QMetaType::QObjectStar  )
 				params << QVariant(QVariant::UserType, *(void **)a[i+1]); // Nicht unterstützt von QVariant
 			else if( QMetaType::User )
 			{

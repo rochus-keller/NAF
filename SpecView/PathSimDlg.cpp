@@ -59,7 +59,7 @@ PathSimDlg::PathSimDlg(Spectrum * s, QWidget *parent):
 void PathSimDlg::setResiType(ResidueType * rt)
 {
     if( rt )
-		d_resiTypes->setCurrentIndex( d_resiTypes->findText( QString::fromAscii(rt->getShort().data() ) ) );
+		d_resiTypes->setCurrentIndex( d_resiTypes->findText( QString::fromLatin1(rt->getShort().data() ) ) );
 	else
 		d_resiTypes->setCurrentIndex( d_resiTypes->findText( QString() ) );
 }
@@ -104,7 +104,7 @@ void PathSimDlg::calcPath()
     d_paths->clear();
     d_peaks->clear();
 
-    ResidueType* rt = d_type->getOwner()->getOwner()->findResidueType( d_resiTypes->currentText().toAscii() );
+    ResidueType* rt = d_type->getOwner()->getOwner()->findResidueType( d_resiTypes->currentText().toLatin1() );
     if( rt == 0 )
         d_mol->setResidueType( 0 );
 	else
@@ -215,7 +215,7 @@ void PathSimDlg::init()
     const Repository::ResidueTypeMap& rm = d_type->getOwner()->getOwner()->getResidueTypes();
 	Repository::ResidueTypeMap::const_iterator p;
 	for( p = rm.begin(); p != rm.end(); ++p )
-        d_resiTypes->addItem( QString::fromAscii((*p).second->getShort().data()) );
+        d_resiTypes->addItem( QString::fromLatin1((*p).second->getShort().data()) );
 	d_resiTypes->addItem( QString() );
     d_resiTypes->model()->sort(0);
 

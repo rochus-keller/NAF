@@ -185,9 +185,10 @@ static int createGrid(lua_State * L)
 	int n = luaL_checknumber( L, 2 );
 	if( lua_gettop(L) > 2 )
 		verti = lua_toboolean( L, 3 );
-	Q3Grid* w = new Q3Grid( n, 
-		(verti)?Qt::Vertical:Qt::Horizontal, parent, "",
-			(parent)?Qt::Widget:Qt::WDestructiveClose );
+	Q3Grid* w = new Q3Grid( n,
+		(verti)?Qt::Vertical:Qt::Horizontal, parent );
+	if( parent == 0 )
+		w->setAttribute( Qt::WA_DeleteOnClose );
 	QtObject<Q3Grid>::create( L, w );
 	return 1;
 }
@@ -339,7 +340,7 @@ static void initFrameStyle( lua_State * L)
 	lua_rawset( L, t );
 
 	lua_pushstring( L, "PopupPanel" );
-	lua_pushnumber( L, QFrame::PopupPanel );
+	lua_pushnumber( L, QFrame::StyledPanel );
 	lua_rawset( L, t );
 
 	lua_pushstring( L, "WinPanel" );
@@ -403,11 +404,11 @@ static void initTabWidget( lua_State * L)
 	const int t = lua_gettop( L );
 
 	lua_pushstring( L, "Top" );
-	lua_pushnumber( L, QTabWidget::Top );
+	lua_pushnumber( L, QTabWidget::North );
 	lua_rawset( L, t );
 
 	lua_pushstring( L, "Bottom" );
-	lua_pushnumber( L, QTabWidget::Bottom );
+	lua_pushnumber( L, QTabWidget::South );
 	lua_rawset( L, t );
 
 	lua_pop(L, 1);

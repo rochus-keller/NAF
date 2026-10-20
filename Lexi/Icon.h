@@ -38,7 +38,7 @@ namespace Lexi
 			Help, Home, Pointer, Left, Right, Magnify
 		};
 
-		Icon(const char* xpm[]);
+		Icon(const char* const xpm[]);
 		Icon( Symbol );
 		Icon();
 		virtual ~Icon();

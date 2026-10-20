@@ -1,0 +1,4 @@
+#ifndef QT3COMPAT_FWD_Q3GRIDLAYOUT
+#define QT3COMPAT_FWD_Q3GRIDLAYOUT
+#include "Qt3Compat.h"
+#endif

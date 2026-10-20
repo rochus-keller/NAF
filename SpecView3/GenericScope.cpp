@@ -45,6 +45,7 @@ private:
 GenericScope::GenericScope(Agent *supervisor)
 {
     setAttribute(Qt::WA_DeleteOnClose);
+    setMenuBar( new Q3MenuBar( this ) );
     // supervisor darf Null sein. Wenn er nicht Null ist, ist supervisor der Owner.
     // Wenn supervisor gelöscht wird, wird damit auch d_agent gelöscht. Da QPointer
     // wird damit d_agent Null. Wenn supervisor Null ist, ist this Owner.

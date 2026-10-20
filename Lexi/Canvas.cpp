@@ -58,7 +58,7 @@ void Canvas::clip(const Allocation & a)
 	{
 		const QRegion& r1 = d_painter->clipRegion();	
 		d_clips.push_back( r1 );
-		d_painter->setClipRegion( r1.intersect( 
+		d_painter->setClipRegion( r1.intersected( 
 			QRegion( t2p( a.getLeft() ), 
 			t2p( a.getTop() ), t2p( a.getWidth() ), 
 			t2p( a.getHeight() ) ) ) );
@@ -143,7 +143,7 @@ void Canvas::drawImage(Twips x, Twips y, Image * img, QColor bg ) const
 		QRegion reg = d_damage;
 		if( !d_clips.empty() )
 			reg = d_painter->clipRegion();
-		reg = reg.eor( 
+		reg = reg.xored( 
 			QRegion( 
 				QRect( 
 					Viewport::toPoint( x ), 
@@ -174,7 +174,7 @@ void Canvas::drawImage(Twips x, Twips y, Image * img, QColor bg ) const
     wm.scale( img->getTwipPerPixel( DimensionX ) / double( TwipsPerPoint ), 
 		img->getTwipPerPixel( DimensionY ) / double( TwipsPerPoint ) );
 
-    d_painter->setMatrix( wm, TRUE ); // Combine
+    d_painter->setMatrix( wm, true ); // Combine
 
 	d_painter->drawImage( o, image );
 

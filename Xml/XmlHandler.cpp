@@ -33,12 +33,8 @@ static void _StartElementHandler( void *userData,
 	{
 		const int s = ::strlen( atts[i + 1] );
 		if( s != 0 )
-			a[ atts[i] ] = QString::fromUtf8( atts[i + 1], s + 1  );
+            a[ atts[i] ] = QByteArray( atts[i + 1], s );
 			// Der Text kommt in Utf-8!
-		/* Das bringt keinen Vorteil, nur mehr Speicher
-		else
-			a[ atts[i] ] = ""; // QT-BUG: fromRawData mit s==0 produziert !isEmpty()
-		*/
 	}
 
 	if( !xh->startElement( name, a ) )
